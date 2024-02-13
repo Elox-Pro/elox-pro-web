@@ -23,15 +23,13 @@ const AlertError: FC<AlertErrorPros> = ({ status, error }) => {
   }, [status])
 
   return (
-    <>
-      <Alert color="danger" isOpen={visible} toggle={onDismiss}>
-        <h4 className="alert-heading">
-          <i className="bi bi-exclamation-circle me-3"></i>
-          {errorData?.error}&nbsp;{errorData?.statusCode}
-        </h4>
-        <p>{errorData?.message}</p>
-      </Alert>
-    </>
+    <Alert color="danger" isOpen={visible} toggle={onDismiss}>
+      <h4 className="alert-heading">
+        <i className="bi bi-exclamation-circle me-3"></i>
+        {errorData?.error}&nbsp;{errorData?.statusCode}
+      </h4>
+      <p>{errorData?.message}</p>
+    </Alert>
   )
 }
 export default AlertError
