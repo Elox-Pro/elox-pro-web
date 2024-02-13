@@ -1,3 +1,4 @@
+import { useId } from "react"
 import { FieldError, UseFormRegister } from "react-hook-form"
 
 export type InputProps = {
@@ -5,7 +6,6 @@ export type InputProps = {
   name: string
   label: string
   placeholder: string
-  id: string
   icon?: string
   autofocus?: boolean
   register: UseFormRegister<any>
@@ -14,7 +14,8 @@ export type InputProps = {
 }
 
 const Input = (props: InputProps) => {
-  const { id, icon, type, placeholder, name, label, autofocus, register, error, valueAsNumber } = props
+  const { icon, type, placeholder, name, label, autofocus, register, error, valueAsNumber } = props
+  const id = useId()
   const formControlClass = `form-control ${error ? "is-invalid" : ""}`
   const feedbackClass = `invalid-feedback ${error ? "d-block" : "d-none"}`
   return (
@@ -28,7 +29,6 @@ const Input = (props: InputProps) => {
 
         <div className="form-floating">
           <input
-            required
             type={type}
             className={formControlClass}
             id={id}
