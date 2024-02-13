@@ -4,6 +4,8 @@ import { loginFormSchema } from "../schemas/login-form.schema"
 import { LoginFormData } from "../types/login-form.data"
 import Input from "../../common/components/input.component"
 import { useLoginFormInputs } from "../inputs/login-form.inputs"
+import { useLoginMutation } from "../api/auth.api"
+import AlertError from "../../common/components/alert-error.component"
 
 const LoginForm = () => {
   const {
@@ -16,8 +18,10 @@ const LoginForm = () => {
 
   const inputs = useLoginFormInputs(register, errors)
 
+  const [login, response] = useLoginMutation()
+
   const onSubmit = async (data: LoginFormData) => {
-    console.log("SUCCESS", data)
+    login(data)
   }
 
   return (
@@ -26,6 +30,9 @@ const LoginForm = () => {
         <h3 className="text-body-highlight">Iniciar Sesión</h3>
         <p className="text-body-tertiary">Obtenga acceso a su cuenta</p>
       </div>
+
+      <AlertError status={response.status} error={response.error} />
+
       <form onSubmit={handleSubmit(onSubmit)} noValidate className="row g-3">
         {inputs.map((input, index) => (
           <Input {...input} key={index} />
