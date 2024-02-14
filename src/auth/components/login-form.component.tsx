@@ -6,7 +6,8 @@ import Input from "../../common/components/input.component"
 import { useLoginFormInputs } from "../inputs/login-form.inputs"
 import { useLoginMutation } from "../api/auth.api"
 import AlertError from "../../common/components/alert-error.component"
-import { Button } from "reactstrap"
+import { QueryStatus } from "@reduxjs/toolkit/query"
+import ProgressButton from "../../common/components/progress-button.component"
 
 const LoginForm = () => {
   const {
@@ -23,6 +24,10 @@ const LoginForm = () => {
 
   const onSubmit = async (data: LoginFormData) => {
     login(data)
+  }
+
+  if (response.status === QueryStatus.fulfilled) {
+    console.log(response.data)
   }
 
   return (
@@ -46,9 +51,7 @@ const LoginForm = () => {
         </p>
 
         <div className="input-group mb-3">
-          <button type="submit" className="btn btn-primary w-100 mb-3">
-            Enviar
-          </button>
+          <ProgressButton type="submit" color="primary" status={response.status} text="Enviar" />
         </div>
       </form>
     </>

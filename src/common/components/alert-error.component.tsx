@@ -19,8 +19,10 @@ const AlertError: FC<AlertErrorPros> = ({ status, error }) => {
       const { data } = useHandleError(error)
       setVisible(data !== undefined)
       setErrorData(data)
+    } else if (status === QueryStatus.fulfilled) {
+      setVisible(false)
     }
-  }, [status])
+  }, [status, error])
 
   return (
     <Alert color="danger" isOpen={visible} toggle={onDismiss}>
