@@ -11,7 +11,7 @@ type ProgressButtonProps = {
   status: QueryStatus
 }
 
-const ProgressButton = (props: ProgressButtonProps) => {
+export default function ProgressButton(props: ProgressButtonProps) {
   const { type, color, status, text } = props
   const [loading, setLoading] = useState(false)
   const [disabled, setDisabled] = useState(false)
@@ -28,5 +28,3 @@ const ProgressButton = (props: ProgressButtonProps) => {
     </Button>
   )
 }
-
-export default ProgressButton

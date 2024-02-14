@@ -9,7 +9,7 @@ type AlertErrorPros = {
   error: FetchBaseQueryError | SerializedError | undefined
 }
 
-const AlertError: FC<AlertErrorPros> = ({ status, error }) => {
+export default function AlertError({ status, error }: AlertErrorPros) {
   const [visible, setVisible] = useState(false)
   const onDismiss = () => setVisible(false)
   const [errorData, setErrorData] = useState<ErrorData>()
@@ -34,4 +34,3 @@ const AlertError: FC<AlertErrorPros> = ({ status, error }) => {
     </Alert>
   )
 }
-export default AlertError

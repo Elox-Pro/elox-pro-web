@@ -13,7 +13,7 @@ export type InputProps = {
   valueAsNumber?: boolean
 }
 
-const Input = (props: InputProps) => {
+export default function Input(props: InputProps) {
   const { icon, type, placeholder, name, label, autofocus, register, error, valueAsNumber } = props
   const id = useId()
   const formControlClass = `form-control ${error ? "is-invalid" : ""}`
@@ -43,5 +43,3 @@ const Input = (props: InputProps) => {
     </>
   )
 }
-
-export default Input

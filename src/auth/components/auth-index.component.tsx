@@ -1,7 +1,7 @@
 import { Col, Container, Row } from "reactstrap"
 import LoginForm from "./login-form.component"
 
-const AuthIndex = () => {
+export default function AuthIndex() {
   return (
     <Container fluid className="p-0">
       <Row className="justify-content-center">
@@ -13,5 +13,3 @@ const AuthIndex = () => {
     </Container>
   )
 }
-
-export default AuthIndex

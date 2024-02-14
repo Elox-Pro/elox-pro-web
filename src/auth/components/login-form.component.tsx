@@ -9,7 +9,7 @@ import AlertError from "../../common/components/alert-error.component"
 import { QueryStatus } from "@reduxjs/toolkit/query"
 import ProgressButton from "../../common/components/progress-button.component"
 
-const LoginForm = () => {
+export default function LoginForm() {
   const {
     register,
     handleSubmit,
@@ -57,5 +57,3 @@ const LoginForm = () => {
     </>
   )
 }
-
-export default LoginForm

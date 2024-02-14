@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authenticationApi } from "../auth/api/auth.api";
+import { authenticationApi } from "../../auth/api/auth.api";
 
 export const appStore = configureStore({
     reducer: {
@@ -10,5 +10,5 @@ export const appStore = configureStore({
     },
 })
 
-export type AppDispatch = typeof store.dispatch
-export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof appStore.dispatch
+export type RootState = ReturnType<typeof appStore.getState>
