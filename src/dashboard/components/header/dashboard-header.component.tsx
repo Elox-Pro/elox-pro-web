@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import { Nav, NavItem, NavLink, NavbarBrand, Container, Offcanvas, OffcanvasBody } from "reactstrap"
+import { Nav, NavItem, NavLink, Container, Offcanvas, OffcanvasBody } from "reactstrap"
 
 export default function DashboardHeader() {
   const [offcanvasOpen, setOffcanvasOpen] = useState(false)
