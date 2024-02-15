@@ -1,5 +1,5 @@
-import AuthLayout from "./auth-layout.component"
-import AuthIndex from "./auth-index.component"
+import AuthLayout from "../layout/auth-layout.component"
+import AuthIndex from "../index/auth-index.component"
 
 const AuthRoutes = [
   {

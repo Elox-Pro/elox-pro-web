@@ -1,6 +1,6 @@
-import DashboardLayout from "./dashboard-layout.component"
-import DashboardIndex from "./dashboard-index.component"
-import UserIndex from "../../users/components/user-index.component"
+import DashboardLayout from "../layout/dashboard-layout.component"
+import DashboardIndex from "../../home/components/index/dashboard-index.component"
+import UserIndex from "../../users/components/index/user-index.component"
 
 const DashboardRoutes = [
   {

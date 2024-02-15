@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import { LoginFormData } from "../types/login-form.data";
+import { LoginFormType } from "../components/login/login-form.type";
 
 //TODO: use env to set the base url
 export const authenticationApi = createApi({
@@ -12,7 +12,7 @@ export const authenticationApi = createApi({
                     return `/test`
                 }
             }),
-            login: builder.mutation<LoginFormData, any>({
+            login: builder.mutation<LoginFormType, any>({
                 query(data) {
                     return {
                         url: `/login`,

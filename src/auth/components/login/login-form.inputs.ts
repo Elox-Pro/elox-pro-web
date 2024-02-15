@@ -1,8 +1,8 @@
 import { FieldError, FieldErrors, UseFormRegister } from "react-hook-form"
-import { LoginFormData } from "../types/login-form.data"
+import { LoginFormType } from "./login-form.type"
 
 export const useLoginFormInputs = (
-    register: UseFormRegister<LoginFormData>,
+    register: UseFormRegister<LoginFormType>,
     errors: FieldErrors) => {
     return [
         {
