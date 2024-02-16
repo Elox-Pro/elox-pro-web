@@ -2,6 +2,7 @@ import DashboardLayout from "../layout/dashboard-layout.component"
 import DashboardIndex from "../../home/components/index/dashboard-index.component"
 import UserIndex from "../../users/components/index/user-index.component"
 import { Navigate } from "react-router-dom"
+import ProtectedRoute from "../../../auth/components/routes/protected-route.component"
 
 const DashboardRoutes = [
   {
@@ -10,7 +11,11 @@ const DashboardRoutes = [
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: "/dashboard/home",

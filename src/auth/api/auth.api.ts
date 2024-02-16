@@ -12,7 +12,7 @@ export const authenticationApi = createApi({
                     return `/test`
                 }
             }),
-            login: builder.mutation<LoginFormType, any>({
+            loginReq: builder.mutation<LoginFormType, any>({
                 query(data) {
                     return {
                         url: `/login`,
@@ -25,4 +25,4 @@ export const authenticationApi = createApi({
     },
 });
 
-export const { useGetTestQuery, useLoginMutation } = authenticationApi;
+export const { useGetTestQuery, useLoginReqMutation } = authenticationApi;

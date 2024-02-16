@@ -1,11 +1,9 @@
-import { createContext, ReactNode, useContext, useMemo } from "react"
-import { useLocalStorage } from "usehooks-ts"
+import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from "react"
 import { User } from "../../types/user.type"
-import { useNavigate } from "react-router-dom"
 
 type AuthContextProps = {
   user: User | null
-  login: (data: any) => Promise<void>
+  login: (user: User) => Promise<void>
   logout: () => void
 }
 
@@ -16,17 +14,23 @@ type AuthProviderProps = {
 }
 
 export default function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useLocalStorage<User | null>("user", null)
-  const navigate = useNavigate()
+  const [user, setUser] = useState<User | null>(null)
+
+  useEffect(() => {
+    const currentUser = localStorage.getItem("user")
+    if (currentUser) {
+      setUser(JSON.parse(currentUser))
+    }
+  }, [])
 
   const login = async (data: User): Promise<void> => {
     setUser(data)
-    navigate("/dashboard/home", { replace: true })
+    localStorage.setItem("user", JSON.stringify(data))
   }
 
   const logout = (): void => {
     setUser(null)
-    navigate("/auth", { replace: true })
+    localStorage.removeItem("user")
   }
 
   const value = useMemo(() => ({ user, login, logout }), [user])

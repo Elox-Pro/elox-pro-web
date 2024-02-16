@@ -5,9 +5,12 @@ import { loginFormSchema } from "./login-form.schema"
 import { LoginFormType } from "./login-form.type"
 import Input from "../../../common/components/input/input.component"
 import { useLoginFormInputs } from "./login-form.inputs"
-import { useLoginMutation } from "../../api/auth.api"
+import { useLoginReqMutation } from "../../api/auth.api"
 import AlertError from "../../../common/components/alert-error/alert-error.component"
 import ProgressButton from "../../../common/components/progress-button/progress-button.component"
+import { useAuth } from "../providers/auth-provider.component"
+import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
 
 export default function LoginForm() {
   const {
@@ -17,18 +20,21 @@ export default function LoginForm() {
   } = useForm<LoginFormType>({
     resolver: zodResolver(loginFormSchema),
   })
-
+  const authContext = useAuth()
+  const navigate = useNavigate()
   const inputs = useLoginFormInputs(register, errors)
-
-  const [login, response] = useLoginMutation()
-
-  const onSubmit = async (data: LoginFormType) => {
-    login(data)
+  const [loginReq, response] = useLoginReqMutation()
+  const onSubmit = (data: LoginFormType) => {
+    loginReq(data)
   }
 
-  if (response.status === QueryStatus.fulfilled) {
-    console.log(response.data)
-  }
+  useEffect(() => {
+    if (response.status === QueryStatus.fulfilled && authContext) {
+      console.log(response.data)
+      authContext.login({ userId: "1", username: "yonax73", role: "admin" })
+      navigate("/dashboard/home", { replace: true })
+    }
+  }, [response])
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { ReactNode } from "react"
+import { ReactNode, useEffect } from "react"
 import { Outlet, useNavigate } from "react-router-dom"
 import { useAuth } from "../providers/auth-provider.component"
 
@@ -7,9 +7,11 @@ type ProtectedRouteProps = {
 }
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const navigate = useNavigate()
-  const data = useAuth()
-  if (data === null || data.user === null) {
-    navigate("/auth", { replace: true })
-  }
+  const authContext = useAuth()
+  useEffect(() => {
+    if (authContext === null || authContext.user === null) {
+      navigate("/auth", { replace: true })
+    }
+  }, [])
   return children ? children : <Outlet />
 }
