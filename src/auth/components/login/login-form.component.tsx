@@ -1,12 +1,12 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { QueryStatus } from "@reduxjs/toolkit/query"
 import { loginFormSchema } from "./login-form.schema"
 import { LoginFormType } from "./login-form.type"
 import Input from "../../../common/components/input/input.component"
 import { useLoginFormInputs } from "./login-form.inputs"
 import { useLoginMutation } from "../../api/auth.api"
 import AlertError from "../../../common/components/alert-error/alert-error.component"
-import { QueryStatus } from "@reduxjs/toolkit/query"
 import ProgressButton from "../../../common/components/progress-button/progress-button.component"
 
 export default function LoginForm() {
