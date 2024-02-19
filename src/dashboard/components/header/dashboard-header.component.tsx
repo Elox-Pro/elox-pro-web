@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom"
 import { Container, Row, Col } from "reactstrap"
+import { useAuth } from "../../../auth/components/providers/auth-provider.component"
+import { ActiveUser } from "../../../auth/types/active-user.type"
 
 export default function DashboardHeader() {
+  const authContext = useAuth()
+
+  const activeUser: ActiveUser | null = authContext && authContext.activeUser
   return (
     <header className="p-3 text-bg-dark">
       <Container fluid>
@@ -20,6 +25,9 @@ export default function DashboardHeader() {
               />
               Elox Pro
             </Link>
+          </Col>
+          <Col xs="12" lg="auto">
+            <p>{activeUser && activeUser.sub}</p>
           </Col>
         </Row>
       </Container>

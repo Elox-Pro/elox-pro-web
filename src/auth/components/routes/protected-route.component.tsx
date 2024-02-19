@@ -8,13 +8,13 @@ type ProtectedRouteProps = {
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const navigate = useNavigate()
   const authContext = useAuth()
+  const isAuthenticated = authContext?.activeUser !== null
+
   useEffect(() => {
-    console.log("authContext", authContext)
-    console.log("authContext.user", authContext?.user)
-    if (authContext === null || authContext.user === null) {
+    if (!isAuthenticated) {
       navigate("/auth", { replace: true })
     }
-  }, [])
+  }, [isAuthenticated])
 
   return children ? children : <Outlet />
 }

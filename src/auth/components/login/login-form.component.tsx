@@ -5,7 +5,7 @@ import { loginFormSchema } from "./login-form.schema"
 import { LoginFormRequest } from "./login-form-request.type"
 import Input from "../../../common/components/input/input.component"
 import { useLoginFormInputs } from "./login-form.inputs"
-import { useGetTestQuery, useLoginRequestMutation } from "../../api/auth.api"
+import { useLoginRequestMutation } from "../../api/auth.api"
 import AlertError from "../../../common/components/alert-error/alert-error.component"
 import ProgressButton from "../../../common/components/progress-button/progress-button.component"
 import { useAuth } from "../providers/auth-provider.component"
@@ -25,6 +25,7 @@ export default function LoginForm() {
   const navigate = useNavigate()
   const inputs = useLoginFormInputs(register, errors)
   const [loginRequest, response] = useLoginRequestMutation()
+
   const onSubmit = (request: LoginFormRequest) => {
     loginRequest(request)
   }
@@ -36,18 +37,11 @@ export default function LoginForm() {
     }
   }, [response])
 
-  const { data, isSuccess } = useGetTestQuery()
-
-  useEffect(() => {
-    console.log("data", data)
-  }, [isSuccess])
-
   return (
     <>
       <div className="text-center">
         <h3 className="text-body-highlight">Iniciar Sesión</h3>
         <p className="text-body-tertiary">Obtenga acceso a su cuenta</p>
-        <h1>User: {authContext?.user?.username}</h1>
       </div>
 
       <AlertError status={response.status} error={response.error} />
