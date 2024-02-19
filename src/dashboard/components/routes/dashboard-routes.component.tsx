@@ -11,11 +11,7 @@ const DashboardRoutes = [
   },
   {
     path: "/dashboard",
-    element: (
-      <ProtectedRoute>
-        <DashboardLayout />
-      </ProtectedRoute>
-    ),
+    element: <DashboardLayout />,
     children: [
       {
         path: "/dashboard/home",
@@ -23,7 +19,11 @@ const DashboardRoutes = [
       },
       {
         path: "/dashboard/user",
-        element: <UserIndex />,
+        element: (
+          <ProtectedRoute>
+            <UserIndex />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

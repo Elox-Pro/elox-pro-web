@@ -9,9 +9,12 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const navigate = useNavigate()
   const authContext = useAuth()
   useEffect(() => {
+    console.log("authContext", authContext)
+    console.log("authContext.user", authContext?.user)
     if (authContext === null || authContext.user === null) {
       navigate("/auth", { replace: true })
     }
   }, [])
+
   return children ? children : <Outlet />
 }

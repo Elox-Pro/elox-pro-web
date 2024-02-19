@@ -1,10 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import { LoginFormType } from "../components/login/login-form.type";
+import { LoginFormRequest } from "../components/login/login-form-request.type";
+import { LoginFormResponse } from "../components/login/login-form-response.type";
 
 //TODO: use env to set the base url
 export const authenticationApi = createApi({
     reducerPath: "authenticationApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3024/authentication" }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: "http://api.eloxpro.com/authentication",
+        credentials: "include",
+    }),
     endpoints(builder) {
         return {
             getTest: builder.query<string, void>({
@@ -12,7 +16,7 @@ export const authenticationApi = createApi({
                     return `/test`
                 }
             }),
-            loginReq: builder.mutation<LoginFormType, any>({
+            loginRequest: builder.mutation<LoginFormResponse, LoginFormRequest>({
                 query(data) {
                     return {
                         url: `/login`,
@@ -25,4 +29,4 @@ export const authenticationApi = createApi({
     },
 });
 
-export const { useGetTestQuery, useLoginReqMutation } = authenticationApi;
+export const { useGetTestQuery, useLoginRequestMutation } = authenticationApi;
