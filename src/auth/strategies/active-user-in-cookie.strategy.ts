@@ -1,9 +1,9 @@
 import Cookies from "js-cookie"
 import ActiveUserStore from "./active-user-store.strategy"
 import { ActiveUser } from "../types/active-user.type"
+import { DOMAIN } from "../../app/constants/app.constants"
 
 const ACTIVE_USER_KEY = "ZWxveC1wcm8tYWN0aXZlLXVzZXI="
-const DOMAIN = ".eloxpro.com"//TODO: Brings from env file
 
 export default class ActiveUserInCookie implements ActiveUserStore {
     set(activeUser: ActiveUser, ttl: number): void {

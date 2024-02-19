@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { LoginFormRequest } from "../components/login/login-form-request.type";
 import { LoginFormResponse } from "../components/login/login-form-response.type";
+import { API_URL } from "../../app/constants/app.constants";
 
-//TODO: use env to set the base url
 export const authenticationApi = createApi({
     reducerPath: "authenticationApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://api.eloxpro.com/authentication",
+        baseUrl: `${API_URL}/authentication`,
         credentials: "include",
     }),
     endpoints(builder) {
