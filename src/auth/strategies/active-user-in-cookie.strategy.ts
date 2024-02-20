@@ -8,7 +8,7 @@ const ACTIVE_USER_KEY = "ZWxveC1wcm8tYWN0aXZlLXVzZXI="
 export default class ActiveUserInCookie implements ActiveUserStore {
     set(activeUser: ActiveUser, ttl: number): void {
         Cookies.set(ACTIVE_USER_KEY, btoa(JSON.stringify(activeUser)), {
-            // secure: true,
+            secure: true,
             domain: DOMAIN,
             expires: new Date(Date.now() + ttl * 1000),
         })

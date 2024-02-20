@@ -1,4 +1,4 @@
-export const DOMAIN = ".eloxpro.com"
-export const API_URL = "http://api.eloxpro.com"
+export const DOMAIN = ".eloxpro-dev.com"
+export const API_URL = "https://api.eloxpro-dev.com"
 
 
