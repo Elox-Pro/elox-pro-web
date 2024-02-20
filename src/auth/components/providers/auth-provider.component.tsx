@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from "react"
+import { createContext, ReactNode, useContext, useMemo, useState } from "react"
 import { ActiveUser } from "../../types/active-user.type"
 import { LoginFormTokens } from "../login/login-form-tokens.type"
 import { jwtDecode } from "jwt-decode"
@@ -23,7 +23,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
   const setLogin = (tokens: LoginFormTokens): void => {
     const user = jwtDecode<ActiveUser>(tokens.accessToken)
-    activeUserStore.set(user, tokens.refreshTokenTTL)
+    activeUserStore.set(user)
     setActiveUser(user)
   }
 
