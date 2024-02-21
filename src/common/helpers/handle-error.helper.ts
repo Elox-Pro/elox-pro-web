@@ -48,7 +48,7 @@ export enum ErrorType {
 export type ErrorData = {
     error?: string;
     message?: string;
-    statusCode?: string;
+    statusCode?: number;
     stack?: string;
 };
 

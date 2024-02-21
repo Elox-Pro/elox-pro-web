@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { Alert } from "reactstrap"
 import { ErrorData, useHandleError } from "../../helpers/handle-error.helper"
 import { FetchBaseQueryError, QueryStatus } from "@reduxjs/toolkit/query"

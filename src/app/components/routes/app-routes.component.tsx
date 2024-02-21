@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom"
 import AuthRoutes from "../../../auth/components/routes/auth-routes.component"
 import DashboardRoutes from "../../../dashboard/components/routes/dashboard-routes.component"
+import ErrorRoutes from "../../../errors/routes/error-routes.component"
 
 export const AppRoutes = createBrowserRouter([
   {
@@ -14,8 +15,5 @@ export const AppRoutes = createBrowserRouter([
   },
   ...AuthRoutes,
   ...DashboardRoutes,
-  {
-    path: "*",
-    element: <h1>Página no encontrada - Error 404</h1>,
-  },
+  ...ErrorRoutes,
 ])
