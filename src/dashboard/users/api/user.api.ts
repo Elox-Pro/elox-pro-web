@@ -11,7 +11,7 @@ export const usersApi = createApi({
         return {
             getProfile: builder.query<any, string>({
                 query(username: string) {
-                    return `/${username}/profile` // => /users/yonax/profile - users/yonax/posts
+                    return `/${username}/profile`
                 }
             })
         }
