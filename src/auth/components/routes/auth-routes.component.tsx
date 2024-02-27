@@ -1,10 +1,15 @@
 import AuthLayout from "../layout/auth-layout.component"
 import AuthIndex from "../index/auth-index.component"
+import AuthGuard from "../guards/auth.guard.component"
 
 const AuthRoutes = [
   {
     path: "/auth",
-    element: <AuthLayout />,
+    element: (
+      <AuthGuard>
+        <AuthLayout />
+      </AuthGuard>
+    ),
     children: [
       {
         index: true,
