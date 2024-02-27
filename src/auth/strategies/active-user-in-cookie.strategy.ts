@@ -3,7 +3,7 @@ import ActiveUserStore from "./active-user-store.strategy"
 import { ActiveUser } from "../types/active-user.type"
 import { DOMAIN } from "../../app/constants/app.constants"
 
-const ACTIVE_USER_KEY = "ZWxveC1wcm8tYWN0aXZlLXVzZXI="
+const ACTIVE_USER_KEY = "ZWxveC1wcm8tYWN0aXZlLXVzZXI"
 
 export default class ActiveUserInCookie implements ActiveUserStore {
     set(activeUser: ActiveUser): void {

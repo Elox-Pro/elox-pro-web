@@ -32,7 +32,7 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (response.status === QueryStatus.fulfilled && authContext) {
-      authContext.setLogin(response.data.tokens)
+      authContext.createSession()
       navigate("/dashboard/home", { replace: true })
     }
   }, [response])
