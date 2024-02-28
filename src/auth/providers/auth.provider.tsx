@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext, useMemo, useState } from "react"
-import { ActiveUser } from "../../types/active-user.type"
-import ActiveUserStore from "../../strategies/active-user-store.strategy"
-import ActiveUserInCookie from "../../strategies/active-user-in-cookie.strategy"
+import { ActiveUser } from "../types/active-user.type"
+import ActiveUserStore from "../strategies/active-user-store.strategy"
+import ActiveUserInCookie from "../strategies/active-user-in-cookie.strategy"
 
 type AuthContextProps = {
   activeUser: ActiveUser | null

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { Container, Row, Col } from "reactstrap"
-import { useAuth } from "../../../auth/components/providers/auth-provider.component"
+import { useAuth } from "../../../auth/providers/auth.provider"
 import { ActiveUser } from "../../../auth/types/active-user.type"
 
 export default function DashboardHeader() {

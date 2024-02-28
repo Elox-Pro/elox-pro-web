@@ -1,8 +1,8 @@
 import { useEffect } from "react"
 import { useGetProfileQuery } from "../../api/user.api"
 import { useNavigate } from "react-router-dom"
-import { useHandleError } from "../../../../common/helpers/handle-error.helper"
-import { useAuth } from "../../../../auth/components/providers/auth-provider.component"
+import { useHandleError } from "../../../../../common/helpers/handle-error.helper"
+import { useAuth } from "../../../../../auth/providers/auth.provider"
 
 export default function UserIndex() {
   const navigate = useNavigate()

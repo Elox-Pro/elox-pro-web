@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom"
-import AuthRoutes from "../../../auth/components/routes/auth-routes.component"
-import DashboardRoutes from "../../../dashboard/components/routes/dashboard-routes.component"
-import ErrorRoutes from "../../../errors/routes/error-routes.component"
+import AuthRoutes from "../../auth/routes/auth.routes"
+import DashboardRoutes from "../../dashboard/routes/dashboard.routes."
+import ErrorRoutes from "../../errors/routes/error.routes."
 
 export const AppRoutes = createBrowserRouter([
   {

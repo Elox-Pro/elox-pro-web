@@ -1,6 +1,6 @@
-import AuthLayout from "../layout/auth-layout.component"
-import AuthIndex from "../index/auth-index.component"
-import AuthGuard from "../guards/auth.guard.component"
+import AuthLayout from "../components/layout/auth-layout.component"
+import AuthIndex from "../components/index/auth-index.component"
+import AuthGuard from "../guards/auth.guard"
 
 const AuthRoutes = [
   {
