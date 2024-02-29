@@ -6,7 +6,7 @@ export default function CoverMain() {
   const { t } = useTranslation(["cover"])
 
   return (
-    <main className="px-3">
+    <main className="px-3 mt-5">
       <BrandLogo type={BrandLogoType.FULL} />
       <h1 className="h1">Elox Pro</h1>
       <h2>{t("cover:title")}.</h2>

@@ -4,7 +4,7 @@ import BrandLogo, { BrandLogoType } from "../../../common/components/brand-logo/
 
 export default function AuthIndex() {
   return (
-    <Container fluid className="p-0">
+    <Container>
       <Row className="justify-content-center text-center">
         <Col sm="12" md="8" lg="6">
           <BrandLogo type={BrandLogoType.FULL} />

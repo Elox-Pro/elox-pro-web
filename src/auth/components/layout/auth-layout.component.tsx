@@ -1,9 +1,9 @@
-import AuthNav from "../nav/auth-nav.component"
+import AuthHeader from "../header/auth-header.component"
 import { Outlet } from "react-router-dom"
 export default function AuthLayout() {
   return (
     <>
-      <AuthNav />
+      <AuthHeader />
       <Outlet />
     </>
   )

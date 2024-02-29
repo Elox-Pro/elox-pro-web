@@ -15,10 +15,6 @@ const AuthRoutes = [
         index: true,
         element: <AuthIndex />,
       },
-      {
-        path: "/auth/signup",
-        element: <h1>Signup</h1>,
-      },
     ],
   },
 ]

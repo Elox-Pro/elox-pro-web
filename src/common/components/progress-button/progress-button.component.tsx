@@ -23,7 +23,7 @@ export default function ProgressButton(props: ProgressButtonProps) {
   }, [status])
 
   return (
-    <Button color={color} type={type} disabled={disabled} className="w-100 mb-3">
+    <Button color={color} type={type} disabled={disabled} className="w-100 mb-3 btn-lg">
       {loading ? <span className="spinner-border spinner-border-sm"></span> : text}
     </Button>
   )
