@@ -13,10 +13,12 @@ i18n.init()
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Provider store={appStore}>
-      <AuthProvider>
-        <RouterProvider router={AppRoutes} />
-      </AuthProvider>
-    </Provider>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Provider store={appStore}>
+        <AuthProvider>
+          <RouterProvider router={AppRoutes} />
+        </AuthProvider>
+      </Provider>
+    </Suspense>
   </React.StrictMode>
 )
