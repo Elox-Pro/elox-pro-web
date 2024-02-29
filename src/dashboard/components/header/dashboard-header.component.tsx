@@ -1,24 +1,24 @@
-import { Container, Row, Col } from "reactstrap"
-import { useAuth } from "../../../auth/providers/auth.provider"
-import { ActiveUser } from "../../../auth/types/active-user.type"
+import { Row, Col } from "reactstrap"
 import BrandLink from "../../../common/components/brand-link/brand-link.component"
+import DropdownProfile from "../dropdown-profile/dropdown-profile.component"
+import "./dashboard-header.style.scss"
 
 export default function DashboardHeader() {
-  const authContext = useAuth()
-
-  const activeUser: ActiveUser | null = authContext && authContext.activeUser
   return (
-    <header className="p-3 text-bg-dark">
-      <Container fluid>
-        <Row className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-          <Col xs="12" lg="auto">
-            <BrandLink to="/dashboard/home" isText={true} />
-          </Col>
-          <Col xs="12" lg="auto">
-            <p>{activeUser && activeUser.sub}</p>
-          </Col>
-        </Row>
-      </Container>
+    <header className="dashboard-header sticky-top text-bg-dark">
+      <Row className="g-0 align-items-center">
+        <Col lg="2" md="3">
+          <BrandLink to="/dashboard/home" isText={true} />
+        </Col>
+        <Col lg="10" md="9" className="text-end">
+          <ul className="navbar-nav flex-row justify-content-end">
+            <li className="nav-item">Another item</li>
+            <li className="nav-item">
+              <DropdownProfile />
+            </li>
+          </ul>
+        </Col>
+      </Row>
     </header>
   )
 }
