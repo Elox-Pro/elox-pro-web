@@ -10,7 +10,7 @@ import AlertError from "../../../common/components/alert-error/alert-error.compo
 import ProgressButton from "../../../common/components/progress-button/progress-button.component"
 import { useAuth } from "../../providers/auth.provider"
 import { useNavigate } from "react-router-dom"
-import { useEffect, useTransition } from "react"
+import { useEffect } from "react"
 import { useTranslation } from "react-i18next"
 
 export default function LoginForm() {

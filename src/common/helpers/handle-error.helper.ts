@@ -39,7 +39,7 @@ const isSerializedError = (error: unknown): error is SerializedError => {
 export enum ErrorType {
     FetchBaseQueryError = "FetchBaseQueryError",
     SerializedError = "SerializedError",
-    Unknown = "Unknown",
+    InternalClientError = "Internal Client Error",
 }
 
 /**
@@ -84,9 +84,9 @@ export const useHandleError = (error: unknown): ErrorResponse => {
         };
     }
     return {
-        type: ErrorType.Unknown,
+        type: ErrorType.InternalClientError,
         data: {
-            error: ErrorType.Unknown,
+            error: ErrorType.InternalClientError,
         },
     };
 }
