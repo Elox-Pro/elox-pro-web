@@ -1,4 +1,6 @@
-import { Col, Container, Row } from "reactstrap"
+import Container from "react-bootstrap/Container"
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
 import LoginForm from "../login/login-form.component"
 import BrandLogo, { BrandLogoType } from "../../../common/components/brand-logo/brand-logo.component"
 

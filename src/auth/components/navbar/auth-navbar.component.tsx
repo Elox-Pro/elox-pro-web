@@ -4,7 +4,7 @@ import Navbar from "react-bootstrap/Navbar"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 
-export default function CoverNavbar() {
+export default function AuthNavbar() {
   const { t } = useTranslation(["nav"])
   return (
     <Navbar expand="lg">
@@ -13,7 +13,7 @@ export default function CoverNavbar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             <Link to={"/auth"} className="nav-link">
-              {t("nav:login")}
+              {t("nav:home")}
             </Link>
           </Nav>
         </Navbar.Collapse>
