@@ -5,7 +5,7 @@ export default function CoverFooter() {
   const { t } = useTranslation(["cover"])
 
   return (
-    <footer className="mt-auto">
+    <footer className="mt-auto text-center">
       <Row>
         <Col xs={12}>
           <p className="mt-5">{t("cover:footer_text_1")}</p>

@@ -11,11 +11,12 @@ export default function DropdownProfile() {
   return (
     <Dropdown isOpen={dropdownOpen} toggle={toggle} className="dropdown-profile">
       <DropdownToggle caret size="lg" type="button" title="profile">
-        <i className="bi bi-person-circle"></i>
+        <span>{activeUser?.sub}</span> <i className="bi bi-person-circle"></i>
       </DropdownToggle>
       <DropdownMenu>
-        <DropdownItem header>{activeUser?.sub}</DropdownItem>
-        <DropdownItem>Action</DropdownItem>
+        <DropdownItem>Profile</DropdownItem>
+        <DropdownItem divider />
+        <DropdownItem>Logout</DropdownItem>
       </DropdownMenu>
     </Dropdown>
   )

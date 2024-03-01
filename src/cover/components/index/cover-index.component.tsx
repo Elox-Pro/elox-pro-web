@@ -1,4 +1,4 @@
-import { Container } from "reactstrap"
+import Container from "react-bootstrap/Container"
 import "./cover-index.styles.scss"
 import CoverHeader from "../header/cover-header.component"
 import CoverMain from "../main/cover-main.component"
@@ -6,12 +6,12 @@ import CoverFooter from "../footer/cover-footer.component"
 
 export default function CoverIndex() {
   return (
-    <div className="cover-index d-flex h-100 text-center bd-masthead">
-      <Container fluid className="cover-container d-flex w-100 h-100 p-1 mx-auto flex-column">
+    <section className="cover-index cover-bg">
+      <Container>
         <CoverHeader />
         <CoverMain />
         <CoverFooter />
       </Container>
-    </div>
+    </section>
   )
 }

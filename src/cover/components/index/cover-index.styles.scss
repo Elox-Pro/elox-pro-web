@@ -1,31 +1,12 @@
-// Variables
-$color-light: #333;
-$shadow-color: rgba(0, 0, 0, 0.5);
 $bd-dark-violet-rgb: rgb(82, 0, 174);
 $bd-accent-rgb: rgb(64, 98, 187);
 $bd-violet-rgb: rgb(102, 51, 153);
 
-// Mixins
-@mixin btn-styles($bg-color, $border-color, $hover-bg-color, $hover-border-color, $active-bg-color, $active-border-color) {
-  --bs-btn-font-weight: 600;
-  --bs-btn-color: #fff;
-  --bs-btn-bg: $bg-color;
-  --bs-btn-border-color: $border-color;
-  --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: $hover-bg-color;
-  --bs-btn-hover-border-color: $hover-border-color;
-  --bs-btn-focus-shadow-rgb: $border-color;
-  --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: $active-bg-color;
-  --bs-btn-active-border-color: $active-border-color;
-}
-
-// Styles
 .cover-index {
-  text-shadow: 0 0.05rem 0.1rem $shadow-color;
+  display: flex;
+  flex-direction: column;
 
-  &.bd-masthead {
-    padding: 1rem 0;
+  &.cover-bg {
     background-image: linear-gradient(180deg,
         rgba(var(--bs-body-bg-rgb), 0.01),
         rgba(var(--bs-body-bg-rgb), 1) 85%),
@@ -42,128 +23,5 @@ $bd-violet-rgb: rgb(102, 51, 153);
         rgba($bd-dark-violet-rgb, 0.5),
         transparent 50%);
   }
-}
 
-.btn-light {
-  color: $color-light;
-  text-shadow: none;
-
-  &:hover,
-  &:focus {
-    color: $color-light;
-  }
-}
-
-.btn-dark {
-  background-color: $bd-dark-violet-rgb;
-  text-shadow: none;
-
-  &:hover,
-  &:focus {
-    background-color: $bd-dark-violet-rgb;
-  }
-}
-
-footer {
-  padding-top: 6rem;
-  text-shadow: none;
-}
-
-.cover-container {
-  max-width: 42em;
-}
-
-.nav-masthead {
-  .nav-link {
-    color: rgba(255, 255, 255, 0.5);
-    border-bottom: 0.25rem solid transparent;
-
-    &:hover,
-    &:focus {
-      border-bottom-color: rgba(255, 255, 255, 0.25);
-    }
-
-    &+.nav-link {
-      margin-left: 1rem;
-    }
-
-    &.active {
-      color: #fff;
-      border-bottom-color: #fff;
-    }
-  }
-}
-
-.bd-placeholder-img {
-  font-size: 1.125rem;
-  text-anchor: middle;
-  user-select: none;
-
-  @media (min-width: 768px) {
-    &-lg {
-      font-size: 3.5rem;
-    }
-  }
-}
-
-.b-cover-divider {
-  width: 100%;
-  height: 3rem;
-  background-color: rgba(0, 0, 0, 0.1);
-  border: solid rgba(0, 0, 0, 0.15);
-  border-width: 1px 0;
-  box-shadow: inset 0 0.5em 1.5em rgba(0, 0, 0, 0.1), inset 0 0.125em 0.5em rgba(0, 0, 0, 0.15);
-}
-
-.b-cover-vr {
-  flex-shrink: 0;
-  width: 1.5rem;
-  height: 100vh;
-}
-
-.bi {
-  vertical-align: -0.125em;
-  fill: currentColor;
-}
-
-.nav-scroller {
-  position: relative;
-  z-index: 2;
-  height: 2.75rem;
-  overflow-y: hidden;
-
-  .nav {
-    display: flex;
-    flex-wrap: nowrap;
-    padding-bottom: 1rem;
-    margin-top: -1px;
-    overflow-x: auto;
-    text-align: center;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-  }
-}
-
-// Button styles
-.btn-bd-primary {
-  @include btn-styles(#712cf9, #712cf9, #6528e0, #6528e0, #5a23c8, #5a23c8);
-}
-
-.bd-mode-toggle {
-  z-index: 1500;
-
-  .dropdown-menu {
-    .active .bi {
-      display: block !important;
-    }
-  }
-}
-
-.h1 {
-  font-size: calc(1.525rem + 3.3vw);
-}
-
-.bd-btn-lg {
-  --bs-btn-border-radius: .5rem;
-  padding: .8125rem 2rem;
 }
