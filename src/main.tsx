@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap-icons/font/bootstrap-icons.min.css"
+import "./app/styles/app.styles.scss"
 import React, { Suspense } from "react"
 import ReactDOM from "react-dom/client"
 import { Provider } from "react-redux"

@@ -12,7 +12,7 @@ export default function AuthNavbar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Link to={"/auth"} className="nav-link">
+            <Link to={"/"} className="nav-link">
               {t("nav:home")}
             </Link>
           </Nav>

@@ -6,6 +6,7 @@ import DashboardNavbarBrand from "../navbar-brand/dashboard-navbar-brand.compone
 import useActiveUser from "../../../auth/hooks/active-user.hook"
 import { Link } from "react-router-dom"
 import "./dashboard-navbar.style.scss"
+import DashboardNavbarToggle from "../navbar-toggle/dashboard-navbar-toggle.component"
 export default function DashboardNavbar() {
   const activeUser = useActiveUser()
 
@@ -14,7 +15,7 @@ export default function DashboardNavbar() {
       <Container fluid>
         <DashboardNavbarBrand />
         <Nav className="me-auto">
-          <Nav.Link href="#">Toogle</Nav.Link>
+          <DashboardNavbarToggle />
         </Nav>
         <Nav className="ms-auto">
           <NavDropdown

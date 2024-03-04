@@ -1,0 +1,10 @@
+:root {
+  --nav-width: 5rem;
+  --nav-width-negative: calc(-1 * var(--nav-width));
+  --nav-transition-duration: 0.5s;
+  --nav-transition-timing-function: cubic-bezier(0.685, 0.0473, 0.346, 1);
+}
+
+body {
+  position: relative;
+}

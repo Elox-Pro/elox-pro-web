@@ -1,0 +1,14 @@
+.dashboard-layout {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  left: 0;
+  &.dashboard-hide-sidebar {
+    .dashboard-sidebar {
+      margin-left: var(--nav-width-negative);
+    }
+    .dashboard-main-panel {
+      margin-left: 0;
+    }
+  }
+}
