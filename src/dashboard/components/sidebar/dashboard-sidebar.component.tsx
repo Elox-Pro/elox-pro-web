@@ -19,7 +19,6 @@ const NavItemLinks = [
 
 export default function DashboardSidebar() {
   const { t } = useTranslation(["nav"])
-
   return (
     <section className="dashboard-sidebar text-bg-dark">
       <DashboardNavbarBrand />
@@ -41,6 +40,7 @@ type NavLinkProps = {
   text: string
   icon: string
 }
+
 function NavItemLink({ to, text, icon }: NavLinkProps) {
   return (
     <NavItem>
