@@ -6,7 +6,9 @@ import useActiveUser from "../../../auth/hooks/active-user.hook"
 import { Link } from "react-router-dom"
 import "./dashboard-navbar.style.scss"
 import DashboardNavbarToggle from "../navbar-toggle/dashboard-navbar-toggle.component"
+import { useTranslation } from "react-i18next"
 export default function DashboardNavbar() {
+  const { t } = useTranslation(["nav"])
   const activeUser = useActiveUser()
 
   return (
@@ -26,11 +28,11 @@ export default function DashboardNavbar() {
             id="dropdown-profile"
           >
             <Link to="dashboard/user/profile" className="dropdown-item">
-              Profile
+              {t("nav:profile")}
             </Link>
             <NavDropdown.Divider />
             <Link to="/auth/logout" className="dropdown-item">
-              Logout
+              {t("nav:logout")}
             </Link>
           </NavDropdown>
         </Nav>

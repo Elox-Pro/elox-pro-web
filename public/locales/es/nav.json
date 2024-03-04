@@ -1,4 +1,7 @@
 {
     "login": "Iniciar Sesión",
-    "home": "Inicio"
+    "logout": "Cerrar Sesión",
+    "profile": "Perfil",
+    "home": "Inicio",
+    "customers": "Clientes"
 }

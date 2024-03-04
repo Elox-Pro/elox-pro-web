@@ -1,4 +1,7 @@
 {
     "login": "Login",
-    "home": "Home"
+    "logout": "Logout",
+    "profile": "Profile",
+    "home": "Home",
+    "customers": "Customers"
 }
