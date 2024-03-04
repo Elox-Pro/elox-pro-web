@@ -9,7 +9,7 @@ export default function DashboardLayout() {
   const dashboardSidebar = useAppSelector((state) => state.dashboardSidebar)
 
   return (
-    <div className={`dashboard-layout ${dashboardSidebar.value ? "dashboard-hide-sidebar" : ""}`}>
+    <div className={`dashboard-layout ${dashboardSidebar.hidden ? "dashboard-hide-sidebar" : ""}`}>
       <DashboardSidebar />
       <DashboardMainPanel>
         <DashboardHeader />

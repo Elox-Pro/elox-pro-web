@@ -2,20 +2,20 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const key = "dashboad-sidebar-slice"
 
-const readValue = (): boolean => {
-    const value = localStorage.getItem(key)
-    if (!value) {
+const isHidden = (): boolean => {
+    const hidden = localStorage.getItem(key)
+    if (!hidden) {
         return false;
     }
-    return value === "true"
+    return hidden === "true"
 }
 
 type DashboadSidebarState = {
-    value: boolean;
+    hidden: boolean;
 }
 
 const initialState: DashboadSidebarState = {
-    value: readValue(),
+    hidden: isHidden(),
 }
 
 const dashboardSidebarSlice = createSlice({
@@ -23,9 +23,9 @@ const dashboardSidebarSlice = createSlice({
     initialState,
     reducers: {
         toggleSidebar: (state) => {
-            const value = !state.value;
-            localStorage.setItem(key, value.toString())
-            state.value = value;
+            const hidden = !state.hidden;
+            localStorage.setItem(key, hidden.toString())
+            state.hidden = hidden;
         },
     },
 });
