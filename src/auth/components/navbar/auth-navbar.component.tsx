@@ -9,14 +9,11 @@ export default function AuthNavbar() {
   return (
     <Navbar expand="lg">
       <Container>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
-            <Link to={"/"} className="nav-link">
-              {t("nav:home")}
-            </Link>
-          </Nav>
-        </Navbar.Collapse>
+        <Nav className="ms-auto">
+          <Link to={"/"} className="nav-link">
+            {t("nav:home")}
+          </Link>
+        </Nav>
       </Container>
     </Navbar>
   )

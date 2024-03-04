@@ -9,14 +9,11 @@ export default function CoverNavbar() {
   return (
     <Navbar expand="lg">
       <Container>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
-            <Link to={"/auth"} className="nav-link">
-              {t("nav:login")}
-            </Link>
-          </Nav>
-        </Navbar.Collapse>
+        <Nav className="ms-auto">
+          <Link to={"/auth"} className="nav-link">
+            {t("nav:login")}
+          </Link>
+        </Nav>
       </Container>
     </Navbar>
   )

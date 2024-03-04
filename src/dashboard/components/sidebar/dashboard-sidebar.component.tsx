@@ -29,7 +29,7 @@ export default function DashboardSidebar() {
       </Nav>
       <hr />
       <Nav className="nav nav-pills flex-column mb-auto">
-        <NavItemLink to="/auth/logout" text={t("nav:logout")} icon="bi bi-box-arrow-left" />
+        <NavItemLink to="/auth/logout" text={t("nav:logout")} icon="bi bi-box-arrow-right" />
       </Nav>
     </section>
   )
