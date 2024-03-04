@@ -1,27 +1,11 @@
 .dashboard-sidebar {
-  position: fixed;
-  left: 0;
-  width: var(--nav-width);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
   height: 100vh;
+  left: 0;
+  padding: 1rem;
+  position: fixed;
   transition: all var(--nav-transition-duration) var(--nav-transition-timing-function);
-  //   transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+  width: var(--nav-width);
 }
-
-// @media screen and (min-width: 768px) {
-//     body {
-//         padding-left: calc(var(--nav-width) + 2rem)
-//     }
-
-//     .dashboard-sidebar {
-//         left: 0;
-//         padding: 1rem 1rem 0 0
-//     }
-
-//     .show {
-//         width: calc(var(--nav-width) + 156px)
-//     }
-
-//     .body-pd {
-//         padding-left: calc(var(--nav-width) + 188px)
-//     }
-// }

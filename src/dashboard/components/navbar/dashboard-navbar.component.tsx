@@ -2,7 +2,6 @@ import Container from "react-bootstrap/Container"
 import Nav from "react-bootstrap/Nav"
 import Navbar from "react-bootstrap/Navbar"
 import NavDropdown from "react-bootstrap/NavDropdown"
-import DashboardNavbarBrand from "../navbar-brand/dashboard-navbar-brand.component"
 import useActiveUser from "../../../auth/hooks/active-user.hook"
 import { Link } from "react-router-dom"
 import "./dashboard-navbar.style.scss"
@@ -11,9 +10,8 @@ export default function DashboardNavbar() {
   const activeUser = useActiveUser()
 
   return (
-    <Navbar expand="lg" bg="dark" data-bs-theme="dark" className="dashboard-navbar">
+    <Navbar expand="lg" className="dashboard-navbar">
       <Container fluid>
-        <DashboardNavbarBrand />
         <Nav className="me-auto">
           <DashboardNavbarToggle />
         </Nav>
@@ -31,7 +29,7 @@ export default function DashboardNavbar() {
               Profile
             </Link>
             <NavDropdown.Divider />
-            <Link to="auth/logout" className="dropdown-item">
+            <Link to="/auth/logout" className="dropdown-item">
               Logout
             </Link>
           </NavDropdown>
