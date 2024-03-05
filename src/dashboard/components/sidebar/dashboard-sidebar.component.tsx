@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom"
-import { Nav, NavItem } from "reactstrap"
+import Nav from "react-bootstrap/Nav"
+import NavItem from "react-bootstrap/NavItem"
 import "./dashboard-sidebar.style.scss"
 import DashboardNavbarBrand from "../navbar-brand/dashboard-navbar-brand.component"
 import { useTranslation } from "react-i18next"
@@ -19,6 +20,7 @@ const NavItemLinks = [
 
 export default function DashboardSidebar() {
   const { t } = useTranslation(["nav"])
+
   return (
     <section className="dashboard-sidebar text-bg-dark">
       <DashboardNavbarBrand />
