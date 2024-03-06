@@ -1,5 +1,6 @@
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
 import { useTranslation } from "react-i18next"
-import { Col, Row } from "reactstrap"
 
 export default function CoverFooter() {
   const { t } = useTranslation(["cover"])

@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom"
 import Nav from "react-bootstrap/Nav"
 import NavItem from "react-bootstrap/NavItem"
 import "./dashboard-sidebar.style.scss"
-import DashboardNavbarBrand from "../navbar-brand/dashboard-navbar-brand.component"
+import DashboardNavbarBrand, { DashboardNavbarBrandLogo } from "../navbar-brand/dashboard-navbar-brand.component"
 import { useTranslation } from "react-i18next"
 
 const NavItemLinks = [
@@ -23,7 +23,7 @@ export default function DashboardSidebar() {
 
   return (
     <section className="dashboard-sidebar text-bg-dark">
-      <DashboardNavbarBrand />
+      <DashboardNavbarBrand logo={DashboardNavbarBrandLogo.WHITE} size={36} text="Elox Pro" />
       <Nav className="nav nav-pills flex-column mb-auto">
         {NavItemLinks.map((item, index) => (
           <NavItemLink key={index} to={item.to} text={t(`nav:${item.tkey}`)} icon={item.icon} />

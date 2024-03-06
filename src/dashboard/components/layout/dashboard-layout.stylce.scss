@@ -12,3 +12,16 @@
     }
   }
 }
+
+/* Styles to render on mobile */
+@media screen and (max-width: 768px) {
+  .dashboard-layout {
+    transition: 0.1s;
+    .dashboard-sidebar {
+      margin-left: var(--nav-width-negative);
+    }
+    .dashboard-main-panel {
+      margin-left: 0;
+    }
+  }
+}
