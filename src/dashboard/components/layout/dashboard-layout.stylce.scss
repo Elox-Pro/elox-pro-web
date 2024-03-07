@@ -8,10 +8,16 @@
       margin-left: 0;
       width: var(--nav-width-xs);
 
+      .dashboard-navbar-brand-text {
+        display: none;
+      }
+
+      .nav-link {
+        flex-direction: column;
+      }
+
       .nav-link-text {
-        left: -5rem;
-        opacity: 0;
-        visibility: hidden;
+        display: none;
       }
     }
     .dashboard-main-panel {

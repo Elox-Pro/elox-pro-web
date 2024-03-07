@@ -15,8 +15,8 @@ type DashboardNavbarBrandProps = {
 export default function DashboardNavbarBrand({ logo, size, text }: DashboardNavbarBrandProps) {
   return (
     <Link to="home" className="dashboard-navbar-brand">
-      <img src={logo} alt="Elox Pro Logo" width={size} height={size} className="me-2" />
-      <span>{text}</span>
+      <img src={logo} alt="Elox Pro Logo" width={size} height={size} />
+      <span className="dashboard-navbar-brand-text ms-2">{text}</span>
     </Link>
   )
 }

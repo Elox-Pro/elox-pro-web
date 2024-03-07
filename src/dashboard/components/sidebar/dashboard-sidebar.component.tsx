@@ -23,7 +23,7 @@ export default function DashboardSidebar() {
 
   return (
     <section className="dashboard-sidebar text-bg-dark">
-      <DashboardNavbarBrand logo={DashboardNavbarBrandLogo.WHITE} size={24} text="" />
+      <DashboardNavbarBrand logo={DashboardNavbarBrandLogo.WHITE} size={24} text="Elox Pro" />
       <Nav className="nav nav-pills flex-column mb-auto">
         {NavItemLinks.map((item, index) => (
           <NavItemLink key={index} to={item.to} text={t(`nav:${item.tkey}`)} icon={item.icon} />
@@ -46,9 +46,9 @@ type NavLinkProps = {
 function NavItemLink({ to, text, icon }: NavLinkProps) {
   return (
     <NavItem>
-      <NavLink to={to} className="nav-link text-white">
-        <i className={`${icon} me-2 fs-5`}></i>
-        <span className="nav-link-text">{text}</span>
+      <NavLink to={to} className="nav-link text-white-50">
+        <i className={`${icon} fs-5`}></i>
+        <span className="ms-2 nav-link-text">{text}</span>
       </NavLink>
     </NavItem>
   )

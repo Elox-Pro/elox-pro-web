@@ -3,7 +3,7 @@
   --nav-width-xs: 5rem;
   --nav-width: 15rem; //abs(--nav-width-xs) + --main-panel-width-xs
   --nav-width-negative: calc(-1 * var(--nav-width));
-  --nav-transition-duration: 0.2s;
+  --nav-transition-duration: 0.25s;
   --nav-transition-timing-function: cubic-bezier(0.685, 0.0473, 0.346, 1);
   --offcanvas-header-width: calc(var(--nav-width) - 3rem);
 }
