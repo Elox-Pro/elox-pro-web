@@ -5,4 +5,6 @@ export type ActiveUser = {
     sub: string
 
     role: string
+
+    isAuthenticated: boolean
 }

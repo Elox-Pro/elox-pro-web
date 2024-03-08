@@ -6,19 +6,16 @@ import { useAuth } from "../../../../../auth/providers/auth.provider"
 
 export default function UserIndex() {
   const navigate = useNavigate()
-  const auth = useAuth()
+  const authContext = useAuth()
 
-  if (auth === null || auth.activeUser === null) {
-    navigate("/errors/401", { replace: true })
-    return null
-  }
+  const { activeUser } = authContext
 
-  const { data, error, isLoading } = useGetProfileQuery(auth.activeUser.sub)
+  const { data, error, isLoading } = useGetProfileQuery(activeUser.sub)
 
   useEffect(() => {
     const errorResponse = useHandleError(error)
     if (errorResponse.data.statusCode === 401) {
-      navigate("/errors/401", { replace: true })
+      navigate("/error/401", { replace: true })
     }
   }, [error])
 

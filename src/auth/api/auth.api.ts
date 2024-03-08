@@ -11,11 +11,6 @@ export const authenticationApi = createApi({
     }),
     endpoints(builder) {
         return {
-            getTest: builder.query<string, void>({
-                query() {
-                    return `/test`
-                }
-            }),
             loginRequest: builder.mutation<LoginFormResponse, LoginFormRequest>({
                 query(data) {
                     return {
@@ -25,8 +20,16 @@ export const authenticationApi = createApi({
                     }
                 },
             }),
+            logoutRequest: builder.mutation<void, void>({
+                query() {
+                    return {
+                        url: `/logout`,
+                        method: "POST",
+                    }
+                }
+            }),
         }
     },
 });
 
-export const { useGetTestQuery, useLoginRequestMutation } = authenticationApi;
+export const { useLogoutRequestMutation, useLoginRequestMutation } = authenticationApi;

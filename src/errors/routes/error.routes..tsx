@@ -3,7 +3,7 @@ import Error404 from "../components/error-404/error-404.component"
 
 const ErrorRoutes = [
   {
-    path: "/errors/401",
+    path: "/error/401",
     element: <Error401 />,
   },
   {

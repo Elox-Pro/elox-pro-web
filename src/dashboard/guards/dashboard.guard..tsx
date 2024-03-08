@@ -8,11 +8,11 @@ type DashboardGuardProps = {
 export default function DashboardGuard({ children }: DashboardGuardProps) {
   const navigate = useNavigate()
   const authContext = useAuth()
-  const isAuthenticated = authContext?.activeUser !== null
+  const isAuthenticated = authContext.activeUser.isAuthenticated
 
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate("/auth", { replace: true })
+      navigate("/auth/", { replace: true })
     }
   }, [isAuthenticated])
 

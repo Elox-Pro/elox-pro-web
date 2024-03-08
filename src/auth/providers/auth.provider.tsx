@@ -2,30 +2,44 @@ import { createContext, ReactNode, useContext, useMemo, useState } from "react"
 import { ActiveUser } from "../types/active-user.type"
 import ActiveUserStore from "../strategies/active-user-store.strategy"
 import ActiveUserInCookie from "../strategies/active-user-in-cookie.strategy"
+import { useLogoutRequestMutation } from "../api/auth.api"
 
 type AuthContextProps = {
-  activeUser: ActiveUser | null
+  activeUser: ActiveUser
   createSession: () => void
   logout: () => void
 }
-
-const AuthContext = createContext<AuthContextProps | null>(null)
 
 type AuthProviderProps = {
   children: ReactNode
 }
 
+const activeUserInitState: ActiveUser = {
+  sub: "",
+  role: "",
+  isAuthenticated: false,
+}
+
+const authContextInitState: AuthContextProps = {
+  activeUser: activeUserInitState,
+  createSession: () => {},
+  logout: () => {},
+}
+
+const AuthContext = createContext<AuthContextProps>(authContextInitState)
+
 export default function AuthProvider({ children }: AuthProviderProps) {
-  const activeUserStore: ActiveUserStore = new ActiveUserInCookie()
-  const [activeUser, setActiveUser] = useState<ActiveUser | null>(activeUserStore.get())
+  const activeUserStore: ActiveUserStore = new ActiveUserInCookie(activeUserInitState)
+  const [activeUser, setActiveUser] = useState<ActiveUser>(activeUserStore.get())
+  const [logoutRequest] = useLogoutRequestMutation()
 
   const createSession = (): void => {
     setActiveUser(activeUserStore.get())
   }
 
   const logout = (): void => {
-    activeUserStore.remove()
-    setActiveUser(null)
+    logoutRequest()
+    setActiveUser(activeUserInitState)
   }
 
   const value = useMemo(

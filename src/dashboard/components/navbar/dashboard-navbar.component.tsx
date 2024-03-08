@@ -2,14 +2,23 @@ import Container from "react-bootstrap/Container"
 import Nav from "react-bootstrap/Nav"
 import Navbar from "react-bootstrap/Navbar"
 import NavDropdown from "react-bootstrap/NavDropdown"
-import useActiveUser from "../../../auth/hooks/active-user.hook"
 import { Link } from "react-router-dom"
 import "./dashboard-navbar.style.scss"
 import DashboardNavbarToggle from "../navbar-toggle/dashboard-navbar-toggle.component"
 import { useTranslation } from "react-i18next"
+import { useAuth } from "../../../auth/providers/auth.provider"
 export default function DashboardNavbar() {
   const { t } = useTranslation(["nav"])
-  const activeUser = useActiveUser()
+  const authContext = useAuth()
+  const { activeUser, logout } = authContext
+
+  const handleLogout = () => {
+    try {
+      logout()
+    } catch (error) {
+      console.error("Logout Error:", error)
+    }
+  }
 
   return (
     <Navbar expand="lg" className="dashboard-navbar">
@@ -31,9 +40,9 @@ export default function DashboardNavbar() {
               {t("nav:profile")}
             </Link>
             <NavDropdown.Divider />
-            <Link to="/auth/logout" className="dropdown-item">
+            <button type="button" className="dropdown-item" onClick={handleLogout}>
               {t("nav:logout")}
-            </Link>
+            </button>
           </NavDropdown>
         </Nav>
       </Container>

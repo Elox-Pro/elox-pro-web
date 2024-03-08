@@ -24,6 +24,7 @@ export default function LoginForm() {
   })
 
   const authContext = useAuth()
+  const { createSession } = authContext
   const navigate = useNavigate()
   const inputs = useLoginFormInputs(register, errors)
   const [loginRequest, { status, error }] = useLoginRequestMutation()
@@ -38,7 +39,7 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (status === QueryStatus.fulfilled && authContext) {
-      authContext.createSession()
+      createSession()
       navigate("/dashboard/home", { replace: true })
     }
   }, [status, authContext])

@@ -8,7 +8,7 @@ type AuthGuardProps = {
 export default function AuthGuard({ children }: AuthGuardProps) {
   const navigate = useNavigate()
   const authContext = useAuth()
-  const isAuthenticated = authContext?.activeUser !== null
+  const isAuthenticated = authContext.activeUser.isAuthenticated
 
   useEffect(() => {
     if (isAuthenticated) {

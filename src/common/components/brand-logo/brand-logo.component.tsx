@@ -1,6 +1,6 @@
 export enum BrandLogoType {
-  FULL = "icons/logo-color-520.png",
-  WHITE = "icons/logo-white-520.png",
+  FULL = "/icons/logo-color-520.png",
+  WHITE = "/icons/logo-white-520.png",
 }
 type BrandLogoProps = {
   type: BrandLogoType
