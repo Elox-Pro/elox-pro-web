@@ -11,10 +11,12 @@ import AlertError from "../../../common/components/alert-error/alert-error.compo
 import Input from "../../../common/components/input/input.component"
 import ProgressButton from "../../../common/components/progress-button/progress-button.component"
 import { useZod } from "../../../common/hooks/zod.hook"
-import { useAppSelector } from "../../../app/hooks/app.hooks"
+import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks"
+import { setIsTfaPending } from "../../feautures/login.slice"
 
 export default function ValidateTfaForm() {
   const { username } = useAppSelector((state) => state.login)
+  const dispatch = useAppDispatch()
   const { t } = useTranslation(["common", "login"])
   const { register, handleSubmit, errors } = useZod<ValidateTfaRequest>(validateTfaSchema)
   const authContext = useAuth()
@@ -32,6 +34,7 @@ export default function ValidateTfaForm() {
 
   useEffect(() => {
     if (status === QueryStatus.fulfilled) {
+      dispatch(setIsTfaPending(false))
       createSession()
       navigate("/dashboard/home", { replace: true })
     }

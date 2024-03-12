@@ -1,0 +1,4 @@
+{
+    "zodError.tooShort": "Este campo debe tener al menos {{minLength}} caracteres de longitud.",
+    "zodError.required": "Este campo es requerido."
+}

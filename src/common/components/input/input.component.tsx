@@ -1,5 +1,6 @@
 import { useId } from "react"
 import { FieldError, UseFormRegister } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 
 export type InputProps = {
   type: string
@@ -30,9 +31,12 @@ export default function Input({
   readonly,
   disabled,
 }: InputProps) {
+  const { t } = useTranslation(["zod-error"])
   const id = useId()
   const formControlClass = `form-control ${error ? "is-invalid" : ""}`
   const feedbackClass = `invalid-feedback ${error ? "d-block" : "d-none"}`
+  const errorMessage = error && t(error.message || "")
+  console.log(errorMessage)
   return (
     <>
       <div className="input-group has-validation mb-3">
@@ -56,7 +60,7 @@ export default function Input({
           />
           <label htmlFor={id}>{label}</label>
         </div>
-        <div className={feedbackClass}>{error?.message}</div>
+        <div className={feedbackClass}>{errorMessage}</div>
       </div>
     </>
   )
