@@ -1,9 +1,9 @@
 import { z, ZodType } from "zod"
-import { LoginFormRequest } from "./login-form-request.type"
+import { LoginRequest } from "../types/login/login-request.type"
 
 const requiredError = "Este campo es requerido."
 
-export const loginFormSchema: ZodType<LoginFormRequest> = z.object({
+export const loginSchema: ZodType<LoginRequest> = z.object({
     username: z.string().min(3, { message: requiredError }),
     password: z.string().min(3, { message: requiredError }),
 })

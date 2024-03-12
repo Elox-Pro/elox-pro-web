@@ -3,9 +3,11 @@ import { authenticationApi } from "../../auth/api/auth.api";
 import { usersApi } from "../../dashboard/children/users/api/user.api";
 import dashboardSidebarReducer from "../../dashboard/features/dashbaord-sidebar.slice";
 import dashboardSidebarOffcanvasReducer from "../../dashboard/features/dashboard-sidebar-offcanvas.slice";
+import loginReducer from "../../auth/feautures/login.slice";
 
 export const appStore = configureStore({
     reducer: {
+        login: loginReducer,
         dashboardSidebar: dashboardSidebarReducer,
         dashboardSidebarOffcanvas: dashboardSidebarOffcanvasReducer,
         [authenticationApi.reducerPath]: authenticationApi.reducer,

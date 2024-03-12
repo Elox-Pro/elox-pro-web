@@ -1,7 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import { LoginFormRequest } from "../components/login/login-form-request.type";
-import { LoginFormResponse } from "../components/login/login-form-response.type";
+import { LoginRequest } from "../types/login/login-request.type";
+import { LoginResponse } from "../types/login/login-response.type";
 import { API_URL } from "../../app/constants/app.constants";
+import { ValidateTfaResponse } from "../types/validate-tfa/validate-tfa-response.type";
+import { ValidateTfaRequest } from "../types/validate-tfa/validate-tfa-request.type";
 
 export const authenticationApi = createApi({
     reducerPath: "authenticationApi",
@@ -11,10 +13,19 @@ export const authenticationApi = createApi({
     }),
     endpoints(builder) {
         return {
-            loginRequest: builder.mutation<LoginFormResponse, LoginFormRequest>({
+            loginRequest: builder.mutation<LoginResponse, LoginRequest>({
                 query(data) {
                     return {
                         url: `/login`,
+                        method: "POST",
+                        body: data,
+                    }
+                },
+            }),
+            validateTfaRequest: builder.mutation<ValidateTfaResponse, ValidateTfaRequest>({
+                query(data) {
+                    return {
+                        url: `/validate-tfa`,
                         method: "POST",
                         body: data,
                     }
@@ -32,4 +43,8 @@ export const authenticationApi = createApi({
     },
 });
 
-export const { useLogoutRequestMutation, useLoginRequestMutation } = authenticationApi;
+export const {
+    useLogoutRequestMutation,
+    useLoginRequestMutation,
+    useValidateTfaRequestMutation
+} = authenticationApi;

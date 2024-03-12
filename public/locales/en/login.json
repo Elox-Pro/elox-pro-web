@@ -5,5 +5,7 @@
     "username_label": "Username",
     "username_placeholder": "Type username",
     "password_label": "Password",
-    "password_placeholder": "Type password"
+    "password_placeholder": "Type password",
+    "tfa_label": "Two-factor authentication",
+    "tfa_placeholder": "Type code"
 }

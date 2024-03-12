@@ -11,6 +11,9 @@ export type InputProps = {
   register: UseFormRegister<any>
   error: FieldError | undefined
   valueAsNumber?: boolean
+  value?: string
+  readonly?: boolean
+  disabled?: boolean
 }
 
 export default function Input({
@@ -23,6 +26,9 @@ export default function Input({
   register,
   error,
   valueAsNumber,
+  value,
+  readonly,
+  disabled,
 }: InputProps) {
   const id = useId()
   const formControlClass = `form-control ${error ? "is-invalid" : ""}`
@@ -43,6 +49,9 @@ export default function Input({
             id={id}
             placeholder={placeholder}
             autoFocus={autofocus}
+            value={value}
+            readOnly={readonly}
+            disabled={disabled}
             {...register(name, { valueAsNumber })}
           />
           <label htmlFor={id}>{label}</label>
