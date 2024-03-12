@@ -1,6 +1,7 @@
 {
     "title": "Login",
     "description": "Get access to your account",
+    "tfa_title": "Two-factor Authentication",
     "forgot_password": "Forgot password?",
     "username_label": "Username",
     "username_placeholder": "Type username",

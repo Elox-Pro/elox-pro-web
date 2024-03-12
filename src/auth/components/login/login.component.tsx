@@ -14,10 +14,12 @@ export default function Login() {
     dispatch(setIsTfaPending(false))
   }
 
+  const title = isTfaPending ? t("login:tfa_title") : t("login:title")
+
   return (
     <>
       <div className="text-center">
-        <h3 className="text-body-highlight">{t("login:title")}</h3>
+        <h3 className="text-body-highlight">{title}</h3>
         <p className="text-body-tertiary">{t("login:description")}</p>
       </div>
 
