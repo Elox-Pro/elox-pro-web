@@ -6,5 +6,6 @@
     "username_label": "Usuario",
     "username_placeholder": "Ingrese usuario",
     "password_label": "Contraseña",
-    "password_placeholder": "Ingrese contraseña"
+    "password_placeholder": "Ingrese contraseña",
+    "recaptcha_error": "Recaptcha es requerido"
 }

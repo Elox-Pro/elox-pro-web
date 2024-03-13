@@ -13,6 +13,8 @@ import { useTranslation } from "react-i18next"
 import { useZod } from "../../../common/hooks/zod.hook"
 import { useAppDispatch } from "../../../app/hooks/app.hooks"
 import { setUsername, setIsTfaPending } from "../../feautures/login.slice"
+import { GOOGLE_RECAPTCHA_SITE_KEY } from "../../../app/constants/app.constants"
+import { useGRecaptcha } from "../../../common/hooks/grecaptcha.hook"
 
 export default function LoginForm() {
   const dispatch = useAppDispatch()
@@ -22,11 +24,19 @@ export default function LoginForm() {
   const navigate = useNavigate()
   const { createSession } = authContext
   const [loginRequest, { data, status, error }] = useLoginRequestMutation()
+  const grecaptcha = useGRecaptcha(GOOGLE_RECAPTCHA_SITE_KEY)
 
-  const onSubmit = (request: LoginRequest) => {
+  const onSubmit = async (request: LoginRequest) => {
     try {
+      if (!grecaptcha) {
+        throw new Error(t("login:recaptcha_error"))
+      }
+      const token = await grecaptcha.execute(GOOGLE_RECAPTCHA_SITE_KEY, { action: "submit" })
+      if (!token) {
+        throw new Error(t("login:recaptcha_error"))
+      }
       dispatch(setUsername(request.username))
-      loginRequest(request)
+      loginRequest({ ...request, grecaptchaToken: token })
     } catch (error) {
       console.error("Login Error:", error)
     }

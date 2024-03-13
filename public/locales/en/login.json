@@ -8,5 +8,6 @@
     "password_label": "Password",
     "password_placeholder": "Type password",
     "tfa_label": "Two-factor authentication",
-    "tfa_placeholder": "Type code"
+    "tfa_placeholder": "Type code",
+    "recaptcha_error": "Recaptcha is required"
 }
