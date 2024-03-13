@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { showGRecaptcha } from "../helpers/show-grecaptcha.helper"
 
 type GoogleRecaptcha = {
   execute(sitekey: string, action: object): Promise<string>
@@ -18,6 +19,7 @@ export const useGRecaptcha = (siteKey: string): GoogleRecaptcha | null => {
       if ((window as any).grecaptcha) {
         clearInterval(intervalId)
         setGrecaptchaInstance((window as any).grecaptcha)
+        showGRecaptcha(true)
       }
     }, 100)
 

@@ -3,6 +3,7 @@ import { ActiveUser } from "../types/active-user.type"
 import ActiveUserStore from "../strategies/active-user-store.strategy"
 import ActiveUserInCookie from "../strategies/active-user-in-cookie.strategy"
 import { useLogoutRequestMutation } from "../api/auth.api"
+import { showGRecaptcha } from "../../common/helpers/show-grecaptcha.helper"
 
 type AuthContextProps = {
   activeUser: ActiveUser
@@ -34,6 +35,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const [logoutRequest] = useLogoutRequestMutation()
 
   const createSession = (): void => {
+    showGRecaptcha(false)
     setActiveUser(activeUserStore.get())
   }
 
