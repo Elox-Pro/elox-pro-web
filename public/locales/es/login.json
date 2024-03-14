@@ -1,11 +1,13 @@
 {
     "title": "Iniciar Sesión",
-    "tfa_title": "Segund factor de autenticación",
     "description": "Obtenga acceso a su cuenta",
+    "tfa_title": "Segundo factor de autenticación",
     "forgot_password": "¿Has olvidado tu contraseña?",
     "username_label": "Usuario",
     "username_placeholder": "Ingrese usuario",
     "password_label": "Contraseña",
     "password_placeholder": "Ingrese contraseña",
+    "tfa_label": "Segundo factor de autenticación",
+    "tfa_placeholder": "Ingrese el código",
     "recaptcha_error": "Recaptcha es requerido"
 }
