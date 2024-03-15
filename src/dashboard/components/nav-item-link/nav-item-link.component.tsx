@@ -1,5 +1,5 @@
 import NavItem from "react-bootstrap/NavItem"
-import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks"
+import { useAppDispatch } from "../../../app/hooks/app.hooks"
 import { handleClose } from "../../features/dashboard-sidebar-offcanvas.slice"
 import { NavLink } from "react-router-dom"
 
@@ -10,13 +10,10 @@ type NavLinkProps = {
 }
 
 export default function NavItemLink({ to, text, icon }: NavLinkProps) {
-  const { show } = useAppSelector((state) => state.dashboardSidebarOffcanvas)
   const dispatch = useAppDispatch()
 
   const handleCloseAction = () => {
-    if (show) {
-      dispatch(handleClose())
-    }
+    dispatch(handleClose())
   }
 
   return (
