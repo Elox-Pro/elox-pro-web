@@ -2,6 +2,8 @@ import NavItem from "react-bootstrap/NavItem"
 import { useAppDispatch } from "../../../app/hooks/app.hooks"
 import { handleClose } from "../../features/dashboard-sidebar-offcanvas.slice"
 import { NavLink } from "react-router-dom"
+import OverlayTrigger from "react-bootstrap/OverlayTrigger"
+import Tooltip from "react-bootstrap/Tooltip"
 
 type NavLinkProps = {
   to: string
@@ -19,7 +21,9 @@ export default function NavItemLink({ to, text, icon }: NavLinkProps) {
   return (
     <NavItem>
       <NavLink to={to} className="nav-link text-white-50" onClick={handleCloseAction}>
-        <i className={`${icon} fs-5`}></i>
+        <OverlayTrigger placement="right" overlay={<Tooltip id={to}>{text}</Tooltip>}>
+          <i className={`${icon} fs-5`}></i>
+        </OverlayTrigger>
         <span className="ms-2 nav-link-text">{text}</span>
       </NavLink>
     </NavItem>

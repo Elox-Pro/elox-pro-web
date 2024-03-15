@@ -1,20 +1,7 @@
-import useRedirectTimeout from "../../../common/hooks/redirect-timeout.hook"
+import { useTranslation } from "react-i18next"
+import ErrorPage from "../error-page.component"
 
 export default function Error401() {
-  const seconds = 10
-  const { isRedirecting } = useRedirectTimeout({
-    delayInSeconds: seconds,
-    page: "/auth",
-  })
-
-  return (
-    <>
-      <h1>No autorizado - Error 401</h1>
-      {isRedirecting && (
-        <p>
-          <small>Redireccionando en {seconds} segundos...</small>
-        </p>
-      )}
-    </>
-  )
+  const { t } = useTranslation(["error-page"])
+  return <ErrorPage code={401} message={t("error-page:unauthorized")} />
 }
