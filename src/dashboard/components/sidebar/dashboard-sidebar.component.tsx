@@ -1,23 +1,10 @@
-import { NavLink } from "react-router-dom"
 import Nav from "react-bootstrap/Nav"
 import NavItem from "react-bootstrap/NavItem"
 import "./dashboard-sidebar.style.scss"
 import DashboardNavbarBrand, { DashboardNavbarBrandLogo } from "../navbar-brand/dashboard-navbar-brand.component"
 import { useTranslation } from "react-i18next"
 import { useAuth } from "../../../auth/providers/auth.provider"
-
-const NavItemLinks = [
-  {
-    to: "home",
-    tkey: "home",
-    icon: "bi bi-house",
-  },
-  {
-    to: "user",
-    tkey: "customers",
-    icon: "bi bi-people",
-  },
-]
+import NavItemLink from "../nav-item-link/nav-item-link.component"
 
 export default function DashboardSidebar() {
   const { t } = useTranslation(["nav"])
@@ -36,9 +23,8 @@ export default function DashboardSidebar() {
     <section className="dashboard-sidebar text-bg-dark">
       <DashboardNavbarBrand logo={DashboardNavbarBrandLogo.WHITE} size={24} text="Elox Pro" />
       <Nav className="nav nav-pills flex-column mb-auto">
-        {NavItemLinks.map((item, index) => (
-          <NavItemLink key={index} to={item.to} text={t(`nav:${item.tkey}`)} icon={item.icon} />
-        ))}
+        <NavItemLink to="home" text={t("nav:home")} icon="bi bi-house" />
+        <NavItemLink to="user" text={t("nav:customers")} icon="bi bi-people" />
       </Nav>
       <hr />
       <Nav className="nav nav-pills flex-column mb-auto">
@@ -50,22 +36,5 @@ export default function DashboardSidebar() {
         </NavItem>
       </Nav>
     </section>
-  )
-}
-
-type NavLinkProps = {
-  to: string
-  text: string
-  icon: string
-}
-
-function NavItemLink({ to, text, icon }: NavLinkProps) {
-  return (
-    <NavItem>
-      <NavLink to={to} className="nav-link text-white-50">
-        <i className={`${icon} fs-5`}></i>
-        <span className="ms-2 nav-link-text">{text}</span>
-      </NavLink>
-    </NavItem>
   )
 }
