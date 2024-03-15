@@ -9,12 +9,13 @@ import { RouterProvider } from "react-router-dom"
 import { AppRoutes } from "./app/routes/app.routes.tsx"
 import AuthProvider from "./auth/providers/auth.provider.tsx"
 import i18n from "./app/i18n/i18n.ts"
+import Loading from "./common/components/loading/loading.component.tsx"
 
 i18n.init()
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loading />}>
       <Provider store={appStore}>
         <AuthProvider>
           <RouterProvider router={AppRoutes} />
