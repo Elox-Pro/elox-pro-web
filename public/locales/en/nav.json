@@ -1,5 +1,6 @@
 {
     "login": "Login",
+    "signup": "Signup",
     "logout": "Logout",
     "profile": "Profile",
     "home": "Home",

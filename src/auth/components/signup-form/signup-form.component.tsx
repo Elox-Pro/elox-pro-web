@@ -16,9 +16,9 @@ import { setUsername, setIsTfaPending } from "../../feautures/login.slice"
 import { GOOGLE_RECAPTCHA_SITE_KEY } from "../../../app/constants/app.constants"
 import { useGRecaptcha } from "../../../common/hooks/grecaptcha.hook"
 
-export default function LoginForm() {
+export default function SignupForm() {
   const dispatch = useAppDispatch()
-  const { t } = useTranslation(["common", "auth"])
+  const { t } = useTranslation(["common", "login"])
   const { register, handleSubmit, errors } = useZod<LoginRequest>(loginSchema)
   const authContext = useAuth()
   const navigate = useNavigate()
@@ -29,11 +29,11 @@ export default function LoginForm() {
   const onSubmit = async (request: LoginRequest) => {
     try {
       if (!grecaptcha) {
-        throw new Error(t("auth:recaptcha_error"))
+        throw new Error(t("login:recaptcha_error"))
       }
       const token = await grecaptcha.execute(GOOGLE_RECAPTCHA_SITE_KEY, { action: "submit" })
       if (!token) {
-        throw new Error(t("auth:recaptcha_error"))
+        throw new Error(t("login:recaptcha_error"))
       }
       dispatch(setUsername(request.username))
       loginRequest({ ...request, grecaptchaToken: token })
@@ -61,8 +61,8 @@ export default function LoginForm() {
         <Input
           type="text"
           name="username"
-          label={t("auth:username_label")}
-          placeholder={t("auth:username_placeholder")}
+          label={t("login:username_label")}
+          placeholder={t("login:username_placeholder")}
           icon="bi bi-person"
           register={register}
           error={errors.username as FieldError}
@@ -72,8 +72,8 @@ export default function LoginForm() {
         <Input
           type="password"
           name="password"
-          label={t("auth:password_label")}
-          placeholder={t("auth:password_placeholder")}
+          label={t("login:password_label")}
+          placeholder={t("login:password_placeholder")}
           icon="bi bi-lock"
           register={register}
           error={errors.password as FieldError}

@@ -1,4 +1,6 @@
 :root {
+  --bs-primary: rgb(82, 0, 174);
+  --bs-primary-rgb: 82, 0, 174;
   --main-panel-width-xs: 5rem;
   --nav-width-xs: 5rem;
   --nav-width: 15rem; //abs(--nav-width-xs) + --main-panel-width-xs
@@ -11,4 +13,9 @@
 body {
   background-color: var(--bs-tertiary-bg);
   position: relative;
+}
+
+.container-fluid {
+  margin: 0;
+  padding: 0;
 }

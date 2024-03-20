@@ -17,7 +17,7 @@ import { setIsTfaPending } from "../../feautures/login.slice"
 export default function ValidateTfaForm() {
   const { username } = useAppSelector((state) => state.login)
   const dispatch = useAppDispatch()
-  const { t } = useTranslation(["common", "login"])
+  const { t } = useTranslation(["common", "auth"])
   const { register, handleSubmit, errors } = useZod<ValidateTfaRequest>(validateTfaSchema)
   const authContext = useAuth()
   const navigate = useNavigate()
@@ -48,8 +48,8 @@ export default function ValidateTfaForm() {
         <Input
           type="text"
           name="username"
-          label={t("login:username_label")}
-          placeholder={t("login:username_placeholder")}
+          label={t("auth:username_label")}
+          placeholder={t("auth:username_placeholder")}
           icon="bi bi-person"
           readonly={true}
           register={register}
@@ -60,8 +60,8 @@ export default function ValidateTfaForm() {
         <Input
           type="text"
           name="code"
-          label={t("login:tfa_label")}
-          placeholder={t("login:tfa_placeholder")}
+          label={t("auth:tfa_label")}
+          placeholder={t("auth:tfa_placeholder")}
           icon="bi bi-lock"
           register={register}
           error={errors.code as FieldError}
