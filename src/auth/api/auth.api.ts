@@ -4,6 +4,8 @@ import { LoginResponse } from "../types/login/login-response.type";
 import { API_URL } from "../../app/constants/app.constants";
 import { ValidateTfaResponse } from "../types/validate-tfa/validate-tfa-response.type";
 import { ValidateTfaRequest } from "../types/validate-tfa/validate-tfa-request.type";
+import { SignupResponse } from "../types/signup/signup-response.type";
+import { SignupRequest } from "../types/signup/signup-request.type";
 
 export const authenticationApi = createApi({
     reducerPath: "authenticationApi",
@@ -13,6 +15,15 @@ export const authenticationApi = createApi({
     }),
     endpoints(builder) {
         return {
+            signupRequest: builder.mutation<SignupResponse, SignupRequest>({
+                query(data) {
+                    return {
+                        url: `/signup`,
+                        method: "POST",
+                        body: data,
+                    }
+                },
+            }),
             loginRequest: builder.mutation<LoginResponse, LoginRequest>({
                 query(data) {
                     return {
@@ -44,7 +55,8 @@ export const authenticationApi = createApi({
 });
 
 export const {
-    useLogoutRequestMutation,
+    useSignupRequestMutation,
     useLoginRequestMutation,
-    useValidateTfaRequestMutation
+    useValidateTfaRequestMutation,
+    useLogoutRequestMutation
 } = authenticationApi;

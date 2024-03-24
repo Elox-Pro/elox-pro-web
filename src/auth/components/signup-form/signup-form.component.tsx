@@ -1,44 +1,41 @@
 import { FieldError } from "react-hook-form"
 import { QueryStatus } from "@reduxjs/toolkit/query"
-import { loginSchema } from "../../schemas/login.schema"
-import { LoginRequest } from "../../types/login/login-request.type"
 import Input from "../../../common/components/input/input.component"
-import { useLoginRequestMutation } from "../../api/auth.api"
+import { useSignupRequestMutation } from "../../api/auth.api"
 import AlertError from "../../../common/components/alert-error/alert-error.component"
 import ProgressButton from "../../../common/components/progress-button/progress-button.component"
-import { useAuth } from "../../providers/auth.provider"
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { useZod } from "../../../common/hooks/zod.hook"
 import { useAppDispatch } from "../../../app/hooks/app.hooks"
-import { setUsername, setIsTfaPending } from "../../feautures/login.slice"
+import { setUsername, setIsTfaPending } from "../../feautures/auth.slice"
 import { GOOGLE_RECAPTCHA_SITE_KEY } from "../../../app/constants/app.constants"
 import { useGRecaptcha } from "../../../common/hooks/grecaptcha.hook"
+import { SignupRequest } from "../../types/signup/signup-request.type"
+import { signupSchema } from "../../schemas/signup.schema"
 
 export default function SignupForm() {
   const dispatch = useAppDispatch()
-  const { t } = useTranslation(["common", "login"])
-  const { register, handleSubmit, errors } = useZod<LoginRequest>(loginSchema)
-  const authContext = useAuth()
+  const { t } = useTranslation(["common", "auth"])
+  const { register, handleSubmit, errors } = useZod<SignupRequest>(signupSchema)
   const navigate = useNavigate()
-  const { createSession } = authContext
-  const [loginRequest, { data, status, error }] = useLoginRequestMutation()
+  const [signupRequest, { data, status, error }] = useSignupRequestMutation()
   const grecaptcha = useGRecaptcha(GOOGLE_RECAPTCHA_SITE_KEY)
 
-  const onSubmit = async (request: LoginRequest) => {
+  const onSubmit = async (request: SignupRequest) => {
     try {
       if (!grecaptcha) {
-        throw new Error(t("login:recaptcha_error"))
+        throw new Error(t("auth:recaptcha_error"))
       }
-      const token = await grecaptcha.execute(GOOGLE_RECAPTCHA_SITE_KEY, { action: "submit" })
-      if (!token) {
-        throw new Error(t("login:recaptcha_error"))
+      const grecaptchaToken = await grecaptcha.execute(GOOGLE_RECAPTCHA_SITE_KEY, { action: "submit" })
+      if (!grecaptchaToken) {
+        throw new Error(t("auth:recaptcha_error"))
       }
       dispatch(setUsername(request.username))
-      loginRequest({ ...request, grecaptchaToken: token })
+      signupRequest({ ...request, grecaptchaToken })
     } catch (error) {
-      console.error("Login Error:", error)
+      console.error("Sign up Error:", error)
     }
   }
 
@@ -46,10 +43,9 @@ export default function SignupForm() {
     if (status === QueryStatus.fulfilled) {
       if (data?.isTFAPending) {
         dispatch(setIsTfaPending(true))
+        navigate("/auth/tfa", { replace: true })
       } else {
-        setIsTfaPending(false)
-        createSession()
-        navigate("/dashboard/home", { replace: true })
+        navigate("/auth/", { replace: true })
       }
     }
   }, [status])
@@ -61,8 +57,8 @@ export default function SignupForm() {
         <Input
           type="text"
           name="username"
-          label={t("login:username_label")}
-          placeholder={t("login:username_placeholder")}
+          label={t("auth:username_label")}
+          placeholder={t("auth:username_placeholder")}
           icon="bi bi-person"
           register={register}
           error={errors.username as FieldError}
@@ -70,13 +66,33 @@ export default function SignupForm() {
         />
 
         <Input
+          type="email"
+          name="email"
+          label={t("auth:email_label")}
+          placeholder={t("auth:email_placeholder")}
+          icon="bi bi-envelope"
+          register={register}
+          error={errors.email as FieldError}
+        />
+
+        <Input
           type="password"
-          name="password"
-          label={t("login:password_label")}
-          placeholder={t("login:password_placeholder")}
+          name="password1"
+          label={t("auth:password_label")}
+          placeholder={t("auth:password_placeholder")}
           icon="bi bi-lock"
           register={register}
-          error={errors.password as FieldError}
+          error={errors.password1 as FieldError}
+        />
+
+        <Input
+          type="password"
+          name="password2"
+          label={t("auth:confirm_password_label")}
+          placeholder={t("auth:confirm_password_placeholder")}
+          icon="bi bi-lock"
+          register={register}
+          error={errors.password2 as FieldError}
         />
 
         <div className="input-group mb-3">

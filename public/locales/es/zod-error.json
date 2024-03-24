@@ -1,4 +1,6 @@
 {
     "zodError.tooShort": "Este campo debe tener al menos {{minLength}} caracteres de longitud.",
-    "zodError.required": "Este campo es requerido."
+    "zodError.required": "Este campo es requerido.",
+    "zodError.invalidEmail": "Este campo debe ser una dirección de correo electrónico válida.",
+    "zodError.passwordsDoNotMatch": "Las contraseñas no coinciden."
 }

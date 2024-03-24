@@ -1,3 +1,5 @@
 export const ZodErrorKey = {
-    required: "zodError.required"
+    required: "zodError.required",
+    invalidEmail: "zodError.invalidEmail",
+    passwordsDoNotMatch: "zodError.passwordsDoNotMatch",
 };

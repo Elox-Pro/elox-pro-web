@@ -36,7 +36,6 @@ export default function Input({
   const formControlClass = `form-control ${error ? "is-invalid" : ""}`
   const feedbackClass = `invalid-feedback ${error ? "d-block" : "d-none"}`
   const errorMessage = error && t(error.message || "")
-  console.log(errorMessage)
   return (
     <>
       <div className="input-group has-validation mb-3">

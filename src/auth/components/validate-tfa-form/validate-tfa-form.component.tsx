@@ -12,7 +12,8 @@ import Input from "../../../common/components/input/input.component"
 import ProgressButton from "../../../common/components/progress-button/progress-button.component"
 import { useZod } from "../../../common/hooks/zod.hook"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks"
-import { setIsTfaPending } from "../../feautures/login.slice"
+import { setIsSignupNotification, setIsTfaPending } from "../../feautures/auth.slice"
+import { TfaAction } from "../../enums/validate-tfa/tfa-action.enum"
 
 export default function ValidateTfaForm() {
   const { username } = useAppSelector((state) => state.login)
@@ -22,7 +23,7 @@ export default function ValidateTfaForm() {
   const authContext = useAuth()
   const navigate = useNavigate()
   const { createSession } = authContext
-  const [validateTfaRequest, { status, error }] = useValidateTfaRequestMutation()
+  const [validateTfaRequest, { data, status, error }] = useValidateTfaRequestMutation()
 
   const onSubmit = (request: ValidateTfaRequest) => {
     try {
@@ -35,8 +36,13 @@ export default function ValidateTfaForm() {
   useEffect(() => {
     if (status === QueryStatus.fulfilled) {
       dispatch(setIsTfaPending(false))
-      createSession()
-      navigate("/dashboard/home", { replace: true })
+      if (data?.action === TfaAction.SIGN_IN) {
+        createSession()
+        navigate("/dashboard/home", { replace: true })
+      } else if (data?.action === TfaAction.SIGN_UP) {
+        dispatch(setIsSignupNotification(true))
+        navigate("/auth/", { replace: true })
+      }
     }
   }, [status])
 
