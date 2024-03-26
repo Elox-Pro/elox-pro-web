@@ -1,21 +1,22 @@
 $shadow-color: rgba(0, 0, 0, 0.5);
 
-.cover-main{
-    text-shadow: 0 0.05rem 0.1rem $shadow-color;
-    text-align: center;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    margin-top: 3rem;
-    margin-bottom: 3rem;
+.cover-main {
+  text-shadow: 0 0.05rem 0.1rem $shadow-color;
+  text-align: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
 
-    .cover-h1 {
-        font-size: calc(1.525rem + 3.3vw);
-    }
-    
-    .cover-btn-lg {
-       --bs-btn-border-radius: .5rem;
-        padding: .8125rem 2rem;
-        font-weight: bold;
-        margin-top: 1.5rem;
-    }
+  .cover-h1 {
+    font-size: calc(1.525rem + 3.3vw);
+  }
+
+  .cover-btn-lg {
+    --bs-btn-border-radius: 0.5rem;
+    padding: 1rem 2.25rem;
+    font-weight: bold;
+    margin-top: 1.5rem;
+    font-size: 125%;
+  }
 }

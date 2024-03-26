@@ -9,23 +9,33 @@ export default function PublicNavbar() {
   const { t } = useTranslation(["nav"])
 
   return (
-    <Navbar expand="lg" className="public-navbar mb-5 shadow" bg="primary">
+    <Navbar expand="lg" className="public-navbar mb-5 shadow" bg="primary" data-bs-theme="dark">
       <Container>
-        <Nav>
-          <NavLink to={"/"} className="nav-link">
-            {t("nav:home")}
+        <Navbar.Brand href="#">
+          <NavLink to={"/"}>
+            <img
+              src="/icons/logo-white-520.png"
+              width="30"
+              height="30"
+              className="d-inline-block align-top"
+              alt="Elox Pro Logo"
+            />
           </NavLink>
-        </Nav>
-        <Nav>
-          <NavLink to={"/auth/signin"} className="nav-link">
-            {t("nav:login")}
-          </NavLink>
-        </Nav>
-        <Nav>
-          <NavLink to={"/auth/signup"} className="nav-link">
-            {t("nav:signup")}
-          </NavLink>
-        </Nav>
+        </Navbar.Brand>
+
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav>
+            <NavLink to={"/auth/signin"} className="nav-link">
+              {t("nav:login")}
+            </NavLink>
+          </Nav>
+          <Nav>
+            <NavLink to={"/auth/signup"} className="nav-link">
+              {t("nav:signup")}
+            </NavLink>
+          </Nav>
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   )
