@@ -24,8 +24,6 @@ export default function VaildateTfa() {
           <ValidateTfaForm />
         </>
       )}
-      {/* {!isTfaPending && <LoginForm />} */}
-      {/* {isTfaPending && <ValidateTfaForm />} */}
     </>
   )
 }
