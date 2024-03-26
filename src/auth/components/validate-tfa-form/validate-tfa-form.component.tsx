@@ -41,7 +41,7 @@ export default function ValidateTfaForm() {
         navigate("/dashboard/home", { replace: true })
       } else if (data?.action === TfaAction.SIGN_UP) {
         dispatch(setIsSignupNotification(true))
-        navigate("/auth/", { replace: true })
+        navigate("/auth/signin", { replace: true })
       }
     }
   }, [status])

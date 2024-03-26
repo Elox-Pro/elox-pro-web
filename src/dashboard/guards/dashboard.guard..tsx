@@ -12,7 +12,7 @@ export default function DashboardGuard({ children }: DashboardGuardProps) {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate("/auth/", { replace: true })
+      navigate("/auth/signin", { replace: true })
     }
   }, [isAuthenticated])
 

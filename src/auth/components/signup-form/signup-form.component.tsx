@@ -45,7 +45,7 @@ export default function SignupForm() {
         dispatch(setIsTfaPending(true))
         navigate("/auth/tfa", { replace: true })
       } else {
-        navigate("/auth/", { replace: true })
+        navigate("/auth/signin", { replace: true })
       }
     }
   }, [status])

@@ -17,7 +17,7 @@ export default function PublicNavbar() {
           </NavLink>
         </Nav>
         <Nav>
-          <NavLink to={"/auth"} className="nav-link">
+          <NavLink to={"/auth/signin"} className="nav-link">
             {t("nav:login")}
           </NavLink>
         </Nav>
