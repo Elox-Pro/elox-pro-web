@@ -26,8 +26,7 @@ export default function LoginForm() {
   const { createSession } = authContext
   const [loginRequest, { data, status, error }] = useLoginRequestMutation()
   const grecaptcha = useGRecaptcha(GOOGLE_RECAPTCHA_SITE_KEY)
-  // const { username } = useAppSelector((state) => state.login)
-  // const usernameValue = username || ""
+  const { username } = useAppSelector((state) => state.login)
 
   const onSubmit = async (request: LoginRequest) => {
     try {
@@ -71,6 +70,7 @@ export default function LoginForm() {
           placeholder={t("auth:username_placeholder")}
           icon="bi bi-person"
           register={register}
+          defaultValue={username}
           error={errors.username as FieldError}
           autofocus={true}
         />

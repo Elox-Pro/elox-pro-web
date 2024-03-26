@@ -15,6 +15,7 @@ export type InputProps = {
   value?: string
   readonly?: boolean
   disabled?: boolean
+  defaultValue?: string
 }
 
 export default function Input({
@@ -30,6 +31,7 @@ export default function Input({
   value,
   readonly,
   disabled,
+  defaultValue,
 }: InputProps) {
   const { t } = useTranslation(["zod-error"])
   const id = useId()
@@ -55,6 +57,7 @@ export default function Input({
             value={value}
             readOnly={readonly}
             disabled={disabled}
+            defaultValue={defaultValue}
             {...register(name, { valueAsNumber })}
           />
           <label htmlFor={id}>{label}</label>
