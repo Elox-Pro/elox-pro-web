@@ -46,12 +46,13 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (status === QueryStatus.fulfilled) {
+      dispatch(setIsSignupNotification(false))
+
       if (data?.isTFAPending) {
         dispatch(setIsTfaPending(true))
         navigate("/auth/tfa", { replace: true })
       } else {
         dispatch(setIsTfaPending(false))
-        dispatch(setIsSignupNotification(false))
         dispatch(setUsername(""))
         createSession()
         navigate("/dashboard/home", { replace: true })
