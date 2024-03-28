@@ -51,7 +51,7 @@ export default function LoginForm() {
 
       if (data?.isTFAPending) {
         dispatch(setIsTfaPending(true))
-        navigate("/auth/tfa", { replace: true })
+        navigate("/tfa/validate", { replace: true })
       } else {
         dispatch(setIsTfaPending(false))
         dispatch(setUsername(""))

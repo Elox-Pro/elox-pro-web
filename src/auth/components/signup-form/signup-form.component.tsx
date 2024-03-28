@@ -44,7 +44,7 @@ export default function SignupForm() {
     if (status === QueryStatus.fulfilled) {
       if (data?.isTFAPending) {
         dispatch(setIsTfaPending(true))
-        navigate("/auth/tfa", { replace: true })
+        navigate("/tfa/validate", { replace: true })
       } else {
         navigate("/auth/signin", { replace: true })
       }
