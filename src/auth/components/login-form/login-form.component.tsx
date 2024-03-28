@@ -12,7 +12,8 @@ import { useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { useZod } from "../../../common/hooks/zod.hook"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks"
-import { setUsername, setIsTfaPending, setIsSignupNotification } from "../../feautures/auth.slice"
+import { setUsername, setIsSignupNotification } from "../../feautures/auth.slice"
+import { setIsTfaPending } from "../../../tfa/features/tfa.slice"
 import { GOOGLE_RECAPTCHA_SITE_KEY } from "../../../app/constants/app.constants"
 import { useGRecaptcha } from "../../../common/hooks/grecaptcha.hook"
 import AuthLink from "../auth-link/auth-link.component"
@@ -26,7 +27,7 @@ export default function LoginForm() {
   const { createSession } = authContext
   const [loginRequest, { data, status, error }] = useLoginRequestMutation()
   const grecaptcha = useGRecaptcha(GOOGLE_RECAPTCHA_SITE_KEY)
-  const { username } = useAppSelector((state) => state.login)
+  const { username } = useAppSelector((state) => state.auth)
 
   const onSubmit = async (request: LoginRequest) => {
     try {

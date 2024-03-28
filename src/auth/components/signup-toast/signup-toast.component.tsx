@@ -7,7 +7,7 @@ import { setIsSignupNotification } from "../../feautures/auth.slice"
 
 export default function SignupToast() {
   const { t } = useTranslation(["auth"])
-  const { username, isSignupNotification } = useAppSelector((state) => state.login)
+  const { username, isSignupNotification } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
   const [showToast, setShowToast] = useState(false)
   const closeToast = () => {

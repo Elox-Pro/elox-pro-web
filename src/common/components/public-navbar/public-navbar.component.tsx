@@ -11,17 +11,15 @@ export default function PublicNavbar() {
   return (
     <Navbar expand="lg" className="public-navbar mb-5 shadow" bg="primary" data-bs-theme="dark">
       <Container>
-        <Navbar.Brand href="#">
-          <NavLink to={"/"}>
-            <img
-              src="/icons/logo-white-520.png"
-              width="30"
-              height="30"
-              className="d-inline-block align-top"
-              alt="Elox Pro Logo"
-            />
-          </NavLink>
-        </Navbar.Brand>
+        <NavLink to={"/"} className="navbar-brand">
+          <img
+            src="/icons/logo-white-520.png"
+            width="30"
+            height="30"
+            className="d-inline-block align-top"
+            alt="Elox Pro Logo"
+          />
+        </NavLink>
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

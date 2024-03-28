@@ -2,9 +2,9 @@ import { useTranslation } from "react-i18next"
 import { ValidateTfaRequest } from "../../types/validate-tfa/validate-tfa-request.type"
 import { FieldError } from "react-hook-form"
 import { validateTfaSchema } from "../../schemas/validate-tfa.schema"
-import { useAuth } from "../../providers/auth.provider"
+import { useAuth } from "../../../auth/providers/auth.provider"
 import { useNavigate } from "react-router-dom"
-import { useValidateTfaRequestMutation } from "../../api/auth.api"
+import { useValidateTfaRequestMutation } from "../../api/tfa.api"
 import { useEffect } from "react"
 import { QueryStatus } from "@reduxjs/toolkit/query"
 import AlertError from "../../../common/components/alert-error/alert-error.component"
@@ -12,13 +12,14 @@ import Input from "../../../common/components/input/input.component"
 import ProgressButton from "../../../common/components/progress-button/progress-button.component"
 import { useZod } from "../../../common/hooks/zod.hook"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks"
-import { setIsSignupNotification, setIsTfaPending } from "../../feautures/auth.slice"
+import { setIsSignupNotification } from "../../../auth/feautures/auth.slice"
+import { setIsTfaPending } from "../../features/tfa.slice"
 import { TfaAction } from "../../enums/validate-tfa/tfa-action.enum"
 
 export default function ValidateTfaForm() {
-  const { username } = useAppSelector((state) => state.login)
+  const { username } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
-  const { t } = useTranslation(["common", "auth"])
+  const { t } = useTranslation(["common", "tfa", "auth"])
   const { register, handleSubmit, errors } = useZod<ValidateTfaRequest>(validateTfaSchema)
   const authContext = useAuth()
   const navigate = useNavigate()
@@ -66,8 +67,8 @@ export default function ValidateTfaForm() {
         <Input
           type="text"
           name="code"
-          label={t("auth:tfa_label")}
-          placeholder={t("auth:tfa_placeholder")}
+          label={t("tfa:tfa_label")}
+          placeholder={t("tfa:tfa_placeholder")}
           icon="bi bi-lock"
           register={register}
           error={errors.code as FieldError}

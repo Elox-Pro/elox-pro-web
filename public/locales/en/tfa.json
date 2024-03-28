@@ -1,0 +1,6 @@
+{
+    "tfa_description": "Type your two-factor authentication code to complete your request",
+    "tfa_label": "Two-factor authentication",
+    "tfa_placeholder": "Type code",
+    "tfa_title": "Two-factor Authentication"
+}

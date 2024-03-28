@@ -1,0 +1,6 @@
+{
+    "tfa_description": "Introduce el código de autenticación de dos factores para completar la solicitud",
+    "tfa_label": "Autenticación de dos factores",
+    "tfa_placeholder": "Introduce el código",
+    "tfa_title": "Autenticación de dos factores"
+}
