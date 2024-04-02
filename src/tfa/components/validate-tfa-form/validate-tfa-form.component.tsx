@@ -15,9 +15,10 @@ import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks"
 import { setIsSignupNotification } from "../../../auth/feautures/auth.slice"
 import { setIsTfaPending } from "../../features/tfa.slice"
 import { TfaAction } from "../../enums/validate-tfa/tfa-action.enum"
+import { setIsResetFormEnabled } from "../../../recover-password/features/recover-password.slice"
 
 export default function ValidateTfaForm() {
-  const { username } = useAppSelector((state) => state.auth)
+  const { username } = useAppSelector((state) => state.tfa)
   const dispatch = useAppDispatch()
   const { t } = useTranslation(["common", "tfa", "auth"])
   const { register, handleSubmit, errors } = useZod<ValidateTfaRequest>(validateTfaSchema)
@@ -43,6 +44,9 @@ export default function ValidateTfaForm() {
       } else if (data?.action === TfaAction.SIGN_UP) {
         dispatch(setIsSignupNotification(true))
         navigate("/auth/signin", { replace: true })
+      } else if (data?.action === TfaAction.RECOVER_PASSWORD) {
+        dispatch(setIsResetFormEnabled(true))
+        navigate("/recover-password/reset", { replace: true })
       }
     }
   }, [status])

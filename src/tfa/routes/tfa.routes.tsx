@@ -1,6 +1,6 @@
 import AuthLayout from "../../auth/components/layout/auth-layout.component"
 import VaildateTfa from "../../tfa/components/validate-tfa/validate-tfa.component"
-import Tfa from "../components/tfa/auth.component"
+import TfaIndex from "../components/tfa-index/tfa-index.component"
 
 const TfaRoutes = [
   {
@@ -9,7 +9,7 @@ const TfaRoutes = [
     children: [
       {
         path: "/tfa/",
-        element: <Tfa />,
+        element: <TfaIndex />,
       },
       {
         index: true,
