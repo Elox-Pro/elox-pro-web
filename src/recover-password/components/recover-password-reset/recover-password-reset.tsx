@@ -8,7 +8,7 @@ import { useEffect } from "react"
 export default function RecoverPasswordReset() {
   const { t } = useTranslation(["common", "recover-password"])
 
-  const { isResetFormEnabled } = useAppSelector((state) => state.recoverPassword)
+  const { resetFormEnabled: isResetFormEnabled } = useAppSelector((state) => state.recoverPassword)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -17,17 +17,14 @@ export default function RecoverPasswordReset() {
     }
   }, [])
 
+  if (!isResetFormEnabled) {
+    return <></>
+  }
+
   return (
     <>
-      {isResetFormEnabled && (
-        <>
-          <AuthFormHeader
-            title={t("recover-password:reset_title")}
-            description={t("recover-password:reset_description")}
-          />
-          <RecoverPasswordResetForm />
-        </>
-      )}
+      <AuthFormHeader title={t("recover-password:reset_title")} description={t("recover-password:reset_description")} />
+      <RecoverPasswordResetForm />
     </>
   )
 }

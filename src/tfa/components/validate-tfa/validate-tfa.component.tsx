@@ -7,7 +7,7 @@ import { useEffect } from "react"
 
 export default function VaildateTfa() {
   const { t } = useTranslation(["common", "tfa"])
-  const { isTfaPending } = useAppSelector((state) => state.tfa)
+  const { tfaPending: isTfaPending } = useAppSelector((state) => state.tfa)
   const navigate = useNavigate()
 
   useEffect(() => {

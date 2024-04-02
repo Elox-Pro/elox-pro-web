@@ -12,10 +12,10 @@ import Input from "../../../common/components/input/input.component"
 import ProgressButton from "../../../common/components/progress-button/progress-button.component"
 import { useZod } from "../../../common/hooks/zod.hook"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks"
-import { setIsSignupNotification } from "../../../auth/feautures/auth.slice"
-import { setIsTfaPending } from "../../features/tfa.slice"
+import { setSignupSuccess } from "../../../auth/feautures/auth.slice"
+import { setTfaPending } from "../../features/tfa.slice"
 import { TfaAction } from "../../enums/validate-tfa/tfa-action.enum"
-import { setIsResetFormEnabled } from "../../../recover-password/features/recover-password.slice"
+import { setResetFormEnabled } from "../../../recover-password/features/recover-password.slice"
 
 export default function ValidateTfaForm() {
   const { username } = useAppSelector((state) => state.tfa)
@@ -37,15 +37,15 @@ export default function ValidateTfaForm() {
 
   useEffect(() => {
     if (status === QueryStatus.fulfilled) {
-      dispatch(setIsTfaPending(false))
+      dispatch(setTfaPending(false))
       if (data?.action === TfaAction.SIGN_IN) {
         createSession()
         navigate("/dashboard/home", { replace: true })
       } else if (data?.action === TfaAction.SIGN_UP) {
-        dispatch(setIsSignupNotification(true))
+        dispatch(setSignupSuccess(true))
         navigate("/auth/signin", { replace: true })
       } else if (data?.action === TfaAction.RECOVER_PASSWORD) {
-        dispatch(setIsResetFormEnabled(true))
+        dispatch(setResetFormEnabled(true))
         navigate("/recover-password/reset", { replace: true })
       }
     }

@@ -6,5 +6,5 @@ export default function RecoverPasswordIndex() {
   useEffect(() => {
     navigate("/recover-password/init")
   }, [])
-  return null
+  return <></>
 }

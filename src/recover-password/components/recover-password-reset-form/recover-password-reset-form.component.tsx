@@ -13,7 +13,7 @@ import ProgressButton from "../../../common/components/progress-button/progress-
 import { RecoverPasswordResetRequest } from "../../types/recover-password-reset/recover-password-reset-request.type"
 import { recoverPasswordResetSchema } from "../../schemas/recover-password-reset.schema"
 import { useResetRequestMutation } from "../../api/recover-password.api"
-import { setIsResetFormEnabled } from "../../features/recover-password.slice"
+import { setResetPasswordSuccess, setResetFormEnabled } from "../../features/recover-password.slice"
 
 export default function RecoverPasswordResetForm() {
   const dispatch = useAppDispatch()
@@ -41,7 +41,8 @@ export default function RecoverPasswordResetForm() {
 
   useEffect(() => {
     if (status === QueryStatus.fulfilled) {
-      dispatch(setIsResetFormEnabled(false))
+      dispatch(setResetFormEnabled(false))
+      dispatch(setResetPasswordSuccess(true))
       navigate("/auth/signin", { replace: true })
     }
   }, [status])

@@ -13,7 +13,7 @@ import { QueryStatus } from "@reduxjs/toolkit/query"
 import Input from "../../../common/components/input/input.component"
 import { FieldError } from "react-hook-form"
 import ProgressButton from "../../../common/components/progress-button/progress-button.component"
-import { setIsTfaPending, setUsername } from "../../../tfa/features/tfa.slice"
+import { setTfaPending, setUsername } from "../../../tfa/features/tfa.slice"
 
 export default function RecoverPasswordInitForm() {
   const dispatch = useAppDispatch()
@@ -41,7 +41,7 @@ export default function RecoverPasswordInitForm() {
 
   useEffect(() => {
     if (status === QueryStatus.fulfilled) {
-      dispatch(setIsTfaPending(true))
+      dispatch(setTfaPending(true))
       navigate("/tfa/validate", { replace: true })
     }
   }, [status])

@@ -1,23 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 type AuthState = {
-    isSignupNotification: boolean;
+    signupSuccess: boolean;
 }
 
 const initialState: AuthState = {
-    isSignupNotification: false
+    signupSuccess: false
 }
 
 const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        setIsSignupNotification: (state, action: { payload: boolean }) => {
-            state.isSignupNotification = action.payload;
+        setSignupSuccess: (state, action: { payload: boolean }) => {
+            state.signupSuccess = action.payload;
         }
     }
 });
 
 const authReducer = authSlice.reducer;
-export const { setIsSignupNotification } = authSlice.actions;
+export const { setSignupSuccess } = authSlice.actions;
 export default authReducer;

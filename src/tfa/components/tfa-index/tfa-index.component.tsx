@@ -6,5 +6,5 @@ export default function TfaIndex() {
   useEffect(() => {
     navigate("/tfa/validate")
   }, [])
-  return null
+  return <></>
 }

@@ -12,8 +12,8 @@ import { useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { useZod } from "../../../common/hooks/zod.hook"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks"
-import { setIsSignupNotification } from "../../feautures/auth.slice"
-import { setUsername, setIsTfaPending } from "../../../tfa/features/tfa.slice"
+import { setSignupSuccess } from "../../feautures/auth.slice"
+import { setUsername, setTfaPending } from "../../../tfa/features/tfa.slice"
 import { GOOGLE_RECAPTCHA_SITE_KEY } from "../../../app/constants/app.constants"
 import { useGRecaptcha } from "../../../common/hooks/grecaptcha.hook"
 import AuthLink from "../auth-link/auth-link.component"
@@ -47,13 +47,13 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (status === QueryStatus.fulfilled) {
-      dispatch(setIsSignupNotification(false))
+      dispatch(setSignupSuccess(false))
 
       if (data?.isTFAPending) {
-        dispatch(setIsTfaPending(true))
+        dispatch(setTfaPending(true))
         navigate("/tfa/validate", { replace: true })
       } else {
-        dispatch(setIsTfaPending(false))
+        dispatch(setTfaPending(false))
         dispatch(setUsername(""))
         createSession()
         navigate("/dashboard/home", { replace: true })
