@@ -35,21 +35,39 @@ export default function ValidateTfaForm() {
     }
   }
 
+  // Triggered when the status or data dependencies change
   useEffect(() => {
     if (status === QueryStatus.fulfilled) {
-      dispatch(setTfaPending(false))
-      if (data?.action === TfaAction.SIGN_IN) {
-        createSession()
-        navigate("/dashboard/home", { replace: true })
-      } else if (data?.action === TfaAction.SIGN_UP) {
-        dispatch(setSignupSuccess(true))
-        navigate("/auth/signin", { replace: true })
-      } else if (data?.action === TfaAction.RECOVER_PASSWORD) {
-        dispatch(setResetFormEnabled(true))
-        navigate("/recover-password/reset", { replace: true })
+      // If the query status is fulfilled
+      dispatch(setTfaPending(false)) // Update state to indicate TFA is no longer pending
+
+      // Perform different actions based on the TFA action from the API response
+      switch (data?.action) {
+        // Action for signing in
+        case TfaAction.SIGN_IN:
+          createSession() // Create a session
+          navigate("/dashboard/home", { replace: true }) // Navigate to the dashboard home page
+          break
+
+        // Action for signing up
+        case TfaAction.SIGN_UP:
+          dispatch(setSignupSuccess(true)) // Update state to indicate signup success
+          navigate("/auth/signin", { replace: true }) // Navigate to the signin page
+          break
+
+        // Action for recovering password
+        case TfaAction.RECOVER_PASSWORD:
+          dispatch(setResetFormEnabled(true)) // Enable the password reset form
+          navigate("/recover-password/reset", { replace: true }) // Navigate to the password reset page
+          break
+
+        // Default case for unhandled TFA actions
+        default:
+          console.warn("Unhandled TFA action:", data?.action) // Log a warning for unhandled actions
+          break
       }
     }
-  }, [status])
+  }, [status, data]) // Dependencies for the useEffect hook
 
   return (
     <>

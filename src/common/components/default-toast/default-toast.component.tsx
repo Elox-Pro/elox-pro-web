@@ -9,7 +9,7 @@ type ToastProps = {
 
 export default function DefaultToast({ show, onCloseAction: onCloseAction, children }: ToastProps) {
   const [showToast, setShowToast] = useState(false)
-  const delay_in_ms = 1000 * 60
+  const delay_in_ms = 1000 * 30
   const closeToast = () => {
     setShowToast(false)
     if (onCloseAction) {
