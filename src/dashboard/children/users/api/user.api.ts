@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { API_URL } from "../../../../app/constants/app.constants";
+import { GetProfileResponse } from "../types/get-profile/get-profile-response.type";
 
 export const usersApi = createApi({
     reducerPath: "usersApi",
@@ -9,9 +10,9 @@ export const usersApi = createApi({
     }),
     endpoints(builder) {
         return {
-            getProfile: builder.query<any, string>({
-                query(username: string) {
-                    return `/${username}/profile`
+            getProfile: builder.query<GetProfileResponse, void>({
+                query() {
+                    return `/profile`
                 }
             })
         }

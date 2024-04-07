@@ -10,7 +10,7 @@ export default function UserIndex() {
 
   const { activeUser } = authContext
 
-  const { data, error, isLoading } = useGetProfileQuery(activeUser.sub)
+  const { data, error, isLoading } = useGetProfileQuery()
 
   useEffect(() => {
     const errorResponse = useHandleError(error)
@@ -18,6 +18,10 @@ export default function UserIndex() {
       navigate("/error/401", { replace: true })
     }
   }, [error])
+
+  useEffect(() => {
+    console.log(data?.user)
+  },[data])
 
   return <h1>User Index {data && data.user.email} </h1>
 }
