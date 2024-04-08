@@ -12,7 +12,7 @@ export default function AuthGuard({ children }: AuthGuardProps) {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/dashboard/home", { replace: true })
+      navigate("/cpanel/dashboard", { replace: true })
     }
   }, [isAuthenticated])
 

@@ -1,4 +1,4 @@
-import DashboardLayout from "../components/layout/dashboard-layout.component"
+import DashboardLayout from "../../cpanel/components/layout/dashboard-layout.component"
 import DashboardIndex from "../children/home/components/index/dashboard-index.component"
 import UserIndex from "../children/users/components/index/user-index.component"
 import { Navigate } from "react-router-dom"
@@ -6,11 +6,11 @@ import DashboardGuard from "../guards/dashboard.guard."
 
 const DashboardRoutes = [
   {
-    path: "/dashboard",
-    element: <Navigate to="/dashboard/home" replace />,
+    path: "/cpanel",
+    element: <Navigate to="/cpanel/dashboard" replace />,
   },
   {
-    path: "/dashboard",
+    path: "/cpanel",
     element: (
       <DashboardGuard>
         <DashboardLayout />
@@ -18,11 +18,11 @@ const DashboardRoutes = [
     ),
     children: [
       {
-        path: "/dashboard/home",
+        path: "/cpanel/dashboard",
         element: <DashboardIndex />,
       },
       {
-        path: "/dashboard/user",
+        path: "/cpanel/user",
         element: <UserIndex />,
       },
     ],

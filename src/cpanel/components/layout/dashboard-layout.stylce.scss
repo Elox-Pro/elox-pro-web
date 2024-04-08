@@ -3,6 +3,7 @@
   margin: 0;
   padding: 0;
   left: 0;
+
   &.dashboard-hide-sidebar {
     .dashboard-sidebar {
       margin-left: 0;
@@ -20,9 +21,19 @@
         display: none;
       }
     }
+
     .dashboard-main-panel {
       margin-left: var(--main-panel-width-xs);
     }
+
+    .wrapper-page {
+      .loading {
+        .loading-center {
+          margin-left: calc(-1 * var(--main-panel-width-xs));
+        }
+      }
+    }
+
   }
 }
 
@@ -30,9 +41,11 @@
 @media screen and (max-width: 768px) {
   .dashboard-layout {
     transition: 0.05s;
+
     .dashboard-sidebar {
       margin-left: var(--nav-width-negative) !important;
     }
+
     .dashboard-main-panel {
       margin-left: 0 !important;
     }

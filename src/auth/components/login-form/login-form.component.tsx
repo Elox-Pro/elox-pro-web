@@ -56,7 +56,7 @@ export default function LoginForm() {
         dispatch(setTfaPending(false))
         dispatch(setUsername(""))
         createSession()
-        navigate("/dashboard/home", { replace: true })
+        navigate("/cpanel/dashboard", { replace: true })
       }
     }
   }, [status])

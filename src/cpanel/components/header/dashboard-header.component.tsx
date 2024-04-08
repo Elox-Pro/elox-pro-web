@@ -1,4 +1,4 @@
-import DashboardNavbar from "../navbar/dashboard-navbar.component"
+import DashboardNavbar from "../../../dashboard/components/navbar/dashboard-navbar.component"
 
 export default function DashboardHeader() {
   return (

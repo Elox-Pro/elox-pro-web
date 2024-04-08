@@ -12,7 +12,7 @@ export default function DashboardSidebar() {
     <section className="dashboard-sidebar text-bg-dark">
       <DashboardNavbarBrand logo={DashboardNavbarBrandLogo.WHITE} size={24} text="Elox Pro" />
       <Nav className="nav nav-pills flex-column mb-auto">
-        <NavItemLink to="home" text={t("nav:home")} icon="bi bi-house" />
+        <NavItemLink to="dashboard" text={t("nav:home")} icon="bi bi-house" />
         <NavItemLink to="user" text={t("nav:customers")} icon="bi bi-people" />
       </Nav>
       <hr />
