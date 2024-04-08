@@ -1,0 +1,35 @@
+.cp-navbar-toggle {
+  &.cp-navbar-toggle-xs {
+    display: none;
+    flex-direction: row;
+
+    .cp-navbar-brand {
+      margin-bottom: 0;
+      padding-top: 0;
+    }
+  }
+  .navbar-toggle {
+    background-color: transparent;
+    border: transparent;
+    border-radius: var(--bs-navbar-toggler-border-radius);
+    color: var(--bs-navbar-color);
+    font-size: var(--bs-navbar-toggler-font-size);
+    line-height: 1;
+    margin-right: 0.025rem;
+    padding: var(--bs-navbar-toggler-padding-y) var(--bs-navbar-toggler-padding-x);
+    transition: var(--bs-navbar-toggler-transition);
+  }
+}
+
+/* Styles to render on mobile */
+@media screen and (max-width: 768px) {
+  .cp-navbar-toggle {
+    &.cp-navbar-toggle-md {
+      display: none;
+    }
+
+    &.cp-navbar-toggle-xs {
+      display: flex;
+    }
+  }
+}

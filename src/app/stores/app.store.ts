@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authApi } from "../../auth/api/auth.api";
-import { usersApi } from "../../dashboard/children/users/api/user.api";
+import { userApi } from "../../users/api/user.api";
 import { tfaApi } from "../../tfa/api/tfa.api";
-import dashboardSidebarReducer from "../../dashboard/features/dashbaord-sidebar.slice";
-import dashboardSidebarOffcanvasReducer from "../../dashboard/features/dashboard-sidebar-offcanvas.slice";
+import cpSidebarReducer from "../../cpanel/features/cp-sidebar.slice";
+import cpSidebarOffcanvasReducer from "../../cpanel/features/cp-sidebar-offcanvas.slice";
 import authReducer from "../../auth/feautures/auth.slice";
 import tfaReducer from "../../tfa/features/tfa.slice";
 import { recoverPasswordApi } from "../../recover-password/api/recover-password.api";
@@ -14,18 +14,18 @@ export const appStore = configureStore({
         auth: authReducer,
         tfa: tfaReducer,
         recoverPassword: recoverPasswordReducer,
-        dashboardSidebar: dashboardSidebarReducer,
-        dashboardSidebarOffcanvas: dashboardSidebarOffcanvasReducer,
+        cpSidebar: cpSidebarReducer,
+        cpSidebarOffcanvas: cpSidebarOffcanvasReducer,
         [authApi.reducerPath]: authApi.reducer,
         [tfaApi.reducerPath]: tfaApi.reducer,
-        [usersApi.reducerPath]: usersApi.reducer,
+        [userApi.reducerPath]: userApi.reducer,
         [recoverPasswordApi.reducerPath]: recoverPasswordApi.reducer,
     },
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware().concat(
             authApi.middleware,
             tfaApi.middleware,
-            usersApi.middleware,
+            userApi.middleware,
             recoverPasswordApi.middleware,
         )
     },
