@@ -1,19 +1,18 @@
 import { PropsWithChildren } from "react";
 import Loading from "../../../common/components/loading/loading.component";
-import AlertError from "../../../common/components/alert-error/alert-error.component";
-import { FetchBaseQueryError, QueryStatus } from "@reduxjs/toolkit/query";
-import { SerializedError } from "@reduxjs/toolkit";
+import AlertError, { AlertErrorPros } from "../../../common/components/alert-error/alert-error.component";
+import "./cp-wrapper-page.styles.scss"
 
 type WrapperPageProps = {
     loading: boolean
-    status: QueryStatus
-    error: FetchBaseQueryError | SerializedError | undefined
+    error: AlertErrorPros["error"]
+    status: AlertErrorPros["status"]
 } & PropsWithChildren
 export default function CPWrapperPage(
-    {loading,children,error,status }: WrapperPageProps
+    { loading, children, error, status }: WrapperPageProps
 ) {
     return (
-        <div className="cp-wraper-page">
+        <div className="cp-wrapper-page">
             <AlertError status={status} error={error} />
             {loading && <Loading />}
             {(!error && !loading) && children}

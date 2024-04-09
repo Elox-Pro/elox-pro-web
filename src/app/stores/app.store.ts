@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authApi } from "../../auth/api/auth.api";
-import { userApi } from "../../users/api/user.api";
+import { profileApi } from "../../profile/api/profile.api";
 import { tfaApi } from "../../tfa/api/tfa.api";
 import cpSidebarReducer from "../../cpanel/features/cp-sidebar.slice";
 import cpSidebarOffcanvasReducer from "../../cpanel/features/cp-sidebar-offcanvas.slice";
@@ -18,14 +18,14 @@ export const appStore = configureStore({
         cpSidebarOffcanvas: cpSidebarOffcanvasReducer,
         [authApi.reducerPath]: authApi.reducer,
         [tfaApi.reducerPath]: tfaApi.reducer,
-        [userApi.reducerPath]: userApi.reducer,
+        [profileApi.reducerPath]: profileApi.reducer,
         [recoverPasswordApi.reducerPath]: recoverPasswordApi.reducer,
     },
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware().concat(
             authApi.middleware,
             tfaApi.middleware,
-            userApi.middleware,
+            profileApi.middleware,
             recoverPasswordApi.middleware,
         )
     },

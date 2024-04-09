@@ -13,7 +13,8 @@ export default function CPSidebar() {
       <CPNavbarBrand logo={CPNavbarBrandLogo.WHITE} size={24} text="Elox Pro" />
       <Nav className="nav nav-pills flex-column mb-auto">
         <CPNavItemLink to="dashboard" text={t("nav:home")} icon="bi bi-house" />
-        <CPNavItemLink to="user" text={t("nav:customers")} icon="bi bi-people" />
+        <CPNavItemLink to="profile" text={t("nav:profile")} icon="bi bi-person" />
+        {/* <CPNavItemLink to="user" text={t("nav:customers")} icon="bi bi-people" /> */}
       </Nav>
       <hr />
       <Nav className="nav nav-pills flex-column mb-auto">

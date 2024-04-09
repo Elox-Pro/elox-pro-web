@@ -36,7 +36,7 @@ export default function CPNavbar() {
             }
             id="dropdown-profile"
           >
-            <Link to="cpanel/user" className="dropdown-item">
+            <Link to="/cpanel/profile" className="dropdown-item">
               {t("nav:profile")}
             </Link>
             <NavDropdown.Divider />

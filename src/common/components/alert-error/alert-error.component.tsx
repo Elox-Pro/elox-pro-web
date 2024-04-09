@@ -4,7 +4,7 @@ import { ErrorData, useHandleError } from "../../helpers/handle-error.helper"
 import { FetchBaseQueryError, QueryStatus } from "@reduxjs/toolkit/query"
 import { SerializedError } from "@reduxjs/toolkit"
 
-type AlertErrorPros = {
+export type AlertErrorPros = {
   status: QueryStatus
   error: FetchBaseQueryError | SerializedError | undefined
 }
