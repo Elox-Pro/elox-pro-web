@@ -11,11 +11,22 @@
 }
 
 body {
-  background-color: rgba(255, 255, 255,1);
+  background-color: rgba(255, 255, 255, 1);
   position: relative;
 }
 
 .container-fluid {
   margin: 0;
   padding: 0;
+}
+
+.card {
+  .card-body {
+    .card-title {
+       &.h5 {
+        font-size: 2rem;
+        font-weight: 400;
+      }
+    }
+  }
 }

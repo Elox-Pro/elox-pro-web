@@ -7,6 +7,7 @@ import "./cp-navbar.style.scss"
 import CPNavbarToggle from "../navbar-toggle/cp-navbar-toggle.component"
 import { useTranslation } from "react-i18next"
 import { useAuth } from "../../../auth/providers/auth.provider"
+import { useEffect, useState } from "react"
 export default function CPNavbar() {
   const { t } = useTranslation(["nav"])
   const authContext = useAuth()
@@ -20,8 +21,18 @@ export default function CPNavbar() {
     }
   }
 
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll); // Cleanup
+  }, []);
+
   return (
-    <Navbar expand="lg" className="cp-navbar">
+    <Navbar expand="lg" className={`cp-navbar ${isScrolled ? 'scrolled' : ''}`}>
       <Container fluid>
         <Nav className="me-auto">
           <CPNavbarToggle />
@@ -34,8 +45,7 @@ export default function CPNavbar() {
                 <i className="ms-2 bi bi-person-circle"></i>
               </span>
             }
-            id="dropdown-profile"
-          >
+            id="dropdown-profile">
             <Link to="/cpanel/profile" className="dropdown-item">
               {t("nav:profile")}
             </Link>

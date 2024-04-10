@@ -1,7 +1,12 @@
 .cp-navbar {
+  transition: background-color 4s;
   .dropdown-menu {
     position: absolute;
     right: 0;
     left: auto;
+  }
+
+  &.scrolled {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 }
