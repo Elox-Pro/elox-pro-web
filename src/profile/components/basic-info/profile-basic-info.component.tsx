@@ -4,11 +4,13 @@ import ListGroupItem, { ListGroupItemType } from "../../../common/components/lis
 import { User } from "../../../users/types/user.type";
 import { DEFAULT_AVATAR_URL } from "../../constants/profile.constants";
 import { DEFAULT_DATE_FORMAT, DEFAULT_LOCALE } from "../../../common/constants/common.constants";
+import { useTranslation } from "react-i18next";
 
 type ProfileBasicInfoProps = {
     user: User
 }
 export default function ProfileBasicInfo({ user }: ProfileBasicInfoProps) {
+    const { t } = useTranslation(["profile"])
     const avatar = user.avatarUrl || DEFAULT_AVATAR_URL
     const fullName = `${user.firstName || ""} ${user.lastName || ""}`
 
@@ -30,15 +32,15 @@ export default function ProfileBasicInfo({ user }: ProfileBasicInfoProps) {
 
                     <ListGroupItem
                         type={ListGroupItemType.AVATAR}
-                        label="Profile Picture"
-                        value="A profile picture helps personalize your account"
+                        label={t("basic_info_avatar_label")}
+                        value={t("basic_info_avatar_value")}
                         imageUrl={avatar}
                         onClick={handleChangeAvatar}
                     />
 
                     <ListGroupItem
                         type={ListGroupItemType.DEFAULT}
-                        label="Username"
+                        label={t("basic_info_username_label")}
                         value={user.username}
                         hidden />
 

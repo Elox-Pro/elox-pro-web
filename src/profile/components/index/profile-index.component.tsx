@@ -7,9 +7,10 @@ import ProfileContactInfo from "../contact-info/profile-contact-info.component"
 import ProfilePasswordInfo from "../password-info/profile-password-info.component"
 import ProfileTfaInfo from "../tfa-info/profile-tfa-info.component"
 import ProfileSettings from "../settings/profile-settings.component"
+import { useTranslation } from "react-i18next"
 
 export default function ProfileIndex() {
-
+  const { t } = useTranslation(["profile"])
   const { data, error, isLoading, status } = useGetProfileQuery()
   const user = data?.user
 
@@ -19,8 +20,8 @@ export default function ProfileIndex() {
         <div className="profile-index">
           <Row className="text-center">
             <Col xs={12}>
-              <p className="fs-1 mb-0">Personal info</p>
-              <p>Info about you and your preferences.</p>
+              <p className="fs-1 mb-0">{t("index_title")}</p>
+              <p>{t("index_subtitle")}</p>
             </Col>
           </Row>
           <Row>
