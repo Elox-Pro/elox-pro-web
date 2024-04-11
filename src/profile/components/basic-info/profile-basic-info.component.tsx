@@ -8,8 +8,12 @@ import { useTranslation } from "react-i18next";
 
 type ProfileBasicInfoProps = {
     user: User
+    userT: Record<string, string>
 }
-export default function ProfileBasicInfo({ user }: ProfileBasicInfoProps) {
+export default function ProfileBasicInfo({
+    user,
+    userT
+}: ProfileBasicInfoProps) {
     const { t } = useTranslation(["profile"])
     const avatar = user.avatarUrl || DEFAULT_AVATAR_URL
     const fullName = `${user.firstName || ""} ${user.lastName || ""}`
@@ -46,34 +50,34 @@ export default function ProfileBasicInfo({ user }: ProfileBasicInfoProps) {
 
                     <ListGroupItem
                         type={ListGroupItemType.DEFAULT}
-                        label="Role"
-                        value={user.role}
+                        label={t("basic_info_role_label")}
+                        value={userT[user.role]}
                         hidden />
 
 
                     <ListGroupItem
                         type={ListGroupItemType.DEFAULT}
-                        label="Name"
+                        label={t("basic_info_name_label")}
                         value={fullName}
                         hidden />
 
                     <ListGroupItem
                         type={ListGroupItemType.DEFAULT}
-                        label="Gender"
-                        value={user.gender || "N/A"}
+                        label={t("basic_info_gender_label")}
+                        value={userT[user.gender] || "N/A"}
                         hidden />
 
                     <ListGroupItem
                         type={ListGroupItemType.DEFAULT}
-                        label="Updated at"
+                        label={t("basic_info_updated_at_label")}
                         value={updatedAt}
                         hidden />
 
 
                     <ListGroupItem
                         type={ListGroupItemType.EXTRA_ACTION}
-                        label="More options"
-                        text="Edit"
+                        label={t("basic_info_more_options_label")}
+                        text={t("basic_info_more_options_text")}
                         icon="bi bi-pencil-square"
                     />
 

@@ -4,5 +4,11 @@
     "basic_info_title": "Basic info",
     "basic_info_avatar_label":"Profile picture",
     "basic_info_avatar_value":"A profile picture helps personalize your account",
-    "basic_info_username_label":"Username"
+    "basic_info_username_label":"Username",
+    "basic_info_role_label":"Role",
+    "basic_info_name_label":"Name",
+    "basic_info_gender_label":"Gender",
+    "basic_info_updated_at_label":"Updated at",
+    "basic_info_more_options_label":"More options",
+    "basic_info_more_options_text":"Edit"
 }

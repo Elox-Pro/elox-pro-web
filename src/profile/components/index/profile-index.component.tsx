@@ -13,10 +13,11 @@ export default function ProfileIndex() {
   const { t } = useTranslation(["profile"])
   const { data, error, isLoading, status } = useGetProfileQuery()
   const user = data?.user
+  const userT = data?.userTranslations
 
   return (
     <CPWrapperPage loading={isLoading} error={error} status={status}>
-      {user &&
+      {user && userT &&
         <div className="profile-index">
           <Row className="text-center">
             <Col xs={12}>
@@ -26,7 +27,7 @@ export default function ProfileIndex() {
           </Row>
           <Row>
             <Col xs={12}>
-              <ProfileBasicInfo user={user} />
+              <ProfileBasicInfo user={user} userT={userT} />
             </Col>
             <Col xs={12}>
               <ProfileContactInfo user={user} />
