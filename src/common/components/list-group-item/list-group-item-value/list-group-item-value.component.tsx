@@ -14,7 +14,7 @@ type ListGroupItemValueProps = {
  */
 export default function ListGroupItemValue({ value }: ListGroupItemValueProps) {
     return (
-        <Col xs={12} md={9}>
+        <Col xs={12} md={8}>
             <p className="mb-0">{value}</p>
         </Col>
     );

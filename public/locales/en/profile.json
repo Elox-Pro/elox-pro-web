@@ -1,14 +1,66 @@
 {
-    "index_title": "Personal info",
-    "index_subtitle":"Info about you and your preferences",
-    "basic_info_title": "Basic info",
-    "basic_info_avatar_label":"Profile picture",
-    "basic_info_avatar_value":"A profile picture helps personalize your account",
-    "basic_info_username_label":"Username",
-    "basic_info_role_label":"Role",
-    "basic_info_name_label":"Name",
-    "basic_info_gender_label":"Gender",
-    "basic_info_updated_at_label":"Updated at",
-    "basic_info_more_options_label":"More options",
-    "basic_info_more_options_text":"Edit"
+    "index": {
+        "title": "Personal info",
+        "subtitle": "Info about you and your preferences"
+    },
+    "basic_info": {
+        "title": "Basic info",
+        "avatar": {
+            "label": "Profile picture",
+            "value": "A profile picture helps personalize your account"
+        },
+        "username": {
+            "label": "Username"
+        },
+        "role": {
+            "label": "Role"
+        },
+        "name": {
+            "label": "Name"
+        },
+        "gender": {
+            "label": "Gender"
+        },
+        "updated_at": {
+            "label": "Updated at"
+        },
+        "more_options": {
+            "label": "More options",
+            "text": "Edit"
+        }
+    },
+    "contact_info": {
+        "verified": "Verified",
+        "email": {
+            "label": "Email"
+        },
+        "phone": {
+            "label": "Phone"
+        }
+    },
+    "password_info": {
+        "title": "Password",
+        "subtitle": "A secure password helps protect your account",
+        "password": {
+            "label": "Password"
+        }
+    },
+    "tfa_info": {
+        "title": "Two-factor authentication",
+        "subtitle": "2FA helps your account security by adding an extra login step",
+        "configured": "Configured",
+        "email": {
+            "label": "Email",
+            "value": "Enable email verification for 2FA in your account"
+        }
+    },
+    "settings": {
+        "title": "General settings",
+        "language": {
+            "label": "Language"
+        },
+        "theme": {
+            "label": "Theme"
+        }
+    }
 }

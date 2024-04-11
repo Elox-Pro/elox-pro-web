@@ -14,7 +14,7 @@ export default function ProfileBasicInfo({
     user,
     userT
 }: ProfileBasicInfoProps) {
-    const { t } = useTranslation(["profile"])
+    const { t } = useTranslation("profile", { keyPrefix: "basic_info" })
     const avatar = user.avatarUrl || DEFAULT_AVATAR_URL
     const fullName = `${user.firstName || ""} ${user.lastName || ""}`
 
@@ -30,54 +30,54 @@ export default function ProfileBasicInfo({
             <Card.Body>
                 <Card.Title>
                     <i className="bi bi-person-circle me-3"></i>
-                    Basic info
+                    {t("title")}
                 </Card.Title>
                 <ListGroup variant="flush">
 
                     <ListGroupItem
                         type={ListGroupItemType.AVATAR}
-                        label={t("basic_info_avatar_label")}
-                        value={t("basic_info_avatar_value")}
+                        label={t("avatar.label")}
+                        value={t("avatar.value")}
                         imageUrl={avatar}
                         onClick={handleChangeAvatar}
                     />
 
                     <ListGroupItem
                         type={ListGroupItemType.DEFAULT}
-                        label={t("basic_info_username_label")}
+                        label={t("username.label")}
                         value={user.username}
                         hidden />
 
                     <ListGroupItem
                         type={ListGroupItemType.DEFAULT}
-                        label={t("basic_info_role_label")}
+                        label={t("role.label")}
                         value={userT[user.role]}
                         hidden />
 
 
                     <ListGroupItem
                         type={ListGroupItemType.DEFAULT}
-                        label={t("basic_info_name_label")}
+                        label={t("name.label")}
                         value={fullName}
                         hidden />
 
                     <ListGroupItem
                         type={ListGroupItemType.DEFAULT}
-                        label={t("basic_info_gender_label")}
+                        label={t("gender.label")}
                         value={userT[user.gender] || "N/A"}
                         hidden />
 
                     <ListGroupItem
                         type={ListGroupItemType.DEFAULT}
-                        label={t("basic_info_updated_at_label")}
+                        label={t("updated_at.label")}
                         value={updatedAt}
                         hidden />
 
 
                     <ListGroupItem
                         type={ListGroupItemType.EXTRA_ACTION}
-                        label={t("basic_info_more_options_label")}
-                        text={t("basic_info_more_options_text")}
+                        label={t("more_options.label")}
+                        text={t("more_options.text")}
                         icon="bi bi-pencil-square"
                     />
 

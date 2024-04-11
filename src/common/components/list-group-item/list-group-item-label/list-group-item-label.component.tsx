@@ -14,7 +14,7 @@ type ListGroupItemLabelProps = {
  */
 export default function ListGroupItemLabel({ value }: ListGroupItemLabelProps) {
     return (
-        <Col xs={12} md={3}>
+        <Col xs={12} md={4}>
             <p className="mb-0 text-muted">{value}</p>
         </Col>
     );

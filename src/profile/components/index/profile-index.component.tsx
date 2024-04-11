@@ -10,7 +10,7 @@ import ProfileSettings from "../settings/profile-settings.component"
 import { useTranslation } from "react-i18next"
 
 export default function ProfileIndex() {
-  const { t } = useTranslation(["profile"])
+  const { t } = useTranslation("profile", { keyPrefix: "index" })
   const { data, error, isLoading, status } = useGetProfileQuery()
   const user = data?.user
   const userT = data?.userTranslations
@@ -21,8 +21,8 @@ export default function ProfileIndex() {
         <div className="profile-index">
           <Row className="text-center">
             <Col xs={12}>
-              <p className="fs-1 mb-0">{t("index_title")}</p>
-              <p>{t("index_subtitle")}</p>
+              <p className="fs-1 mb-0">{t("title")}</p>
+              <p>{t("subtitle")}</p>
             </Col>
           </Row>
           <Row>
@@ -39,7 +39,7 @@ export default function ProfileIndex() {
               <ProfileTfaInfo user={user} />
             </Col>
             <Col xs={12}>
-              <ProfileSettings user={user} />
+              <ProfileSettings user={user} userT={userT} />
             </Col>
           </Row>
 

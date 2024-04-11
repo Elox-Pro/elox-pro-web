@@ -3,17 +3,20 @@ import { User } from "../../../users/types/user.type"
 import ListGroup from "react-bootstrap/esm/ListGroup"
 import ListGroupItem, { ListGroupItemType } from "../../../common/components/list-group-item/list-group-item.component"
 import Badge from "react-bootstrap/esm/Badge"
+import { useTranslation } from "react-i18next"
 
 type ProfileContactInfoProps = {
     user: User
 }
 export default function ProfileContactInfo({ user }: ProfileContactInfoProps) {
-    
+    const { t } = useTranslation("profile", { keyPrefix: "contact_info" });
     const emailVerifiedElement: JSX.Element = (
         <>
-            <span>{user.email}</span>
+            <span className="me-3">{user.email}</span>
             {user.emailVerified &&
-                <Badge className="ms-3" bg="success">Verified</Badge>
+                <Badge bg="success">
+                    {t("verified")}
+                </Badge>
             }
         </>
     );
@@ -21,9 +24,11 @@ export default function ProfileContactInfo({ user }: ProfileContactInfoProps) {
 
     const phoneVerifiedElement: JSX.Element = (
         <>
-            <span>{user.phone || "N/A"}</span>
+            <span className="me-3">{user.phone || "N/A"}</span>
             {user.phoneVerified &&
-                <Badge className="ms-3" bg="success">Verified</Badge>
+                <Badge bg="success">
+                    {t("verified")}
+                </Badge>
             }
         </>
     );
@@ -33,20 +38,20 @@ export default function ProfileContactInfo({ user }: ProfileContactInfoProps) {
         <Card className="mb-3">
             <Card.Body>
                 <Card.Title>
-                <i className="bi bi-person-badge me-3"></i>
+                    <i className="bi bi-person-badge me-3"></i>
                     Contact info</Card.Title>
                 <ListGroup variant="flush">
 
                     <ListGroupItem
                         type={ListGroupItemType.DEFAULT}
-                        label="Email"
+                        label={t("email.label")}
                         value={emailVerifiedElement}
                         onClick={handleChangeEmail}
                     />
 
                     <ListGroupItem
                         type={ListGroupItemType.DEFAULT}
-                        label="Phone"
+                        label={t("phone.label")}
                         value={phoneVerifiedElement}
                         onClick={handleChangePhone}
                     />

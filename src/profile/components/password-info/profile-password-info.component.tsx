@@ -2,11 +2,13 @@ import Card from "react-bootstrap/esm/Card"
 import { User } from "../../../users/types/user.type"
 import ListGroup from "react-bootstrap/esm/ListGroup"
 import ListGroupItem, { ListGroupItemType } from "../../../common/components/list-group-item/list-group-item.component"
+import { useTranslation } from "react-i18next"
 
 type ProfilePasswordInfoProps = {
     user: User
 }
 export default function ProfilePasswordInfo({ user }: ProfilePasswordInfoProps) {
+    const { t } = useTranslation("profile", { keyPrefix: "password_info" });
     const handleChangePassword = () => {
         alert("Not implemented")
     }
@@ -16,17 +18,16 @@ export default function ProfilePasswordInfo({ user }: ProfilePasswordInfoProps) 
             <Card.Body>
                 <Card.Title>
                     <i className="bi bi-file-lock2 me-3"></i>
-                    Password
+                    {t("title")}
                 </Card.Title>
-                <p>A secure password helps protect your account</p>
+                <p>{t("subtitle")}</p>
                 <ListGroup variant="flush">
                     <ListGroupItem
                         type={ListGroupItemType.DEFAULT}
-                        label="Password"
+                        label={t("password.label")}
                         value="••••••••"
                         onClick={handleChangePassword}
                     />
-
                 </ListGroup>
             </Card.Body>
         </Card>

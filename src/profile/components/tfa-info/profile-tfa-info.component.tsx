@@ -4,17 +4,20 @@ import ListGroup from "react-bootstrap/esm/ListGroup"
 import ListGroupItem, { ListGroupItemType } from "../../../common/components/list-group-item/list-group-item.component"
 import Badge from "react-bootstrap/esm/Badge"
 import { TfaType } from "../../../tfa/enums/validate-tfa/tfa-type.enum"
+import { useTranslation } from "react-i18next"
 
 type ProfileTfaInfoProps = {
     user: User
 }
 export default function ProfileTfaInfo({ user }: ProfileTfaInfoProps) {
-
+    const { t } = useTranslation("profile", { keyPrefix: "tfa_info" });
     const tfaEmailElement: JSX.Element = (
         <>
-            <span>Enable email verification for 2FA in your account</span>
+            <span>{t("email.value")}</span>
             {user.tfaType === TfaType.EMAIL &&
-                <Badge className="ms-3" bg="success">Configured</Badge>
+                <Badge className="ms-3" bg="success">
+                    {t("configured")}
+                </Badge>
             }
         </>
     );
@@ -28,15 +31,15 @@ export default function ProfileTfaInfo({ user }: ProfileTfaInfoProps) {
             <Card.Body>
                 <Card.Title>
                     <i className="bi bi-shield-check me-3"></i>
-                    Two-factor authentication
+                    {t("title")}
                 </Card.Title>
                 <p>
-                    2FA helps your account security by adding an extra login step.
+                    {t("subtitle")}
                 </p>
                 <ListGroup variant="flush">
                     <ListGroupItem
                         type={ListGroupItemType.DEFAULT}
-                        label="Email"
+                        label={t("email.label")}
                         value={tfaEmailElement}
                         onClick={handleEnableTfa}
                     />
