@@ -1,0 +1,12 @@
+.profile-change-avatar-modal {
+    .btn-avatar {
+        &:hover {
+            background-color: var(--bs-tertiary-bg);
+        }
+
+        &.active,
+        &:active {
+            background-color: var(--bs-secondary-bg);
+        }
+    }
+}

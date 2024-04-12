@@ -1,6 +1,8 @@
 :root {
   --bs-primary: rgb(82, 0, 174);
   --bs-primary-rgb: 82, 0, 174;
+  --bs-tertiary-bg: #f8f9fa;
+  --bs-secondary-bg: #e9ecef;
   --main-panel-width-xs: 5rem;
   --nav-width-xs: 5rem;
   --nav-width: 15rem; //abs(--nav-width-xs) + --main-panel-width-xs
@@ -15,6 +17,10 @@ body {
   position: relative;
 }
 
+.bg-tertiary {
+  background-color: var(--bs-tertiary-bg) !important;
+}
+
 .container-fluid {
   margin: 0;
   padding: 0;
@@ -23,10 +29,16 @@ body {
 .card {
   .card-body {
     .card-title {
-       &.h5 {
+      &.h5 {
         font-size: 2rem;
         font-weight: 400;
       }
     }
   }
+}
+
+.btn-link {
+  color: var(--bs-primary);
+  font-weight: 700;
+  text-decoration: none;
 }
