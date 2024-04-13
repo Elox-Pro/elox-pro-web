@@ -3,8 +3,13 @@ import Container from "react-bootstrap/esm/Container"
 import Modal from "react-bootstrap/esm/Modal"
 import Row from "react-bootstrap/esm/Row"
 import "./profile-change-avatar-modal.style.scss"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ModalHeader } from "../../../common/components/modal/modal-header/modal-header.component"
+import { useUpdateAvatarMutation } from "../../api/profile.api"
+import AlertError, { AlertErrorPros } from "../../../common/components/alert-error/alert-error.component"
+import { QueryStatus } from "@reduxjs/toolkit/query"
+import { useAppDispatch } from "../../../app/hooks/app.hooks"
+import { setProfileToast } from "../../features/profile.slice"
 
 type ProfileChangeAvatarModalProps = {
     userAvatar: string
@@ -12,17 +17,46 @@ type ProfileChangeAvatarModalProps = {
     onHide: () => void
 }
 export default function ProfileChangeAvatarModal({ userAvatar, show, onHide }: ProfileChangeAvatarModalProps) {
+    const [selectedAvatar, setSelectedAvatar] = useState(userAvatar);
+    const [alertError, setAlertError] = useState<AlertErrorPros>();
+    const [updateAvatar, { data, status, error }] = useUpdateAvatarMutation();
+    const dispatch = useAppDispatch();
 
-    const [avatar, setAvatar] = useState(userAvatar);
-
-    const handleSelectAvatar = (avatar: string) => {
-        setAvatar(avatar);
+    const handleOnSelectAvatar = (avatar: string) => {
+        setSelectedAvatar(avatar);
     }
 
     const handleOnHide = () => {
-        setAvatar(userAvatar);
+        setSelectedAvatar(userAvatar);
+        setAlertError(undefined);
         onHide();
     }
+
+
+    const handleOnSubmit = () => {
+        try {
+            if (userAvatar === selectedAvatar) {
+                return;
+            }
+            updateAvatar({ avatarUrl: selectedAvatar });
+        } catch (error) {
+            console.error("Update Avatar Error:", error)
+        }
+    }
+
+    useEffect(() => {
+        if (status === QueryStatus.fulfilled && data.OK) {
+            handleOnHide();
+            dispatch(setProfileToast({
+                title: "success",
+                message: "avatar updated",
+                show: true
+            }))
+
+        } else if (status === QueryStatus.rejected) {
+            setAlertError({ status, error });
+        }
+    }, [status, error, data])
 
     const avatars = [
         "https://api.dicebear.com/8.x/bottts-neutral/svg?seed=Sophie",
@@ -53,21 +87,24 @@ export default function ProfileChangeAvatarModal({ userAvatar, show, onHide }: P
                 title="Edit avatar"
                 buttonText="OK"
                 onHide={handleOnHide}
-                onSubmit={() => { alert("Not implemented") }}
+                onSubmit={handleOnSubmit}
             />
             <Modal.Body className="p-0 pb-5">
                 <div className="bg-tertiary sticky-top mb-2">
-                    <img src={avatar} width={128} className="mx-auto my-0 py-3 d-flex rounded-circle" />
+                    <img src={selectedAvatar} width={128} className="mx-auto my-0 py-3 d-flex rounded-circle" />
                 </div>
                 <Container>
+                    <AlertError status={alertError?.status} error={alertError?.error} />
                     <p className="text-muted">Select a picture</p>
                     <Row className="g-0">
-                        {avatars.map((av, index) => (
+                        {avatars.map((avatar, index) => (
                             <Col key={index} xs={3} className="p-2">
-                                <button className={`${avatar === av ? 'active' : ''} btn btn-avatar`} onClick={() => {
-                                    handleSelectAvatar(av)
-                                }}>
-                                    <img src={av} width={96} className="w-100" alt="avatar" />
+                                <button
+                                    className={`${selectedAvatar === avatar ? 'active' : ''} btn btn-avatar`}
+                                    onClick={() => {
+                                        handleOnSelectAvatar(avatar)
+                                    }}>
+                                    <img src={avatar} width={96} className="w-100" alt="avatar" />
                                 </button>
                             </Col>
                         ))}
@@ -75,6 +112,5 @@ export default function ProfileChangeAvatarModal({ userAvatar, show, onHide }: P
                 </Container>
             </Modal.Body>
         </Modal>
-
     )
 }

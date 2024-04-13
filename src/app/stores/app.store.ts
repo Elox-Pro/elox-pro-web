@@ -8,6 +8,7 @@ import authReducer from "../../auth/feautures/auth.slice";
 import tfaReducer from "../../tfa/features/tfa.slice";
 import { recoverPasswordApi } from "../../recover-password/api/recover-password.api";
 import recoverPasswordReducer from "../../recover-password/features/recover-password.slice";
+import ProfileReducer from "../../profile/features/profile.slice";
 
 export const appStore = configureStore({
     reducer: {
@@ -16,6 +17,7 @@ export const appStore = configureStore({
         recoverPassword: recoverPasswordReducer,
         cpSidebar: cpSidebarReducer,
         cpSidebarOffcanvas: cpSidebarOffcanvasReducer,
+        profile: ProfileReducer,
         [authApi.reducerPath]: authApi.reducer,
         [tfaApi.reducerPath]: tfaApi.reducer,
         [profileApi.reducerPath]: profileApi.reducer,

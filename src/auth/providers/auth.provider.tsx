@@ -8,7 +8,8 @@ import { showGRecaptcha } from "../../common/helpers/show-grecaptcha.helper"
 type AuthContextProps = {
   activeUser: ActiveUser
   createSession: () => void
-  logout: () => void
+  logout: () => void,
+  resetActiveUser: () => void
 }
 
 type AuthProviderProps = {
@@ -23,8 +24,9 @@ const activeUserInitState: ActiveUser = {
 
 const authContextInitState: AuthContextProps = {
   activeUser: activeUserInitState,
-  createSession: () => {},
-  logout: () => {},
+  createSession: () => { },
+  logout: () => { },
+  resetActiveUser: () => { },
 }
 
 const AuthContext = createContext<AuthContextProps>(authContextInitState)
@@ -41,6 +43,10 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
   const logout = (): void => {
     logoutRequest()
+    resetActiveUser()
+  }
+
+  const resetActiveUser = (): void => {
     setActiveUser(activeUserInitState)
   }
 
@@ -49,8 +55,9 @@ export default function AuthProvider({ children }: AuthProviderProps) {
       activeUser,
       createSession,
       logout,
+      resetActiveUser,
     }),
-    [activeUser, createSession, logout]
+    [activeUser, createSession, logout, resetActiveUser]
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

@@ -8,6 +8,7 @@ import ProfilePasswordInfo from "../password-info/profile-password-info.componen
 import ProfileTfaInfo from "../tfa-info/profile-tfa-info.component"
 import ProfileSettings from "../settings/profile-settings.component"
 import { useTranslation } from "react-i18next"
+import ProfileToast from "../profile-toast/profile-toast.component"
 
 export default function ProfileIndex() {
   const { t } = useTranslation("profile", { keyPrefix: "index" })
@@ -19,6 +20,7 @@ export default function ProfileIndex() {
     <CPWrapperPage loading={isLoading} error={error} status={status}>
       {user && userT &&
         <div className="profile-index">
+          <ProfileToast />
           <Row className="text-center">
             <Col xs={12}>
               <p className="fs-1 mb-0">{t("title")}</p>

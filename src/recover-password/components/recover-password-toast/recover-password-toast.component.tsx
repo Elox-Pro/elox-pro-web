@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next"
 import { setResetPasswordSuccess } from "../../features/recover-password.slice"
 import DefaultToast from "../../../common/components/default-toast/default-toast.component"
 
-export default function RecoverPasswordToast() {
+export default function 
+RecoverPasswordToast() {
   const { t } = useTranslation(["recover-password"])
   const { username } = useAppSelector((state) => state.tfa)
   const { resetPasswordSuccess } = useAppSelector((state) => state.recoverPassword)

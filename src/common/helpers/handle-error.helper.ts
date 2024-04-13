@@ -80,7 +80,7 @@ export const useHandleError = (error: unknown): ErrorResponse => {
                 message: error.message,
                 statusCode: error.code,
                 stack: error.stack,
-            },
+            } as ErrorData,
         };
     }
     return {
