@@ -3,7 +3,7 @@ import ListGroup from "react-bootstrap/esm/ListGroup";
 import ListGroupItem, { ListGroupItemType } from "../../../common/components/list-group-item/list-group-item.component";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import ProfileChangeAvatarModal from "../change-avatar-modal/profile-change-avatar-modal.component";
+import ProfileUpdateAvatarModal from "../update-avatar-modal/profile-update-avatar-modal.component";
 import { useAppSelector } from "../../../app/hooks/app.hooks";
 import { getProfileAvatar } from "../../helpers/get-profile-avatar";
 import { getProfileFullname } from "../../helpers/get-profile-full-name";
@@ -86,7 +86,7 @@ export default function ProfileBasicInfo() {
                 </Card.Body>
             </Card>
 
-            <ProfileChangeAvatarModal show={show} onHide={() => setShow(false)} />
+            <ProfileUpdateAvatarModal show={show} onHide={() => setShow(false)} />
 
         </>
     )

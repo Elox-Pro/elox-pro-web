@@ -2,7 +2,7 @@ import Col from "react-bootstrap/esm/Col"
 import Container from "react-bootstrap/esm/Container"
 import Modal from "react-bootstrap/esm/Modal"
 import Row from "react-bootstrap/esm/Row"
-import "./profile-change-avatar-modal.style.scss"
+import "./profile-update-avatar-modal.style.scss"
 import { useEffect, useState } from "react"
 import { ModalHeader } from "../../../common/components/modal/modal-header/modal-header.component"
 import { useUpdateAvatarMutation } from "../../api/profile.api"
@@ -12,12 +12,14 @@ import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks"
 import { setProfile, setProfileToast } from "../../features/profile.slice"
 import { useGetAvatarsQuery } from "../../../avatars/api/avatar.api"
 import CPWrapperPage from "../../../cpanel/components/wrapper-page/cp-wrapper-page.component"
+import { useTranslation } from "react-i18next"
 
-type ProfileChangeAvatarModalProps = {
+type ProfileUpdateAvatarModalProps = {
     show: boolean,
     onHide: () => void
 }
-export default function ProfileChangeAvatarModal({ show, onHide }: ProfileChangeAvatarModalProps) {
+export default function ProfileUpdateAvatarModal({ show, onHide }: ProfileUpdateAvatarModalProps) {
+    const { t } = useTranslation("profile", { keyPrefix: "update_avatar" });
     const { profile } = useAppSelector(state => state.profile);
     const [alertError, setAlertError] = useState<AlertErrorPros>();
     const [updateAvatar, { data, status, error, isLoading }] = useUpdateAvatarMutation();
@@ -58,8 +60,8 @@ export default function ProfileChangeAvatarModal({ show, onHide }: ProfileChange
             onHide();
             setAlertError(undefined);
             dispatch(setProfileToast({
-                title: "success",
-                message: "avatar updated",
+                title: t("success_toast.title"),
+                message: t("success_toast.message"),
                 show: true
             }));
 
@@ -72,11 +74,11 @@ export default function ProfileChangeAvatarModal({ show, onHide }: ProfileChange
 
     return (
 
-        <Modal className="profile-change-avatar-modal" show={show} fullscreen="lg-down" scrollable backdrop="static" keyboard={false}>
+        <Modal className="profile-update-avatar-modal" show={show} fullscreen="lg-down" scrollable backdrop="static" keyboard={false}>
 
             <ModalHeader
-                title="Edit avatar"
-                buttonText="OK"
+                title={t("modal.title")}
+                buttonText={t("modal.submit")}
                 onHide={handleOnHide}
                 onSubmit={handleOnSubmit}
             />
@@ -86,11 +88,10 @@ export default function ProfileChangeAvatarModal({ show, onHide }: ProfileChange
                 </div>
                 <Container>
                     <AlertError status={alertError?.status} error={alertError?.error} />
-                    <p className="text-muted">Select a picture</p>
+                    <p className="text-muted">{t("modal.label")}</p>
                     <AvatarList selectedAvatar={selectedAvatar} handleOnSelectAvatar={handleOnSelectAvatar} />
                 </Container>
             </Modal.Body>
-
         </Modal >
 
     )

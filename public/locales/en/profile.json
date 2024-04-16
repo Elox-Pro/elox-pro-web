@@ -63,5 +63,16 @@
         "theme": {
             "label": "Theme"
         }
+    },
+    "update_avatar": {
+        "success_toast": {
+            "title": "Edit avatar",
+            "message": "Avatar updated successfully"
+        },
+        "modal": {
+            "title": "Edit avatar",
+            "submit": "OK",
+            "label": "Select a picture"
+        }
     }
 }
