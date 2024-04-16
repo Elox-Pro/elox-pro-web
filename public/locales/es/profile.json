@@ -30,6 +30,7 @@
         }
     },
     "contact_info": {
+        "title": "Contact info",
         "verified": "Verificado",
         "email": {
             "label": "Correo electrónico"

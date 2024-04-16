@@ -1,26 +1,14 @@
 import Card from "react-bootstrap/esm/Card"
-import { User } from "../../../users/types/user.type"
 import ListGroup from "react-bootstrap/esm/ListGroup"
 import ListGroupItem, { ListGroupItemType } from "../../../common/components/list-group-item/list-group-item.component"
 import Badge from "react-bootstrap/esm/Badge"
 import { TfaType } from "../../../tfa/enums/validate-tfa/tfa-type.enum"
 import { useTranslation } from "react-i18next"
+import { useAppSelector } from "../../../app/hooks/app.hooks"
 
-type ProfileTfaInfoProps = {
-    user: User
-}
-export default function ProfileTfaInfo({ user }: ProfileTfaInfoProps) {
+export default function ProfileTfaInfo() {
     const { t } = useTranslation("profile", { keyPrefix: "tfa_info" });
-    const tfaEmailElement: JSX.Element = (
-        <>
-            <span>{t("email.value")}</span>
-            {user.tfaType === TfaType.EMAIL &&
-                <Badge className="ms-3" bg="success">
-                    {t("configured")}
-                </Badge>
-            }
-        </>
-    );
+    const { profile } = useAppSelector(state => state.profile);
 
     const handleEnableTfa = () => {
         alert("Not implemented")
@@ -33,18 +21,35 @@ export default function ProfileTfaInfo({ user }: ProfileTfaInfoProps) {
                     <i className="bi bi-shield-check me-3"></i>
                     {t("title")}
                 </Card.Title>
-                <p>
-                    {t("subtitle")}
-                </p>
+                <p>{t("subtitle")}</p>
                 <ListGroup variant="flush">
                     <ListGroupItem
                         type={ListGroupItemType.DEFAULT}
                         label={t("email.label")}
-                        value={tfaEmailElement}
+                        value={<TfaEmail
+                            value={t("email.value")}
+                            type={profile.tfaType}
+                            text={t("configured")}
+                        />}
                         onClick={handleEnableTfa}
                     />
                 </ListGroup>
             </Card.Body>
         </Card>
+    )
+}
+
+type TfaEmailProps = {
+    value: string
+    type: TfaType | undefined
+    text: string
+}
+
+function TfaEmail({ value, type, text }: TfaEmailProps) {
+    return (
+        <>
+            <span>{value}</span>
+            {type === TfaType.EMAIL && <Badge className="ms-3" bg="success">{text}</Badge>}
+        </>
     )
 }

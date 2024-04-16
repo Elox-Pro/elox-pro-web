@@ -1,34 +1,36 @@
+import { TfaType } from "../../tfa/enums/validate-tfa/tfa-type.enum"
+
 export type User = {
 
-    updatedAt: Date
-    createdAt: Date
+    updatedAt?: Date
+    createdAt?: Date
 
-    role: string
-    username: string
-    email: string
-    firstName: string
-    lastName: string
-    phone: string
+    role?: string
+    username?: string
+    email?: string
+    firstName?: string
+    lastName?: string
+    phone?: string
 
-    gender: string
+    gender?: string
 
-    avatarUrl: string
+    avatarUrl?: string
 
     // Flat indication email verification status
-    emailVerified: boolean
+    emailVerified?: boolean
 
     // Flag indicating phone verification status
-    phoneVerified: boolean
+    phoneVerified?: boolean
 
     // The TFA authentication type to 
-    tfaType: string
+    tfaType?: TfaType
 
     // Last login timestamp
-    lastLoginAt: Date
+    lastLoginAt?: Date
 
     // The user language
-    lang: string
+    lang?: string
 
     // The UI user theme
-    theme: string
+    theme?: string
 }

@@ -1,13 +1,9 @@
 import Card from "react-bootstrap/esm/Card"
-import { User } from "../../../users/types/user.type"
 import ListGroup from "react-bootstrap/esm/ListGroup"
 import ListGroupItem, { ListGroupItemType } from "../../../common/components/list-group-item/list-group-item.component"
 import { useTranslation } from "react-i18next"
 
-type ProfilePasswordInfoProps = {
-    user: User
-}
-export default function ProfilePasswordInfo({ user }: ProfilePasswordInfoProps) {
+export default function ProfilePasswordInfo() {
     const { t } = useTranslation("profile", { keyPrefix: "password_info" });
     const handleChangePassword = () => {
         alert("Not implemented")

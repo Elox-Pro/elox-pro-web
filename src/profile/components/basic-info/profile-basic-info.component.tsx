@@ -1,33 +1,27 @@
 import Card from "react-bootstrap/esm/Card";
 import ListGroup from "react-bootstrap/esm/ListGroup";
 import ListGroupItem, { ListGroupItemType } from "../../../common/components/list-group-item/list-group-item.component";
-import { User } from "../../../users/types/user.type";
-import { DEFAULT_AVATAR_URL } from "../../constants/profile.constants";
-import { DEFAULT_DATE_FORMAT, DEFAULT_LOCALE } from "../../../common/constants/common.constants";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import ProfileChangeAvatarModal from "../change-avatar-modal/profile-change-avatar-modal.component";
+import { useAppSelector } from "../../../app/hooks/app.hooks";
+import { getProfileAvatar } from "../../helpers/get-profile-avatar";
+import { getProfileFullname } from "../../helpers/get-profile-full-name";
+import { getFormatDate } from "../../../common/helpers/get-format-date";
 
-type ProfileBasicInfoProps = {
-    user: User
-    userT: Record<string, string>
-}
-export default function ProfileBasicInfo({ user, userT }: ProfileBasicInfoProps) {
+export default function ProfileBasicInfo() {
 
-    const { t } = useTranslation("profile", { keyPrefix: "basic_info" })
-    const avatar = user.avatarUrl || DEFAULT_AVATAR_URL
-    const fullName = `${user.firstName || ""} ${user.lastName || ""}`
-
-    const updatedAt = user.updatedAt ? new Date(user.updatedAt).toLocaleString(
-        DEFAULT_LOCALE, DEFAULT_DATE_FORMAT
-    ) : "N/A";
+    const { profile, profileT } = useAppSelector(state => state.profile);
+    const { t } = useTranslation("profile", { keyPrefix: "basic_info" });
+    const avatar = getProfileAvatar(profile.avatarUrl);
+    const fullName = getProfileFullname(profile.firstName, profile.lastName);
+    const updatedAt = getFormatDate(profile.updatedAt);
 
     const [show, setShow] = useState(false);
 
     const handleChangeAvatar = () => {
         setShow(true);
     }
-
 
     const handleChangeName = () => {
         alert("Not implemented")
@@ -38,9 +32,7 @@ export default function ProfileBasicInfo({ user, userT }: ProfileBasicInfoProps)
     }
 
     return (
-
         <>
-
             <Card className="mb-3">
                 <Card.Body>
                     <Card.Title>
@@ -60,13 +52,13 @@ export default function ProfileBasicInfo({ user, userT }: ProfileBasicInfoProps)
                         <ListGroupItem
                             type={ListGroupItemType.DEFAULT}
                             label={t("username.label")}
-                            value={user.username}
+                            value={profile.username}
                             hidden />
 
                         <ListGroupItem
                             type={ListGroupItemType.DEFAULT}
                             label={t("role.label")}
-                            value={userT[user.role]}
+                            value={profile.role && profileT[profile.role]}
                             hidden />
 
 
@@ -80,7 +72,7 @@ export default function ProfileBasicInfo({ user, userT }: ProfileBasicInfoProps)
                         <ListGroupItem
                             type={ListGroupItemType.DEFAULT}
                             label={t("gender.label")}
-                            value={userT[user.gender] || "N/A"}
+                            value={profile.gender && profileT[profile.gender] || "N/A"}
                             onClick={handleChangeGender}
                         />
 
@@ -94,7 +86,7 @@ export default function ProfileBasicInfo({ user, userT }: ProfileBasicInfoProps)
                 </Card.Body>
             </Card>
 
-            <ProfileChangeAvatarModal userAvatar={avatar} show={show} onHide={() => setShow(false)} />
+            <ProfileChangeAvatarModal show={show} onHide={() => setShow(false)} />
 
         </>
     )

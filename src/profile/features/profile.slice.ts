@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { User } from "../../users/types/user.type";
 
 type Toast = {
     title: string
@@ -7,7 +8,9 @@ type Toast = {
 }
 
 type ProfileState = {
-    toast: Toast
+    toast: Toast,
+    profile: User,
+    profileT: Record<string, string> // Profile translations
 }
 
 const initialState: ProfileState = {
@@ -15,7 +18,9 @@ const initialState: ProfileState = {
         title: "",
         message: "",
         show: false
-    }
+    },
+    profile: {},
+    profileT: {}
 }
 
 const ProfileSlice = createSlice({
@@ -24,10 +29,16 @@ const ProfileSlice = createSlice({
     reducers: {
         setProfileToast: (state, action: { payload: Toast }) => {
             state.toast = action.payload;
+        },
+        setProfile: (state, action: { payload: User }) => {
+            state.profile = action.payload;
+        },
+        setProfileT: (state, action: { payload: Record<string, string> }) => {
+            state.profileT = action.payload;
         }
     }
 });
 
 const ProfileReducer = ProfileSlice.reducer;
-export const { setProfileToast } = ProfileSlice.actions;
+export const { setProfileToast, setProfile, setProfileT } = ProfileSlice.actions;
 export default ProfileReducer;

@@ -1,15 +1,13 @@
 import Card from "react-bootstrap/esm/Card"
-import { User } from "../../../users/types/user.type"
 import ListGroup from "react-bootstrap/esm/ListGroup"
 import ListGroupItem, { ListGroupItemType } from "../../../common/components/list-group-item/list-group-item.component"
 import { useTranslation } from "react-i18next"
+import { useAppSelector } from "../../../app/hooks/app.hooks"
 
-type ProfileSettingsProps = {
-    user: User,
-    userT: Record<string, string>
-}
-export default function ProfileSettings({ user, userT }: ProfileSettingsProps) {
+export default function ProfileSettings() {
+    const { profile, profileT } = useAppSelector(state => state.profile);
     const { t } = useTranslation("profile", { keyPrefix: "settings" });
+
     const handleChangeLanguage = () => {
         alert("Not implemented")
     }
@@ -30,14 +28,14 @@ export default function ProfileSettings({ user, userT }: ProfileSettingsProps) {
                     <ListGroupItem
                         type={ListGroupItemType.DEFAULT}
                         label={t("language.label")}
-                        value={userT[user.lang]}
+                        value={profile?.lang && profileT[profile.lang]}
                         onClick={handleChangeLanguage}
                     />
 
                     <ListGroupItem
                         type={ListGroupItemType.DEFAULT}
                         label={t("theme.label")}
-                        value={userT[user.theme]}
+                        value={profile?.theme && profileT[profile.theme]}
                         onClick={handleChangeTheme}
                     />
 

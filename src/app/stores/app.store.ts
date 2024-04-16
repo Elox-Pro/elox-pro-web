@@ -9,6 +9,7 @@ import tfaReducer from "../../tfa/features/tfa.slice";
 import { recoverPasswordApi } from "../../recover-password/api/recover-password.api";
 import recoverPasswordReducer from "../../recover-password/features/recover-password.slice";
 import ProfileReducer from "../../profile/features/profile.slice";
+import { avatarApi } from "../../avatars/api/avatar.api";
 
 export const appStore = configureStore({
     reducer: {
@@ -22,6 +23,7 @@ export const appStore = configureStore({
         [tfaApi.reducerPath]: tfaApi.reducer,
         [profileApi.reducerPath]: profileApi.reducer,
         [recoverPasswordApi.reducerPath]: recoverPasswordApi.reducer,
+        [avatarApi.reducerPath]: avatarApi.reducer,
     },
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware().concat(
@@ -29,6 +31,7 @@ export const appStore = configureStore({
             tfaApi.middleware,
             profileApi.middleware,
             recoverPasswordApi.middleware,
+            avatarApi.middleware
         )
     },
 })

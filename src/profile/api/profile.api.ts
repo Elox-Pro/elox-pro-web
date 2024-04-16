@@ -13,18 +13,13 @@ export const profileApi = createApi({
     endpoints(builder) {
         return {
             getProfile: builder.query<GetProfileResponse, void>({
-                query() {
-                    return `/`
-                }
+                query() { return `/` }
             }),
+
             updateAvatar: builder.mutation<UpdateAvatarResponse, UpdateAvatarRequest>({
-                query(data) {
-                    return {
-                        url: `/avatar`,
-                        method: "PATCH",
-                        body: data,
-                    }
-                },
+                query(body) {
+                    return { url: `/avatar`, method: "PATCH", body }
+                }
             })
         }
     },

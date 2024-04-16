@@ -9,16 +9,30 @@ import ProfileTfaInfo from "../tfa-info/profile-tfa-info.component"
 import ProfileSettings from "../settings/profile-settings.component"
 import { useTranslation } from "react-i18next"
 import ProfileToast from "../profile-toast/profile-toast.component"
+import { useEffect } from "react"
+import { useDispatch } from "react-redux"
+import { QueryStatus } from "@reduxjs/toolkit/query"
+import { setProfile, setProfileT } from "../../features/profile.slice"
+import { useAppSelector } from "../../../app/hooks/app.hooks"
 
 export default function ProfileIndex() {
-  const { t } = useTranslation("profile", { keyPrefix: "index" })
-  const { data, error, isLoading, status } = useGetProfileQuery()
-  const user = data?.user
-  const userT = data?.userTranslations
+  const { t } = useTranslation("profile", { keyPrefix: "index" });
+  const dispatch = useDispatch();
+  const { profile, profileT } = useAppSelector((state) => state.profile);
+  const { data, error, isLoading, status } = useGetProfileQuery();
+
+  useEffect(() => {
+    if (Object.keys(profile).length === 0 || Object.keys(profileT).length === 0) {
+      if (status === QueryStatus.fulfilled && data) {
+        dispatch(setProfile(data.user));
+        dispatch(setProfileT(data.userTranslations));
+      }
+    }
+  }, [dispatch, profile, profileT, status, data]);
 
   return (
     <CPWrapperPage loading={isLoading} error={error} status={status}>
-      {user && userT &&
+      {status === QueryStatus.fulfilled &&
         <div className="profile-index">
           <ProfileToast />
           <Row className="text-center">
@@ -29,19 +43,19 @@ export default function ProfileIndex() {
           </Row>
           <Row>
             <Col xs={12}>
-              <ProfileBasicInfo user={user} userT={userT} />
+              <ProfileBasicInfo />
             </Col>
             <Col xs={12}>
-              <ProfileContactInfo user={user} />
+              <ProfileContactInfo />
             </Col>
             <Col xs={12}>
-              <ProfilePasswordInfo user={user} />
+              <ProfilePasswordInfo />
             </Col>
             <Col xs={12}>
-              <ProfileTfaInfo user={user} />
+              <ProfileTfaInfo />
             </Col>
             <Col xs={12}>
-              <ProfileSettings user={user} userT={userT} />
+              <ProfileSettings />
             </Col>
           </Row>
 

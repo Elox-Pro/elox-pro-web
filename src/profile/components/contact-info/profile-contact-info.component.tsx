@@ -1,37 +1,15 @@
 import Card from "react-bootstrap/esm/Card"
-import { User } from "../../../users/types/user.type"
 import ListGroup from "react-bootstrap/esm/ListGroup"
 import ListGroupItem, { ListGroupItemType } from "../../../common/components/list-group-item/list-group-item.component"
 import Badge from "react-bootstrap/esm/Badge"
 import { useTranslation } from "react-i18next"
+import { useAppSelector } from "../../../app/hooks/app.hooks"
 
-type ProfileContactInfoProps = {
-    user: User
-}
-export default function ProfileContactInfo({ user }: ProfileContactInfoProps) {
+export default function ProfileContactInfo() {
+    const { profile } = useAppSelector(state => state.profile);
     const { t } = useTranslation("profile", { keyPrefix: "contact_info" });
-    const emailVerifiedElement: JSX.Element = (
-        <>
-            <span className="me-3">{user.email}</span>
-            {user.emailVerified &&
-                <Badge bg="success">
-                    {t("verified")}
-                </Badge>
-            }
-        </>
-    );
-    const handleChangeEmail = () => { alert("change email") };
 
-    const phoneVerifiedElement: JSX.Element = (
-        <>
-            <span className="me-3">{user.phone || "N/A"}</span>
-            {user.phoneVerified &&
-                <Badge bg="success">
-                    {t("verified")}
-                </Badge>
-            }
-        </>
-    );
+    const handleChangeEmail = () => { alert("change email") };
     const handleChangePhone = () => { alert("change phone") };
 
     return (
@@ -39,20 +17,29 @@ export default function ProfileContactInfo({ user }: ProfileContactInfoProps) {
             <Card.Body>
                 <Card.Title>
                     <i className="bi bi-person-badge me-3"></i>
-                    Contact info</Card.Title>
+                    {t("title")}
+                </Card.Title>
                 <ListGroup variant="flush">
 
                     <ListGroupItem
                         type={ListGroupItemType.DEFAULT}
                         label={t("email.label")}
-                        value={emailVerifiedElement}
+                        value={<Verified
+                            value={profile.email}
+                            verified={profile.emailVerified}
+                            text={t("verified")}
+                        />}
                         onClick={handleChangeEmail}
                     />
 
                     <ListGroupItem
                         type={ListGroupItemType.DEFAULT}
                         label={t("phone.label")}
-                        value={phoneVerifiedElement}
+                        value={<Verified
+                            value={profile.phone}
+                            verified={profile.phoneVerified}
+                            text={t("verified")}
+                        />}
                         onClick={handleChangePhone}
                     />
 
@@ -60,5 +47,19 @@ export default function ProfileContactInfo({ user }: ProfileContactInfoProps) {
             </Card.Body>
         </Card>
     )
+}
 
+type VerifiedProps = {
+    value: string | undefined
+    verified: boolean | undefined
+    text: string
+}
+
+function Verified({ value, verified, text }: VerifiedProps) {
+    return (
+        <>
+            <span className="me-3">{value || "N/A"}</span>
+            {verified && <Badge bg="success">{text}</Badge>}
+        </>
+    );
 }
