@@ -17,6 +17,7 @@ import { setUsername, setTfaPending } from "../../../tfa/features/tfa.slice"
 import { GOOGLE_RECAPTCHA_SITE_KEY } from "../../../app/constants/app.constants"
 import { useGRecaptcha } from "../../../common/hooks/grecaptcha.hook"
 import AuthLink from "../auth-link/auth-link.component"
+import { setOverlay } from "../../../common/features/common.slice"
 
 export default function LoginForm() {
   const dispatch = useAppDispatch()
@@ -31,6 +32,7 @@ export default function LoginForm() {
 
   const onSubmit = async (request: LoginRequest) => {
     try {
+      dispatch(setOverlay(true))
       if (!grecaptcha) {
         throw new Error(t("auth:recaptcha_error"))
       }
@@ -41,14 +43,19 @@ export default function LoginForm() {
       dispatch(setUsername(request.username))
       loginRequest({ ...request, grecaptchaToken: token })
     } catch (error) {
+      dispatch(setOverlay(false))
       console.error("Login Error:", error)
     }
   }
 
   useEffect(() => {
+
+    if (status !== QueryStatus.pending) {
+      dispatch(setOverlay(false))
+    }
+
     if (status === QueryStatus.fulfilled) {
       dispatch(setSignupSuccess(false))
-
       if (data?.isTFAPending) {
         dispatch(setTfaPending(true))
         navigate("/tfa/validate", { replace: true })

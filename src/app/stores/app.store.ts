@@ -10,6 +10,7 @@ import { recoverPasswordApi } from "../../recover-password/api/recover-password.
 import recoverPasswordReducer from "../../recover-password/features/recover-password.slice";
 import ProfileReducer from "../../profile/features/profile.slice";
 import { avatarApi } from "../../avatars/api/avatar.api";
+import commonReducer from "../../common/features/common.slice";
 
 export const appStore = configureStore({
     reducer: {
@@ -19,6 +20,7 @@ export const appStore = configureStore({
         cpSidebar: cpSidebarReducer,
         cpSidebarOffcanvas: cpSidebarOffcanvasReducer,
         profile: ProfileReducer,
+        common: commonReducer,
         [authApi.reducerPath]: authApi.reducer,
         [tfaApi.reducerPath]: tfaApi.reducer,
         [profileApi.reducerPath]: profileApi.reducer,
