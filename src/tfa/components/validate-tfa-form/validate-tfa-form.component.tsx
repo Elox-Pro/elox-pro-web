@@ -5,17 +5,18 @@ import { validateTfaSchema } from "../../schemas/validate-tfa.schema"
 import { useAuth } from "../../../auth/providers/auth.provider"
 import { useNavigate } from "react-router-dom"
 import { useValidateTfaRequestMutation } from "../../api/tfa.api"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { QueryStatus } from "@reduxjs/toolkit/query"
-import AlertError from "../../../common/components/alert-error/alert-error.component"
 import Input from "../../../common/components/input/input.component"
-import ProgressButton from "../../../common/components/progress-button/progress-button.component"
 import { useZod } from "../../../common/hooks/zod.hook"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks"
-import { setSignupSuccess } from "../../../auth/feautures/auth.slice"
 import { setTfaPending } from "../../features/tfa.slice"
 import { TfaAction } from "../../enums/validate-tfa/tfa-action.enum"
 import { setResetFormEnabled } from "../../../recover-password/features/recover-password.slice"
+import { setOverlay } from "../../../common/features/common.slice"
+import { toast } from "react-toastify"
+import { handleError } from "../../../common/helpers/handle-error.helper"
+import SubmitButton from "../../../common/components/submit-button/submit-button"
 
 export default function ValidateTfaForm() {
   const { username } = useAppSelector((state) => state.tfa)
@@ -24,55 +25,78 @@ export default function ValidateTfaForm() {
   const { register, handleSubmit, errors } = useZod<ValidateTfaRequest>(validateTfaSchema)
   const authContext = useAuth()
   const navigate = useNavigate()
-  const { createSession } = authContext
   const [validateTfaRequest, { data, status, error }] = useValidateTfaRequestMutation()
+  const [disabled, setDisabled] = useState(false)
 
-  const onSubmit = (request: ValidateTfaRequest) => {
+  const onSubmit = (req: ValidateTfaRequest) => {
     try {
-      validateTfaRequest(request)
+      onInitRequest()
+      validateTfaRequest(req)
     } catch (error) {
-      console.error("Tfa Error:", error)
+      onErrorRequest(error)
     }
   }
 
-  // Triggered when the status or data dependencies change
   useEffect(() => {
-    if (status === QueryStatus.fulfilled) {
-      // If the query status is fulfilled
-      dispatch(setTfaPending(false)) // Update state to indicate TFA is no longer pending
-
-      // Perform different actions based on the TFA action from the API response
-      switch (data?.action) {
-        // Action for signing in
-        case TfaAction.SIGN_IN:
-          createSession() // Create a session
-          navigate("/dashboard/home", { replace: true }) // Navigate to the dashboard home page
-          break
-
-        // Action for signing up
-        case TfaAction.SIGN_UP:
-          dispatch(setSignupSuccess(true)) // Update state to indicate signup success
-          navigate("/auth/signin", { replace: true }) // Navigate to the signin page
-          break
-
-        // Action for recovering password
-        case TfaAction.RECOVER_PASSWORD:
-          dispatch(setResetFormEnabled(true)) // Enable the password reset form
-          navigate("/recover-password/reset", { replace: true }) // Navigate to the password reset page
-          break
-
-        // Default case for unhandled TFA actions
-        default:
-          console.warn("Unhandled TFA action:", data?.action) // Log a warning for unhandled actions
-          break
-      }
+    switch (status) {
+      case QueryStatus.rejected: onRejected(); break;
+      case QueryStatus.fulfilled: onFulfilled(); break;
     }
-  }, [status, data]) // Dependencies for the useEffect hook
+  }, [status, error, data])
+
+  const onInitRequest = () => {
+    dispatch(setOverlay(true));
+    setDisabled(true);
+  }
+
+  const onErrorRequest = (error: any) => {
+    dispatch(setOverlay(false));
+    setDisabled(false);
+    toast.error("Error submitting validate TFA request");
+    console.error("Validate TFA Error:", error);
+  }
+
+  const onRejected = () => {
+    dispatch(setOverlay(false));
+    setDisabled(false);
+    const res = handleError(error);
+    toast.error(res.message);
+    console.error("Validate TFA Rejected:", res);
+  }
+
+  const onFulfilled = () => {
+    dispatch(setOverlay(false));
+    dispatch(setTfaPending(false));
+    setDisabled(false);
+    if (!data || !data.action) {
+      return;
+    }
+    switch (data.action) {
+      case TfaAction.SIGN_IN: signinAction(); break;
+      case TfaAction.SIGN_UP: signupAction(); break;
+      case TfaAction.RECOVER_PASSWORD: recoverPasswordAction(); break;
+      default: console.warn("Unhandled TFA action:", data.action); break;
+    }
+  }
+
+  const signinAction = () => {
+    authContext.createSession()
+    navigate("/cpanel/dashboard", { replace: true })
+    toast("Welcome back! " + username)
+  }
+
+  const signupAction = () => {
+    navigate("/auth/signin", { replace: true })
+    toast.success("Sign up successful")
+  }
+
+  const recoverPasswordAction = () => {
+    dispatch(setResetFormEnabled(true))
+    navigate("/recover-password/reset", { replace: true })
+  }
 
   return (
     <>
-      <AlertError status={status} error={error} />
-
       <form onSubmit={handleSubmit(onSubmit)} noValidate className="row g-3">
         <Input
           type="text"
@@ -95,10 +119,11 @@ export default function ValidateTfaForm() {
           register={register}
           error={errors.code as FieldError}
           autofocus={true}
+          disabled={disabled}
         />
 
         <div className="input-group mb-3">
-          <ProgressButton type="submit" color="primary" status={status} text={t("common:submit")} />
+          <SubmitButton disabled={disabled} />
         </div>
       </form>
     </>

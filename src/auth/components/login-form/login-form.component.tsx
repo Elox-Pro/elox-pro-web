@@ -16,7 +16,6 @@ import AuthLink from "../auth-link/auth-link.component";
 import { setOverlay } from "../../../common/features/common.slice";
 import { toast } from 'react-toastify';
 import { handleError } from "../../../common/helpers/handle-error.helper";
-import Button from "react-bootstrap/esm/Button";
 import SubmitButton from "../../../common/components/submit-button/submit-button";
 
 /**
@@ -72,8 +71,8 @@ export default function LoginForm() {
    */
   const onErrorRequest = (error: any) => {
     dispatch(setOverlay(false));
-    dispatch(setUsername(""));
     setDisabled(false);
+    dispatch(setUsername(""));
     toast.error("Error submitting login request");
     console.error("Login Error:", error);
   };
@@ -83,8 +82,8 @@ export default function LoginForm() {
    */
   const onRejected = () => {
     dispatch(setOverlay(false));
-    dispatch(setUsername(""));
     setDisabled(false);
+    dispatch(setUsername(""));
     const res = handleError(error);
     toast.error(res.message);
     console.error("Login Rejected:", res);
@@ -95,6 +94,7 @@ export default function LoginForm() {
    */
   const onFulfilled = () => {
     dispatch(setOverlay(false));
+    setDisabled(false);
     if (!data) { return; }
     if (data.isTFAPending) {
       dispatch(setTfaPending(true));
@@ -103,6 +103,7 @@ export default function LoginForm() {
       dispatch(setTfaPending(false));
       authContext.createSession();
       navigate("/cpanel/dashboard", { replace: true });
+      toast("Welcome back! " + username);
     }
   };
 
