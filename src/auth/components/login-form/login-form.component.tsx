@@ -2,7 +2,7 @@ import { FieldError } from "react-hook-form";
 import { QueryStatus } from "@reduxjs/toolkit/query";
 import { loginSchema } from "../../schemas/login.schema";
 import { LoginRequest } from "../../types/login/login-request.type";
-import Input from "../../../common/components/input/input.component";
+import IconInput from "../../../common/components/icon-input/icon-input.component";
 import { useLoginRequestMutation } from "../../api/auth.api";
 import { useAuth } from "../../providers/auth.provider";
 import { useNavigate } from "react-router-dom";
@@ -43,8 +43,8 @@ export default function LoginForm() {
       onInitRequest(req.username);
       const grecaptchaToken = await getGRecaptchaToken(grecaptcha);
       loginRequest({ ...req, grecaptchaToken });
-    } catch (err) {
-      onErrorRequest(err);
+    } catch (error) {
+      onErrorRequest(error);
     }
   };
 
@@ -110,7 +110,7 @@ export default function LoginForm() {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} noValidate className="row g-3">
-        <Input
+        <IconInput
           type="text"
           name="username"
           label={t("auth:username_label")}
@@ -119,11 +119,11 @@ export default function LoginForm() {
           register={register}
           defaultValue={username}
           error={errors.username as FieldError}
-          autofocus={true}
+          autoFocus={true}
           disabled={disabled}
         />
 
-        <Input
+        <IconInput
           type="password"
           name="password"
           label={t("auth:password_label")}

@@ -1,56 +1,113 @@
-import { useTranslation } from "react-i18next"
-import { useAppDispatch } from "../../../app/hooks/app.hooks"
-import AlertError from "../../../common/components/alert-error/alert-error.component"
-import { RecoverPasswordInitRequest } from "../../types/recover-password-init/recover-password-init-request.type"
-import { recoverPasswordInitSchema } from "../../schemas/recover-password-init.schemta"
-import { useZod } from "../../../common/hooks/zod.hook"
-import { useNavigate } from "react-router-dom"
-import { useInitRequestMutation } from "../../api/recover-password.api"
-import { useGRecaptcha } from "../../../common/hooks/grecaptcha.hook"
-import { GOOGLE_RECAPTCHA_SITE_KEY } from "../../../app/constants/app.constants"
-import { useEffect } from "react"
-import { QueryStatus } from "@reduxjs/toolkit/query"
-import Input from "../../../common/components/input/input.component"
-import { FieldError } from "react-hook-form"
-import ProgressButton from "../../../common/components/progress-button/progress-button.component"
-import { setTfaPending, setUsername } from "../../../tfa/features/tfa.slice"
+import { useTranslation } from "react-i18next";
+import { useAppDispatch } from "../../../app/hooks/app.hooks";
+import { RecoverPasswordInitRequest } from "../../types/recover-password-init/recover-password-init-request.type";
+import { recoverPasswordInitSchema } from "../../schemas/recover-password-init.schema";
+import { useZod } from "../../../common/hooks/zod.hook";
+import { useNavigate } from "react-router-dom";
+import { useInitRequestMutation } from "../../api/recover-password.api";
+import { getGRecaptchaToken, useGRecaptcha } from "../../../common/hooks/grecaptcha.hook";
+import { useEffect, useState } from "react";
+import { QueryStatus } from "@reduxjs/toolkit/query";
+import IconInput from "../../../common/components/icon-input/icon-input.component";
+import { FieldError } from "react-hook-form";
+import { setTfaPending, setUsername } from "../../../tfa/features/tfa.slice";
+import { setOverlay } from "../../../common/features/common.slice";
+import { toast } from "react-toastify";
+import { handleError } from "../../../common/helpers/handle-error.helper";
+import SubmitButton from "../../../common/components/submit-button/submit-button";
 
+/**
+ * Renders the Recover Password Init Form component.
+ * @author Yonatan A Quintero R
+ * @returns {JSX.Element} The Recover Password Init Form component.
+ */
 export default function RecoverPasswordInitForm() {
-  const dispatch = useAppDispatch()
-  const { t } = useTranslation(["common", "auth"])
-  const { register, handleSubmit, errors } = useZod<RecoverPasswordInitRequest>(recoverPasswordInitSchema)
-  const navigate = useNavigate()
-  const [initRequest, { status, error }] = useInitRequestMutation()
-  const grecaptcha = useGRecaptcha(GOOGLE_RECAPTCHA_SITE_KEY)
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation(["common", "auth"]);
+  const { register, handleSubmit, errors } = useZod<RecoverPasswordInitRequest>(recoverPasswordInitSchema);
+  const navigate = useNavigate();
+  const [initRequest, { status, error }] = useInitRequestMutation();
+  const grecaptcha = useGRecaptcha();
+  const [disabled, setDisabled] = useState(false);
 
-  const onSubmit = async (request: RecoverPasswordInitRequest) => {
+  /**
+   * Handles the form submission.
+   * @param {RecoverPasswordInitRequest} req - The recover password init request object.
+   * @returns {Promise<void>} - A Promise that resolves when the request is complete.
+   */
+  const onSubmit = async (req: RecoverPasswordInitRequest) => {
     try {
-      if (!grecaptcha) {
-        throw new Error(t("auth:recaptcha_error"))
-      }
-      const token = await grecaptcha.execute(GOOGLE_RECAPTCHA_SITE_KEY, { action: "submit" })
-      if (!token) {
-        throw new Error(t("auth:recaptcha_error"))
-      }
-      dispatch(setUsername(request.username))
-      initRequest({ ...request, grecaptchaToken: token })
+      onInitRequest(req.username);
+      const grecaptchaToken = await getGRecaptchaToken(grecaptcha);
+      initRequest({ ...req, grecaptchaToken });
     } catch (error) {
-      console.error("Recover password Init Error:", error)
+      onErrorRequest(error);
     }
-  }
+  };
 
   useEffect(() => {
-    if (status === QueryStatus.fulfilled) {
-      dispatch(setTfaPending(true))
-      navigate("/tfa/validate", { replace: true })
+    switch (status) {
+      case QueryStatus.rejected:
+        onRejected();
+        break;
+      case QueryStatus.fulfilled:
+        onFulfilled();
+        break;
     }
-  }, [status])
+  }, [status, error]);
+
+  /**
+   * Initializes the recover password init request.
+   * @param {string} username - The username to be set.
+   * @returns {void}
+   */
+  const onInitRequest = (username: string) => {
+    dispatch(setOverlay(true));
+    dispatch(setUsername(username));
+    setDisabled(true);
+  };
+
+  /**
+   * Handles an error during the recover password init request.
+   * @param {any} error - The error object.
+   * @returns {void}
+   */
+  const onErrorRequest = (error: any) => {
+    dispatch(setOverlay(false));
+    setDisabled(false);
+    dispatch(setUsername(""));
+    toast.error("Error submitting recover password init request");
+    console.error("Recover Password Init Error:", error);
+  };
+
+  /**
+   * Handles a rejected recover password init request.
+   * @returns {void}
+   */
+  const onRejected = () => {
+    dispatch(setOverlay(false));
+    setDisabled(false);
+    dispatch(setUsername(""));
+    const res = handleError(error);
+    toast.error(res.message);
+    console.error("Recover Password Init Rejected:", res);
+  };
+
+  /**
+   * Handles a successful recover password init request.
+   * @returns {void}
+   */
+  const onFulfilled = () => {
+    dispatch(setOverlay(false));
+    setDisabled(false);
+    dispatch(setTfaPending(true));
+    navigate("/tfa/validate", { replace: true });
+  };
 
   return (
     <>
-      <AlertError status={status} error={error} />
       <form onSubmit={handleSubmit(onSubmit)} noValidate className="row g-3">
-        <Input
+        <IconInput
           type="text"
           name="username"
           label={t("auth:username_label")}
@@ -58,13 +115,13 @@ export default function RecoverPasswordInitForm() {
           icon="bi bi-person"
           register={register}
           error={errors.username as FieldError}
-          autofocus={true}
+          autoFocus={true}
+          disabled={disabled}
         />
-
         <div className="input-group mb-3">
-          <ProgressButton type="submit" color="primary" status={status} text={t("common:submit")} />
+          <SubmitButton disabled={disabled} />
         </div>
       </form>
     </>
-  )
+  );
 }

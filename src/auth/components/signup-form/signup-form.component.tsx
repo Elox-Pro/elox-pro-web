@@ -1,6 +1,6 @@
 import { FieldError } from "react-hook-form";
 import { QueryStatus } from "@reduxjs/toolkit/query";
-import Input from "../../../common/components/input/input.component";
+import IconInput from "../../../common/components/icon-input/icon-input.component";
 import { useSignupRequestMutation } from "../../api/auth.api";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -114,7 +114,7 @@ export default function SignupForm() {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} noValidate className="row g-3">
-        <Input
+        <IconInput
           type="text"
           name="username"
           label={t("auth:username_label")}
@@ -122,11 +122,11 @@ export default function SignupForm() {
           icon="bi bi-person"
           register={register}
           error={errors.username as FieldError}
-          autofocus={true}
+          autoFocus={true}
           disabled={disabled}
         />
 
-        <Input
+        <IconInput
           type="email"
           name="email"
           label={t("auth:email_label")}
@@ -137,7 +137,7 @@ export default function SignupForm() {
           disabled={disabled}
         />
 
-        <Input
+        <IconInput
           type="password"
           name="password1"
           label={t("auth:password_label")}
@@ -148,7 +148,7 @@ export default function SignupForm() {
           disabled={disabled}
         />
 
-        <Input
+        <IconInput
           type="password"
           name="password2"
           label={t("auth:confirm_password_label")}

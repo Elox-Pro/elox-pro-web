@@ -4,7 +4,6 @@ import { profileApi } from "../../profile/api/profile.api";
 import { tfaApi } from "../../tfa/api/tfa.api";
 import cpSidebarReducer from "../../cpanel/features/cp-sidebar.slice";
 import cpSidebarOffcanvasReducer from "../../cpanel/features/cp-sidebar-offcanvas.slice";
-import authReducer from "../../auth/feautures/auth.slice";
 import tfaReducer from "../../tfa/features/tfa.slice";
 import { recoverPasswordApi } from "../../recover-password/api/recover-password.api";
 import recoverPasswordReducer from "../../recover-password/features/recover-password.slice";
@@ -14,7 +13,6 @@ import commonReducer from "../../common/features/common.slice";
 
 export const appStore = configureStore({
     reducer: {
-        auth: authReducer,
         tfa: tfaReducer,
         recoverPassword: recoverPasswordReducer,
         cpSidebar: cpSidebarReducer,

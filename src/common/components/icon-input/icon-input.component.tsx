@@ -1,43 +1,28 @@
-import { useId } from "react"
+import { InputHTMLAttributes, useId } from "react"
 import { FieldError, UseFormRegister } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
-export type InputProps = {
-  type: string
-  name: string
-  label: string
-  placeholder: string
+type IconInputProps = {
   icon?: string
-  autofocus?: boolean
+  label: string
   register: UseFormRegister<any>
   error: FieldError | undefined
   valueAsNumber?: boolean
-  value?: string
-  readonly?: boolean
-  disabled?: boolean
-  defaultValue?: string
-}
+} & InputHTMLAttributes<HTMLInputElement>
 
-export default function Input({
-  icon,
-  type,
-  placeholder,
-  name,
-  label,
-  autofocus,
-  register,
-  error,
-  valueAsNumber,
-  value,
-  readonly,
-  disabled,
-  defaultValue,
-}: InputProps) {
+export default function IconInput({ icon, label, register, error, valueAsNumber, ...props }: IconInputProps) {
+
+  const { name } = props;
+  if (!name) {
+    throw new Error("Name is required");
+  }
+
   const { t } = useTranslation(["zod-error"])
   const id = useId()
   const formControlClass = `form-control ${error ? "is-invalid" : ""}`
   const feedbackClass = `invalid-feedback ${error ? "d-block" : "d-none"}`
   const errorMessage = error && t(error.message || "")
+
   return (
     <>
       <div className="input-group has-validation mb-3">
@@ -49,16 +34,10 @@ export default function Input({
 
         <div className="form-floating">
           <input
-            type={type}
             className={formControlClass}
             id={id}
-            placeholder={placeholder}
-            autoFocus={autofocus}
-            value={value}
-            readOnly={readonly}
-            disabled={disabled}
-            defaultValue={defaultValue}
             {...register(name, { valueAsNumber })}
+            {...props}
           />
           <label htmlFor={id}>{label}</label>
         </div>
