@@ -2,18 +2,19 @@ import { FieldError } from "react-hook-form"
 import { QueryStatus } from "@reduxjs/toolkit/query"
 import Input from "../../../common/components/input/input.component"
 import { useSignupRequestMutation } from "../../api/auth.api"
-import AlertError from "../../../common/components/alert-error/alert-error.component"
-import ProgressButton from "../../../common/components/progress-button/progress-button.component"
 import { useNavigate } from "react-router-dom"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useZod } from "../../../common/hooks/zod.hook"
 import { useAppDispatch } from "../../../app/hooks/app.hooks"
 import { setUsername, setTfaPending } from "../../../tfa/features/tfa.slice"
-import { GOOGLE_RECAPTCHA_SITE_KEY } from "../../../app/constants/app.constants"
-import { useGRecaptcha } from "../../../common/hooks/grecaptcha.hook"
+import { getGRecaptchaToken, useGRecaptcha } from "../../../common/hooks/grecaptcha.hook"
 import { SignupRequest } from "../../types/signup/signup-request.type"
 import { signupSchema } from "../../schemas/signup.schema"
+import { setOverlay } from "../../../common/features/common.slice"
+import { toast } from "react-toastify"
+import { handleError } from "../../../common/helpers/handle-error.helper"
+import SubmitButton from "../../../common/components/submit-button/submit-button"
 
 export default function SignupForm() {
   const dispatch = useAppDispatch()
@@ -21,38 +22,63 @@ export default function SignupForm() {
   const { register, handleSubmit, errors } = useZod<SignupRequest>(signupSchema)
   const navigate = useNavigate()
   const [signupRequest, { data, status, error }] = useSignupRequestMutation()
-  const grecaptcha = useGRecaptcha(GOOGLE_RECAPTCHA_SITE_KEY)
+  const grecaptcha = useGRecaptcha()
+  const [disabled, setDisabled] = useState(false)
 
-  const onSubmit = async (request: SignupRequest) => {
+  const onSubmit = async (req: SignupRequest) => {
     try {
-      if (!grecaptcha) {
-        throw new Error(t("auth:recaptcha_error"))
-      }
-      const grecaptchaToken = await grecaptcha.execute(GOOGLE_RECAPTCHA_SITE_KEY, { action: "submit" })
-      if (!grecaptchaToken) {
-        throw new Error(t("auth:recaptcha_error"))
-      }
-      dispatch(setUsername(request.username))
-      signupRequest({ ...request, grecaptchaToken })
+      onInitRequest(req.username);
+      const grecaptchaToken = await getGRecaptchaToken(grecaptcha);
+      signupRequest({ ...req, grecaptchaToken })
     } catch (error) {
-      console.error("Sign up Error:", error)
+      onErrorRequest(error);
     }
   }
 
   useEffect(() => {
-    if (status === QueryStatus.fulfilled) {
-      if (data?.isTFAPending) {
-        dispatch(setTfaPending(true))
-        navigate("/tfa/validate", { replace: true })
-      } else {
-        navigate("/auth/signin", { replace: true })
-      }
+    switch (status) {
+      case QueryStatus.rejected: onRejected(); break;
+      case QueryStatus.fulfilled: onFulfilled(); break;
     }
-  }, [status])
+  }, [status, error, data]);
+
+  const onInitRequest = (username: string) => {
+    dispatch(setOverlay(true));
+    dispatch(setUsername(username));
+    setDisabled(true);
+  }
+
+  const onErrorRequest = (error: any) => {
+    dispatch(setOverlay(false));
+    dispatch(setUsername(""));
+    setDisabled(false);
+    toast.error("Error submitting signup request");
+    console.error("Signup Error:", error);
+  }
+
+  const onRejected = () => {
+    dispatch(setOverlay(false));
+    dispatch(setUsername(""));
+    setDisabled(false);
+    const res = handleError(error);
+    toast.error(res.message);
+    console.error("Signup Rejected:", res);
+  }
+
+  const onFulfilled = () => {
+    dispatch(setOverlay(false));
+    if (!data) { return; }
+    if (data.isTFAPending) {
+      dispatch(setTfaPending(true))
+      navigate("/tfa/validate", { replace: true })
+    } else {
+      dispatch(setTfaPending(false))
+      navigate("/auth/signin", { replace: true })
+    }
+  }
 
   return (
     <>
-      <AlertError status={status} error={error} />
       <form onSubmit={handleSubmit(onSubmit)} noValidate className="row g-3">
         <Input
           type="text"
@@ -63,6 +89,7 @@ export default function SignupForm() {
           register={register}
           error={errors.username as FieldError}
           autofocus={true}
+          disabled={disabled}
         />
 
         <Input
@@ -73,6 +100,7 @@ export default function SignupForm() {
           icon="bi bi-envelope"
           register={register}
           error={errors.email as FieldError}
+          disabled={disabled}
         />
 
         <Input
@@ -83,6 +111,7 @@ export default function SignupForm() {
           icon="bi bi-lock"
           register={register}
           error={errors.password1 as FieldError}
+          disabled={disabled}
         />
 
         <Input
@@ -93,10 +122,11 @@ export default function SignupForm() {
           icon="bi bi-lock"
           register={register}
           error={errors.password2 as FieldError}
+          disabled={disabled}
         />
 
         <div className="input-group mb-3">
-          <ProgressButton type="submit" color="primary" status={status} text={t("common:submit")} />
+          <SubmitButton disabled={disabled} />
         </div>
       </form>
     </>

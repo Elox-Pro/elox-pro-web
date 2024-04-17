@@ -17,6 +17,7 @@ import { setOverlay } from "../../../common/features/common.slice";
 import { toast } from 'react-toastify';
 import { handleError } from "../../../common/helpers/handle-error.helper";
 import Button from "react-bootstrap/esm/Button";
+import SubmitButton from "../../../common/components/submit-button/submit-button";
 
 /**
  * LoginForm component
@@ -50,12 +51,8 @@ export default function LoginForm() {
 
   useEffect(() => {
     switch (status) {
-      case QueryStatus.rejected:
-        onRejected();
-        break;
-      case QueryStatus.fulfilled:
-        onFulfilled();
-        break;
+      case QueryStatus.rejected: onRejected(); break;
+      case QueryStatus.fulfilled: onFulfilled(); break;
     }
   }, [status, error, data]);
 
@@ -98,15 +95,14 @@ export default function LoginForm() {
    */
   const onFulfilled = () => {
     dispatch(setOverlay(false));
-    if (data) {
-      if (data.isTFAPending) {
-        dispatch(setTfaPending(true));
-        navigate("/tfa/validate", { replace: true });
-      } else {
-        dispatch(setTfaPending(false));
-        authContext.createSession();
-        navigate("/cpanel/dashboard", { replace: true });
-      }
+    if (!data) { return; }
+    if (data.isTFAPending) {
+      dispatch(setTfaPending(true));
+      navigate("/tfa/validate", { replace: true });
+    } else {
+      dispatch(setTfaPending(false));
+      authContext.createSession();
+      navigate("/cpanel/dashboard", { replace: true });
     }
   };
 
@@ -138,9 +134,7 @@ export default function LoginForm() {
         />
 
         <div className="input-group mb-3">
-          <Button type="submit" variant="primary" disabled={disabled} className="w-100 mb-3 btn-lg">
-            {t("common:submit")}
-          </Button>
+          <SubmitButton disabled={disabled} />
         </div>
       </form>
 
