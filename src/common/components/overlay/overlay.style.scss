@@ -35,11 +35,9 @@
         overflow: hidden;
 
         .loading-bar {
-            &.active {
-                height: 100%;
-                background-color: var(--bs-primary);
-                animation: loadingAnimation 0.75s linear infinite;
-            }
+            height: 100%;
+            background-color: var(--bs-primary);
+            animation: loadingAnimation 0.75s linear infinite;
         }
     }
 }

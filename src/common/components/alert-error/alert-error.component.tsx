@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Alert from "react-bootstrap/Alert"
-import { ErrorData, useHandleError } from "../../helpers/handle-error.helper"
+import { ErrorData, handleError } from "../../helpers/handle-error.helper"
 import { FetchBaseQueryError, QueryStatus } from "@reduxjs/toolkit/query"
 import { SerializedError } from "@reduxjs/toolkit"
 import { useNavigate } from "react-router-dom"
@@ -18,7 +18,7 @@ export default function AlertError({ status, error }: AlertErrorPros) {
 
   useEffect(() => {
     if (status === QueryStatus.rejected) {
-      const { data } = useHandleError(error)
+      const { data } = handleError(error)
       if (data.statusCode === 401) {
         navigate("/error/401", { replace: true })
       } else {
@@ -38,7 +38,7 @@ export default function AlertError({ status, error }: AlertErrorPros) {
     <Alert show={show} variant="danger" onClose={handleClose} dismissible>
       <h4 className="alert-heading">
         <i className="bi bi-exclamation-circle me-3"></i>
-        {errorData?.error}&nbsp;{errorData?.statusCode}
+        {errorData?.error}&nbsp;{errorData?.code}
       </h4>
       <p>{errorData?.message}</p>
     </Alert>

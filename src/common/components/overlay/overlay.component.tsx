@@ -6,7 +6,7 @@ export function Overlay() {
     return (
         <div className={`overlay ${active}`}>
             <div className="loading-container">
-                <div className={`loading-bar ${active}`}></div>
+                <div className={`loading-bar`}></div>
             </div>
         </div >
     )

@@ -8,10 +8,10 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
  */
 const isFetchBaseQueryError = (error: unknown): error is FetchBaseQueryError => {
     return (
-        typeof error === "object" &&
-        error !== null &&
-        "status" in error &&
-        "data" in error
+        typeof error === "object"
+        && error !== null
+        && "status" in error
+        && "data" in error
     );
 };
 
@@ -22,14 +22,9 @@ const isFetchBaseQueryError = (error: unknown): error is FetchBaseQueryError => 
  */
 const isSerializedError = (error: unknown): error is SerializedError => {
     return (
-        typeof error === "object" &&
-        error !== null &&
-        (
-            "message" in error ||
-            "name" in error ||
-            "code" in error ||
-            "stack" in error
-        )
+        typeof error === "object"
+        && error !== null
+        && ("message" in error || "name" in error || "code" in error || "stack" in error)
     );
 };
 
@@ -46,47 +41,39 @@ export enum ErrorType {
  * Data structure representing error details.
  */
 export type ErrorData = {
-    error?: string;
-    message?: string;
-    statusCode?: number;
-    stack?: string;
-};
-
-/**
- * Response structure representing an error.
- */
-export type ErrorResponse = {
     type: ErrorType;
-    data: ErrorData;
+    message: string;
+    code?: number;
+    error?: string;
+    stack?: string;
 };
 
 /**
  * Handles errors by categorizing and structuring them into a standardized ErrorResponse format.
  * @param error The error to handle.
- * @returns An ErrorResponse object containing categorized error data.
+ * @returns An ErrorData object containing categorized error data.
  */
-export const useHandleError = (error: unknown): ErrorResponse => {
+export const handleError = (error: unknown): ErrorData => {
     if (isFetchBaseQueryError(error)) {
+        const err = error.data as { message: string, statusCode: number };
         return {
             type: ErrorType.FetchBaseQueryError,
-            data: error.data as ErrorData,
-        };
+            message: err.message,
+            code: err.statusCode,
+        } as ErrorData;
     }
     if (isSerializedError(error)) {
         return {
             type: ErrorType.SerializedError,
-            data: {
-                error: error.name,
-                message: error.message,
-                statusCode: error.code,
-                stack: error.stack,
-            } as ErrorData,
-        };
+            error: error.name,
+            message: error.message,
+            code: error.code,
+            stack: error.stack,
+        } as ErrorData;
     }
+
     return {
         type: ErrorType.InternalClientError,
-        data: {
-            error: ErrorType.InternalClientError,
-        },
-    };
+        message: ErrorType.InternalClientError,
+    } as ErrorData;
 }
