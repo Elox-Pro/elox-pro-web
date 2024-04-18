@@ -1,20 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { User } from "../../users/types/user.type";
-
-type AvatarState = {
-    selected: string
-}
-
-type ProfileState = {
-    profile: User,
-    profileTranslations: Record<string, string>,
-    avatar: AvatarState
-}
+import { ProfileState } from "../types/profile-state.type";
 
 const initialState: ProfileState = {
     profile: {},
-    profileTranslations: {},
-    avatar: { selected: "" }
+    profileTranslations: {}
 }
 
 const ProfileSlice = createSlice({
@@ -26,9 +16,6 @@ const ProfileSlice = createSlice({
         },
         setProfileTranslations: (state, action: { payload: Record<string, string> }) => {
             state.profileTranslations = action.payload;
-        },
-        setAvatar: (state, action: { payload: AvatarState }) => {
-            state.avatar = action.payload;
         }
     }
 });
