@@ -1,6 +1,21 @@
 {
-    "tfa_description": "Introduce el código de autenticación de dos factores para completar la solicitud",
-    "tfa_label": "Autenticación de dos factores",
-    "tfa_placeholder": "Introduce el código",
-    "tfa_title": "Autenticación de dos factores"
+    "validate-tfa": {
+        "title": "Autenticación de dos factores",
+        "description": "Ingrese su código de autenticación de dos factores",
+        "username": {
+            "label": "Nombre de usuario",
+            "placeholder": "Escriba el nombre de usuario"
+        },
+        "validate-code": {
+            "label": "Código de validación",
+            "placeholder": "Escriba el código"
+        },
+        "error": {
+            "on-request": "Error al enviar la autenticación de dos factores"
+        },
+        "success": {
+            "signin": "¡Bienvenido de nuevo {{username}}!",
+            "signup": "Tu cuenta ha sido creada con éxito"
+        }
+    }
 }

@@ -1,4 +1,10 @@
 {
     "home": "Home",
-    "submit": "Submit"
+    "submit-button": {
+        "text": "Submit"
+    },
+    "nav": {
+        "signin": "Sign in",
+        "signup": "Sign up"
+    }
 }

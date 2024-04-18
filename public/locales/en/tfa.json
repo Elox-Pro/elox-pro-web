@@ -1,6 +1,21 @@
 {
-    "tfa_description": "Type your two-factor authentication code to complete your request",
-    "tfa_label": "Two-factor authentication",
-    "tfa_placeholder": "Type code",
-    "tfa_title": "Two-factor Authentication"
+    "validate-tfa": {
+        "title": "Two-factor authentication",
+        "description": "Enter your two-factor authentication code",
+        "username": {
+            "label": "Username",
+            "placeholder": "Type username"
+        },
+        "validate-code": {
+            "label": "Validate code",
+            "placeholder": "Type code"
+        },
+        "error": {
+            "on-request": "Error submitting two-factor authentication"
+        },
+        "success": {
+            "signin": "Welcome back {{username}}!",
+            "signup": "Your account has been created successfully"
+        }
+    }
 }

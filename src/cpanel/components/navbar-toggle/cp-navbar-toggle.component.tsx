@@ -1,6 +1,6 @@
 import { useAppDispatch } from "../../../app/hooks/app.hooks"
 import { toggleSidebar } from "../../features/cp-sidebar.slice"
-import { handleShow } from "../../features/cp-sidebar-offcanvas.slice"
+import { sidebarOffToggle } from "../../features/cp-sidebar-offcanvas.slice"
 import CPNavbarBrand, { CPNavbarBrandLogo } from "../navbar-brand/cp-navbar-brand.component"
 import "./cp-navbar-toggle.style.scss"
 export default function CPNavbarToggle() {
@@ -9,7 +9,7 @@ export default function CPNavbarToggle() {
     dispatch(toggleSidebar())
   }
   const handleShowAction = () => {
-    dispatch(handleShow())
+    dispatch(sidebarOffToggle())
   }
   return (
     <>

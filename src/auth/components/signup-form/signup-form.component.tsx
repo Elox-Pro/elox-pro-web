@@ -22,7 +22,7 @@ import { handleRejected } from "../../../common/helpers/handle-rejected.helper";
  */
 export default function SignupForm() {
   const dispatch = useAppDispatch();
-  const { t } = useTranslation(["common", "auth"]);
+  const { t } = useTranslation("auth", { keyPrefix: "signup" })
   const { register, handleSubmit, errors } = useZod<SignupRequest>(signupSchema);
   const navigate = useNavigate();
   const [signupRequest, { data, status, error }] = useSignupRequestMutation();
@@ -75,7 +75,7 @@ export default function SignupForm() {
     dispatch(setOverlay(false));
     setDisabled(false);
     dispatch(setUsername(""));
-    toast.error("Error submitting signup request");
+    toast.error(t("error.on-request"));
     console.error("Signup Error:", error);
   };
 
@@ -106,6 +106,7 @@ export default function SignupForm() {
     } else {
       dispatch(setTfaPending(false));
       navigate("/auth/signin", { replace: true });
+      toast.success(t("success.message"));
     }
   };
 
@@ -115,20 +116,21 @@ export default function SignupForm() {
         <IconInput
           type="text"
           name="username"
-          label={t("auth:username_label")}
-          placeholder={t("auth:username_placeholder")}
+          label={t("username.label")}
+          placeholder={t("username.placeholder")}
           icon="bi bi-person"
           register={register}
           error={errors.username as FieldError}
           autoFocus={true}
           disabled={disabled}
+          autoComplete="username"
         />
 
         <IconInput
           type="email"
           name="email"
-          label={t("auth:email_label")}
-          placeholder={t("auth:email_placeholder")}
+          label={t("email.label")}
+          placeholder={t("email.placeholder")}
           icon="bi bi-envelope"
           register={register}
           error={errors.email as FieldError}
@@ -138,23 +140,25 @@ export default function SignupForm() {
         <IconInput
           type="password"
           name="password1"
-          label={t("auth:password_label")}
-          placeholder={t("auth:password_placeholder")}
+          label={t("password.label")}
+          placeholder={t("password.placeholder")}
           icon="bi bi-lock"
           register={register}
           error={errors.password1 as FieldError}
           disabled={disabled}
+          autoComplete="new-password"
         />
 
         <IconInput
           type="password"
           name="password2"
-          label={t("auth:confirm_password_label")}
-          placeholder={t("auth:confirm_password_placeholder")}
+          label={t("confirm-password.label")}
+          placeholder={t("confirm-password.placeholder")}
           icon="bi bi-lock"
           register={register}
           error={errors.password2 as FieldError}
           disabled={disabled}
+          autoComplete="new-password"
         />
 
         <div className="input-group mb-3">

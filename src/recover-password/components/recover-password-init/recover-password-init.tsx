@@ -3,11 +3,11 @@ import AuthFormHeader from "../../../auth/components/auth-form-header/auth-form-
 import RecoverPasswordInitForm from "../recover-password-init-form/recover-password-init-form.component"
 
 export default function RecoverPasswordInit() {
-  const { t } = useTranslation(["common", "recover-password"])
+  const { t } = useTranslation("recover-password", {keyPrefix: "init"})
 
   return (
     <>
-      <AuthFormHeader title={t("recover-password:init_title")} description={t("recover-password:init_description")} />
+      <AuthFormHeader title={t("title")} description={t("description")} />
       <RecoverPasswordInitForm />
     </>
   )

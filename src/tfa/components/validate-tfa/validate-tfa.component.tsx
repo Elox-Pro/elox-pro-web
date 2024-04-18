@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 
 export default function VaildateTfa() {
-  const { t } = useTranslation(["common", "tfa"])
+  const { t } = useTranslation("tfa", { keyPrefix: "validate-tfa" })
   const { tfaPending: isTfaPending } = useAppSelector((state) => state.tfa)
   const navigate = useNavigate()
 
@@ -20,7 +20,7 @@ export default function VaildateTfa() {
     <>
       {isTfaPending && (
         <>
-          <AuthFormHeader title={t("tfa:tfa_title")} description={t("tfa:tfa_description")} />
+          <AuthFormHeader title={t("title")} description={t("description")} />
           <ValidateTfaForm />
         </>
       )}

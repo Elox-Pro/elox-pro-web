@@ -25,10 +25,6 @@ const DashboardRoutes = [
         path: "/cpanel/profile",
         element: <ProfileIndex />,
       },
-      // {
-      //   path: "/cpanel/user",
-      //   element: <UserIndex />,
-      // },
     ],
   },
 ]

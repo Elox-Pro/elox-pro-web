@@ -22,8 +22,8 @@ import { handleRejected } from "../../../common/helpers/handle-rejected.helper";
  * @returns {JSX.Element} The Recover Password Init Form component.
  */
 export default function RecoverPasswordInitForm() {
+  const { t } = useTranslation("recover-password", { keyPrefix: "init" })
   const dispatch = useAppDispatch();
-  const { t } = useTranslation(["common", "auth"]);
   const { register, handleSubmit, errors } = useZod<RecoverPasswordInitRequest>(recoverPasswordInitSchema);
   const navigate = useNavigate();
   const [initRequest, { status, error }] = useInitRequestMutation();
@@ -76,7 +76,7 @@ export default function RecoverPasswordInitForm() {
     dispatch(setOverlay(false));
     setDisabled(false);
     dispatch(setUsername(""));
-    toast.error("Error submitting recover password init request");
+    toast.error(t("error.on-request"));
     console.error("Recover Password Init Error:", error);
   };
 
@@ -108,13 +108,14 @@ export default function RecoverPasswordInitForm() {
         <IconInput
           type="text"
           name="username"
-          label={t("auth:username_label")}
-          placeholder={t("auth:username_placeholder")}
+          label={t("username.label")}
+          placeholder={t("username.placeholder")}
           icon="bi bi-person"
           register={register}
           error={errors.username as FieldError}
           autoFocus={true}
           disabled={disabled}
+          autoComplete="username"
         />
         <div className="input-group mb-3">
           <SubmitButton disabled={disabled} />

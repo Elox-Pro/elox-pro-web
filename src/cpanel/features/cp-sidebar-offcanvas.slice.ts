@@ -1,26 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 type CPSidebarOffcanvasState = {
-    show: boolean;
+    sidebarOffShow: boolean;
 }
 
 const initialState: CPSidebarOffcanvasState = {
-    show: false,
+    sidebarOffShow: false,
 }
 
 const cpSidebarOffcanvasSlice = createSlice({
     name: "cpSidebarOffcanvas",
     initialState,
     reducers: {
-        handleShow: (state) => {
-            state.show = true;
+        sidebarOffToggle: (state) => {
+            state.sidebarOffShow = !state.sidebarOffShow;
         },
-        handleClose: (state) => {
-            state.show = false;
+        sidebarOffClose: (state) => {
+            state.sidebarOffShow = false;
         },
     },
 });
 
 const cpSidebarOffcanvasReducer = cpSidebarOffcanvasSlice.reducer;
-export const { handleShow, handleClose } = cpSidebarOffcanvasSlice.actions;
+export const { sidebarOffToggle, sidebarOffClose } = cpSidebarOffcanvasSlice.actions;
 export default cpSidebarOffcanvasReducer;

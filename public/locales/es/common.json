@@ -1,3 +1,10 @@
 {
-    "submit": "Enviar"
+    "home": "Inicio",
+    "submit-button": {
+        "text": "Enviar"
+    },
+    "nav": {
+        "signin": "Iniciar sesión",
+        "signup": "Registrarse"
+    }
 }

@@ -3,17 +3,36 @@ import Col from "react-bootstrap/Col"
 import { useTranslation } from "react-i18next"
 
 export default function CoverFooter() {
-  const { t } = useTranslation(["cover"])
+  const { t } = useTranslation("cover", { keyPrefix: "footer" });
 
   return (
-    <footer className="mt-auto text-center">
+    <footer className="p-2">
       <Row>
         <Col xs={12}>
-          <p className="mt-5">{t("cover:footer_text_1")}</p>
-          <p className="mt-4">{t("cover:footer_text_2")}</p>
-          <p className="mt-3">
-            <small>{t("cover:footer_text_3")}</small>
-          </p>
+          <hr />
+          <ul className="list-unstyled text-muted">
+            <li>
+              <p>
+                <small>
+                  {t("text1")}
+                </small>
+              </p>
+            </li>
+            <li>
+              <p>
+                <small>
+                  {t("text2")}
+                </small>
+              </p>
+            </li>
+            <li>
+              <p>
+                <small>
+                  {t("text3")}
+                </small>
+              </p>
+            </li>
+          </ul>
         </Col>
       </Row>
     </footer>

@@ -24,9 +24,9 @@ import { handleRejected } from "../../../common/helpers/handle-rejected.helper";
  * @returns {JSX.Element} The Validate TFA Form component.
  */
 export default function ValidateTfaForm() {
+  const { t } = useTranslation("tfa", { keyPrefix: "validate-tfa" })
   const { username } = useAppSelector((state) => state.tfa);
   const dispatch = useAppDispatch();
-  const { t } = useTranslation(["common", "tfa", "auth"]);
   const { register, handleSubmit, errors } = useZod<ValidateTfaRequest>(validateTfaSchema);
   const authContext = useAuth();
   const navigate = useNavigate();
@@ -75,7 +75,7 @@ export default function ValidateTfaForm() {
   const onErrorRequest = (error: any) => {
     dispatch(setOverlay(false));
     setDisabled(false);
-    toast.error("Error submitting validate TFA request");
+    toast.error(t("error.on-request"));
     console.error("Validate TFA Error:", error);
   };
 
@@ -123,7 +123,7 @@ export default function ValidateTfaForm() {
   const signinAction = () => {
     authContext.createSession();
     navigate("/cpanel/dashboard", { replace: true });
-    toast("Welcome back! " + username);
+    toast(t("success.signin", { username }));
   };
 
   /**
@@ -132,7 +132,7 @@ export default function ValidateTfaForm() {
    */
   const signupAction = () => {
     navigate("/auth/signin", { replace: true });
-    toast.success("Sign up successful");
+    toast.success(t("success.signup"));
   };
 
   /**
@@ -150,8 +150,8 @@ export default function ValidateTfaForm() {
         <IconInput
           type="text"
           name="username"
-          label={t("auth:username_label")}
-          placeholder={t("auth:username_placeholder")}
+          label={t("username.label")}
+          placeholder={t("username.placeholder")}
           icon="bi bi-person"
           readOnly={true}
           register={register}
@@ -162,8 +162,8 @@ export default function ValidateTfaForm() {
         <IconInput
           type="text"
           name="code"
-          label={t("tfa:tfa_label")}
-          placeholder={t("tfa:tfa_placeholder")}
+          label={t("validate-code.label")}
+          placeholder={t("validate-code.placeholder")}
           icon="bi bi-lock"
           register={register}
           error={errors.code as FieldError}

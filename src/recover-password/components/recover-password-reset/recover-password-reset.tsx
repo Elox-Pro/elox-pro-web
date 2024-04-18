@@ -6,24 +6,24 @@ import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 
 export default function RecoverPasswordReset() {
-  const { t } = useTranslation(["common", "recover-password"])
+  const { t } = useTranslation("recover-password", { keyPrefix: "reset" })
 
-  const { resetFormEnabled: isResetFormEnabled } = useAppSelector((state) => state.recoverPassword)
+  const { resetFormEnabled } = useAppSelector((state) => state.recoverPassword)
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (!isResetFormEnabled) {
+    if (!resetFormEnabled) {
       navigate(-1)
     }
   }, [])
 
-  if (!isResetFormEnabled) {
-    return <></>
+  if (!resetFormEnabled) {
+    return null
   }
 
   return (
     <>
-      <AuthFormHeader title={t("recover-password:reset_title")} description={t("recover-password:reset_description")} />
+      <AuthFormHeader title={t("title")} description={t("description")} />
       <RecoverPasswordResetForm />
     </>
   )

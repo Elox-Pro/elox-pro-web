@@ -1,0 +1,16 @@
+{
+    "sidebar": {
+        "home": "Inicio",
+        "logout": {
+            "text": "Cerrar sesión",
+            "error": "Error al intentar cerrar sesión"
+        }
+    },
+    "navbar": {
+        "profile": "Perfil",
+        "logout": {
+            "text": "Cerrar sesión",
+            "error": "Error al intentar cerrar sesión"
+        }
+    }
+}

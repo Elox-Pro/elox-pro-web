@@ -5,9 +5,13 @@ import { useTranslation } from "react-i18next"
 import { NavLink } from "react-router-dom"
 import "./public-navbar.style.scss"
 
-export default function PublicNavbar() {
-  const { t } = useTranslation(["nav"])
+const autoCollapse = () => {
+  const collapse = document.querySelector(".navbar-collapse.collapse");
+  collapse?.classList.remove("show");
+}
 
+export default function PublicNavbar() {
+  const { t } = useTranslation("common", { keyPrefix: "nav" });
   return (
     <Navbar expand="lg" className="public-navbar mb-5 shadow" bg="primary" data-bs-theme="dark">
       <Container>
@@ -21,16 +25,16 @@ export default function PublicNavbar() {
           />
         </NavLink>
 
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Toggle />
+        <Navbar.Collapse >
           <Nav>
-            <NavLink to={"/auth/signin"} className="nav-link">
-              {t("nav:login")}
+            <NavLink to={"/auth/signin"} className="nav-link" onClick={autoCollapse}>
+              {t("signin")}
             </NavLink>
           </Nav>
           <Nav>
-            <NavLink to={"/auth/signup"} className="nav-link">
-              {t("nav:signup")}
+            <NavLink to={"/auth/signup"} className="nav-link" onClick={autoCollapse}>
+              {t("signup")}
             </NavLink>
           </Nav>
         </Navbar.Collapse>

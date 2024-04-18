@@ -17,8 +17,8 @@ import SubmitButton from "../../../common/components/submit-button/submit-button
 import { handleRejected } from "../../../common/helpers/handle-rejected.helper"
 
 export default function RecoverPasswordResetForm() {
+  const { t } = useTranslation("recover-password", { keyPrefix: "reset" })
   const dispatch = useAppDispatch()
-  const { t } = useTranslation(["common", "auth"])
   const { register, handleSubmit, errors } = useZod<RecoverPasswordResetRequest>(recoverPasswordResetSchema)
   const navigate = useNavigate()
   const [resetRequest, { status, error }] = useResetRequestMutation()
@@ -54,7 +54,7 @@ export default function RecoverPasswordResetForm() {
   const onErrorRequest = (error: any) => {
     dispatch(setOverlay(false));
     setDisabled(false);
-    toast.error("Error submitting recover password reset request");
+    toast.error(t("error.on-request"));
     console.error("Recover Password Reset Error:", error);
   }
   const onRejected = () => {
@@ -67,7 +67,7 @@ export default function RecoverPasswordResetForm() {
     setDisabled(false);
     dispatch(setResetFormEnabled(false))
     navigate("/auth/signin", { replace: true })
-    toast.success("Password reset successfully.")
+    toast.success(t("success.message"))
   }
 
   return (
@@ -76,36 +76,39 @@ export default function RecoverPasswordResetForm() {
         <IconInput
           type="text"
           name="username"
-          label={t("auth:username_label")}
-          placeholder={t("auth:username_placeholder")}
+          label={t("username.label")}
+          placeholder={t("username.placeholder")}
           icon="bi bi-person"
           register={register}
           error={errors.username as FieldError}
           defaultValue={username}
           readOnly={true}
+          autoComplete="username"
         />
 
         <IconInput
           type="password"
           name="password1"
-          label={t("auth:password_label")}
-          placeholder={t("auth:password_placeholder")}
+          label={t("password.label")}
+          placeholder={t("password.placeholder")}
           icon="bi bi-lock"
           register={register}
           error={errors.password1 as FieldError}
           autoFocus={true}
           disabled={disabled}
+          autoComplete="new-password"
         />
 
         <IconInput
           type="password"
           name="password2"
-          label={t("auth:confirm_password_label")}
-          placeholder={t("auth:confirm_password_placeholder")}
+          label={t("password.label")}
+          placeholder={t("password.placeholder")}
           icon="bi bi-lock"
           register={register}
           error={errors.password2 as FieldError}
           disabled={disabled}
+          autoComplete="new-password"
         />
 
         <div className="input-group mb-3">

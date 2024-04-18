@@ -25,7 +25,7 @@ import { handleRejected } from "../../../common/helpers/handle-rejected.helper";
  */
 export default function LoginForm() {
   const dispatch = useAppDispatch();
-  const { t } = useTranslation(["common", "auth"]);
+  const { t } = useTranslation("auth", { keyPrefix: "login" });
   const { username } = useAppSelector((state) => state.tfa);
   const grecaptcha = useGRecaptcha();
   const [disabled, setDisabled] = useState(false);
@@ -73,7 +73,7 @@ export default function LoginForm() {
     dispatch(setOverlay(false));
     setDisabled(false);
     dispatch(setUsername(""));
-    toast.error("Error submitting login request");
+    toast.error(t("error.on-request"));
     console.error("Login Error:", error);
   };
 
@@ -101,7 +101,7 @@ export default function LoginForm() {
       dispatch(setTfaPending(false));
       authContext.createSession();
       navigate("/cpanel/dashboard", { replace: true });
-      toast("Welcome back! " + username);
+      toast(t("welcome", { username }));
     }
   };
 
@@ -111,25 +111,27 @@ export default function LoginForm() {
         <IconInput
           type="text"
           name="username"
-          label={t("auth:username_label")}
-          placeholder={t("auth:username_placeholder")}
+          label={t("username.label")}
+          placeholder={t("username.placeholder")}
           icon="bi bi-person"
           register={register}
           defaultValue={username}
           error={errors.username as FieldError}
           autoFocus={true}
           disabled={disabled}
+          autoComplete="username"
         />
 
         <IconInput
           type="password"
           name="password"
-          label={t("auth:password_label")}
-          placeholder={t("auth:password_placeholder")}
+          label={t("password.label")}
+          placeholder={t("password.placeholder")}
           icon="bi bi-lock"
           register={register}
           error={errors.password as FieldError}
           disabled={disabled}
+          autoComplete="current-password"
         />
 
         <div className="input-group mb-3">
@@ -138,7 +140,7 @@ export default function LoginForm() {
       </form>
 
       <p className="text-end">
-        <AuthLink text={t("auth:forgot_password")} to={"/recover-password/init"} />
+        <AuthLink text={t("forgot-password")} to={"/recover-password/init"} />
       </p>
     </>
   );

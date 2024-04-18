@@ -4,6 +4,8 @@ import ActiveUserStore from "../strategies/active-user-store.strategy"
 import ActiveUserInCookie from "../strategies/active-user-in-cookie.strategy"
 import { useLogoutRequestMutation } from "../api/auth.api"
 import { showGRecaptcha } from "../../common/helpers/show-grecaptcha.helper"
+import { useDispatch } from "react-redux"
+import { sidebarOffClose } from "../../cpanel/features/cp-sidebar-offcanvas.slice"
 
 type AuthContextProps = {
   activeUser: ActiveUser
@@ -35,6 +37,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const activeUserStore: ActiveUserStore = new ActiveUserInCookie(activeUserInitState)
   const [activeUser, setActiveUser] = useState<ActiveUser>(activeUserStore.get())
   const [logoutRequest] = useLogoutRequestMutation()
+  const dispatch = useDispatch()
 
   const createSession = (): void => {
     showGRecaptcha(false)
@@ -44,6 +47,8 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const logout = (): void => {
     logoutRequest()
     resetActiveUser()
+    dispatch(sidebarOffClose())
+
   }
 
   const resetActiveUser = (): void => {

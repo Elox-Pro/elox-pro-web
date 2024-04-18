@@ -1,6 +1,6 @@
 import NavItem from "react-bootstrap/NavItem"
 import { useAppDispatch } from "../../../app/hooks/app.hooks"
-import { handleClose } from "../../features/cp-sidebar-offcanvas.slice"
+import { sidebarOffToggle } from "../../features/cp-sidebar-offcanvas.slice"
 import { NavLink } from "react-router-dom"
 import OverlayTrigger from "react-bootstrap/OverlayTrigger"
 import Tooltip from "react-bootstrap/Tooltip"
@@ -15,7 +15,7 @@ export default function CPNavItemLink({ to, text, icon }: CPNavLinkProps) {
   const dispatch = useAppDispatch()
 
   const handleCloseAction = () => {
-    dispatch(handleClose())
+    dispatch(sidebarOffToggle())
   }
 
   return (

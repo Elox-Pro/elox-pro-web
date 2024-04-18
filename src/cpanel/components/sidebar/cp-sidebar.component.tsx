@@ -6,15 +6,13 @@ import CPNavItemLink from "../nav-item-link/cp-nav-item-link.component"
 import CPNavItemLinkLogout from "../nav-item-link-logout/cp-nav-item-link-logout.component"
 
 export default function CPSidebar() {
-  const { t } = useTranslation(["nav"])
+  const { t } = useTranslation("cpanel", { keyPrefix: "sidebar" })
 
   return (
     <section className="cp-sidebar text-bg-dark">
       <CPNavbarBrand logo={CPNavbarBrandLogo.WHITE} size={24} text="Elox Pro" />
       <Nav className="nav nav-pills flex-column mb-auto">
-        <CPNavItemLink to="dashboard" text={t("nav:home")} icon="bi bi-house" />
-        <CPNavItemLink to="profile" text={t("nav:profile")} icon="bi bi-person" />
-        {/* <CPNavItemLink to="user" text={t("nav:customers")} icon="bi bi-people" /> */}
+        <CPNavItemLink to="dashboard" text={t("home")} icon="bi bi-house" />
       </Nav>
       <hr />
       <Nav className="nav nav-pills flex-column mb-auto">

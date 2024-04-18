@@ -1,8 +1,12 @@
 {
-    "title": "Easy Loan Express Professional",
-    "description": "Manage your personal loans with ease, anywhere",
-    "action": "Start",
-    "footer_text_1": "Development for Sourcelatam SAS, by Yonatan A Quintero R.",
-    "footer_text_2": "Copyright © 2024 Easy Loan Express Professional. All rights reserved.",
-    "footer_text_3": "\"In Loving Memory of Yadir Edilio Quintero Rodríguez: A Beloved Son, Brother, Husband, and Father. Forever in Our Hearts. With Love, Their family. ❤\""
+    "main": {
+        "title": "Easy Loan Express Professional",
+        "description": "Manage your personal loans with ease, anywhere",
+        "action": "Start"
+    },
+    "footer": {
+        "text1": "In Loving Memory of Yadir Edilio Quintero Rodríguez. ❤",
+        "text2": "Development by Yonatan A Quintero R.",
+        "text3": "Copyright © 2024 Easy Loan Express Professional. All rights reserved."
+    }
 }
