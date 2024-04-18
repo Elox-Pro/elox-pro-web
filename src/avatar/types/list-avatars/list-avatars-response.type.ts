@@ -1,5 +1,5 @@
 import { Avatar } from "../avatar.type"
 
-export type GetAvatarsResponse = {
+export type ListAvatarsResponse = {
     avatars: Avatar[]
 }

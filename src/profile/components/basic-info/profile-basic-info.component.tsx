@@ -8,19 +8,22 @@ import { useAppSelector } from "../../../app/hooks/app.hooks";
 import { getProfileAvatar } from "../../helpers/get-profile-avatar";
 import { getProfileFullname } from "../../helpers/get-profile-full-name";
 import { getFormatDate } from "../../../common/helpers/get-format-date";
+import { useDispatch } from "react-redux";
+import { setSelectedAvatar } from "../../../avatar/features/avatar.slice";
 
 export default function ProfileBasicInfo() {
 
-    const { profile, profileT } = useAppSelector(state => state.profile);
+    const { profile, profileTranslations: profileT } = useAppSelector(state => state.profile);
     const { t } = useTranslation("profile", { keyPrefix: "basic_info" });
     const avatar = getProfileAvatar(profile.avatarUrl);
     const fullName = getProfileFullname(profile.firstName, profile.lastName);
     const updatedAt = getFormatDate(profile.updatedAt);
-
-    const [show, setShow] = useState(false);
+    const dispatch = useDispatch();
+    const [showAvatarModal, setShowAvatarModal] = useState(false);
 
     const handleChangeAvatar = () => {
-        setShow(true);
+        dispatch(setSelectedAvatar({ url: avatar }));
+        setShowAvatarModal(true);
     }
 
     const handleChangeName = () => {
@@ -86,7 +89,7 @@ export default function ProfileBasicInfo() {
                 </Card.Body>
             </Card>
 
-            <ProfileUpdateAvatarModal show={show} onHide={() => setShow(false)} />
+            <ProfileUpdateAvatarModal show={showAvatarModal} onHide={() => setShowAvatarModal(false)} />
 
         </>
     )

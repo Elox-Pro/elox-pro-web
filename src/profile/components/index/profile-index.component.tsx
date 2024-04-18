@@ -1,5 +1,4 @@
 import { useGetProfileQuery } from "../../api/profile.api"
-import CPWrapperPage from "../../../cpanel/components/wrapper-page/cp-wrapper-page.component"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/esm/Col"
 import ProfileBasicInfo from "../basic-info/profile-basic-info.component"
@@ -8,33 +7,50 @@ import ProfilePasswordInfo from "../password-info/profile-password-info.componen
 import ProfileTfaInfo from "../tfa-info/profile-tfa-info.component"
 import ProfileSettings from "../settings/profile-settings.component"
 import { useTranslation } from "react-i18next"
-import ProfileToast from "../profile-toast/profile-toast.component"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { QueryStatus } from "@reduxjs/toolkit/query"
-import { setProfile, setProfileT } from "../../features/profile.slice"
-import { useAppSelector } from "../../../app/hooks/app.hooks"
+import { setProfile, setProfileTranslations } from "../../features/profile.slice"
+import { setOverlay } from "../../../common/features/common.slice"
+import { useNavigate } from "react-router-dom"
+import CPWrapperPage from "../../../cpanel/components/wrapper-page/cp-wrapper-page.component"
+import { handleRejected } from "../../../common/helpers/handle-rejected.helper"
 
 export default function ProfileIndex() {
   const { t } = useTranslation("profile", { keyPrefix: "index" });
   const dispatch = useDispatch();
-  const { profile, profileT } = useAppSelector((state) => state.profile);
-  const { data, error, isLoading, status } = useGetProfileQuery();
+  const { data, error, status, isSuccess } = useGetProfileQuery();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (Object.keys(profile).length === 0 || Object.keys(profileT).length === 0) {
-      if (status === QueryStatus.fulfilled && data) {
-        dispatch(setProfile(data.user));
-        dispatch(setProfileT(data.userTranslations));
-      }
+    switch (status) {
+      case QueryStatus.pending: onInitRequest(); break;
+      case QueryStatus.rejected: onRejected(); break;
+      case QueryStatus.fulfilled: onFulfilled(); break;
     }
-  }, [dispatch, profile, profileT, status, data]);
+
+  }, [status, data, error]);
+
+  const onInitRequest = () => {
+    dispatch(setOverlay(true));
+  }
+
+  const onRejected = () => {
+    dispatch(setOverlay(false));
+    handleRejected({ error, message: "Profile Rejected", navigate });
+  }
+
+  const onFulfilled = () => {
+    dispatch(setOverlay(false));
+    if (!data) { return; }
+    dispatch(setProfile(data.user));
+    dispatch(setProfileTranslations(data.userTranslations));
+  }
 
   return (
-    <CPWrapperPage loading={isLoading} error={error} status={status}>
-      {status === QueryStatus.fulfilled &&
+    isSuccess && (
+      <CPWrapperPage >
         <div className="profile-index">
-          <ProfileToast />
           <Row className="text-center">
             <Col xs={12}>
               <p className="fs-1 mb-0">{t("title")}</p>
@@ -58,9 +74,7 @@ export default function ProfileIndex() {
               <ProfileSettings />
             </Col>
           </Row>
-
         </div>
-      }
-    </CPWrapperPage>
-  )
+      </CPWrapperPage >
+    ));
 }

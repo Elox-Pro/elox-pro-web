@@ -15,8 +15,8 @@ import { getGRecaptchaToken, useGRecaptcha } from "../../../common/hooks/grecapt
 import AuthLink from "../auth-link/auth-link.component";
 import { setOverlay } from "../../../common/features/common.slice";
 import { toast } from 'react-toastify';
-import { handleError } from "../../../common/helpers/handle-error.helper";
 import SubmitButton from "../../../common/components/submit-button/submit-button";
+import { handleRejected } from "../../../common/helpers/handle-rejected.helper";
 
 /**
  * LoginForm component
@@ -84,9 +84,7 @@ export default function LoginForm() {
     dispatch(setOverlay(false));
     setDisabled(false);
     dispatch(setUsername(""));
-    const res = handleError(error);
-    toast.error(res.message);
-    console.error("Login Rejected:", res);
+    handleRejected({ error, message: "Login Rejected" });
   };
 
   /**

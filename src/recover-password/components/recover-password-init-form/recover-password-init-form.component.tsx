@@ -13,8 +13,8 @@ import { FieldError } from "react-hook-form";
 import { setTfaPending, setUsername } from "../../../tfa/features/tfa.slice";
 import { setOverlay } from "../../../common/features/common.slice";
 import { toast } from "react-toastify";
-import { handleError } from "../../../common/helpers/handle-error.helper";
 import SubmitButton from "../../../common/components/submit-button/submit-button";
+import { handleRejected } from "../../../common/helpers/handle-rejected.helper";
 
 /**
  * Renders the Recover Password Init Form component.
@@ -88,9 +88,7 @@ export default function RecoverPasswordInitForm() {
     dispatch(setOverlay(false));
     setDisabled(false);
     dispatch(setUsername(""));
-    const res = handleError(error);
-    toast.error(res.message);
-    console.error("Recover Password Init Rejected:", res);
+    handleRejected({ error, message: "Recover Password Init Rejected" });
   };
 
   /**

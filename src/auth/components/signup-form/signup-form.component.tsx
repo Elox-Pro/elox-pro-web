@@ -13,8 +13,8 @@ import { SignupRequest } from "../../types/signup/signup-request.type";
 import { signupSchema } from "../../schemas/signup.schema";
 import { setOverlay } from "../../../common/features/common.slice";
 import { toast } from "react-toastify";
-import { handleError } from "../../../common/helpers/handle-error.helper";
 import SubmitButton from "../../../common/components/submit-button/submit-button";
+import { handleRejected } from "../../../common/helpers/handle-rejected.helper";
 
 /**
  * Renders the Signup Form component.
@@ -87,9 +87,7 @@ export default function SignupForm() {
     dispatch(setOverlay(false));
     setDisabled(false);
     dispatch(setUsername(""));
-    const res = handleError(error);
-    toast.error(res.message);
-    console.error("Signup Rejected:", res);
+    handleRejected({ error, message: "Signup Rejected" });
   };
 
   /**

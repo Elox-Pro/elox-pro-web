@@ -10,16 +10,19 @@ export const profileApi = createApi({
         baseUrl: `${API_URL}/users/profile`,
         credentials: "include",
     }),
+    tagTypes: ["getProfile"],
     endpoints(builder) {
         return {
             getProfile: builder.query<GetProfileResponse, void>({
-                query() { return `/` }
+                query() { return `/` },
+                providesTags: ["getProfile"]
             }),
 
             updateAvatar: builder.mutation<UpdateAvatarResponse, UpdateAvatarRequest>({
                 query(body) {
                     return { url: `/avatar`, method: "PATCH", body }
-                }
+                },
+                invalidatesTags: ["getProfile"]
             })
         }
     },

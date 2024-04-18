@@ -15,8 +15,8 @@ import { TfaAction } from "../../enums/validate-tfa/tfa-action.enum";
 import { setResetFormEnabled } from "../../../recover-password/features/recover-password.slice";
 import { setOverlay } from "../../../common/features/common.slice";
 import { toast } from "react-toastify";
-import { handleError } from "../../../common/helpers/handle-error.helper";
 import SubmitButton from "../../../common/components/submit-button/submit-button";
+import { handleRejected } from "../../../common/helpers/handle-rejected.helper";
 
 /**
  * Renders the Validate TFA Form component.
@@ -86,9 +86,7 @@ export default function ValidateTfaForm() {
   const onRejected = () => {
     dispatch(setOverlay(false));
     setDisabled(false);
-    const res = handleError(error);
-    toast.error(res.message);
-    console.error("Validate TFA Rejected:", res);
+    handleRejected({ error, message: "Validate TFA Rejected" });
   };
 
   /**

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next"
 import { useAppSelector } from "../../../app/hooks/app.hooks"
 
 export default function ProfileSettings() {
-    const { profile, profileT } = useAppSelector(state => state.profile);
+    const { profile, profileTranslations: profileT } = useAppSelector(state => state.profile);
     const { t } = useTranslation("profile", { keyPrefix: "settings" });
 
     const handleChangeLanguage = () => {

@@ -53,7 +53,8 @@ export type ErrorData = {
  * @param error The error to handle.
  * @returns An ErrorData object containing categorized error data.
  */
-export const handleError = (error: unknown): ErrorData => {
+export const getErrorData = (error: unknown): ErrorData => {
+    
     if (isFetchBaseQueryError(error)) {
         const err = error.data as { message: string, statusCode: number };
         return {
@@ -62,6 +63,7 @@ export const handleError = (error: unknown): ErrorData => {
             code: err.statusCode,
         } as ErrorData;
     }
+
     if (isSerializedError(error)) {
         return {
             type: ErrorType.SerializedError,

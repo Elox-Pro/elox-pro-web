@@ -1,44 +1,43 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { User } from "../../users/types/user.type";
 
-type Toast = {
-    title: string
-    message: string
-    show: boolean
+type AvatarState = {
+    selected: string
 }
 
 type ProfileState = {
-    toast: Toast,
     profile: User,
-    profileT: Record<string, string> // Profile translations
+    profileTranslations: Record<string, string>,
+    avatar: AvatarState
 }
 
 const initialState: ProfileState = {
-    toast: {
-        title: "",
-        message: "",
-        show: false
-    },
     profile: {},
-    profileT: {}
+    profileTranslations: {},
+    avatar: { selected: "" }
 }
 
 const ProfileSlice = createSlice({
     name: "profile",
     initialState,
     reducers: {
-        setProfileToast: (state, action: { payload: Toast }) => {
-            state.toast = action.payload;
-        },
         setProfile: (state, action: { payload: User }) => {
             state.profile = action.payload;
         },
-        setProfileT: (state, action: { payload: Record<string, string> }) => {
-            state.profileT = action.payload;
+        setProfileTranslations: (state, action: { payload: Record<string, string> }) => {
+            state.profileTranslations = action.payload;
+        },
+        setAvatar: (state, action: { payload: AvatarState }) => {
+            state.avatar = action.payload;
         }
     }
 });
 
 const ProfileReducer = ProfileSlice.reducer;
-export const { setProfileToast, setProfile, setProfileT } = ProfileSlice.actions;
+
+export const {
+    setProfile,
+    setProfileTranslations,
+} = ProfileSlice.actions;
+
 export default ProfileReducer;

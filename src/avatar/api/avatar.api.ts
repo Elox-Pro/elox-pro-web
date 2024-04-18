@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { API_URL } from "../../app/constants/app.constants";
-import { GetAvatarsResponse } from "../types/get-avatars/get-avatars-response.type";
+import {  ListAvatarsResponse } from "../types/list-avatars/list-avatars-response.type";
 
 export const avatarApi = createApi({
     reducerPath: "avatarApi",
@@ -10,11 +10,11 @@ export const avatarApi = createApi({
     }),
     endpoints(builder) {
         return {
-            getAvatars: builder.query<GetAvatarsResponse, void>({
+            listAvatars: builder.query<ListAvatarsResponse, void>({
                 query() { return "/" }
             }),
         }
     },
 });
 
-export const { useGetAvatarsQuery } = avatarApi;
+export const { useListAvatarsQuery } = avatarApi;

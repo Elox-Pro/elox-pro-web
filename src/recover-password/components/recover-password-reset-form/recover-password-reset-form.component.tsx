@@ -13,8 +13,8 @@ import { useResetRequestMutation } from "../../api/recover-password.api"
 import { setResetFormEnabled } from "../../features/recover-password.slice"
 import { setOverlay } from "../../../common/features/common.slice"
 import { toast } from "react-toastify"
-import { handleError } from "../../../common/helpers/handle-error.helper"
 import SubmitButton from "../../../common/components/submit-button/submit-button"
+import { handleRejected } from "../../../common/helpers/handle-rejected.helper"
 
 export default function RecoverPasswordResetForm() {
   const dispatch = useAppDispatch()
@@ -60,9 +60,7 @@ export default function RecoverPasswordResetForm() {
   const onRejected = () => {
     dispatch(setOverlay(false));
     setDisabled(false);
-    const res = handleError(error);
-    toast.error(res.message);
-    console.error("Recover Password Reset Rejected:", res);
+    handleRejected({ error, message: "Recover Password Reset Rejected" });
   }
   const onFulfilled = () => {
     dispatch(setOverlay(false));
