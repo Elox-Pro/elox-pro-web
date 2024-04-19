@@ -2,29 +2,19 @@ import Card from "react-bootstrap/esm/Card";
 import ListGroup from "react-bootstrap/esm/ListGroup";
 import ListGroupItem, { ListGroupItemType } from "../../../common/components/list-group-item/list-group-item.component";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
-import ProfileUpdateAvatarModal from "../update-avatar-modal/profile-update-avatar-modal.component";
 import { useAppSelector } from "../../../app/hooks/app.hooks";
-import { getProfileAvatar } from "../../helpers/get-profile-avatar";
 import { getProfileFullname } from "../../helpers/get-profile-full-name";
 import { getFormatDate } from "../../../common/helpers/get-format-date";
-import { useDispatch } from "react-redux";
-import { setSelectedAvatar } from "../../../avatar/features/avatar.slice";
+import ListGroupItemAvatar from "../list-group-item-avatar/list-group-item-avatar.component";
+import ListGroupItemDefault from "../../../common/components/list-group-item-default/list-group-item-default.component";
 
 export default function ProfileBasicInfo() {
 
     const { profile, profileTranslations: profileT } = useAppSelector(state => state.profile);
-    const { t } = useTranslation("profile", { keyPrefix: "basic_info" });
-    const avatar = getProfileAvatar(profile.avatarUrl);
+    const { t } = useTranslation("profile", { keyPrefix: "basic-info" });
     const fullName = getProfileFullname(profile.firstName, profile.lastName);
     const updatedAt = getFormatDate(profile.updatedAt);
-    const dispatch = useDispatch();
-    const [showAvatarModal, setShowAvatarModal] = useState(false);
 
-    const handleChangeAvatar = () => {
-        dispatch(setSelectedAvatar({ url: avatar }));
-        setShowAvatarModal(true);
-    }
 
     const handleChangeName = () => {
         alert("Not implemented")
@@ -44,19 +34,12 @@ export default function ProfileBasicInfo() {
                     </Card.Title>
                     <ListGroup variant="flush">
 
-                        <ListGroupItem
-                            type={ListGroupItemType.AVATAR}
-                            label={t("avatar.label")}
-                            value={t("avatar.value")}
-                            imageUrl={avatar}
-                            onClick={handleChangeAvatar}
-                        />
+                        <ListGroupItemAvatar />
 
-                        <ListGroupItem
-                            type={ListGroupItemType.DEFAULT}
+                        <ListGroupItemDefault
                             label={t("username.label")}
                             value={profile.username}
-                            hidden />
+                        />
 
                         <ListGroupItem
                             type={ListGroupItemType.DEFAULT}
@@ -88,9 +71,6 @@ export default function ProfileBasicInfo() {
                     </ListGroup>
                 </Card.Body>
             </Card>
-
-            <ProfileUpdateAvatarModal show={showAvatarModal} onHide={() => setShowAvatarModal(false)} />
-
         </>
     )
 }

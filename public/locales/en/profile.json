@@ -3,7 +3,7 @@
         "title": "Personal info",
         "subtitle": "Info about you and your preferences"
     },
-    "basic_info": {
+    "basic-info": {
         "title": "Basic info",
         "avatar": {
             "label": "Profile picture",
@@ -21,15 +21,15 @@
         "gender": {
             "label": "Gender"
         },
-        "updated_at": {
+        "updated-at": {
             "label": "Updated at"
         },
-        "more_options": {
+        "more-options": {
             "label": "More options",
             "text": "Edit"
         }
     },
-    "contact_info": {
+    "contact-info": {
         "title": "Contact info",
         "verified": "Verified",
         "email": {
@@ -39,14 +39,14 @@
             "label": "Phone"
         }
     },
-    "password_info": {
+    "password-info": {
         "title": "Password",
         "subtitle": "A secure password helps protect your account",
         "password": {
             "label": "Password"
         }
     },
-    "tfa_info": {
+    "tfa-info": {
         "title": "Two-factor authentication",
         "subtitle": "2FA helps your account security by adding an extra login step",
         "configured": "Configured",
@@ -64,8 +64,8 @@
             "label": "Theme"
         }
     },
-    "update_avatar": {
-        "success_toast": {
+    "update-avatar": {
+        "success-toast": {
             "title": "Edit avatar",
             "message": "Avatar updated successfully"
         },

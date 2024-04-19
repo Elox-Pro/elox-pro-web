@@ -1,5 +1,4 @@
-import ListGroupItemAvatar from "./list-group-item-avatar/list-group-item-avatar.component";
-import ListGroupItemDefault from "./list-group-item-default/list-group-item-default.component";
+
 import { ListGroupItemExtraAction } from "./list-group-item-extra-action/list-group-item-extra-action.component";
 
 /**
@@ -42,15 +41,6 @@ export default function ListGroupItem({
 }: ListGroupItemProps) {
     switch (type) {
 
-        case ListGroupItemType.AVATAR:
-            return (<>{imageUrl && value &&
-                <ListGroupItemAvatar
-                    label={label}
-                    value={value}
-                    imageUrl={imageUrl}
-                    onClick={onClick}
-                />
-            }</>);
 
         case ListGroupItemType.EXTRA_ACTION:
             return (<>{text && icon &&
@@ -60,17 +50,6 @@ export default function ListGroupItem({
                     icon={icon}
                     onClick={onClick}
                 />
-            }</>);
-
-        case ListGroupItemType.DEFAULT:
-        default:
-            return (<>{value &&
-                <ListGroupItemDefault
-                    label={label}
-                    value={value}
-                    hidden={hidden}
-                    icon={icon}
-                    onClick={onClick} />
             }</>);
     }
 }

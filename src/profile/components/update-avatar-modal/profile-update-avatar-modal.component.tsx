@@ -21,7 +21,7 @@ type ProfileUpdateAvatarModalProps = {
 }
 export default function ProfileUpdateAvatarModal({ show, onHide }: ProfileUpdateAvatarModalProps) {
     const navigate = useNavigate();
-    const { t } = useTranslation("profile", { keyPrefix: "update_avatar" });
+    const { t } = useTranslation("profile", { keyPrefix: "update-avatar" });
     const { profile } = useAppSelector(state => state.profile);
     const { selectedAvatar } = useAppSelector(state => state.avatar);
     const [disabled, setDisabled] = useState(false);
