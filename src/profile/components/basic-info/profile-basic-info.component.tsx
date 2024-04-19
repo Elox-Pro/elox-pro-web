@@ -1,28 +1,17 @@
 import Card from "react-bootstrap/esm/Card";
 import ListGroup from "react-bootstrap/esm/ListGroup";
-import ListGroupItem, { ListGroupItemType } from "../../../common/components/list-group-item/list-group-item.component";
 import { useTranslation } from "react-i18next";
 import { useAppSelector } from "../../../app/hooks/app.hooks";
-import { getProfileFullname } from "../../helpers/get-profile-full-name";
 import { getFormatDate } from "../../../common/helpers/get-format-date";
 import ListGroupItemAvatar from "../list-group-item-avatar/list-group-item-avatar.component";
 import ListGroupItemDefault from "../../../common/components/list-group-item-default/list-group-item-default.component";
+import ListGroupItemFullName from "../list-group-item-full-name/list-group-item-full-name.component";
+import ListGroupItemGender from "../list-group-item-gender/list-group-item-gender.component";
 
 export default function ProfileBasicInfo() {
-
     const { profile, profileTranslations: profileT } = useAppSelector(state => state.profile);
     const { t } = useTranslation("profile", { keyPrefix: "basic-info" });
-    const fullName = getProfileFullname(profile.firstName, profile.lastName);
     const updatedAt = getFormatDate(profile.updatedAt);
-
-
-    const handleChangeName = () => {
-        alert("Not implemented")
-    }
-
-    const handleChangeGender = () => {
-        alert("Not implemented")
-    }
 
     return (
         <>
@@ -41,32 +30,19 @@ export default function ProfileBasicInfo() {
                             value={profile.username}
                         />
 
-                        <ListGroupItem
-                            type={ListGroupItemType.DEFAULT}
+                        <ListGroupItemDefault
                             label={t("role.label")}
                             value={profile.role && profileT[profile.role]}
-                            hidden />
-
-
-                        <ListGroupItem
-                            type={ListGroupItemType.DEFAULT}
-                            label={t("name.label")}
-                            value={fullName}
-                            onClick={handleChangeName}
                         />
 
-                        <ListGroupItem
-                            type={ListGroupItemType.DEFAULT}
-                            label={t("gender.label")}
-                            value={profile.gender && profileT[profile.gender] || "N/A"}
-                            onClick={handleChangeGender}
-                        />
+                        <ListGroupItemFullName />
 
-                        <ListGroupItem
-                            type={ListGroupItemType.DEFAULT}
-                            label={t("updated_at.label")}
+                        <ListGroupItemGender />
+
+                        <ListGroupItemDefault
+                            label={t("updated-at.label")}
                             value={updatedAt}
-                            hidden />
+                        />
 
                     </ListGroup>
                 </Card.Body>

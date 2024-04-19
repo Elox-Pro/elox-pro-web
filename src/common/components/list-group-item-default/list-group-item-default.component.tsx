@@ -13,12 +13,12 @@ export default function ListGroupItemDefault({ label, value }: ListGroupItemAvat
             <Row className="w-100 align-items-center g-0">
                 <Col xs={12}>
                     <Row className="w-100 align-items-center g-0">
-                        <Col xs={12} md={4}>
+                        <Col xs={12} md={3}>
                             <p className="mb-0 text-muted">
                                 {label}
                             </p>
                         </Col>
-                        <Col xs={12} md={8}>
+                        <Col xs={12} md={9}>
                             <p className="mb-0">
                                 {value || "N/A"}
                             </p>

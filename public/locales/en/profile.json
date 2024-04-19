@@ -16,27 +16,28 @@
             "label": "Role"
         },
         "name": {
-            "label": "Name"
+            "label": "Name",
+            "value": "A name helps personalize your account"
         },
         "gender": {
-            "label": "Gender"
+            "label": "Gender",
+            "value": "A gender helps personalize your account"
         },
         "updated-at": {
             "label": "Updated at"
-        },
-        "more-options": {
-            "label": "More options",
-            "text": "Edit"
         }
     },
     "contact-info": {
         "title": "Contact info",
-        "verified": "Verified",
         "email": {
-            "label": "Email"
+            "label": "Email",
+            "value": "An email helps personalize your account",
+            "verified": "Verified"
         },
         "phone": {
-            "label": "Phone"
+            "label": "Phone",
+            "value": "A phone helps personalize your account",
+            "verified": "Verified"
         }
     },
     "password-info": {
@@ -49,10 +50,10 @@
     "tfa-info": {
         "title": "Two-factor authentication",
         "subtitle": "2FA helps your account security by adding an extra login step",
-        "configured": "Configured",
         "email": {
             "label": "Email",
-            "value": "Enable email verification for 2FA in your account"
+            "value": "Enable email verification for 2FA in your account",
+            "configured": "Configured"
         }
     },
     "settings": {

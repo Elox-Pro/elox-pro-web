@@ -1,78 +1,79 @@
 {
     "index": {
-        "title": "Información personal",
-        "subtitle": "Información sobre usted y sus preferencias"
+      "title": "Información personal",
+      "subtitle": "Información sobre usted y sus preferencias"
     },
-    "basic_info": {
-        "title": "Información básica",
-        "avatar": {
-            "label": "Foto de perfil",
-            "value": "Una foto de perfil ayuda a personalizar tu cuenta"
-        },
-        "username": {
-            "label": "Nombre de usuario"
-        },
-        "role": {
-            "label": "Rol"
-        },
-        "name": {
-            "label": "Nombre"
-        },
-        "gender": {
-            "label": "Género"
-        },
-        "updated_at": {
-            "label": "Actualizado en"
-        },
-        "more_options": {
-            "label": "Más opciones",
-            "text": "Editar"
-        }
+    "basic-info": {
+      "title": "Información básica",
+      "avatar": {
+        "label": "Foto de perfil",
+        "value": "Una foto de perfil ayuda a personalizar tu cuenta"
+      },
+      "username": {
+        "label": "Nombre de usuario"
+      },
+      "role": {
+        "label": "Rol"
+      },
+      "name": {
+        "label": "Nombre",
+        "value": "Un nombre ayuda a personalizar tu cuenta"
+      },
+      "gender": {
+        "label": "Género",
+        "value": "Un género ayuda a personalizar tu cuenta"
+      },
+      "updated-at": {
+        "label": "Actualizado en"
+      }
     },
-    "contact_info": {
-        "title": "Información de contacto",
-        "verified": "Verificado",
-        "email": {
-            "label": "Correo electrónico"
-        },
-        "phone": {
-            "label": "Teléfono"
-        }
+    "contact-info": {
+      "title": "Información de contacto",
+      "email": {
+        "label": "Correo electrónico",
+        "value": "Un correo electrónico ayuda a personalizar tu cuenta",
+        "verified": "Verificado"
+      },
+      "phone": {
+        "label": "Teléfono",
+        "value": "Un teléfono ayuda a personalizar tu cuenta", 
+        "verified": "Verificado"
+      }
     },
-    "password_info": {
-        "title": "Contraseña",
-        "subtitle": "Una contraseña segura ayuda a proteger tu cuenta",
-        "password": {
-            "label": "Contraseña"
-        }
+    "password-info": {
+      "title": "Contraseña",
+      "subtitle": "Una contraseña segura ayuda a proteger tu cuenta",
+      "password": {
+        "label": "Contraseña"
+      }
     },
-    "tfa_info": {
-        "title": "Autenticación de dos factores",
-        "subtitle": "La autenticación de dos factores ayuda a la seguridad de tu cuenta al agregar un paso de inicio de sesión adicional",
-        "configured": "Configurado",
-        "email": {
-            "label": "Correo electrónico",
-            "value": "Habilitar la verificación por correo electrónico para la autenticación de dos factores en tu cuenta"
-        }
+    "tfa-info": {
+      "title": "Autenticación de dos factores",
+      "subtitle": "La autenticación de dos factores ayuda a la seguridad de tu cuenta al agregar un paso de inicio de sesión adicional",
+      "email": {
+        "label": "Correo electrónico",
+        "value": "Habilitar la verificación por correo electrónico para la autenticación de dos factores en tu cuenta",
+        "configured": "Configurado"
+      }
     },
     "settings": {
-        "title": "Configuración general",
-        "language": {
-            "label": "Idioma"
-        },
-        "theme": {
-            "label": "Tema"
-        }
+      "title": "Configuración general",
+      "language": {
+        "label": "Idioma"
+      },
+      "theme": {
+        "label": "Tema"
+      }
     },
-    "update_avatar": {
-        "success_toast": {
-            "title": "Editar avatar",
-            "message": "Avatar actualizado con éxito"
-        },
-        "modal": {
-            "title": "Editar avatar",
-            "submit": "OK",
-            "label": "Seleccionar una imagen"
-        }
+    "update-avatar": {
+      "success-toast": {
+        "title": "Editar avatar",
+        "message": "Avatar actualizado con éxito"
+      },
+      "modal": {
+        "title": "Editar avatar",
+        "submit": "OK",
+        "label": "Seleccionar una imagen"
+      }
     }
-}
+   }

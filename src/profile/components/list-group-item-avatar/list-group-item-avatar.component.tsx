@@ -9,8 +9,7 @@ import { setSelectedAvatar } from "../../../avatar/features/avatar.slice";
 import { useState } from "react";
 import ProfileUpdateAvatarModal from "../update-avatar-modal/profile-update-avatar-modal.component";
 
-type ListGroupItemAvatarProps = {}
-export default function ListGroupItemAvatar({ }: ListGroupItemAvatarProps) {
+export default function ListGroupItemAvatar() {
     const { t } = useTranslation("profile", { keyPrefix: "basic-info.avatar" });
     const { profile } = useAppSelector(state => state.profile);
     const dispatch = useDispatch();

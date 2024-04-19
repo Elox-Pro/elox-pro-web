@@ -1,13 +1,10 @@
 import Card from "react-bootstrap/esm/Card"
 import ListGroup from "react-bootstrap/esm/ListGroup"
-import ListGroupItem, { ListGroupItemType } from "../../../common/components/list-group-item/list-group-item.component"
 import { useTranslation } from "react-i18next"
+import ListGroupItemChangePassword from "../list-group-item-change-password/list-group-item-change-password.component";
 
 export default function ProfilePasswordInfo() {
-    const { t } = useTranslation("profile", { keyPrefix: "password_info" });
-    const handleChangePassword = () => {
-        alert("Not implemented")
-    }
+    const { t } = useTranslation("profile", { keyPrefix: "password-info" });
 
     return (
         <Card className="mb-3">
@@ -18,12 +15,7 @@ export default function ProfilePasswordInfo() {
                 </Card.Title>
                 <p>{t("subtitle")}</p>
                 <ListGroup variant="flush">
-                    <ListGroupItem
-                        type={ListGroupItemType.DEFAULT}
-                        label={t("password.label")}
-                        value="••••••••"
-                        onClick={handleChangePassword}
-                    />
+                    <ListGroupItemChangePassword />
                 </ListGroup>
             </Card.Body>
         </Card>
