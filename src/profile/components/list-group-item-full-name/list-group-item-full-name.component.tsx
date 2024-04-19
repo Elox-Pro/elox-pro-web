@@ -6,9 +6,13 @@ import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 
 export default function ListGroupItemFullName() {
-    const { t } = useTranslation("profile", { keyPrefix: "basic-info.name" });
     const { profile } = useAppSelector(state => state.profile);
-    const fullName = getProfileFullname(profile.firstName, profile.lastName);
+    const { t } = useTranslation("profile", { keyPrefix: "basic-info.name" });
+
+    if (profile === null) {
+        return null;
+    }
+    const fullName = getProfileFullname(profile.firstName, profile.lastName) || t("value");
 
     const onClick = () => {
         alert("Not implemented");
@@ -27,7 +31,7 @@ export default function ListGroupItemFullName() {
                             </Col>
                             <Col xs={12} md={8}>
                                 <p className="mb-0">
-                                    {fullName || t("value")}
+                                    {fullName}
                                 </p>
                             </Col>
                         </Row>

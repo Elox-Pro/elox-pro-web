@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { ValidateTfaRequest } from "../../types/validate-tfa/validate-tfa-request.type";
 import { FieldError } from "react-hook-form";
 import { validateTfaSchema } from "../../schemas/validate-tfa.schema";
-import { useAuth } from "../../../auth/providers/auth.provider";
+import { useAuth } from "../../../auth/hooks/auth.hook";
 import { useNavigate } from "react-router-dom";
 import { useValidateTfaRequestMutation } from "../../api/tfa.api";
 import { useEffect, useState } from "react";

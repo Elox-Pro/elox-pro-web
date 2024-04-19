@@ -6,8 +6,15 @@ import Col from "react-bootstrap/esm/Col";
 import Badge from "react-bootstrap/esm/Badge";
 
 export default function ListGroupItemPhone() {
-    const { t } = useTranslation("profile", { keyPrefix: "contact-info.phone" });
     const { profile } = useAppSelector(state => state.profile);
+    const { t } = useTranslation("profile", { keyPrefix: "contact-info.phone" });
+
+    if (profile === null) {
+        return null;
+    }
+
+    const phone = profile.phone || t("value");
+    const phoneVerified = profile.phoneVerified;
 
     const onClick = () => {
         alert("Not implemented");
@@ -26,8 +33,8 @@ export default function ListGroupItemPhone() {
                             </Col>
                             <Col xs={12} md={8}>
                                 <p className="mb-0">
-                                    <span className="me-3">{profile.phone || t("value")}</span>
-                                    {profile.phone && <Badge bg="success">{t("verified")}</Badge>}
+                                    <span className="me-3">{phone}</span>
+                                    {phoneVerified && <Badge bg="success">{t("verified")}</Badge>}
                                 </p>
                             </Col>
                         </Row>

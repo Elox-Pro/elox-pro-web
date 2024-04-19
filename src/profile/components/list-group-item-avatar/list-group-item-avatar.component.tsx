@@ -10,8 +10,13 @@ import { useState } from "react";
 import ProfileUpdateAvatarModal from "../update-avatar-modal/profile-update-avatar-modal.component";
 
 export default function ListGroupItemAvatar() {
-    const { t } = useTranslation("profile", { keyPrefix: "basic-info.avatar" });
     const { profile } = useAppSelector(state => state.profile);
+    const { t } = useTranslation("profile", { keyPrefix: "basic-info.avatar" });
+
+    if (profile === null) {
+        return null;
+    }
+
     const dispatch = useDispatch();
     const avatar = getProfileAvatar(profile.avatarUrl);
     const [showModal, setShowModal] = useState(false);

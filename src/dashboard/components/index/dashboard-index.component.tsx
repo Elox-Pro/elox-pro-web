@@ -1,4 +1,4 @@
-import { useAuth } from "../../../auth/providers/auth.provider"
+import { useAuth } from "../../../auth/hooks/auth.hook"
 
 export default function DashboardIndex() {
   const authContext = useAuth()

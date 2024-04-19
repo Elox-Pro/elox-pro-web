@@ -1,13 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { User } from "../../users/types/user.type";
 import { ProfileState } from "../types/profile-state.type";
+import { handleLogout } from "../../auth/features/auth.slice";
 
 const initialState: ProfileState = {
-    profile: {},
-    profileTranslations: {}
+    profile: null,
+    profileTranslations: null
 }
 
-const ProfileSlice = createSlice({
+const profileSlice = createSlice({
     name: "profile",
     initialState,
     reducers: {
@@ -16,15 +17,20 @@ const ProfileSlice = createSlice({
         },
         setProfileTranslations: (state, action: { payload: Record<string, string> }) => {
             state.profileTranslations = action.payload;
-        }
+        },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(handleLogout, () => {
+            return profileSlice.getInitialState();
+        })
     }
 });
 
-const ProfileReducer = ProfileSlice.reducer;
+const profileReducer = profileSlice.reducer;
 
 export const {
     setProfile,
     setProfileTranslations,
-} = ProfileSlice.actions;
+} = profileSlice.actions;
 
-export default ProfileReducer;
+export default profileReducer;

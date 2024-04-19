@@ -4,7 +4,7 @@ import { loginSchema } from "../../schemas/login.schema";
 import { LoginRequest } from "../../types/login/login-request.type";
 import IconInput from "../../../common/components/icon-input/icon-input.component";
 import { useLoginRequestMutation } from "../../api/auth.api";
-import { useAuth } from "../../providers/auth.provider";
+import { useAuth } from "../../hooks/auth.hook";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";

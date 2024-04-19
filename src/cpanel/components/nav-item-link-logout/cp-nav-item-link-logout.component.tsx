@@ -1,7 +1,7 @@
 import NavItem from "react-bootstrap/NavItem"
 import OverlayTrigger from "react-bootstrap/OverlayTrigger"
 import Tooltip from "react-bootstrap/Tooltip"
-import { useAuth } from "../../../auth/providers/auth.provider"
+import { useAuth } from "../../../auth/hooks/auth.hook"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 

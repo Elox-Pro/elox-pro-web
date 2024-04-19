@@ -1,6 +1,6 @@
 import { ReactNode, useEffect } from "react"
 import { Outlet, useNavigate } from "react-router-dom"
-import { useAuth } from "../../auth/providers/auth.provider"
+import { useAuth } from "../../auth/hooks/auth.hook"
 
 type CPGuardProps = {
   children: ReactNode

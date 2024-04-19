@@ -5,9 +5,14 @@ import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 
 export default function ListGroupItemGender() {
-    const { t } = useTranslation("profile", { keyPrefix: "basic-info.gender" });
     const { profile, profileTranslations } = useAppSelector(state => state.profile);
-    const value = profile.gender && profileTranslations[profile.gender] || t("value");
+    const { t } = useTranslation("profile", { keyPrefix: "basic-info.gender" });
+
+    if (profile === null || profileTranslations === null) {
+        return null;
+    }
+
+    const gender = profile.gender && profileTranslations[profile.gender] || t("value");
 
     const onClick = () => {
         alert("Not implemented");
@@ -26,7 +31,7 @@ export default function ListGroupItemGender() {
                             </Col>
                             <Col xs={12} md={8}>
                                 <p className="mb-0">
-                                    {value}
+                                    {gender}
                                 </p>
                             </Col>
                         </Row>

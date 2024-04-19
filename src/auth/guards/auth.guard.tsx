@@ -1,6 +1,6 @@
 import { ReactNode, useEffect } from "react"
 import { Outlet, useNavigate } from "react-router-dom"
-import { useAuth } from "../providers/auth.provider"
+import { useAuth } from "../hooks/auth.hook"
 
 type AuthGuardProps = {
   children: ReactNode

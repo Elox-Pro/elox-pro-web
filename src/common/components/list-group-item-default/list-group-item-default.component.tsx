@@ -4,7 +4,7 @@ import Row from "react-bootstrap/esm/Row";
 
 type ListGroupItemAvatarDefaultProps = {
     label: string
-    value: string | undefined
+    value: string | null
 }
 export default function ListGroupItemDefault({ label, value }: ListGroupItemAvatarDefaultProps) {
 

@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next"
 import ErrorPage from "../error-page.component"
-import { useAuth } from "../../../auth/providers/auth.provider"
+import { useAuth } from "../../../auth/hooks/auth.hook"
 import { useEffect } from "react"
 
 export default function Error401() {

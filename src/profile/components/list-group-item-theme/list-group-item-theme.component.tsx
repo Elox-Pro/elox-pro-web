@@ -5,8 +5,13 @@ import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 
 export default function ListGroupItemTheme() {
-    const { t } = useTranslation("profile", { keyPrefix: "settings.theme" });
     const { profile, profileTranslations } = useAppSelector(state => state.profile);
+    const { t } = useTranslation("profile", { keyPrefix: "settings.theme" });
+
+    if (profile === null || profileTranslations === null) {
+        return null;
+    }
+
     const theme = profile.theme && profileTranslations[profile.theme];
 
     const onClick = () => {

@@ -1,4 +1,4 @@
-export function getProfileFullname(firstName: string | undefined, lastName: string | undefined): string | null {
+export function getProfileFullname(firstName: string | null, lastName: string | null): string | null {
     if (!firstName && !lastName) {
         return null;
     }

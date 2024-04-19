@@ -5,8 +5,13 @@ import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 
 export default function ListGroupItemLanguage() {
-    const { t } = useTranslation("profile", { keyPrefix: "settings.language" });
     const { profile, profileTranslations } = useAppSelector(state => state.profile);
+    const { t } = useTranslation("profile", { keyPrefix: "settings.language" });
+
+    if (profile === null || profileTranslations === null) {
+        return null;
+    }
+
     const language = profile.lang && profileTranslations[profile.lang];
 
     const onClick = () => {

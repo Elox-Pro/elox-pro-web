@@ -1,6 +1,6 @@
 import NavItem from "react-bootstrap/NavItem"
 import { useAppDispatch } from "../../../app/hooks/app.hooks"
-import { sidebarOffToggle } from "../../features/cp-sidebar-offcanvas.slice"
+import { sidebarOffToggle } from "../../features/cp-sidebar-off-canvas.slice"
 import { NavLink } from "react-router-dom"
 import OverlayTrigger from "react-bootstrap/OverlayTrigger"
 import Tooltip from "react-bootstrap/Tooltip"

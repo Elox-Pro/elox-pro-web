@@ -15,20 +15,26 @@ import { setOverlay } from "../../../common/features/common.slice"
 import { useNavigate } from "react-router-dom"
 import CPWrapperPage from "../../../cpanel/components/wrapper-page/cp-wrapper-page.component"
 import { handleRejected } from "../../../common/helpers/handle-rejected.helper"
+import { useAppSelector } from "../../../app/hooks/app.hooks"
 
 export default function ProfileIndex() {
+  const { profile } = useAppSelector(state => state.profile);
   const { t } = useTranslation("profile", { keyPrefix: "index" });
   const dispatch = useDispatch();
-  const { data, error, status, isSuccess } = useGetProfileQuery();
+  const { data, error, status, isSuccess, refetch } = useGetProfileQuery();
   const navigate = useNavigate();
 
   useEffect(() => {
+
+    if (profile === null && !data) {
+      refetch();
+    }
+
     switch (status) {
       case QueryStatus.pending: onInitRequest(); break;
       case QueryStatus.rejected: onRejected(); break;
       case QueryStatus.fulfilled: onFulfilled(); break;
     }
-
   }, [status, data, error]);
 
   const onInitRequest = () => {

@@ -6,8 +6,15 @@ import Col from "react-bootstrap/esm/Col";
 import Badge from "react-bootstrap/esm/Badge";
 
 export default function ListGroupItemEmail() {
-    const { t } = useTranslation("profile", { keyPrefix: "contact-info.email" });
     const { profile } = useAppSelector(state => state.profile);
+    const { t } = useTranslation("profile", { keyPrefix: "contact-info.email" });
+
+    if (!profile) {
+        return null;
+    }
+
+    const email = profile.email || t("value");
+    const emailVerified = profile.emailVerified;
 
     const onClick = () => {
         alert("Not implemented");
@@ -26,8 +33,8 @@ export default function ListGroupItemEmail() {
                             </Col>
                             <Col xs={12} md={8}>
                                 <p className="mb-0">
-                                    <span className="me-3">{profile.email || t("value")}</span>
-                                    {profile.emailVerified && <Badge bg="success">{t("verified")}</Badge>}
+                                    <span className="me-3">{email}</span>
+                                    {emailVerified && <Badge bg="success">{t("verified")}</Badge>}
                                 </p>
                             </Col>
                         </Row>

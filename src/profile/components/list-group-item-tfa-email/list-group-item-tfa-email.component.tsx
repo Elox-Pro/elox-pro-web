@@ -6,9 +6,15 @@ import Col from "react-bootstrap/esm/Col";
 import Badge from "react-bootstrap/esm/Badge";
 import { TfaType } from "../../../tfa/enums/validate-tfa/tfa-type.enum";
 
-export default function ListGroupItemTfaEmail(){
-    const { t } = useTranslation("profile", { keyPrefix: "tfa-info.email" });
+export default function ListGroupItemTfaEmail() {
     const { profile } = useAppSelector(state => state.profile);
+    const { t } = useTranslation("profile", { keyPrefix: "tfa-info.email" });
+
+    if (!profile) {
+        return null;
+    }
+
+    const configured = profile.tfaType === TfaType.EMAIL;
 
     const onClick = () => {
         alert("Not implemented");
@@ -28,7 +34,7 @@ export default function ListGroupItemTfaEmail(){
                             <Col xs={12} md={8}>
                                 <p className="mb-0">
                                     <span className="me-3">{t("value")}</span>
-                                    {profile.tfaType === TfaType.EMAIL && <Badge bg="success">{t("configured")}</Badge>}
+                                    {configured && <Badge bg="success">{t("configured")}</Badge>}
                                 </p>
                             </Col>
                         </Row>
