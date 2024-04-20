@@ -4,18 +4,14 @@ import ProfileIndex from "../../profile/components/index/profile-index.component
 import { Navigate } from "react-router-dom"
 import CPGuard from "../guards/cp.guard."
 
-const DashboardRoutes = [
+const CPRoutes = [
   {
     path: "/cpanel",
     element: <Navigate to="/cpanel/dashboard" replace />,
   },
   {
     path: "/cpanel",
-    element: (
-      <CPGuard>
-        <CPLayout />
-      </CPGuard>
-    ),
+    element: <CPGuard><CPLayout /></CPGuard>,
     children: [
       {
         path: "/cpanel/dashboard",
@@ -29,4 +25,4 @@ const DashboardRoutes = [
   },
 ]
 
-export default DashboardRoutes
+export default CPRoutes

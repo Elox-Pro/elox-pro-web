@@ -1,16 +1,15 @@
 {
     "sidebar": {
-        "home": "Home",
-        "logout": {
-            "text": "Logout",
-            "error": "Error trying to log out"
-        }
+        "home": "Home"
     },
     "navbar": {
-        "profile": "Profile",
-        "logout": {
-            "text": "Logout",
-            "error": "Error trying to log out"
+        "profile": "Profile"
+    },
+    "logout": {
+        "text": "Logout",
+        "error": {
+            "on-request": "Error trying to logout"
         }
+
     }
 }

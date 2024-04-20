@@ -8,19 +8,11 @@ import CPNavbarToggle from "../navbar-toggle/cp-navbar-toggle.component"
 import { useTranslation } from "react-i18next"
 import { useAuth } from "../../../auth/hooks/auth.hook"
 import { useEffect, useState } from "react"
-import { toast } from "react-toastify"
+import CPLogout from "../logout/cp-logout.component"
 export default function CPNavbar() {
   const { t } = useTranslation("cpanel", { keyPrefix: "navbar" })
   const authContext = useAuth()
 
-  const handleLogout = () => {
-    try {
-      authContext.logout()
-    } catch (error) {
-      toast.error(t("logout.error"));
-      console.error("Logout Error:", error)
-    }
-  }
 
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -42,7 +34,7 @@ export default function CPNavbar() {
           <NavDropdown
             title={
               <span>
-                {authContext.activeUser?.sub}
+                {authContext.activeUser?.username}
                 <i className="ms-2 bi bi-person-circle"></i>
               </span>
             }
@@ -51,9 +43,7 @@ export default function CPNavbar() {
               {t("profile")}
             </Link>
             <NavDropdown.Divider />
-            <button type="button" className="dropdown-item" onClick={handleLogout}>
-              {t("logout.text")}
-            </button>
+            <CPLogout />
           </NavDropdown>
         </Nav>
       </Container>

@@ -17,6 +17,7 @@ import { setOverlay } from "../../../common/features/common.slice";
 import { toast } from 'react-toastify';
 import SubmitButton from "../../../common/components/submit-button/submit-button";
 import { handleRejected } from "../../../common/helpers/handle-rejected.helper";
+import { createSession, getActiveUserFromCookie } from "../../features/auth.slice";
 
 /**
  * LoginForm component
@@ -91,17 +92,29 @@ export default function LoginForm() {
    * Handles a fulfilled login request
    */
   const onFulfilled = () => {
-    dispatch(setOverlay(false));
-    setDisabled(false);
-    if (!data) { return; }
-    if (data.isTFAPending) {
-      dispatch(setTfaPending(true));
-      navigate("/tfa/validate", { replace: true });
-    } else {
-      dispatch(setTfaPending(false));
-      authContext.createSession();
-      navigate("/cpanel/dashboard", { replace: true });
-      toast(t("welcome", { username }));
+    try {
+      dispatch(setOverlay(false));
+      setDisabled(false);
+      if (!data) {
+        return;
+      }
+      if (data.isTFAPending) {
+        dispatch(setTfaPending(true));
+        navigate("/tfa/validate", { replace: true });
+      } else {
+        const activeUser = getActiveUserFromCookie();
+        if (activeUser === null) {
+          throw new Error("Active user is null");
+        }
+        dispatch(setTfaPending(false));
+        dispatch(createSession(activeUser));
+        authContext.createSession();
+        navigate("/cpanel/dashboard", { replace: true });
+        toast(t("welcome", { username }));
+      }
+    } catch (error) {
+      toast.error(t("error.on-request"));
+      console.error("Login Error:", error);
     }
   };
 

@@ -1,11 +1,11 @@
-import { createContext, ReactNode, useContext, useMemo, useState } from "react"
+import { createContext, ReactNode, useMemo, useState } from "react"
 import { ActiveUser } from "../types/active-user.type"
 import ActiveUserStore from "../strategies/active-user-store.strategy"
 import ActiveUserInCookie from "../strategies/active-user-in-cookie.strategy"
 import { useLogoutRequestMutation } from "../api/auth.api"
 import { showGRecaptcha } from "../../common/helpers/show-grecaptcha.helper"
 import { useDispatch } from "react-redux"
-import { handleLogout } from "../features/auth.slice"
+import { deleteSession } from "../features/auth.slice"
 
 type AuthContextProps = {
   activeUser: ActiveUser
@@ -19,7 +19,7 @@ type AuthProviderProps = {
 }
 
 const activeUserInitState: ActiveUser = {
-  sub: "",
+  username: "",
   role: "",
   isAuthenticated: false,
 }
@@ -34,18 +34,20 @@ const authContextInitState: AuthContextProps = {
 export const AuthContext = createContext<AuthContextProps>(authContextInitState)
 
 export default function AuthProvider({ children }: AuthProviderProps) {
+  console.log(0,"auth provider props")
   const activeUserStore: ActiveUserStore = new ActiveUserInCookie(activeUserInitState)
   const [activeUser, setActiveUser] = useState<ActiveUser>(activeUserStore.get())
   const [logoutRequest] = useLogoutRequestMutation()
   const dispatch = useDispatch()
 
+  
   const createSession = (): void => {
     showGRecaptcha(false)
     setActiveUser(activeUserStore.get())
   }
 
   const logout = (): void => {
-    dispatch(handleLogout())
+    dispatch(deleteSession())
     logoutRequest()
     resetActiveUser()
   }

@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom"
 import AuthRoutes from "../../auth/routes/auth.routes"
-import DashboardRoutes from "../../cpanel/routes/cp.routes"
+import CPRoutes from "../../cpanel/routes/cp.routes"
 import ErrorRoutes from "../../errors/routes/error.routes."
 import CoverRoutes from "../../cover/routes/cover.routes"
 import TfaRoutes from "../../tfa/routes/tfa.routes"
@@ -11,6 +11,6 @@ export const AppRoutes = createBrowserRouter([
   ...AuthRoutes,
   ...TfaRoutes,
   ...RecoverPasswordRoutes,
-  ...DashboardRoutes,
+  ...CPRoutes,
   ...ErrorRoutes,
 ])

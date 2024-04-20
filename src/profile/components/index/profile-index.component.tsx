@@ -12,20 +12,30 @@ import { useDispatch } from "react-redux"
 import { QueryStatus } from "@reduxjs/toolkit/query"
 import { setProfile, setProfileTranslations } from "../../features/profile.slice"
 import { setOverlay } from "../../../common/features/common.slice"
-import { useNavigate } from "react-router-dom"
+import { Navigate, useNavigate } from "react-router-dom"
 import CPWrapperPage from "../../../cpanel/components/wrapper-page/cp-wrapper-page.component"
 import { handleRejected } from "../../../common/helpers/handle-rejected.helper"
 import { useAppSelector } from "../../../app/hooks/app.hooks"
+import CPGuard from "../../../cpanel/guards/cp.guard."
+import { useActiveUser } from "../../../auth/hooks/active-user.hook"
 
 export default function ProfileIndex() {
   const { profile } = useAppSelector(state => state.profile);
   const { t } = useTranslation("profile", { keyPrefix: "index" });
   const dispatch = useDispatch();
-  const { data, error, status, isSuccess, refetch } = useGetProfileQuery();
   const navigate = useNavigate();
 
-  useEffect(() => {
+  // const activeUser = useActiveUser();
+  // if (activeUser === null || !activeUser.isAuthenticated) {
+  //   console.log(1, "validate active user", activeUser)
+  //   return <Navigate to="/error/401/" replace />;
+  // }
 
+
+  const { data, error, status, isSuccess, refetch } = useGetProfileQuery();
+
+  useEffect(() => {
+    console.log(3, "profile", profile)
     if (profile === null && !data) {
       refetch();
     }
@@ -54,33 +64,33 @@ export default function ProfileIndex() {
   }
 
   return (
-    isSuccess && (
-      <CPWrapperPage >
-        <div className="profile-index">
-          <Row className="text-center">
-            <Col xs={12}>
-              <p className="fs-1 mb-0">{t("title")}</p>
-              <p>{t("subtitle")}</p>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12}>
-              <ProfileBasicInfo />
-            </Col>
-            <Col xs={12}>
-              <ProfileContactInfo />
-            </Col>
-            <Col xs={12}>
-              <ProfilePasswordInfo />
-            </Col>
-            <Col xs={12}>
-              <ProfileTfaInfo />
-            </Col>
-            <Col xs={12}>
-              <ProfileSettings />
-            </Col>
-          </Row>
-        </div>
-      </CPWrapperPage >
-    ));
+    isSuccess &&
+    <CPWrapperPage >
+      <div className="profile-index">
+        <Row className="text-center">
+          <Col xs={12}>
+            <p className="fs-1 mb-0">{t("title")}</p>
+            <p>{t("subtitle")}</p>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <ProfileBasicInfo />
+          </Col>
+          <Col xs={12}>
+            <ProfileContactInfo />
+          </Col>
+          <Col xs={12}>
+            <ProfilePasswordInfo />
+          </Col>
+          <Col xs={12}>
+            <ProfileTfaInfo />
+          </Col>
+          <Col xs={12}>
+            <ProfileSettings />
+          </Col>
+        </Row>
+      </div>
+    </CPWrapperPage >
+  );
 }

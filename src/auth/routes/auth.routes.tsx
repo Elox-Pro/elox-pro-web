@@ -7,11 +7,7 @@ import Auth from "../components/auth/auth.component"
 const AuthRoutes = [
   {
     path: "/auth/",
-    element: (
-      <AuthGuard>
-        <AuthLayout />
-      </AuthGuard>
-    ),
+    element: <AuthGuard><AuthLayout /></AuthGuard>,
     children: [
       {
         path: "/auth/",
