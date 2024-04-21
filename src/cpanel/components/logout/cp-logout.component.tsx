@@ -6,11 +6,13 @@ import { useDispatch } from "react-redux"
 import { setOverlay } from "../../../common/features/common.slice"
 import { toast } from "react-toastify"
 import { handleRejected } from "../../../common/helpers/handle-rejected.helper"
-import { deleteSession } from "../../../auth/features/auth.slice"
+import { deleteSession, setActiveUser } from "../../../auth/features/auth.slice"
+import { useNavigate } from "react-router-dom"
 
 export default function CPLogout() {
     const { t } = useTranslation("cpanel", { keyPrefix: "logout" })
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [disabled, setDisabled] = useState(false);
     const [logoutRequest, { status, error }] = useLogoutRequestMutation()
 
@@ -45,13 +47,19 @@ export default function CPLogout() {
     const onRejected = () => {
         dispatch(setOverlay(false));
         setDisabled(false);
-        handleRejected({ error, message: "Logout Rejected" });
+        handleRejected({ error, message: "Logout Rejected", navigate });
     }
 
     const onFulfilled = () => {
+        // dispatch(setActiveUser({
+        //     username: null,
+        //     role: null,
+        //     isAuthenticated: false
+        // }))
         dispatch(deleteSession())
         dispatch(setOverlay(false));
         setDisabled(false);
+        navigate("/auth/signin/", { replace: true });
     }
 
     return (

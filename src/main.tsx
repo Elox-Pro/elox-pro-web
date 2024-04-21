@@ -13,7 +13,7 @@ import { Overlay } from "./common/components/overlay/overlay.component.tsx"
 import Loading from "./common/components/loading/loading.component.tsx"
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.min.css";
-import CPGuard from "./cpanel/guards/cp.guard..tsx"
+import CPGuard from "./cpanel/guards/cp.guard.tsx"
 
 
 i18n.init()

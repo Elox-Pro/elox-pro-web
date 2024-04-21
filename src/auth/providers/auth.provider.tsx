@@ -34,7 +34,7 @@ const authContextInitState: AuthContextProps = {
 export const AuthContext = createContext<AuthContextProps>(authContextInitState)
 
 export default function AuthProvider({ children }: AuthProviderProps) {
-  console.log(0,"auth provider props")
+  // console.log(0,"auth provider props")
   const activeUserStore: ActiveUserStore = new ActiveUserInCookie(activeUserInitState)
   const [activeUser, setActiveUser] = useState<ActiveUser>(activeUserStore.get())
   const [logoutRequest] = useLogoutRequestMutation()

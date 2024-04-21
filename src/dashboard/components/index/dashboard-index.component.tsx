@@ -17,6 +17,7 @@ export default function DashboardIndex() {
   // const activeUser = getActiveUserFromCookie();
   // const navigate = useNavigate();
   const activeUser = useActiveUser();
+  // console.log("dashboard active user", activeUser)
   // if (activeUser === null || !activeUser.isAuthenticated) {
   //   // return redirect("/error/401")
   //   return null;

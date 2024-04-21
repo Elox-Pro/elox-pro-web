@@ -28,7 +28,7 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         createSession: (state, action: { payload: ActiveUser2 }) => {
-            console.log("createSession")
+            // console.log("createSession")
             showGRecaptcha(false)
             state.activeUser = action.payload
 
@@ -37,9 +37,11 @@ const authSlice = createSlice({
             state.activeUser = action.payload
         },
         deleteSession: (state) => {
-            console.log(1, "handleLogout", state.activeUser)
-            state = initialState
-            console.log(2, "handleLogout", state.activeUser)
+            // /console.log(1, "handleLogout", state.activeUser)
+            state.activeUser = initialState.activeUser
+            // console.log(2, "handleLogout", state.activeUser)
+            // state.activeUser = action.payload
+            // return authSlice.getInitialState()
         },
     },
 });

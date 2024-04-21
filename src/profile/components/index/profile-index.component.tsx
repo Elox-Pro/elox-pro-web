@@ -16,7 +16,7 @@ import { Navigate, useNavigate } from "react-router-dom"
 import CPWrapperPage from "../../../cpanel/components/wrapper-page/cp-wrapper-page.component"
 import { handleRejected } from "../../../common/helpers/handle-rejected.helper"
 import { useAppSelector } from "../../../app/hooks/app.hooks"
-import CPGuard from "../../../cpanel/guards/cp.guard."
+import CPGuard from "../../../cpanel/guards/cp.guard"
 import { useActiveUser } from "../../../auth/hooks/active-user.hook"
 
 export default function ProfileIndex() {
@@ -35,7 +35,8 @@ export default function ProfileIndex() {
   const { data, error, status, isSuccess, refetch } = useGetProfileQuery();
 
   useEffect(() => {
-    console.log(3, "profile", profile)
+    // console.log(3, "profile", profile)
+    // console.log(3, "data", data)
     if (profile === null && !data) {
       refetch();
     }
@@ -45,7 +46,7 @@ export default function ProfileIndex() {
       case QueryStatus.rejected: onRejected(); break;
       case QueryStatus.fulfilled: onFulfilled(); break;
     }
-  }, [status, data, error]);
+  }, [profile, status, data, error]);
 
   const onInitRequest = () => {
     dispatch(setOverlay(true));

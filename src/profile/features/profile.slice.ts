@@ -21,6 +21,7 @@ const profileSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(deleteSession, () => {
+            console.log("deleteSession")
             return profileSlice.getInitialState();
         })
     }
