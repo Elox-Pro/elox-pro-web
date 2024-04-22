@@ -66,14 +66,39 @@
         }
     },
     "update-avatar": {
-        "success-toast": {
-            "title": "Edit avatar",
-            "message": "Avatar updated successfully"
+        "success": {
+            "on-fullfilled": "Avatar updated successfully"
         },
         "modal": {
             "title": "Edit avatar",
             "submit": "OK",
             "label": "Select a picture"
+        },
+        "error": {
+            "on-request": "Error updating avatar request"
+        }
+    },
+    "update-name": {
+        "success": {
+            "on-fullfilled": "Name updated successfully"
+        },
+        "modal": {
+            "title": "Edit name",
+            "submit": "OK",
+            "label": "Select a picture"
+        },
+        "container": {
+            "title": "A name helps personalize your account",
+            "subtitle": "Please enter your full name."
+        },
+        "first-name": {
+            "label": "First name"
+        },
+        "last-name": {
+            "label": "Last name"
+        },
+        "error": {
+            "on-request": "Error updating name request"
         }
     }
 }

@@ -4,6 +4,8 @@ import { getProfileFullname } from "../../helpers/get-profile-full-name";
 import ListGroup from "react-bootstrap/esm/ListGroup";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
+import { useState } from "react";
+import UpdateNameModal from "../update-name-modal/update-name-modal.component";
 
 export default function ListGroupItemFullName() {
     const { profile } = useAppSelector(state => state.profile);
@@ -12,10 +14,16 @@ export default function ListGroupItemFullName() {
     if (profile === null) {
         return null;
     }
+
     const fullName = getProfileFullname(profile.firstName, profile.lastName) || t("value");
+    const [showModal, setShowModal] = useState(false);
 
     const onClick = () => {
-        alert("Not implemented");
+        setShowModal(true);
+    }
+
+    const onHide = () => {
+        setShowModal(false);
     }
 
     return (
@@ -41,6 +49,7 @@ export default function ListGroupItemFullName() {
                     </Col>
                 </Row>
             </ListGroup.Item>
+            <UpdateNameModal show={showModal} onHide={onHide} />
         </>
     )
 }

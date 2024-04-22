@@ -54,12 +54,12 @@ export type ErrorData = {
  * @returns An ErrorData object containing categorized error data.
  */
 export const getErrorData = (error: unknown): ErrorData => {
-    
+
     if (isFetchBaseQueryError(error)) {
         const err = error.data as { message: string, statusCode: number };
         return {
             type: ErrorType.FetchBaseQueryError,
-            message: err.message,
+            message: Array.isArray(err.message) ? err.message.join(", ") : err.message,
             code: err.statusCode,
         } as ErrorData;
     }

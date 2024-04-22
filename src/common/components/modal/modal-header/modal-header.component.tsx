@@ -6,10 +6,11 @@ type ModalHeaderProps = {
     title: string
     buttonText: string
     disabled: boolean,
+    tabIndex?: number,
     onHide: () => void
-    onSubmit: () => void
+    onSubmit?: () => void
 }
-export function ModalHeader({ title, buttonText, onHide, onSubmit, disabled }: ModalHeaderProps) {
+export default function ModalHeader({ title, buttonText, tabIndex, onHide, onSubmit, disabled }: ModalHeaderProps) {
     return (<div className="modal-header px-0">
         <Container fluid>
             <Row className="g-0 align-items-center text-center">
@@ -25,8 +26,9 @@ export function ModalHeader({ title, buttonText, onHide, onSubmit, disabled }: M
                 </Col>
                 <Col xs={2}>
                     <button
-                        type="button"
+                        type="submit"
                         className="btn btn-link"
+                        tabIndex={tabIndex}
                         onClick={onSubmit}
                         disabled={disabled}>
                         {buttonText}

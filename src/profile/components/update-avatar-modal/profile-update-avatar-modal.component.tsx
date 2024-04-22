@@ -3,11 +3,10 @@ import Container from "react-bootstrap/esm/Container"
 import Modal from "react-bootstrap/esm/Modal"
 import "./profile-update-avatar-modal.style.scss"
 import { useEffect, useState } from "react"
-import { ModalHeader } from "../../../common/components/modal/modal-header/modal-header.component"
+import ModalHeader from "../../../common/components/modal/modal-header/modal-header.component"
 import { useUpdateAvatarMutation } from "../../api/profile.api"
 import { QueryStatus } from "@reduxjs/toolkit/query"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks"
-import { setProfile } from "../../features/profile.slice"
 import { useTranslation } from "react-i18next"
 import AvatarList from "../../../avatar/components/avatar-list/avatar-list"
 import { setOverlay } from "../../../common/features/common.slice"
@@ -23,6 +22,11 @@ export default function ProfileUpdateAvatarModal({ show, onHide }: ProfileUpdate
     const navigate = useNavigate();
     const { t } = useTranslation("profile", { keyPrefix: "update-avatar" });
     const { profile } = useAppSelector(state => state.profile);
+
+    if (profile === null) {
+        return null;
+    }
+
     const { selectedAvatar } = useAppSelector(state => state.avatar);
     const [disabled, setDisabled] = useState(false);
     const [updateAvatar, { data, status, error }] = useUpdateAvatarMutation();
@@ -56,7 +60,7 @@ export default function ProfileUpdateAvatarModal({ show, onHide }: ProfileUpdate
     const onErrorRequest = (error: any) => {
         dispatch(setOverlay(false));
         setDisabled(false);
-        toast.error("Error submitting update avatar request");
+        toast.error(t("error.on-request"));
         console.error("Update Avatar Error:", error);
     }
 
@@ -67,13 +71,10 @@ export default function ProfileUpdateAvatarModal({ show, onHide }: ProfileUpdate
     }
 
     const onFulfilled = () => {
-        onHide();
         dispatch(setOverlay(false));
         setDisabled(false);
-        if (selectedAvatar !== null) {
-            dispatch(setProfile({ ...profile, avatarUrl: selectedAvatar.url }));
-        }
-        toast.success("Update avatar successful");
+        onHide();
+        toast.success(t("success.on-fullfilled"));
     }
 
     return (
