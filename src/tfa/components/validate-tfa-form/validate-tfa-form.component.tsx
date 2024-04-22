@@ -1,8 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { ValidateTfaRequest } from "../../types/validate-tfa/validate-tfa-request.type";
-import { FieldError } from "react-hook-form";
+import { FieldError, get } from "react-hook-form";
 import { validateTfaSchema } from "../../schemas/validate-tfa.schema";
-import { useAuth } from "../../../auth/hooks/auth.hook";
 import { useNavigate } from "react-router-dom";
 import { useValidateTfaRequestMutation } from "../../api/tfa.api";
 import { useEffect, useState } from "react";
@@ -17,6 +16,8 @@ import { setOverlay } from "../../../common/features/common.slice";
 import { toast } from "react-toastify";
 import SubmitButton from "../../../common/components/submit-button/submit-button";
 import { handleRejected } from "../../../common/helpers/handle-rejected.helper";
+import { login } from "../../../auth/features/auth.slice";
+import { getActiveUserFromCookies } from "../../../auth/helpers/get-active-user-from-cookies.helper";
 
 /**
  * Renders the Validate TFA Form component.
@@ -28,7 +29,6 @@ export default function ValidateTfaForm() {
   const { username } = useAppSelector((state) => state.tfa);
   const dispatch = useAppDispatch();
   const { register, handleSubmit, errors } = useZod<ValidateTfaRequest>(validateTfaSchema);
-  const authContext = useAuth();
   const navigate = useNavigate();
   const [validateTfaRequest, { data, status, error }] = useValidateTfaRequestMutation();
   const [disabled, setDisabled] = useState(false);
@@ -121,9 +121,18 @@ export default function ValidateTfaForm() {
    * @returns {void}
    */
   const signinAction = () => {
-    authContext.createSession();
-    navigate("/cpanel/dashboard", { replace: true });
-    toast(t("success.signin", { username }));
+    try {
+      const activeUser = getActiveUserFromCookies();
+      if (activeUser === null) {
+        throw new Error("Active user is null");
+      }
+      dispatch(login(activeUser));
+      navigate("/cpanel/dashboard", { replace: true });
+      toast(t("success.signin", { username }));
+    } catch (error) {
+      toast.error(t("error.on-request"));
+      console.error("Login Error:", error);
+    }
   };
 
   /**

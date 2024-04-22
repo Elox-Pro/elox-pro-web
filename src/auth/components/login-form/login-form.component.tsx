@@ -4,7 +4,6 @@ import { loginSchema } from "../../schemas/login.schema";
 import { LoginRequest } from "../../types/login/login-request.type";
 import IconInput from "../../../common/components/icon-input/icon-input.component";
 import { useLoginRequestMutation } from "../../api/auth.api";
-import { useAuth } from "../../hooks/auth.hook";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -17,7 +16,8 @@ import { setOverlay } from "../../../common/features/common.slice";
 import { toast } from 'react-toastify';
 import SubmitButton from "../../../common/components/submit-button/submit-button";
 import { handleRejected } from "../../../common/helpers/handle-rejected.helper";
-import { createSession, getActiveUserFromCookie } from "../../features/auth.slice";
+import { login } from "../../features/auth.slice";
+import { getActiveUserFromCookies } from "../../helpers/get-active-user-from-cookies.helper";
 
 /**
  * LoginForm component
@@ -33,7 +33,6 @@ export default function LoginForm() {
   const { register, handleSubmit, errors } = useZod<LoginRequest>(loginSchema);
   const [loginRequest, { data, status, error }] = useLoginRequestMutation();
   const navigate = useNavigate();
-  const authContext = useAuth();
 
   /**
    * Handles the form submission
@@ -102,13 +101,12 @@ export default function LoginForm() {
         dispatch(setTfaPending(true));
         navigate("/tfa/validate", { replace: true });
       } else {
-        const activeUser = getActiveUserFromCookie();
+        const activeUser = getActiveUserFromCookies();
         if (activeUser === null) {
           throw new Error("Active user is null");
         }
         dispatch(setTfaPending(false));
-        dispatch(createSession(activeUser));
-        authContext.createSession();
+        dispatch(login(activeUser));
         navigate("/cpanel/dashboard", { replace: true });
         toast(t("welcome", { username }));
       }

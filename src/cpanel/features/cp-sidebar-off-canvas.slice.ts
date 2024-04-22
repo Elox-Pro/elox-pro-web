@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteSession } from "../../auth/features/auth.slice";
+import { logout } from "../../auth/features/auth.slice";
 
 type CPSidebarOffcanvasState = {
     sidebarOffShow: boolean;
@@ -18,7 +18,7 @@ const cpSidebarOffcanvasSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(deleteSession, () => {
+        builder.addCase(logout, () => {
             return cpSidebarOffcanvasSlice.getInitialState();
         })
     }

@@ -6,14 +6,12 @@ import { Link } from "react-router-dom"
 import "./cp-navbar.style.scss"
 import CPNavbarToggle from "../navbar-toggle/cp-navbar-toggle.component"
 import { useTranslation } from "react-i18next"
-import { useAuth } from "../../../auth/hooks/auth.hook"
 import { useEffect, useState } from "react"
 import CPLogout from "../logout/cp-logout.component"
+import { useActiveUser } from "../../../auth/hooks/active-user.hook"
 export default function CPNavbar() {
   const { t } = useTranslation("cpanel", { keyPrefix: "navbar" })
-  const authContext = useAuth()
-
-
+  const activeUser = useActiveUser();
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -34,7 +32,7 @@ export default function CPNavbar() {
           <NavDropdown
             title={
               <span>
-                {authContext.activeUser?.username}
+                {activeUser.username}
                 <i className="ms-2 bi bi-person-circle"></i>
               </span>
             }

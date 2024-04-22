@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux"
 import { setOverlay } from "../../../common/features/common.slice"
 import { toast } from "react-toastify"
 import { handleRejected } from "../../../common/helpers/handle-rejected.helper"
-import { deleteSession, setActiveUser } from "../../../auth/features/auth.slice"
+import { logout } from "../../../auth/features/auth.slice"
 import { useNavigate } from "react-router-dom"
 
 export default function CPLogout() {
@@ -51,12 +51,7 @@ export default function CPLogout() {
     }
 
     const onFulfilled = () => {
-        // dispatch(setActiveUser({
-        //     username: null,
-        //     role: null,
-        //     isAuthenticated: false
-        // }))
-        dispatch(deleteSession())
+        dispatch(logout())
         dispatch(setOverlay(false));
         setDisabled(false);
         navigate("/auth/signin/", { replace: true });

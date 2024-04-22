@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { User } from "../../users/types/user.type";
 import { ProfileState } from "../types/profile-state.type";
-import { deleteSession } from "../../auth/features/auth.slice";
+import { logout } from "../../auth/features/auth.slice";
 
 const initialState: ProfileState = {
     profile: null,
@@ -20,8 +20,7 @@ const profileSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(deleteSession, () => {
-            console.log("deleteSession")
+        builder.addCase(logout, () => {
             return profileSlice.getInitialState();
         })
     }

@@ -1,10 +1,5 @@
 export type ActiveUser = {
-    /**
-     * The subject is the unique identifier of the user (username).
-     */
-    username: string
-
-    role: string
-
+    username: string | null    
+    role: string | null
     isAuthenticated: boolean
 }

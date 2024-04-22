@@ -1,8 +1,9 @@
 import { ReactNode, useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { getActiveUserFromCookie, setActiveUser } from "../../auth/features/auth.slice";
+import { setActiveUser } from "../../auth/features/auth.slice";
 import { useActiveUser } from "../../auth/hooks/active-user.hook";
 import { useDispatch } from "react-redux";
+import { getActiveUserFromCookies } from "../../auth/helpers/get-active-user-from-cookies.helper";
 
 /**
  * CPGuard component acts as an authentication guard for protected routes.
@@ -20,11 +21,10 @@ type CPGuardProps = {
 };
 
 export default function CPGuard({ children }: CPGuardProps): ReactNode {
-  const dispatch = useDispatch(); 
-  const activeUser = useActiveUser(); 
-  const [renderedNode, setRenderedNode] = useState<ReactNode | null>(null); 
+  const dispatch = useDispatch();
+  const activeUser = useActiveUser();
+  const [renderedNode, setRenderedNode] = useState<ReactNode | null>(null);
 
-  // useEffect hook for side effects based on authentication changes
   useEffect(() => {
     const handleAuthentication = async () => {
       if (activeUser.isAuthenticated) {
@@ -32,7 +32,7 @@ export default function CPGuard({ children }: CPGuardProps): ReactNode {
         setRenderedNode(children || <Outlet />);
       } else {
         // Check for user information in cookies
-        const userFromCookie = getActiveUserFromCookie();
+        const userFromCookie = getActiveUserFromCookies();
 
         if (!userFromCookie?.isAuthenticated) {
           // User is not authenticated based on cookie or cookie is missing
