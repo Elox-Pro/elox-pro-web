@@ -23,7 +23,7 @@ export default function RecoverPasswordResetForm() {
   const navigate = useNavigate()
   const [resetRequest, { status, error }] = useResetRequestMutation()
   const grecaptcha = useGRecaptcha()
-  const { username } = useAppSelector((state) => state.tfa)
+  const { tfaUsername: username } = useAppSelector((state) => state.tfa)
   const [disabled, setDisabled] = useState(false)
 
   const onSubmit = async (request: RecoverPasswordResetRequest) => {

@@ -26,7 +26,7 @@ import { getActiveUserFromCookies } from "../../../auth/helpers/get-active-user-
  */
 export default function ValidateTfaForm() {
   const { t } = useTranslation("tfa", { keyPrefix: "validate-tfa" })
-  const { username } = useAppSelector((state) => state.tfa);
+  const { tfaUsername: username } = useAppSelector((state) => state.tfa);
   const dispatch = useAppDispatch();
   const { register, handleSubmit, errors } = useZod<ValidateTfaRequest>(validateTfaSchema);
   const navigate = useNavigate();
@@ -110,6 +110,9 @@ export default function ValidateTfaForm() {
       case TfaAction.RECOVER_PASSWORD:
         recoverPasswordAction();
         break;
+      case TfaAction.UPDATE_EMAIL:
+        updateEmailAction();
+        break;
       default:
         console.warn("Unhandled TFA action:", data.action);
         break;
@@ -152,6 +155,17 @@ export default function ValidateTfaForm() {
     dispatch(setResetFormEnabled(true));
     navigate("/recover-password/reset", { replace: true });
   };
+
+
+  /**
+   * Handles the update email action.
+   * @returns {void}
+   */
+  function updateEmailAction() {
+    navigate("/cpanel/profile/", { replace: true });
+    toast.success(t("success.update-email"));
+  }
+
 
   return (
     <>

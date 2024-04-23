@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useZod } from "../../../common/hooks/zod.hook";
 import { useAppDispatch } from "../../../app/hooks/app.hooks";
-import { setUsername, setTfaPending } from "../../../tfa/features/tfa.slice";
+import { setTfaUsername, setTfaPending } from "../../../tfa/features/tfa.slice";
 import { getGRecaptchaToken, useGRecaptcha } from "../../../common/hooks/grecaptcha.hook";
 import { SignupRequest } from "../../types/signup/signup-request.type";
 import { signupSchema } from "../../schemas/signup.schema";
@@ -62,7 +62,7 @@ export default function SignupForm() {
    */
   const onInitRequest = (username: string) => {
     dispatch(setOverlay(true));
-    dispatch(setUsername(username));
+    dispatch(setTfaUsername(username));
     setDisabled(true);
   };
 
@@ -74,7 +74,7 @@ export default function SignupForm() {
   const onErrorRequest = (error: any) => {
     dispatch(setOverlay(false));
     setDisabled(false);
-    dispatch(setUsername(""));
+    dispatch(setTfaUsername(""));
     toast.error(t("error.on-request"));
     console.error("Signup Error:", error);
   };
@@ -86,7 +86,7 @@ export default function SignupForm() {
   const onRejected = () => {
     dispatch(setOverlay(false));
     setDisabled(false);
-    dispatch(setUsername(""));
+    dispatch(setTfaUsername(""));
     handleRejected({ error, message: "Signup Rejected" });
   };
 

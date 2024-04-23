@@ -7,6 +7,8 @@ import { UpdateNameResponse } from "../types/update-name/update-name-response.ty
 import { UpdateNameRequest } from "../types/update-name/update-name-request.type";
 import { UpdateGenderResponse } from "../types/update-gender/update-gender-response.type";
 import { UpdateGenderRequest } from "../types/update-gender/update-gender-request.type";
+import { UpdateEmailResponse } from "../types/update-email/update-email-response.type";
+import { UpdateEmailRequest } from "../types/update-email/update-email-request.type";
 
 export const profileApi = createApi({
     reducerPath: "profileApi",
@@ -38,7 +40,13 @@ export const profileApi = createApi({
                     return { url: `/gender`, method: "PATCH", body }
                 },
                 invalidatesTags: ["getProfile"]
-            })
+            }),
+            updateEmail: builder.mutation<UpdateEmailResponse, UpdateEmailRequest>({
+                query(body) {
+                    return { url: `/email`, method: "PATCH", body }
+                },
+                invalidatesTags: ["getProfile"]
+            }),
         }
     },
 });
@@ -47,5 +55,6 @@ export const {
     useGetProfileQuery,
     useUpdateAvatarMutation,
     useUpdateNameMutation,
-    useUpdateGenderMutation
+    useUpdateGenderMutation,
+    useUpdateEmailMutation,
 } = profileApi;

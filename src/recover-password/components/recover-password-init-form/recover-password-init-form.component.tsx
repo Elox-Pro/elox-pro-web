@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { QueryStatus } from "@reduxjs/toolkit/query";
 import IconInput from "../../../common/components/icon-input/icon-input.component";
 import { FieldError } from "react-hook-form";
-import { setTfaPending, setUsername } from "../../../tfa/features/tfa.slice";
+import { setTfaPending, setTfaUsername } from "../../../tfa/features/tfa.slice";
 import { setOverlay } from "../../../common/features/common.slice";
 import { toast } from "react-toastify";
 import SubmitButton from "../../../common/components/submit-button/submit-button";
@@ -63,7 +63,7 @@ export default function RecoverPasswordInitForm() {
    */
   const onInitRequest = (username: string) => {
     dispatch(setOverlay(true));
-    dispatch(setUsername(username));
+    dispatch(setTfaUsername(username));
     setDisabled(true);
   };
 
@@ -75,7 +75,7 @@ export default function RecoverPasswordInitForm() {
   const onErrorRequest = (error: any) => {
     dispatch(setOverlay(false));
     setDisabled(false);
-    dispatch(setUsername(""));
+    dispatch(setTfaUsername(""));
     toast.error(t("error.on-request"));
     console.error("Recover Password Init Error:", error);
   };
@@ -87,7 +87,7 @@ export default function RecoverPasswordInitForm() {
   const onRejected = () => {
     dispatch(setOverlay(false));
     setDisabled(false);
-    dispatch(setUsername(""));
+    dispatch(setTfaUsername(""));
     handleRejected({ error, message: "Recover Password Init Rejected" });
   };
 

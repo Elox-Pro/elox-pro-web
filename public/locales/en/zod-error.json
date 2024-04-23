@@ -2,5 +2,6 @@
     "zodError.tooShort": "This field must be at least {{minLength}} characters long.",
     "zodError.required": "This field is required.",
     "zodError.invalidEmail": "This field must be a valid email address.",
-    "zodError.passwordsDoNotMatch": "The passwords do not match."
+    "zodError.passwordsDoNotMatch": "The passwords do not match.",
+    "zodError.emailAlreadyExists": "This email address is already in use."
 }

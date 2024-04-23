@@ -4,10 +4,13 @@ import ListGroup from "react-bootstrap/esm/ListGroup";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import Badge from "react-bootstrap/esm/Badge";
+import { useState } from "react";
+import UpdateEmailModal from "../update-email-modal/update-email-modal.component";
 
 export default function ListGroupItemEmail() {
     const { profile } = useAppSelector(state => state.profile);
     const { t } = useTranslation("profile", { keyPrefix: "contact-info.email" });
+    const [showModal, setShowModal] = useState(false);
 
     if (!profile) {
         return null;
@@ -17,7 +20,11 @@ export default function ListGroupItemEmail() {
     const emailVerified = profile.emailVerified;
 
     const onClick = () => {
-        alert("Not implemented");
+        setShowModal(true);
+    }
+
+    const onHide = () => {
+        setShowModal(false);
     }
 
     return (
@@ -44,6 +51,10 @@ export default function ListGroupItemEmail() {
                     </Col>
                 </Row>
             </ListGroup.Item>
+            <UpdateEmailModal
+                show={showModal}
+                onHide={onHide}
+            />
         </>
     )
 }

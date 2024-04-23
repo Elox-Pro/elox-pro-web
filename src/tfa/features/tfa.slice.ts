@@ -2,12 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 type TfaState = {
     tfaPending: boolean;
-    username: string;
+    tfaUsername: string;
 }
 
 const initialState: TfaState = {
     tfaPending: false,
-    username: "",
+    tfaUsername: "",
 }
 
 const tfaSlice = createSlice({
@@ -17,12 +17,12 @@ const tfaSlice = createSlice({
         setTfaPending: (state, action: { payload: boolean }) => {
             state.tfaPending = action.payload;
         },
-        setUsername: (state, action: { payload: string }) => {
-            state.username = action.payload
+        setTfaUsername: (state, action: { payload: string }) => {
+            state.tfaUsername = action.payload
         },
     }
 });
 
 const tfaReducer = tfaSlice.reducer;
-export const { setUsername, setTfaPending } = tfaSlice.actions;
+export const { setTfaUsername, setTfaPending } = tfaSlice.actions;
 export default tfaReducer;

@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useZod } from "../../../common/hooks/zod.hook";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
-import { setUsername, setTfaPending } from "../../../tfa/features/tfa.slice";
+import { setTfaUsername, setTfaPending } from "../../../tfa/features/tfa.slice";
 import { getGRecaptchaToken, useGRecaptcha } from "../../../common/hooks/grecaptcha.hook";
 import AuthLink from "../auth-link/auth-link.component";
 import { setOverlay } from "../../../common/features/common.slice";
@@ -27,7 +27,7 @@ import { getActiveUserFromCookies } from "../../helpers/get-active-user-from-coo
 export default function LoginForm() {
   const dispatch = useAppDispatch();
   const { t } = useTranslation("auth", { keyPrefix: "login" });
-  const { username } = useAppSelector((state) => state.tfa);
+  const { tfaUsername: username } = useAppSelector((state) => state.tfa);
   const grecaptcha = useGRecaptcha();
   const [disabled, setDisabled] = useState(false);
   const { register, handleSubmit, errors } = useZod<LoginRequest>(loginSchema);
@@ -61,7 +61,7 @@ export default function LoginForm() {
    */
   const onInitRequest = (username: string) => {
     dispatch(setOverlay(true));
-    dispatch(setUsername(username));
+    dispatch(setTfaUsername(username));
     setDisabled(true);
   };
 
@@ -72,7 +72,7 @@ export default function LoginForm() {
   const onErrorRequest = (error: any) => {
     dispatch(setOverlay(false));
     setDisabled(false);
-    dispatch(setUsername(""));
+    dispatch(setTfaUsername(""));
     toast.error(t("error.on-request"));
     console.error("Login Error:", error);
   };
@@ -83,7 +83,7 @@ export default function LoginForm() {
   const onRejected = () => {
     dispatch(setOverlay(false));
     setDisabled(false);
-    dispatch(setUsername(""));
+    dispatch(setTfaUsername(""));
     handleRejected({ error, message: "Login Rejected" });
   };
 
