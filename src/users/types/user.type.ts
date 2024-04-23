@@ -1,4 +1,5 @@
 import { TfaType } from "../../tfa/enums/validate-tfa/tfa-type.enum"
+import { Gender } from "../enum/gender.enum";
 
 export type User = {
 
@@ -14,7 +15,7 @@ export type User = {
 
     gender: string | null;
 
-    avatarUrl: string | null;
+    avatarUrl: Gender | null;
 
     // Flat indication email verification status
     emailVerified: boolean | false;

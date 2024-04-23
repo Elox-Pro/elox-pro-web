@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { CommonState } from "../types/common-state";
+import { CommonState } from "../types/common-state.type";
 
 const initialState: CommonState = {
     overlay: {

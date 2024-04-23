@@ -3,10 +3,13 @@ import { useAppSelector } from "../../../app/hooks/app.hooks";
 import ListGroup from "react-bootstrap/esm/ListGroup";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
+import { useState } from "react";
+import UpdateGenderModal from "../update-gender-modal/update-gender-modal.component";
 
 export default function ListGroupItemGender() {
     const { profile, profileTranslations } = useAppSelector(state => state.profile);
     const { t } = useTranslation("profile", { keyPrefix: "basic-info.gender" });
+    const [showModal, setShowModal] = useState(false);
 
     if (profile === null || profileTranslations === null) {
         return null;
@@ -15,7 +18,11 @@ export default function ListGroupItemGender() {
     const gender = profile.gender && profileTranslations[profile.gender] || t("value");
 
     const onClick = () => {
-        alert("Not implemented");
+        setShowModal(true);
+    }
+
+    const onHide = () => {
+        setShowModal(false);
     }
 
     return (
@@ -41,6 +48,7 @@ export default function ListGroupItemGender() {
                     </Col>
                 </Row>
             </ListGroup.Item>
+            <UpdateGenderModal show={showModal} onHide={onHide} />
         </>
     )
 }

@@ -84,8 +84,7 @@
         },
         "modal": {
             "title": "Edit name",
-            "submit": "OK",
-            "label": "Select a picture"
+            "submit": "OK"
         },
         "container": {
             "title": "A name helps personalize your account",
@@ -100,5 +99,23 @@
         "error": {
             "on-request": "Error updating name request"
         }
+    },
+    "update-gender": {
+        "success": {
+            "on-fullfilled": "Gender updated successfully"
+        },
+        "modal": {
+            "title": "Edit gender",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "A gender helps personalize your account",
+            "subtitle": "Please select your gender."
+        },
+        "MALE": "Male",
+        "FEMALE": "Female"
+    },
+    "error": {
+        "on-request": "Error updating gender request"
     }
 }
