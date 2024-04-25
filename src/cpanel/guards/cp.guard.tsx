@@ -4,6 +4,7 @@ import { setActiveUser } from "../../auth/features/auth.slice";
 import { useActiveUser } from "../../auth/hooks/active-user.hook";
 import { useDispatch } from "react-redux";
 import { getActiveUserFromCookies } from "../../auth/helpers/get-active-user-from-cookies.helper";
+import useCheckSession from "../hooks/check-session.hook";
 
 /**
  * CPGuard component acts as an authentication guard for protected routes.
@@ -23,7 +24,12 @@ type CPGuardProps = {
 export default function CPGuard({ children }: CPGuardProps): ReactNode {
   const dispatch = useDispatch();
   const activeUser = useActiveUser();
+  const checkSession = useCheckSession();
   const [renderedNode, setRenderedNode] = useState<ReactNode | null>(null);
+
+  if (!checkSession) {
+    console.warn("Check session doesn't work");
+  }
 
   useEffect(() => {
     const handleAuthentication = async () => {
