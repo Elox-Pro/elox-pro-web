@@ -15,7 +15,8 @@
         },
         "success": {
             "signin": "Welcome back {{username}}!",
-            "signup": "Your account has been created successfully"
+            "signup": "Your account has been created successfully",
+            "update-email": "Your email has been updated successfully"
         }
     }
 }

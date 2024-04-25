@@ -112,10 +112,29 @@
             "title": "A gender helps personalize your account",
             "subtitle": "Please select your gender."
         },
+        "error": {
+            "on-request": "Error updating gender request"
+        },
         "MALE": "Male",
         "FEMALE": "Female"
     },
-    "error": {
-        "on-request": "Error updating gender request"
+    "update-email": {
+        "success": {
+            "on-fullfilled": "Email updated successfully"
+        },
+        "modal": {
+            "title": "Edit email",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "A email helps personalize your account",
+            "subtitle": "Please enter your new email."
+        },
+        "email": {
+            "label": "Email"
+        },
+        "error": {
+            "on-request": "Error updating email request"
+        }
     }
 }

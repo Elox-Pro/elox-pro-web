@@ -15,7 +15,8 @@
         },
         "success": {
             "signin": "¡Bienvenido de nuevo {{username}}!",
-            "signup": "Tu cuenta ha sido creada con éxito"
+            "signup": "Tu cuenta ha sido creada con éxito",
+            "update-email": "Tu correo electrónico ha sido actualizado con éxito"
         }
     }
 }
