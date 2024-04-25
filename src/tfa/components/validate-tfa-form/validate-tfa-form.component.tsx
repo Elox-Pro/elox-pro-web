@@ -18,6 +18,7 @@ import SubmitButton from "../../../common/components/submit-button/submit-button
 import { handleRejected } from "../../../common/helpers/handle-rejected.helper";
 import { login } from "../../../auth/features/auth.slice";
 import { getActiveUserFromCookies } from "../../../auth/helpers/get-active-user-from-cookies.helper";
+import { setProfile } from "../../../profile/features/profile.slice";
 
 /**
  * Renders the Validate TFA Form component.
@@ -55,6 +56,7 @@ export default function ValidateTfaForm() {
       case QueryStatus.fulfilled:
         onFulfilled();
         break;
+        default: break
     }
   }, [status, error, data]);
 
@@ -156,12 +158,12 @@ export default function ValidateTfaForm() {
     navigate("/recover-password/reset", { replace: true });
   };
 
-
   /**
    * Handles the update email action.
    * @returns {void}
    */
   function updateEmailAction() {
+    dispatch(setProfile(null));// clear profile to force refresh the profile page
     navigate("/cpanel/profile/", { replace: true });
     toast.success(t("success.update-email"));
   }

@@ -12,11 +12,10 @@ import { useGetProfile } from "../../hooks/get-profile.hook"
 export default function ProfileIndex() {
 
   const { t } = useTranslation("profile", { keyPrefix: "index" });
-  const { isSuccess } = useGetProfile()
+  const { isSuccess } = useGetProfile();
 
   return (
-    isSuccess &&
-    <CPWrapperPage >
+    <CPWrapperPage show={isSuccess} >
       <div className="profile-index">
         <Row className="text-center">
           <Col xs={12}>
@@ -42,6 +41,6 @@ export default function ProfileIndex() {
           </Col>
         </Row>
       </div>
-    </CPWrapperPage >
-  );
+    </CPWrapperPage>
+  )
 }

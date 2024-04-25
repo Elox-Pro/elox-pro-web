@@ -12,7 +12,7 @@ const profileSlice = createSlice({
     name: "profile",
     initialState,
     reducers: {
-        setProfile: (state, action: { payload: User }) => {
+        setProfile: (state, action: { payload: User | null }) => {
             state.profile = action.payload;
         },
         setProfileTranslations: (state, action: { payload: Record<string, string> }) => {

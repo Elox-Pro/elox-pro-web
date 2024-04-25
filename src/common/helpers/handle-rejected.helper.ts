@@ -8,7 +8,7 @@ type HandleRejectedProps = {
     message: string
     navigate?: NavigateFunction
 }
-export function handleRejected({ error, message, navigate }: HandleRejectedProps) {
+export function handleRejected({ error, message, navigate }: HandleRejectedProps): void {
     const errorData = getErrorData(error);
     if (navigate && errorData.code === HttpStatus.UNAUTHORIZED) {
         navigate("/error/401", { replace: true })
@@ -16,4 +16,5 @@ export function handleRejected({ error, message, navigate }: HandleRejectedProps
     }
     toast.error(errorData.message);
     console.error(message, errorData);
+    return;
 }

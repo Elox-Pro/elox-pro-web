@@ -17,7 +17,7 @@ import { QueryStatus } from "@reduxjs/toolkit/query";
 import { UpdateEmailRequest } from "../../types/update-email/update-email-request.type";
 import { updateEmailSchema } from "../../schemas/update-emaill.schema";
 import { setTfaPending, setTfaUsername } from "../../../tfa/features/tfa.slice";
-import { useActiveUser } from "../../../auth/hooks/active-user.hook";
+import { useDispatch } from "react-redux";
 
 type UpdateEmailModalProps = {
     show: boolean,
@@ -28,7 +28,7 @@ export default function UpdateEmailModal({ show, onHide }: UpdateEmailModalProps
     const { t } = useTranslation("profile", { keyPrefix: "update-email" });
     const [disabled, setDisabled] = useState(false);
     const { register, handleSubmit, errors } = useZod<UpdateEmailRequest>(updateEmailSchema);
-    const dispatch = useAppDispatch();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const { profile } = useAppSelector((state) => state.profile);
 
