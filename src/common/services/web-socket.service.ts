@@ -20,18 +20,15 @@ export class WebSocketService {
         onJobFailed: (message: string) => void,
         onJobSucceeded: (message: string) => void
     ) {
-        this.socket.on(`job-sent-${this.username}`, (message) => onJobSent(message));
-        this.socket.on(`job-failed-${this.username}`, (message) => onJobFailed(message));
-        this.socket.on(`job-succeeded-${this.username}`, (message) => onJobSucceeded(message));
-        // this.socket.on(`job-sent`, (message) => onJobSent(message));
-        // this.socket.on('job-failed', (message) => onJobFailed(message));
-        // this.socket.on(`job-succeeded-${this.username}`, (message) => onJobSucceeded(message));
+        this.socket.on(`job-sent:${this.username}`, (message) => onJobSent(message));
+        this.socket.on(`job-failed:${this.username}`, (message) => onJobFailed(message));
+        this.socket.on(`job-succeeded:${this.username}`, (message) => onJobSucceeded(message));
     }
 
     unsubscribeFromJobEvents() {
-        this.socket.off(`job-sent-${this.username}`);
-        this.socket.off(`job-failed-${this.username}`);
-        this.socket.off(`job-succeeded-${this.username}`);
+        this.socket.off(`job-sent:${this.username}`);
+        this.socket.off(`job-failed:${this.username}`);
+        this.socket.off(`job-succeeded:${this.username}`);
     }
 
     disconnect() {
