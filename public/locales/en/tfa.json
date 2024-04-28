@@ -18,5 +18,9 @@
             "signup": "Your account has been created successfully",
             "update-email": "Your email has been updated successfully"
         }
+    },
+    "validate-tfa-status": {
+        "succeeded": "Two-factor authentication was send successfully",
+        "failed": "Error sending two-factor authentication"
     }
 }
