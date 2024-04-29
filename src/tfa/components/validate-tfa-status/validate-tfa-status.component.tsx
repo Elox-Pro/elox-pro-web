@@ -3,11 +3,14 @@ import { useAppSelector } from "../../../app/hooks/app.hooks";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import { WS_URL } from "../../../app/constants/app.constants";
 
 /**
  * Component to validate Two-Factor Authentication (TFA) status using WebSocket events.
  * Handles success and failure events and displays corresponding toast messages.
  * Connects to a WebSocket server to listen for specific TFA events.
+ * @author Yonatan A Quintero R
+ * @date 2024-04-29
  */
 export default function ValidateTfaStatus() {
     const { t } = useTranslation("tfa", { keyPrefix: "validate-tfa-status" });
@@ -48,7 +51,7 @@ export default function ValidateTfaStatus() {
      * @returns {Socket} - The initialized WebSocket instance.
      */
     const initializeSocket = (): Socket => {
-        const socket: Socket = io("http://localhost:4025");//TODO: Move to environment variable
+        const socket: Socket = io(WS_URL);
 
         socket.on('connect', () => {
             console.info('Connected to WebSocket server');

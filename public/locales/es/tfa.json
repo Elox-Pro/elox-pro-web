@@ -17,6 +17,10 @@
             "signin": "¡Bienvenido de nuevo {{username}}!",
             "signup": "Tu cuenta ha sido creada con éxito",
             "update-email": "Tu correo electrónico ha sido actualizado con éxito"
+        },
+        "validate-tfa-status": {
+            "succeeded": "Segundo factor de autenticación fue enviado con éxito",
+            "failed": "Error enviando el segundo factor de autenticación"
         }
     }
 }
