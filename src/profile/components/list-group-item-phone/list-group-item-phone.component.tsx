@@ -4,10 +4,13 @@ import ListGroup from "react-bootstrap/esm/ListGroup";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import Badge from "react-bootstrap/esm/Badge";
+import UpdatePhoneModal from "../update-phone-modal/update-phone-modal.component";
+import { useState } from "react";
 
 export default function ListGroupItemPhone() {
     const { profile } = useAppSelector(state => state.profile);
     const { t } = useTranslation("profile", { keyPrefix: "contact-info.phone" });
+    const [showModal, setShowModal] = useState(false);
 
     if (profile === null) {
         return null;
@@ -17,7 +20,11 @@ export default function ListGroupItemPhone() {
     const phoneVerified = profile.phoneVerified;
 
     const onClick = () => {
-        alert("Not implemented");
+        setShowModal(true);
+    }
+
+    const onHide = () => {
+        setShowModal(false);
     }
 
     return (
@@ -44,6 +51,7 @@ export default function ListGroupItemPhone() {
                     </Col>
                 </Row>
             </ListGroup.Item>
+            <UpdatePhoneModal show={showModal} onHide={onHide} />
         </>
     )
 }

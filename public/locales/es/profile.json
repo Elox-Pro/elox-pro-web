@@ -1,79 +1,159 @@
 {
-    "index": {
+  "index": {
       "title": "Información personal",
-      "subtitle": "Información sobre usted y sus preferencias"
-    },
-    "basic-info": {
+      "subtitle": "Información sobre ti y tus preferencias"
+  },
+  "basic-info": {
       "title": "Información básica",
       "avatar": {
-        "label": "Foto de perfil",
-        "value": "Una foto de perfil ayuda a personalizar tu cuenta"
+          "label": "Foto de perfil",
+          "value": "Una foto de perfil ayuda a personalizar tu cuenta"
       },
       "username": {
-        "label": "Nombre de usuario"
+          "label": "Nombre de usuario"
       },
       "role": {
-        "label": "Rol"
+          "label": "Rol"
       },
       "name": {
-        "label": "Nombre",
-        "value": "Un nombre ayuda a personalizar tu cuenta"
+          "label": "Nombre",
+          "value": "Un nombre ayuda a personalizar tu cuenta"
       },
       "gender": {
-        "label": "Género",
-        "value": "Un género ayuda a personalizar tu cuenta"
+          "label": "Género",
+          "value": "Un género ayuda a personalizar tu cuenta"
       },
       "updated-at": {
-        "label": "Actualizado en"
+          "label": "Actualizado en"
       }
-    },
-    "contact-info": {
+  },
+  "contact-info": {
       "title": "Información de contacto",
       "email": {
-        "label": "Correo electrónico",
-        "value": "Un correo electrónico ayuda a personalizar tu cuenta",
-        "verified": "Verificado"
+          "label": "Correo electrónico",
+          "value": "Un correo electrónico ayuda a personalizar tu cuenta",
+          "verified": "Verificado"
       },
       "phone": {
-        "label": "Teléfono",
-        "value": "Un teléfono ayuda a personalizar tu cuenta", 
-        "verified": "Verificado"
+          "label": "Teléfono",
+          "value": "Un teléfono ayuda a personalizar tu cuenta",
+          "verified": "Verificado"
       }
-    },
-    "password-info": {
+  },
+  "password-info": {
       "title": "Contraseña",
       "subtitle": "Una contraseña segura ayuda a proteger tu cuenta",
       "password": {
-        "label": "Contraseña"
+          "label": "Contraseña"
       }
-    },
-    "tfa-info": {
+  },
+  "tfa-info": {
       "title": "Autenticación de dos factores",
-      "subtitle": "La autenticación de dos factores ayuda a la seguridad de tu cuenta al agregar un paso de inicio de sesión adicional",
+      "subtitle": "La 2FA mejora la seguridad de tu cuenta al agregar un paso adicional de inicio de sesión",
       "email": {
-        "label": "Correo electrónico",
-        "value": "Habilitar la verificación por correo electrónico para la autenticación de dos factores en tu cuenta",
-        "configured": "Configurado"
+          "label": "Correo electrónico",
+          "value": "Habilitar verificación por correo electrónico para 2FA en tu cuenta",
+          "configured": "Configurado"
       }
-    },
-    "settings": {
-      "title": "Configuración general",
+  },
+  "settings": {
+      "title": "Configuraciones generales",
       "language": {
-        "label": "Idioma"
+          "label": "Idioma"
       },
       "theme": {
-        "label": "Tema"
+          "label": "Tema"
       }
-    },
-    "update-avatar": {
-      "success-toast": {
-        "title": "Editar avatar",
-        "message": "Avatar actualizado con éxito"
+  },
+  "update-avatar": {
+      "success": {
+          "on-fullfilled": "Foto de perfil actualizada exitosamente"
       },
       "modal": {
-        "title": "Editar avatar",
-        "submit": "OK",
-        "label": "Seleccionar una imagen"
+          "title": "Editar foto de perfil",
+          "submit": "OK",
+          "label": "Selecciona una imagen"
+      },
+      "error": {
+          "on-request": "Error al actualizar la foto de perfil"
       }
-    }
-   }
+  },
+  "update-name": {
+      "success": {
+          "on-fullfilled": "Nombre actualizado exitosamente"
+      },
+      "modal": {
+          "title": "Editar nombre",
+          "submit": "OK"
+      },
+      "container": {
+          "title": "Un nombre ayuda a personalizar tu cuenta",
+          "subtitle": "Por favor ingresa tu nombre completo."
+      },
+      "first-name": {
+          "label": "Primer nombre"
+      },
+      "last-name": {
+          "label": "Apellido"
+      },
+      "error": {
+          "on-request": "Error al actualizar el nombre"
+      }
+  },
+  "update-gender": {
+      "success": {
+          "on-fullfilled": "Género actualizado exitosamente"
+      },
+      "modal": {
+          "title": "Editar género",
+          "submit": "OK"
+      },
+      "container": {
+          "title": "Un género ayuda a personalizar tu cuenta",
+          "subtitle": "Por favor selecciona tu género."
+      },
+      "error": {
+          "on-request": "Error al actualizar el género"
+      },
+      "MALE": "Masculino",
+      "FEMALE": "Femenino"
+  },
+  "update-email": {
+      "success": {
+          "on-fullfilled": "Correo electrónico actualizado exitosamente"
+      },
+      "modal": {
+          "title": "Editar correo electrónico",
+          "submit": "OK"
+      },
+      "container": {
+          "title": "Un correo electrónico ayuda a personalizar tu cuenta",
+          "subtitle": "Por favor ingresa tu nuevo correo electrónico."
+      },
+      "email": {
+          "label": "Correo electrónico"
+      },
+      "error": {
+          "on-request": "Error al actualizar el correo electrónico"
+      }
+  },
+  "update-phone": {
+      "success": {
+          "on-fullfilled": "Teléfono actualizado exitosamente"
+      },
+      "modal": {
+          "title": "Editar teléfono",
+          "submit": "OK"
+      },
+      "container": {
+          "title": "Un teléfono ayuda a personalizar tu cuenta",
+          "subtitle": "Por favor ingresa tu nuevo teléfono."
+      },
+      "phone": {
+          "label": "Teléfono"
+      },
+      "error": {
+          "on-request": "Error al actualizar el teléfono"
+      }
+  }
+}

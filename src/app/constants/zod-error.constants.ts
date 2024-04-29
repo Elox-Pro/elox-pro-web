@@ -3,4 +3,6 @@ export const ZodErrorKey = {
     invalidEmail: "zodError.invalidEmail",
     passwordsDoNotMatch: "zodError.passwordsDoNotMatch",
     emailAlreadyExists: "zodError.emailAlreadyExists",
+    invalidPhone: "zodError.invalidPhone",
+    phoneAlreadyExists: "zodError.phoneAlreadyExists"
 };

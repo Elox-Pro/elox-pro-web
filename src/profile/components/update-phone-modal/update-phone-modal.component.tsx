@@ -8,97 +8,91 @@ import FloatingInput from "../../../common/components/floating-input/floating-in
 import { FieldError } from "react-hook-form";
 import Form from "react-bootstrap/esm/Form";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
-import { useUpdateEmailMutation } from "../../api/profile.api";
+import { useUpdatePhoneMutation } from "../../api/profile.api";
 import { setOverlay } from "../../../common/features/common.slice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { handleRejected } from "../../../common/helpers/handle-rejected.helper";
 import { QueryStatus } from "@reduxjs/toolkit/query";
-import { UpdateEmailRequest } from "../../types/update-email/update-email-request.type";
-import { updateEmailSchema } from "../../schemas/update-emaill.schema";
-import { setTfaPending, setTfaUsername } from "../../../tfa/features/tfa.slice";
-import { useDispatch } from "react-redux";
+import { UpdatePhoneRequest } from "../../types/update-phone/update-phone-request.type";
+import { updatePhoneSchema } from "../../schemas/update-phone.schema";
 
-type UpdateEmailModalProps = {
+type UpdatePhoneModalProps = {
     show: boolean,
     onHide: () => void
 }
-export default function UpdateEmailModal({ show, onHide }: UpdateEmailModalProps) {
+export default function UpdatePhoneModal({ show, onHide }: UpdatePhoneModalProps) {
 
-    const { t } = useTranslation("profile", { keyPrefix: "update-email" });
+    const { t } = useTranslation("profile", { keyPrefix: "update-phone" });
     const [disabled, setDisabled] = useState(false);
-    const { register, handleSubmit, errors } = useZod<UpdateEmailRequest>(updateEmailSchema);
-    const dispatch = useDispatch();
+    const { register, handleSubmit, errors } = useZod<UpdatePhoneRequest>(updatePhoneSchema);
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { profile } = useAppSelector((state) => state.profile);
 
     if (profile === null) {
         return null;
     }
-    const email = profile.email || "";
-    const username = profile.username || "";
+    const phone = profile.phone || "";
 
-    const [updateEmail, { data, status, error }] = useUpdateEmailMutation();
+    const [updatePhone, { data, status, error }] = useUpdatePhoneMutation();
 
-    const onSubmit = async (req: UpdateEmailRequest) => {
+    const handleSubmitRequest = async (req: UpdatePhoneRequest) => {
         try {
-            onInitRequest();
-            updateEmail({ email: req.email });
+            handleInitRequest();
+            updatePhone({ phone: req.phone });
         } catch (error) {
-            onErrorRequest(error);
+            handleErrorRequest(error);
         }
     };
 
     useEffect(() => {
         switch (status) {
-            case QueryStatus.fulfilled: onFulfilled(); break;
-            case QueryStatus.rejected: onRejected(); break;
+            case QueryStatus.fulfilled:
+                handleSuccessfulRequest();
+                break;
+            case QueryStatus.rejected:
+                handleRejectedRequest();
+                break;
             default: break;
         }
     }, [status, error, data])
 
-    const onInitRequest = () => {
+    const handleInitRequest = () => {
         setDisabled(true);
         dispatch(setOverlay(true));
     }
 
-    const onErrorRequest = (error: any) => {
+    const handleErrorRequest = (error: any) => {
         dispatch(setOverlay(false));
         setDisabled(false);
         toast.error(t("error.on-request"));
-        console.error("Update email error:", error);
+        console.error("Update phone error:", error);
     }
 
-    const onRejected = () => {
+    const handleRejectedRequest = () => {
         dispatch(setOverlay(false));
         setDisabled(false);
-        handleRejected({ error, message: "Update email rejected", navigate });
+        handleRejected({ error, message: "Update phone rejected", navigate });
     }
 
-    const onFulfilled = () => {
-        try {
-            if (!data || !data.isTFAPending) {
-                throw new Error("Update email fulfilled but no data");
-            }
-            dispatch(setOverlay(false));
-            dispatch(setTfaPending(true));
-            dispatch(setTfaUsername(username));
-            navigate("/tfa/validate", { replace: true });
-        } catch (error) {
-            onErrorRequest(error);
-        }
+    const handleSuccessfulRequest = () => {
+        dispatch(setOverlay(false));
+        setDisabled(false);
+        onHide();
+        toast.success(t("success.on-fullfilled"));
     }
 
     return (
 
         <Modal
-            className="update-email-modal"
+            className="update-fullname-modal"
             show={show}
             fullscreen="lg-down"
             scrollable
             backdrop="static"
             keyboard={false}>
-            <Form onSubmit={handleSubmit(onSubmit)} noValidate>
+            <Form onSubmit={handleSubmit(handleSubmitRequest)} noValidate>
                 <ModalHeader
                     title={t("modal.title")}
                     buttonText={"OK"}
@@ -116,21 +110,21 @@ export default function UpdateEmailModal({ show, onHide }: UpdateEmailModalProps
                         <FloatingInput
                             tabIndex={1}
                             type="text"
-                            name="email"
-                            label={t("email.label")}
+                            name="phone"
+                            label={t("phone.label")}
                             autoFocus
-                            defaultValue={email}
+                            autoComplete="phone"
+                            defaultValue={phone}
                             disabled={disabled}
                             register={register}
-                            error={errors.email as FieldError}
+                            error={errors.phone as FieldError}
                         />
-
                     </Container>
                 </Modal.Body>
                 <input
                     type="hidden"
-                    defaultValue={email}
-                    {...register("currentEmail")}
+                    defaultValue={phone}
+                    {...register("currentPhone")}
                 />
             </Form>
         </Modal >

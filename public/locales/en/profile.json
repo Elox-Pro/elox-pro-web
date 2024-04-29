@@ -136,5 +136,24 @@
         "error": {
             "on-request": "Error updating email request"
         }
+    },
+    "update-phone": {
+        "success": {
+            "on-fullfilled": "Phone updated successfully"
+        },
+        "modal": {
+            "title": "Edit phone",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "A phone helps personalize your account",
+            "subtitle": "Please enter your new phone."
+        },
+        "phone": {
+            "label": "Phone"
+        },
+        "error": {
+            "on-request": "Error updating phone request"
+        }
     }
 }

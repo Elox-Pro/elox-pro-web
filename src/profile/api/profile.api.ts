@@ -9,6 +9,8 @@ import { UpdateGenderResponse } from "../types/update-gender/update-gender-respo
 import { UpdateGenderRequest } from "../types/update-gender/update-gender-request.type";
 import { UpdateEmailResponse } from "../types/update-email/update-email-response.type";
 import { UpdateEmailRequest } from "../types/update-email/update-email-request.type";
+import { UpdatePhoneResponse } from "../types/update-phone/update-phone-response.type";
+import { UpdatePhoneRequest } from "../types/update-phone/update-phone-request.type";
 
 export const profileApi = createApi({
     reducerPath: "profileApi",
@@ -47,6 +49,12 @@ export const profileApi = createApi({
                 },
                 invalidatesTags: ["getProfile"]
             }),
+            updatePhone: builder.mutation<UpdatePhoneResponse, UpdatePhoneRequest>({
+                query(body) {
+                    return { url: `/phone`, method: "PATCH", body }
+                },
+                invalidatesTags: ["getProfile"]
+            })
         }
     },
 });
@@ -57,4 +65,5 @@ export const {
     useUpdateNameMutation,
     useUpdateGenderMutation,
     useUpdateEmailMutation,
+    useUpdatePhoneMutation
 } = profileApi;
