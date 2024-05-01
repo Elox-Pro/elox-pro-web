@@ -22,10 +22,11 @@ type UpdatePasswordModalProps = {
     show: boolean,
     onHide: () => void
 }
+
 export default function UpdatePasswordModal({ show, onHide }: UpdatePasswordModalProps) {
 
     const { t } = useTranslation("profile", { keyPrefix: "update-password" });
-    const { register, handleSubmit, errors } = useZod<UpdatePasswordRequest>(updatePasswordSchema);
+    const { register, handleSubmit, reset, errors } = useZod<UpdatePasswordRequest>(updatePasswordSchema);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { profile } = useAppSelector((state) => state.profile);
@@ -56,7 +57,12 @@ export default function UpdatePasswordModal({ show, onHide }: UpdatePasswordModa
                 break;
             default: break;
         }
-    }, [status, error, data])
+    }, [status, error, data]);
+
+    const handleHide = () => {
+        reset();
+        onHide();
+    }
 
     const handleInitRequest = () => {
         dispatch(setOverlay(true));
@@ -84,7 +90,7 @@ export default function UpdatePasswordModal({ show, onHide }: UpdatePasswordModa
                 dispatch(setTfaUsername(username));
                 navigate("/tfa/validate", { replace: true });
             } else {
-                onHide();
+                handleHide();
                 toast.success(t("success.on-fullfilled"));
             }
         } catch (error) {
@@ -104,7 +110,7 @@ export default function UpdatePasswordModal({ show, onHide }: UpdatePasswordModa
                 <ModalHeader
                     title={t("modal.title")}
                     buttonText={"OK"}
-                    onHide={onHide}
+                    onHide={handleHide}
                     disabled={isLoading}
                     tabIndex={4}
                 />

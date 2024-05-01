@@ -35,7 +35,6 @@ export function useGetProfile() {
   useEffect(() => {
     // clean up the query if the user is diferent from the profile
     if (activeUser.isAuthenticated && activeUser.username !== profile?.username) {
-      console.log("cleaning query");
       refetch();
     }
 

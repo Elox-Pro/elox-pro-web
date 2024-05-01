@@ -6,6 +6,7 @@ export function useZod<T extends FieldValues>(type: ZodType) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<T>({
     resolver: zodResolver(type),
@@ -14,6 +15,7 @@ export function useZod<T extends FieldValues>(type: ZodType) {
   return {
     register,
     handleSubmit,
+    reset,
     errors,
   }
 }
