@@ -137,23 +137,29 @@
             "on-request": "Error updating email request"
         }
     },
-    "update-phone": {
+    "update-password": {
         "success": {
-            "on-fullfilled": "Phone updated successfully"
+            "on-fullfilled": "Password updated successfully"
         },
         "modal": {
-            "title": "Edit phone",
+            "title": "Edit password",
             "submit": "OK"
         },
         "container": {
-            "title": "A phone helps personalize your account",
-            "subtitle": "Please enter your new phone."
+            "title": "A secure password helps protect your account",
+            "subtitle": "To change your password, please enter your current password and your new password."
         },
-        "phone": {
-            "label": "Phone"
+        "current-password": {
+            "label": "Current password"
+        },
+        "new-password": {
+            "label": "New password"
+        },
+        "confirm-password": {
+            "label": "Confirm password"
         },
         "error": {
-            "on-request": "Error updating phone request"
+            "on-request": "Error updating password request"
         }
     }
 }

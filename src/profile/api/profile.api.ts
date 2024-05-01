@@ -11,6 +11,8 @@ import { UpdateEmailResponse } from "../types/update-email/update-email-response
 import { UpdateEmailRequest } from "../types/update-email/update-email-request.type";
 import { UpdatePhoneResponse } from "../types/update-phone/update-phone-response.type";
 import { UpdatePhoneRequest } from "../types/update-phone/update-phone-request.type";
+import { UpdatePasswordRequest } from "../types/update-password/update-password-request.type";
+import { UpdatePasswordResponse } from "../types/update-password/update-password-response.type";
 
 export const profileApi = createApi({
     reducerPath: "profileApi",
@@ -54,6 +56,12 @@ export const profileApi = createApi({
                     return { url: `/phone`, method: "PATCH", body }
                 },
                 invalidatesTags: ["getProfile"]
+            }),
+            updatePassword: builder.mutation<UpdatePasswordResponse, UpdatePasswordRequest>({
+                query(body) {
+                    return { url: `/password`, method: "PATCH", body }
+                },
+                invalidatesTags: ["getProfile"]
             })
         }
     },
@@ -65,5 +73,6 @@ export const {
     useUpdateNameMutation,
     useUpdateGenderMutation,
     useUpdateEmailMutation,
-    useUpdatePhoneMutation
+    useUpdatePhoneMutation,
+    useUpdatePasswordMutation
 } = profileApi;

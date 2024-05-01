@@ -7,7 +7,7 @@ import { useZod } from "../../../common/hooks/zod.hook";
 import FloatingInput from "../../../common/components/floating-input/floating-input.component";
 import { FieldError } from "react-hook-form";
 import Form from "react-bootstrap/esm/Form";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
+import { useAppSelector } from "../../../app/hooks/app.hooks";
 import { useUpdateEmailMutation } from "../../api/profile.api";
 import { setOverlay } from "../../../common/features/common.slice";
 import { toast } from "react-toastify";

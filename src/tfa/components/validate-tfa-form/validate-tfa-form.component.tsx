@@ -56,7 +56,7 @@ export default function ValidateTfaForm() {
       case QueryStatus.fulfilled:
         onFulfilled();
         break;
-        default: break
+      default: break
     }
   }, [status, error, data]);
 
@@ -115,6 +115,9 @@ export default function ValidateTfaForm() {
       case TfaAction.UPDATE_EMAIL:
         updateEmailAction();
         break;
+      case TfaAction.UPDATE_PASSWORD:
+        updatePasswordAction();
+        break;
       default:
         console.warn("Unhandled TFA action:", data.action);
         break;
@@ -168,6 +171,14 @@ export default function ValidateTfaForm() {
     toast.success(t("success.update-email"));
   }
 
+  /**
+   * Handles the update password action.
+   * @returns {void}
+   */
+  function updatePasswordAction() {
+    navigate("/cpanel/profile/", { replace: true });
+    toast.success(t("success.update-password"));
+  }
 
   return (
     <>

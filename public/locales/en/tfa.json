@@ -16,7 +16,8 @@
         "success": {
             "signin": "Welcome back {{username}}!",
             "signup": "Your account has been created successfully",
-            "update-email": "Your email has been updated successfully"
+            "update-email": "Your email has been updated successfully",
+            "update-password": "Your password has been updated successfully"
         }
     },
     "validate-tfa-status": {

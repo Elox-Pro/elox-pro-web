@@ -13,6 +13,43 @@ import commonReducer from "../../common/features/common.slice";
 import avatarReducer from "../../avatar/features/avatar.slice";
 import authReducer from "../../auth/features/auth.slice";
 
+
+
+import { Middleware, isRejectedWithValue } from '@reduxjs/toolkit';
+import type { MiddlewareAPI } from "@reduxjs/toolkit";
+
+export const apiMiddleware: Middleware =
+    (api: MiddlewareAPI) => (next) => (action: any) => {
+        // Check if the action is from an RTK Query API
+        if (action.meta?.requestStatus) {
+            switch (action.meta.requestStatus) {
+                case 'pending':
+                    // Handle pending state
+                    console.log('API request is pending');
+                    break;
+                case 'fulfilled':
+                    // Handle fulfilled state
+                    console.log('API request is fulfilled');
+                    break;
+                case 'rejected':
+                    // console.log('API request is rejected', action);
+                    // Handle rejected state
+                    if (isRejectedWithValue(action)) {
+                        // Access the error payload
+                        console.error('API request failed:', action.payload);
+                    }
+                    //  else if (!action.meta.aborted) {
+                    //     console.error('API request failed', action.meta);
+                    // }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return next(action);
+    };
+
 export const appStore = configureStore({
     reducer: {
         tfa: tfaReducer,
@@ -31,6 +68,7 @@ export const appStore = configureStore({
     },
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware().concat(
+            apiMiddleware,
             authApi.middleware,
             tfaApi.middleware,
             profileApi.middleware,

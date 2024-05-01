@@ -2,12 +2,19 @@ import { useTranslation } from "react-i18next";
 import ListGroup from "react-bootstrap/esm/ListGroup";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
+import { useState } from "react";
+import UpdatePasswordModal from "../update-password-modal/update-password-modal.component";
 
-export default function ListGroupItemChangePassword() {
+export default function ListGroupItemUpdatePassword() {
     const { t } = useTranslation("profile", { keyPrefix: "password-info.password" });
-
+    const [showModal, setShowModal] = useState(false);
+    
     const onClick = () => {
-        alert("Not implemented");
+        setShowModal(true);
+    }
+
+    const onHide = () => {
+        setShowModal(false);
     }
 
     return (
@@ -33,6 +40,7 @@ export default function ListGroupItemChangePassword() {
                     </Col>
                 </Row>
             </ListGroup.Item>
+            <UpdatePasswordModal show={showModal} onHide={onHide} />
         </>
     )
 }
