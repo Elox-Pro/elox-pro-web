@@ -1,14 +1,26 @@
-import { useNavigate } from "react-router-dom"
-import { useAppSelector } from "../../app/hooks/app.hooks"
-export default function ErrorGuard() {
-  const navigate = useNavigate()
-  const error = useAppSelector((state) => state.someSlice.error)
+import { Outlet, useNavigate } from "react-router-dom"
+import { useAppDispatch, useAppSelector } from "../../app/hooks/app.hooks"
+import { HttpStatus } from "../../common/constants/common.constants"
+import { ReactNode, useEffect } from "react"
+import { toast } from "react-toastify";
+import { clearError } from "../features/error.slice";
+
+type ErrorGuardProps = {
+  children?: ReactNode
+}
+export default function ErrorGuard({ children }: ErrorGuardProps) {
+  const navigate = useNavigate();
+  const error = useAppSelector((state) => state.error);
+  const dispath = useAppDispatch();
 
   useEffect(() => {
-    if (error && error.status === 401) {
-      navigate("/401")
+    if (error && error.code === HttpStatus.UNAUTHORIZED) {
+      navigate("/error/401", { replace: true });
+    } else {
+      toast.error(error.message);
     }
-  }, [error, navigate])
+    dispath(clearError())
+  }, [error, navigate]);
 
-  return null // This component doesn't render anything visible
+  return children || <Outlet />;
 }

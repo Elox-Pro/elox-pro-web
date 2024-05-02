@@ -13,6 +13,7 @@ import commonReducer from "../../common/features/common.slice";
 import avatarReducer from "../../avatar/features/avatar.slice";
 import authReducer from "../../auth/features/auth.slice";
 import { rtkQueryMiddleware } from "../middlewares/rtk-api.middlaware";
+import errorReducer from "../../errors/features/error.slice";
 
 
 export const appStore = configureStore({
@@ -25,6 +26,7 @@ export const appStore = configureStore({
         common: commonReducer,
         avatar: avatarReducer,
         auth: authReducer,
+        error: errorReducer,
         [authApi.reducerPath]: authApi.reducer,
         [tfaApi.reducerPath]: tfaApi.reducer,
         [profileApi.reducerPath]: profileApi.reducer,

@@ -12,8 +12,6 @@ import { Overlay } from "./common/components/overlay/overlay.component.tsx"
 import Loading from "./common/components/loading/loading.component.tsx"
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.min.css";
-
-
 i18n.init()
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

@@ -9,4 +9,5 @@ export const DEFAULT_DATE_FORMAT: Intl.DateTimeFormatOptions = {
 
 export const HttpStatus = {
     UNAUTHORIZED: 401,
+    INTERNAL_SERVER_ERROR: 500
 }
