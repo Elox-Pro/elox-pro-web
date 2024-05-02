@@ -58,14 +58,14 @@ export function useGetProfile() {
   * Handles the initial request to the API
   */
   const handleInitialRequest = useCallback(() => {
-    dispatch(setOverlay(true));
+    // dispatch(setOverlay(true));
   }, [dispatch]);
 
   /**
    * Handles the rejected state by dispatching an action to hide the overlay and navigating to an error page.
    */
   const handleRejectedRequest = useCallback(() => {
-    dispatch(setOverlay(false));
+    // dispatch(setOverlay(false));
     handleRejected({ error, message: "Profile Rejected", navigate });
   }, [dispatch, error, navigate]);
 
@@ -73,7 +73,7 @@ export function useGetProfile() {
    * Handles the fulfilled state by dispatching actions to update the profile and profile translations in the Redux store.
    */
   const handleSuccessfulRequest = useCallback(() => {
-    dispatch(setOverlay(false));
+    // dispatch(setOverlay(false));
     if (!data) {
       return;
     }
