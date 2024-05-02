@@ -27,11 +27,6 @@ export function useGetProfile() {
   // Use the RTK Query hook to fetch the profile data
   const { data, error, status, isSuccess, refetch } = useGetProfileQuery();
 
-  // Use effect to init request when the component mounts
-  useEffect(() => {
-    handleInitialRequest();
-  }, []);
-
   useEffect(() => {
     // clean up the query if the user is diferent from the profile
     if (activeUser.isAuthenticated && activeUser.username !== profile?.username) {
@@ -54,12 +49,6 @@ export function useGetProfile() {
     }
   }, [status, data, error]);
 
-  /*
-  * Handles the initial request to the API
-  */
-  const handleInitialRequest = useCallback(() => {
-    // dispatch(setOverlay(true));
-  }, [dispatch]);
 
   /**
    * Handles the rejected state by dispatching an action to hide the overlay and navigating to an error page.
