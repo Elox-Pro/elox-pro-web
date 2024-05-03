@@ -1,20 +1,17 @@
 import Container from "react-bootstrap/esm/Container"
 import Modal from "react-bootstrap/esm/Modal"
 import ModalHeader from "../../../common/components/modal/modal-header/modal-header.component";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { UpdateNameRequest } from "../../types/update-name/update-name-request.type";
 import { updateNameSchema } from "../../schemas/update-name.schema";
-import { useZod } from "../../../common/hooks/zod.hook";
+import { useZodForm } from "../../../common/hooks/zod-form.hook";
 import FloatingInput from "../../../common/components/floating-input/floating-input.component";
 import { FieldError } from "react-hook-form";
 import Form from "react-bootstrap/esm/Form";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
+import { useAppSelector } from "../../../app/hooks/app.hooks";
 import { useUpdateNameMutation } from "../../api/profile.api";
-import { setOverlay } from "../../../common/features/common.slice";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { handleRejected } from "../../../common/helpers/handle-rejected.helper";
 import { QueryStatus } from "@reduxjs/toolkit/query";
 
 type UpdateNameModalProps = {
@@ -24,10 +21,7 @@ type UpdateNameModalProps = {
 export default function UpdateNameModal({ show, onHide }: UpdateNameModalProps) {
 
     const { t } = useTranslation("profile", { keyPrefix: "update-name" });
-    const [disabled, setDisabled] = useState(false);
-    const { register, handleSubmit, errors } = useZod<UpdateNameRequest>(updateNameSchema);
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
+    const { register, handleSubmit, errors } = useZodForm<UpdateNameRequest>(updateNameSchema);
     const { profile } = useAppSelector((state) => state.profile);
 
     if (profile === null) {
@@ -36,49 +30,25 @@ export default function UpdateNameModal({ show, onHide }: UpdateNameModalProps) 
     const firstName = profile.firstName || "";
     const lastName = profile.lastName || "";
 
-    const [updateName, { data, status, error }] = useUpdateNameMutation();
+    const [mutation, { status, isLoading }] = useUpdateNameMutation();
 
     const onSubmit = async (req: UpdateNameRequest) => {
         try {
-            onInitRequest();
-            updateName(req);
+            mutation(req);
         } catch (error) {
-            onErrorRequest(error);
+            console.error(error);
+            toast.error(JSON.stringify(error));
         }
     };
 
     useEffect(() => {
-        switch (status) {
-            case QueryStatus.fulfilled: onFulfilled(); break;
-            case QueryStatus.rejected: onRejected(); break;
-            default: break;
+
+        if (status === QueryStatus.fulfilled) {
+            onHide();
+            toast.success(t("success.on-fullfilled"));
         }
-    }, [status, error, data])
 
-    const onInitRequest = () => {
-        setDisabled(true);
-        dispatch(setOverlay(true));
-    }
-
-    const onErrorRequest = (error: any) => {
-        dispatch(setOverlay(false));
-        setDisabled(false);
-        toast.error(t("error.on-request"));
-        console.error("Update name error:", error);
-    }
-
-    const onRejected = () => {
-        dispatch(setOverlay(false));
-        setDisabled(false);
-        handleRejected({ error, message: "Update name rejected", navigate });
-    }
-
-    const onFulfilled = () => {
-        dispatch(setOverlay(false));
-        setDisabled(false);
-        onHide();
-        toast.success(t("success.on-fullfilled"));
-    }
+    }, [status]);
 
     return (
 
@@ -94,7 +64,7 @@ export default function UpdateNameModal({ show, onHide }: UpdateNameModalProps) 
                     title={t("modal.title")}
                     buttonText={"OK"}
                     onHide={onHide}
-                    disabled={disabled}
+                    disabled={isLoading}
                     tabIndex={3}
                 />
                 <Modal.Body className="p-3">
@@ -111,7 +81,7 @@ export default function UpdateNameModal({ show, onHide }: UpdateNameModalProps) 
                             label={t("first-name.label")}
                             autoFocus
                             defaultValue={firstName}
-                            disabled={disabled}
+                            disabled={isLoading}
                             register={register}
                             error={errors.firstName as FieldError}
                         />
@@ -122,7 +92,7 @@ export default function UpdateNameModal({ show, onHide }: UpdateNameModalProps) 
                             name="lastName"
                             label={t("last-name.label")}
                             defaultValue={lastName}
-                            disabled={disabled}
+                            disabled={isLoading}
                             register={register}
                             error={errors.lastName as FieldError}
                         />

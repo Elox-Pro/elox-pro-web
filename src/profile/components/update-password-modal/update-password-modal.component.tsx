@@ -3,16 +3,14 @@ import Modal from "react-bootstrap/esm/Modal"
 import ModalHeader from "../../../common/components/modal/modal-header/modal-header.component";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useZod } from "../../../common/hooks/zod.hook";
+import { useZodForm } from "../../../common/hooks/zod-form.hook";
 import FloatingInput from "../../../common/components/floating-input/floating-input.component";
 import { FieldError } from "react-hook-form";
 import Form from "react-bootstrap/esm/Form";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { useUpdatePasswordMutation } from "../../api/profile.api";
-import { setOverlay } from "../../../common/features/common.slice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { handleRejected } from "../../../common/helpers/handle-rejected.helper";
 import { QueryStatus } from "@reduxjs/toolkit/query";
 import { updatePasswordSchema } from "../../schemas/update-password.schema";
 import { UpdatePasswordRequest } from "../../types/update-password/update-password-request.type";
@@ -26,7 +24,7 @@ type UpdatePasswordModalProps = {
 export default function UpdatePasswordModal({ show, onHide }: UpdatePasswordModalProps) {
 
     const { t } = useTranslation("profile", { keyPrefix: "update-password" });
-    const { register, handleSubmit, reset, errors } = useZod<UpdatePasswordRequest>(updatePasswordSchema);
+    const { register, handleSubmit, reset, errors } = useZodForm<UpdatePasswordRequest>(updatePasswordSchema);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { profile } = useAppSelector((state) => state.profile);
@@ -36,55 +34,19 @@ export default function UpdatePasswordModal({ show, onHide }: UpdatePasswordModa
     }
     const username = profile.username || "";
 
-    const [updatePassword, { data, status, error, isLoading }] = useUpdatePasswordMutation();
+    const [mutation, { data, status, isLoading }] = useUpdatePasswordMutation();
 
-    const handleSubmitRequest = async (req: UpdatePasswordRequest) => {
+    const onSubmit = async (req: UpdatePasswordRequest) => {
         try {
-            handleInitRequest();
-            updatePassword(req);
+            mutation(req);
         } catch (error) {
-            handleErrorRequest(error);
+            console.error(error);
+            toast.error(JSON.stringify(error));
         }
     };
 
     useEffect(() => {
-        switch (status) {
-            case QueryStatus.fulfilled:
-                handleSuccessfulRequest();
-                break;
-            case QueryStatus.rejected:
-                handleRejectedRequest();
-                break;
-            default: break;
-        }
-    }, [status, error, data]);
-
-    const handleHide = () => {
-        reset();
-        onHide();
-    }
-
-    const handleInitRequest = () => {
-        dispatch(setOverlay(true));
-    }
-
-    const handleErrorRequest = (error: any) => {
-        dispatch(setOverlay(false));
-        toast.error(t("error.on-request"));
-        console.error("Update phone error:", error);
-    }
-
-    const handleRejectedRequest = () => {
-        dispatch(setOverlay(false));
-        handleRejected({ error, message: "Update phone rejected", navigate });
-    }
-
-    const handleSuccessfulRequest = () => {
-        try {
-            if (!data) {
-                throw new Error("Update password fulfilled but no data");
-            }
-            dispatch(setOverlay(false));
+        if (status === QueryStatus.fulfilled && data) {
             if (data.isTFAPending) {
                 dispatch(setTfaPending(true));
                 dispatch(setTfaUsername(username));
@@ -93,9 +55,12 @@ export default function UpdatePasswordModal({ show, onHide }: UpdatePasswordModa
                 handleHide();
                 toast.success(t("success.on-fullfilled"));
             }
-        } catch (error) {
-            handleErrorRequest(error);
         }
+    }, [status, data]);
+
+    const handleHide = () => {
+        reset();
+        onHide();
     }
 
     return (
@@ -106,7 +71,7 @@ export default function UpdatePasswordModal({ show, onHide }: UpdatePasswordModa
             scrollable
             backdrop="static"
             keyboard={false}>
-            <Form onSubmit={handleSubmit(handleSubmitRequest)} noValidate>
+            <Form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <ModalHeader
                     title={t("modal.title")}
                     buttonText={"OK"}

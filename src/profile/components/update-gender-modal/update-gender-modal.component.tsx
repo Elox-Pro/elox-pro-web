@@ -1,15 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useZod } from "../../../common/hooks/zod.hook";
+import { useZodForm } from "../../../common/hooks/zod-form.hook";
 import { UpdateGenderRequest } from "../../types/update-gender/update-gender-request.type";
 import { updateGenderSchema } from "../../schemas/update-gender.schema";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
-import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../../app/hooks/app.hooks";
 import { useUpdateGenderMutation } from "../../api/profile.api";
 import { QueryStatus } from "@reduxjs/toolkit/query";
-import { setOverlay } from "../../../common/features/common.slice";
 import { toast } from "react-toastify";
-import { handleRejected } from "../../../common/helpers/handle-rejected.helper";
 import Modal from "react-bootstrap/esm/Modal";
 import { Form } from "react-bootstrap";
 import ModalHeader from "../../../common/components/modal/modal-header/modal-header.component";
@@ -22,10 +19,7 @@ type UpdateGenderModalProps = {
 export default function UpdateGenderModal({ show, onHide }: UpdateGenderModalProps) {
 
     const { t } = useTranslation("profile", { keyPrefix: "update-gender" });
-    const [disabled, setDisabled] = useState(false);
-    const { handleSubmit, register } = useZod<UpdateGenderRequest>(updateGenderSchema);
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
+    const { handleSubmit, register } = useZodForm<UpdateGenderRequest>(updateGenderSchema);
     const { profile } = useAppSelector((state) => state.profile);
 
     if (profile === null) {
@@ -35,49 +29,24 @@ export default function UpdateGenderModal({ show, onHide }: UpdateGenderModalPro
     const genderAux = profile.gender || Gender.MALE;
     const [checkedMale, checkedFemale] = genderAux === Gender.MALE ? [true, false] : [false, true];
 
-    const [updateGender, { data, status, error }] = useUpdateGenderMutation();
+    const [mutation, { status, isLoading }] = useUpdateGenderMutation();
 
     const onSubmit = async (req: UpdateGenderRequest) => {
         try {
-            onInitRequest();
-            updateGender(req);
+            mutation(req);
         } catch (error) {
-            onErrorRequest(error);
+            console.error(error);
+            toast.error(JSON.stringify(error));
         }
     }
 
     useEffect(() => {
-        switch (status) {
-            case QueryStatus.fulfilled: onFulfilled(); break;
-            case QueryStatus.rejected: onRejected(); break;
-            default: break;
+        if (status === QueryStatus.fulfilled) {
+            onHide();
+            toast.success(t("success.on-fullfilled"));
         }
-    }, [status, error, data]);
+    }, [status]);
 
-    const onInitRequest = () => {
-        setDisabled(true);
-        dispatch(setOverlay(true));
-    }
-
-    const onErrorRequest = (error: any) => {
-        dispatch(setOverlay(false));
-        setDisabled(false);
-        toast.error(t("error.on-request"));
-        console.error("Update gender error:", error);
-    }
-
-    const onRejected = () => {
-        dispatch(setOverlay(false));
-        setDisabled(false);
-        handleRejected({ error, message: "Update gender rejected", navigate });
-    }
-
-    const onFulfilled = () => {
-        dispatch(setOverlay(false));
-        setDisabled(false);
-        onHide();
-        toast.success(t("success.on-fullfilled"));
-    }
 
     return (
 
@@ -93,7 +62,7 @@ export default function UpdateGenderModal({ show, onHide }: UpdateGenderModalPro
                     title={t("modal.title")}
                     buttonText={"OK"}
                     onHide={onHide}
-                    disabled={disabled}
+                    disabled={isLoading}
                     tabIndex={3} />
                 <Modal.Body className="p-3">
                     <h3>{t("container.title")}</h3>

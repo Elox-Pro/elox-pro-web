@@ -13,7 +13,7 @@ export const recoverPasswordApi = createApi({
     }),
     endpoints(builder) {
         return {
-            initRequest: builder
+            init: builder
                 .mutation<RecoverPasswordInitResponse, RecoverPasswordInitRequest>({
                     query(data) {
                         return {
@@ -23,7 +23,7 @@ export const recoverPasswordApi = createApi({
                         }
                     },
                 }),
-            resetRequest: builder
+            reset: builder
                 .mutation<RecoverPasswordResetResponse, RecoverPasswordResetRequest>({
                     query(data) {
                         return {
@@ -38,6 +38,6 @@ export const recoverPasswordApi = createApi({
 });
 
 export const {
-    useInitRequestMutation,
-    useResetRequestMutation
+    useInitMutation,
+    useResetMutation
 } = recoverPasswordApi;

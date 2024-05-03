@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { FieldValues, useForm } from "react-hook-form"
 import { ZodType } from "zod"
 
-export function useZod<T extends FieldValues>(type: ZodType) {
+export function useZodForm<T extends FieldValues>(type: ZodType) {
   const {
     register,
     handleSubmit,

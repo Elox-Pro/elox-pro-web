@@ -13,7 +13,7 @@ export const authApi = createApi({
     }),
     endpoints(builder) {
         return {
-            signupRequest: builder.mutation<SignupResponse, SignupRequest>({
+            signup: builder.mutation<SignupResponse, SignupRequest>({
                 query(data) {
                     return {
                         url: `/signup`,
@@ -22,7 +22,7 @@ export const authApi = createApi({
                     }
                 },
             }),
-            loginRequest: builder.mutation<LoginResponse, LoginRequest>({
+            login: builder.mutation<LoginResponse, LoginRequest>({
                 query(data) {
                     return {
                         url: `/login`,
@@ -31,7 +31,7 @@ export const authApi = createApi({
                     }
                 },
             }),
-            logoutRequest: builder.mutation<void, void>({
+            logout: builder.mutation<void, void>({
                 query() {
                     return {
                         url: `/logout`,
@@ -44,7 +44,7 @@ export const authApi = createApi({
 });
 
 export const {
-    useSignupRequestMutation,
-    useLoginRequestMutation,
-    useLogoutRequestMutation
+    useSignupMutation,
+    useLoginMutation,
+    useLogoutMutation
 } = authApi;
