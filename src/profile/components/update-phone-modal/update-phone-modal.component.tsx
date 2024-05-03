@@ -1,18 +1,15 @@
 import Container from "react-bootstrap/esm/Container"
 import Modal from "react-bootstrap/esm/Modal"
 import ModalHeader from "../../../common/components/modal/modal-header/modal-header.component";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useZodForm } from "../../../common/hooks/zod-form.hook";
 import FloatingInput from "../../../common/components/floating-input/floating-input.component";
 import { FieldError } from "react-hook-form";
 import Form from "react-bootstrap/esm/Form";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
+import { useAppSelector } from "../../../app/hooks/app.hooks";
 import { useUpdatePhoneMutation } from "../../api/profile.api";
-import { setOverlay } from "../../../common/features/common.slice";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { handleRejected } from "../../../common/helpers/handle-rejected.helper";
 import { QueryStatus } from "@reduxjs/toolkit/query";
 import { UpdatePhoneRequest } from "../../types/update-phone/update-phone-request.type";
 import { updatePhoneSchema } from "../../schemas/update-phone.schema";
@@ -24,10 +21,7 @@ type UpdatePhoneModalProps = {
 export default function UpdatePhoneModal({ show, onHide }: UpdatePhoneModalProps) {
 
     const { t } = useTranslation("profile", { keyPrefix: "update-phone" });
-    const [disabled, setDisabled] = useState(false);
     const { register, handleSubmit, errors } = useZodForm<UpdatePhoneRequest>(updatePhoneSchema);
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
     const { profile } = useAppSelector((state) => state.profile);
 
     if (profile === null) {
@@ -35,53 +29,24 @@ export default function UpdatePhoneModal({ show, onHide }: UpdatePhoneModalProps
     }
     const phone = profile.phone || "";
 
-    const [updatePhone, { data, status, error }] = useUpdatePhoneMutation();
+    const [mutation, { status, isLoading }] = useUpdatePhoneMutation();
 
     const handleSubmitRequest = async (req: UpdatePhoneRequest) => {
         try {
-            handleInitRequest();
-            updatePhone({ phone: req.phone });
+            mutation({ phone: req.phone });
         } catch (error) {
-            handleErrorRequest(error);
+            console.error(error);
+            toast.error(JSON.stringify(error));
         }
     };
 
     useEffect(() => {
-        switch (status) {
-            case QueryStatus.fulfilled:
-                handleSuccessfulRequest();
-                break;
-            case QueryStatus.rejected:
-                handleRejectedRequest();
-                break;
-            default: break;
+        if (status === QueryStatus.fulfilled) {
+            onHide();
+            toast.success(t("success.on-fullfilled"));
         }
-    }, [status, error, data])
+    }, [status])
 
-    const handleInitRequest = () => {
-        setDisabled(true);
-        dispatch(setOverlay(true));
-    }
-
-    const handleErrorRequest = (error: any) => {
-        dispatch(setOverlay(false));
-        setDisabled(false);
-        toast.error(t("error.on-request"));
-        console.error("Update phone error:", error);
-    }
-
-    const handleRejectedRequest = () => {
-        dispatch(setOverlay(false));
-        setDisabled(false);
-        handleRejected({ error, message: "Update phone rejected", navigate });
-    }
-
-    const handleSuccessfulRequest = () => {
-        dispatch(setOverlay(false));
-        setDisabled(false);
-        onHide();
-        toast.success(t("success.on-fullfilled"));
-    }
 
     return (
 
@@ -97,7 +62,7 @@ export default function UpdatePhoneModal({ show, onHide }: UpdatePhoneModalProps
                     title={t("modal.title")}
                     buttonText={"OK"}
                     onHide={onHide}
-                    disabled={disabled}
+                    disabled={isLoading}
                     tabIndex={2}
                 />
                 <Modal.Body className="p-3">
@@ -115,7 +80,7 @@ export default function UpdatePhoneModal({ show, onHide }: UpdatePhoneModalProps
                             autoFocus
                             autoComplete="phone"
                             defaultValue={phone}
-                            disabled={disabled}
+                            disabled={isLoading}
                             register={register}
                             error={errors.phone as FieldError}
                         />

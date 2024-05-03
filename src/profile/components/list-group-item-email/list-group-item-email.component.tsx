@@ -51,10 +51,7 @@ export default function ListGroupItemEmail() {
                     </Col>
                 </Row>
             </ListGroup.Item>
-            <UpdateEmailModal
-                show={showModal}
-                onHide={onHide}
-            />
+            <UpdateEmailModal show={showModal} onHide={onHide} />
         </>
     )
 }

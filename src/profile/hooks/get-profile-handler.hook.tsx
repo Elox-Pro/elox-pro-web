@@ -40,7 +40,6 @@ export function useGetProfile() {
     }
   }, [status, data]);
 
-
   // Return the isSuccess flag indicating whether the profile data was fetched successfully
   return { isSuccess, profile, t };
 }
