@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/esm/Modal"
 import ModalHeader from "../../../common/components/modal/modal-header/modal-header.component";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useZod } from "../../../common/hooks/zod.hook";
+import { useZodForm } from "../../../common/hooks/zod-form.hook";
 import FloatingInput from "../../../common/components/floating-input/floating-input.component";
 import { FieldError } from "react-hook-form";
 import Form from "react-bootstrap/esm/Form";
@@ -25,7 +25,7 @@ export default function UpdatePhoneModal({ show, onHide }: UpdatePhoneModalProps
 
     const { t } = useTranslation("profile", { keyPrefix: "update-phone" });
     const [disabled, setDisabled] = useState(false);
-    const { register, handleSubmit, errors } = useZod<UpdatePhoneRequest>(updatePhoneSchema);
+    const { register, handleSubmit, errors } = useZodForm<UpdatePhoneRequest>(updatePhoneSchema);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { profile } = useAppSelector((state) => state.profile);

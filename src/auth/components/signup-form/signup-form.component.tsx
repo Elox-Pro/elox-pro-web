@@ -5,7 +5,7 @@ import { useSignupRequestMutation } from "../../api/auth.api";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useZod } from "../../../common/hooks/zod.hook";
+import { useZodForm } from "../../../common/hooks/zod-form.hook";
 import { useAppDispatch } from "../../../app/hooks/app.hooks";
 import { setTfaUsername, setTfaPending } from "../../../tfa/features/tfa.slice";
 import { getGRecaptchaToken, useGRecaptcha } from "../../../common/hooks/grecaptcha.hook";
@@ -23,7 +23,7 @@ import { handleRejected } from "../../../common/helpers/handle-rejected.helper";
 export default function SignupForm() {
   const dispatch = useAppDispatch();
   const { t } = useTranslation("auth", { keyPrefix: "signup" })
-  const { register, handleSubmit, errors } = useZod<SignupRequest>(signupSchema);
+  const { register, handleSubmit, errors } = useZodForm<SignupRequest>(signupSchema);
   const navigate = useNavigate();
   const [signupRequest, { data, status, error }] = useSignupRequestMutation();
   const grecaptcha = useGRecaptcha();

@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/esm/Modal"
 import ModalHeader from "../../../common/components/modal/modal-header/modal-header.component";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useZod } from "../../../common/hooks/zod.hook";
+import { useZodForm } from "../../../common/hooks/zod-form.hook";
 import FloatingInput from "../../../common/components/floating-input/floating-input.component";
 import { FieldError } from "react-hook-form";
 import Form from "react-bootstrap/esm/Form";
@@ -27,7 +27,7 @@ export default function UpdateEmailModal({ show, onHide }: UpdateEmailModalProps
 
     const { t } = useTranslation("profile", { keyPrefix: "update-email" });
     const [disabled, setDisabled] = useState(false);
-    const { register, handleSubmit, errors } = useZod<UpdateEmailRequest>(updateEmailSchema);
+    const { register, handleSubmit, errors } = useZodForm<UpdateEmailRequest>(updateEmailSchema);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { profile } = useAppSelector((state) => state.profile);

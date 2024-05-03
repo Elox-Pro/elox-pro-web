@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks/app.hooks";
 import { getGRecaptchaToken, useGRecaptcha } from "../../common/hooks/grecaptcha.hook";
-import { useLoginRequestMutation } from "../api/auth.api";
+import { useLoginMutation } from "../api/auth.api";
 import { LoginRequest } from "../types/login/login-request.type";
 import { setTfaPending, setTfaUsername } from "../../tfa/features/tfa.slice";
 import { toast } from "react-toastify";
@@ -10,14 +10,22 @@ import { QueryStatus } from "@reduxjs/toolkit/query";
 import { getActiveUserFromCookies } from "../helpers/get-active-user-from-cookies.helper";
 import { login } from "../features/auth.slice";
 import { useTranslation } from "react-i18next";
+import { useZodForm } from "../../common/hooks/zod-form.hook";
+import { loginSchema } from "../schemas/login.schema";
 
-export default function useLoginMutation() {
+/**
+ * Custom hook for handling the login functionality.
+ * @module useLoginHandler
+ * @returns {Object} An object containing the necessary functions and state for login handling.
+ */
+export default function useLoginHandler() {
     const dispatch = useAppDispatch();
     const grecaptcha = useGRecaptcha();
     const navigate = useNavigate();
     const { tfaUsername } = useAppSelector((state) => state.tfa);
     const { t } = useTranslation("auth", { keyPrefix: "login" });
-    const [loginRequest, { data, status, error, isLoading }] = useLoginRequestMutation();
+    const zodForm = useZodForm<LoginRequest>(loginSchema);
+    const [mutation, { data, status, error, isLoading }] = useLoginMutation();
 
     /**
    * Handles the form submission
@@ -27,7 +35,7 @@ export default function useLoginMutation() {
         try {
             dispatch(setTfaUsername(req.username));
             const grecaptchaToken = await getGRecaptchaToken(grecaptcha);
-            loginRequest({ ...req, grecaptchaToken });
+            mutation({ ...req, grecaptchaToken });
         } catch (error) {
             toast.error(JSON.stringify(error));
             console.error(error);
@@ -57,5 +65,5 @@ export default function useLoginMutation() {
         }
     }, [status, error, data]);
 
-    return { onSubmit, isLoading, tfaUsername };
+    return { onSubmit, isLoading, tfaUsername, t, zodForm };
 }

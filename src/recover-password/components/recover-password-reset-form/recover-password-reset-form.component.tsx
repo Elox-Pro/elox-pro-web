@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks"
-import { useZod } from "../../../common/hooks/zod.hook"
+import { useZodForm } from "../../../common/hooks/zod-form.hook"
 import { useNavigate } from "react-router-dom"
 import { getGRecaptchaToken, useGRecaptcha } from "../../../common/hooks/grecaptcha.hook"
 import { useEffect, useState } from "react"
@@ -19,7 +19,7 @@ import { handleRejected } from "../../../common/helpers/handle-rejected.helper"
 export default function RecoverPasswordResetForm() {
   const { t } = useTranslation("recover-password", { keyPrefix: "reset" })
   const dispatch = useAppDispatch()
-  const { register, handleSubmit, errors } = useZod<RecoverPasswordResetRequest>(recoverPasswordResetSchema)
+  const { register, handleSubmit, errors } = useZodForm<RecoverPasswordResetRequest>(recoverPasswordResetSchema)
   const navigate = useNavigate()
   const [resetRequest, { status, error }] = useResetRequestMutation()
   const grecaptcha = useGRecaptcha()

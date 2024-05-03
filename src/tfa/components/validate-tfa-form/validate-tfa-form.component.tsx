@@ -7,7 +7,7 @@ import { useValidateTfaRequestMutation } from "../../api/tfa.api";
 import { useEffect, useState } from "react";
 import { QueryStatus } from "@reduxjs/toolkit/query";
 import IconInput from "../../../common/components/icon-input/icon-input.component";
-import { useZod } from "../../../common/hooks/zod.hook";
+import { useZodForm } from "../../../common/hooks/zod-form.hook";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { setTfaPending } from "../../features/tfa.slice";
 import { TfaAction } from "../../enums/validate-tfa/tfa-action.enum";
@@ -29,7 +29,7 @@ export default function ValidateTfaForm() {
   const { t } = useTranslation("tfa", { keyPrefix: "validate-tfa" })
   const { tfaUsername: username } = useAppSelector((state) => state.tfa);
   const dispatch = useAppDispatch();
-  const { register, handleSubmit, errors } = useZod<ValidateTfaRequest>(validateTfaSchema);
+  const { register, handleSubmit, errors } = useZodForm<ValidateTfaRequest>(validateTfaSchema);
   const navigate = useNavigate();
   const [validateTfaRequest, { data, status, error }] = useValidateTfaRequestMutation();
   const [disabled, setDisabled] = useState(false);

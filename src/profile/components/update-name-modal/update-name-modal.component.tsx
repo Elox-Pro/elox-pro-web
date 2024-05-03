@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { UpdateNameRequest } from "../../types/update-name/update-name-request.type";
 import { updateNameSchema } from "../../schemas/update-name.schema";
-import { useZod } from "../../../common/hooks/zod.hook";
+import { useZodForm } from "../../../common/hooks/zod-form.hook";
 import FloatingInput from "../../../common/components/floating-input/floating-input.component";
 import { FieldError } from "react-hook-form";
 import Form from "react-bootstrap/esm/Form";
@@ -25,7 +25,7 @@ export default function UpdateNameModal({ show, onHide }: UpdateNameModalProps) 
 
     const { t } = useTranslation("profile", { keyPrefix: "update-name" });
     const [disabled, setDisabled] = useState(false);
-    const { register, handleSubmit, errors } = useZod<UpdateNameRequest>(updateNameSchema);
+    const { register, handleSubmit, errors } = useZodForm<UpdateNameRequest>(updateNameSchema);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { profile } = useAppSelector((state) => state.profile);

@@ -1,12 +1,8 @@
 import { FieldError } from "react-hook-form";
-import { loginSchema } from "../../schemas/login.schema";
-import { LoginRequest } from "../../types/login/login-request.type";
 import IconInput from "../../../common/components/icon-input/icon-input.component";
-import { useTranslation } from "react-i18next";
-import { useZod } from "../../../common/hooks/zod.hook";
 import AuthLink from "../auth-link/auth-link.component";
 import SubmitButton from "../../../common/components/submit-button/submit-button";
-import useLoginMutation from "../../hooks/login-mutation.hook";
+import useLoginHandler from "../../hooks/login-handler.hook";
 
 /**
  * LoginForm component
@@ -14,9 +10,8 @@ import useLoginMutation from "../../hooks/login-mutation.hook";
  * @returns {JSX.Element} - The login form
  */
 export default function LoginForm() {
-  const { t } = useTranslation("auth", { keyPrefix: "login" });// TODO: move use login mutation
-  const { register, handleSubmit, errors } = useZod<LoginRequest>(loginSchema); // TODO: move use login mutation
-  const { onSubmit, tfaUsername, isLoading } = useLoginMutation();
+  const { onSubmit, tfaUsername, isLoading, zodForm, t } = useLoginHandler();
+  const { register, handleSubmit, errors } = zodForm;
 
   return (
     <>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useZod } from "../../../common/hooks/zod.hook";
+import { useZodForm } from "../../../common/hooks/zod-form.hook";
 import { UpdateGenderRequest } from "../../types/update-gender/update-gender-request.type";
 import { updateGenderSchema } from "../../schemas/update-gender.schema";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
@@ -23,7 +23,7 @@ export default function UpdateGenderModal({ show, onHide }: UpdateGenderModalPro
 
     const { t } = useTranslation("profile", { keyPrefix: "update-gender" });
     const [disabled, setDisabled] = useState(false);
-    const { handleSubmit, register } = useZod<UpdateGenderRequest>(updateGenderSchema);
+    const { handleSubmit, register } = useZodForm<UpdateGenderRequest>(updateGenderSchema);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { profile } = useAppSelector((state) => state.profile);

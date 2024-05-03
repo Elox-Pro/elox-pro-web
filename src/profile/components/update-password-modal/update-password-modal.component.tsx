@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/esm/Modal"
 import ModalHeader from "../../../common/components/modal/modal-header/modal-header.component";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useZod } from "../../../common/hooks/zod.hook";
+import { useZodForm } from "../../../common/hooks/zod-form.hook";
 import FloatingInput from "../../../common/components/floating-input/floating-input.component";
 import { FieldError } from "react-hook-form";
 import Form from "react-bootstrap/esm/Form";
@@ -26,7 +26,7 @@ type UpdatePasswordModalProps = {
 export default function UpdatePasswordModal({ show, onHide }: UpdatePasswordModalProps) {
 
     const { t } = useTranslation("profile", { keyPrefix: "update-password" });
-    const { register, handleSubmit, reset, errors } = useZod<UpdatePasswordRequest>(updatePasswordSchema);
+    const { register, handleSubmit, reset, errors } = useZodForm<UpdatePasswordRequest>(updatePasswordSchema);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { profile } = useAppSelector((state) => state.profile);
