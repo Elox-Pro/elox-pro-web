@@ -5,14 +5,12 @@ import ProfileContactInfo from "../contact-info/profile-contact-info.component"
 import ProfilePasswordInfo from "../password-info/profile-password-info.component"
 import ProfileTfaInfo from "../tfa-info/profile-tfa-info.component"
 import ProfileSettings from "../settings/profile-settings.component"
-import { useTranslation } from "react-i18next"
 import CPWrapperPage from "../../../cpanel/components/wrapper-page/cp-wrapper-page.component"
-import { useGetProfile } from "../../hooks/get-profile.hook"
+import { useGetProfile } from "../../hooks/get-profile-handler.hook"
 
 export default function ProfileIndex() {
 
-  const { t } = useTranslation("profile", { keyPrefix: "index" });
-  const { isSuccess, profile } = useGetProfile();
+  const { isSuccess, profile, t } = useGetProfile();
 
   return (
     <CPWrapperPage show={isSuccess && profile !== null} >
