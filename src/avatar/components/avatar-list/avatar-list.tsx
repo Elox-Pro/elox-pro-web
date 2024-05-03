@@ -2,48 +2,29 @@ import Row from "react-bootstrap/esm/Row";
 import { useListAvatarsQuery } from "../../api/avatar.api";
 import Col from "react-bootstrap/esm/Col";
 import { useDispatch } from "react-redux";
-import { setOverlay } from "../../../common/features/common.slice";
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Avatar } from "../../types/avatar.type";
 import { useAppSelector } from "../../../app/hooks/app.hooks";
 import { QueryStatus } from "@reduxjs/toolkit/query";
 import { setSelectedAvatar } from "../../features/avatar.slice";
-import { handleRejected } from "../../../common/helpers/handle-rejected.helper";
 
 export default function AvatarList() {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+
     const { selectedAvatar } = useAppSelector(state => state.avatar);
-    const { data, error, isSuccess, status } = useListAvatarsQuery();
+    const { data, isSuccess, status } = useListAvatarsQuery();
     const [avatars, setAvatars] = useState<Avatar[]>([]);
 
     useEffect(() => {
-        switch (status) {
-            case QueryStatus.pending: onInitRequest(); break;
-            case QueryStatus.fulfilled: onFulfilled(); break;
-            case QueryStatus.rejected: onRejected(); break;
+        if (status === QueryStatus.fulfilled && data) {
+            setAvatars(data.avatars);
         }
 
-    }, [status, error, data])
+    }, [status, data])
 
-    const onInitRequest = () => {
-        dispatch(setOverlay(true));
-    }
-
-    const onRejected = () => {
-        dispatch(setOverlay(false));
-        handleRejected({ error, message: "Avatar List Rejected", navigate });
-    }
-
-    const onFulfilled = () => {
-        dispatch(setOverlay(false));
-        if (!data) { return; }
-        setAvatars(data.avatars);
-    }
 
     return (
-        isSuccess && (
+        isSuccess && avatars.length > 0 && (
             <Row className="g-0">
                 {avatars.map((avatar, index) => (
                     <Col key={index} xs={3} className="p-2">
