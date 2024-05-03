@@ -73,9 +73,6 @@
             "title": "Editar foto de perfil",
             "submit": "OK",
             "label": "Selecciona una imagen"
-        },
-        "error": {
-            "on-request": "Error al actualizar la foto de perfil"
         }
     },
     "update-name": {
@@ -95,9 +92,6 @@
         },
         "last-name": {
             "label": "Apellido"
-        },
-        "error": {
-            "on-request": "Error al actualizar el nombre"
         }
     },
     "update-gender": {
@@ -132,9 +126,6 @@
         },
         "email": {
             "label": "Correo electrónico"
-        },
-        "error": {
-            "on-request": "Error al actualizar el correo electrónico"
         }
     },
     "update-phone": {
@@ -151,9 +142,6 @@
         },
         "phone": {
             "label": "Teléfono"
-        },
-        "error": {
-            "on-request": "Error al actualizar el teléfono"
         }
     },
     "update-password": {
@@ -176,9 +164,21 @@
         },
         "confirm-password": {
             "label": "Confirmar contraseña"
-        },
-        "error": {
-            "on-request": "Error al actualizar la contraseña"
         }
+    },
+    "update-tfa": {
+        "success": {
+            "on-fullfilled": "Segunda autenticación de dos factores actualizada exitosamente"
+        },
+        "modal": {
+            "title": "Editar 2FA",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "El 2FA ayuda a proteger tu cuenta",
+            "subtitle": "Para cambiar tu 2FA, por favor seleccione una opción."
+        },
+        "NONE": "Ninguno",
+        "EMAIL": "Correo electrónico"
     }
 }

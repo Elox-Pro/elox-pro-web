@@ -13,6 +13,8 @@ import { UpdatePhoneResponse } from "../types/update-phone/update-phone-response
 import { UpdatePhoneRequest } from "../types/update-phone/update-phone-request.type";
 import { UpdatePasswordRequest } from "../types/update-password/update-password-request.type";
 import { UpdatePasswordResponse } from "../types/update-password/update-password-response.type";
+import { UpdateTfaResponse } from "../types/update-tfa/update-tfa-response.type";
+import { UpdateTfaRequest } from "../types/update-tfa/update-tfa-request.type";
 
 export const profileApi = createApi({
     reducerPath: "profileApi",
@@ -62,6 +64,12 @@ export const profileApi = createApi({
                     return { url: `/password`, method: "PATCH", body }
                 },
                 invalidatesTags: ["getProfile"]
+            }),
+            updateTfa: builder.mutation<UpdateTfaResponse, UpdateTfaRequest>({
+                query(body) {
+                    return { url: `/tfa`, method: "PATCH", body }
+                },
+                invalidatesTags: ["getProfile"]
             })
         }
     },
@@ -74,5 +82,6 @@ export const {
     useUpdateGenderMutation,
     useUpdateEmailMutation,
     useUpdatePhoneMutation,
-    useUpdatePasswordMutation
+    useUpdatePasswordMutation,
+    useUpdateTfaMutation
 } = profileApi;

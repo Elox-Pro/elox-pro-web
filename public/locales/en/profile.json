@@ -73,9 +73,6 @@
             "title": "Edit avatar",
             "submit": "OK",
             "label": "Select a picture"
-        },
-        "error": {
-            "on-request": "Error updating avatar request"
         }
     },
     "update-name": {
@@ -95,9 +92,6 @@
         },
         "last-name": {
             "label": "Last name"
-        },
-        "error": {
-            "on-request": "Error updating name request"
         }
     },
     "update-gender": {
@@ -111,9 +105,6 @@
         "container": {
             "title": "A gender helps personalize your account",
             "subtitle": "Please select your gender."
-        },
-        "error": {
-            "on-request": "Error updating gender request"
         },
         "MALE": "Male",
         "FEMALE": "Female"
@@ -132,9 +123,6 @@
         },
         "email": {
             "label": "Email"
-        },
-        "error": {
-            "on-request": "Error updating email request"
         }
     },
     "update-password": {
@@ -157,9 +145,21 @@
         },
         "confirm-password": {
             "label": "Confirm password"
-        },
-        "error": {
-            "on-request": "Error updating password request"
         }
+    },
+    "update-tfa": {
+        "success": {
+            "on-fullfilled": "Two factor authentication updated successfully"
+        },
+        "modal": {
+            "title": "Edit TFA",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "A TFA helps protect your account",
+            "subtitle": "To change your tfa, please select one option."
+        },
+        "NONE": "None",
+        "EMAIL": "Email"
     }
 }

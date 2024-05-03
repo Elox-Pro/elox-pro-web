@@ -1,7 +1,7 @@
 import Card from "react-bootstrap/esm/Card"
 import ListGroup from "react-bootstrap/esm/ListGroup"
 import { useTranslation } from "react-i18next"
-import ListGroupItemTfaEmail from "../list-group-item-tfa-email/list-group-item-tfa-email.component"
+import ListGroupItemTfa from "../list-group-item-tfa/list-group-item-tfa.component"
 
 export default function ProfileTfaInfo() {
     const { t } = useTranslation("profile", { keyPrefix: "tfa-info" });
@@ -15,7 +15,7 @@ export default function ProfileTfaInfo() {
                 </Card.Title>
                 <p>{t("subtitle")}</p>
                 <ListGroup variant="flush">
-                    <ListGroupItemTfaEmail />
+                    <ListGroupItemTfa />
                 </ListGroup>
             </Card.Body>
         </Card>
