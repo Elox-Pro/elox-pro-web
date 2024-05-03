@@ -17,7 +17,7 @@ export default function useSignupHandler() {
     const { t } = useTranslation("auth", { keyPrefix: "signup" })
     const zodForm = useZodForm<SignupRequest>(signupSchema);
     const navigate = useNavigate();
-    const [mutation, { data, status, error, isLoading }] = useSignupMutation();
+    const [mutation, { data, status, isLoading }] = useSignupMutation();
     const grecaptcha = useGRecaptcha();
 
     /**
@@ -47,7 +47,7 @@ export default function useSignupHandler() {
                 toast.success(t("success.message"));
             }
         }
-    }, [status, error, data]);
+    }, [status, data]);
 
     return {
         onSubmit, zodForm, isLoading, t

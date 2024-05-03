@@ -25,7 +25,7 @@ export default function useLoginHandler() {
     const { tfaUsername } = useAppSelector((state) => state.tfa);
     const { t } = useTranslation("auth", { keyPrefix: "login" });
     const zodForm = useZodForm<LoginRequest>(loginSchema);
-    const [mutation, { data, status, error, isLoading }] = useLoginMutation();
+    const [mutation, { data, status, isLoading }] = useLoginMutation();
 
     /**
    * Handles the form submission
@@ -63,7 +63,7 @@ export default function useLoginHandler() {
                 console.error(error);
             }
         }
-    }, [status, error, data]);
+    }, [status, data]);
 
     return { onSubmit, isLoading, tfaUsername, t, zodForm };
 }
