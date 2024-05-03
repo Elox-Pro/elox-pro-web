@@ -11,7 +11,7 @@ export const tfaApi = createApi({
     }),
     endpoints(builder) {
         return {
-            validateTfaRequest: builder.mutation<ValidateTfaResponse, ValidateTfaRequest>({
+            validateTfa: builder.mutation<ValidateTfaResponse, ValidateTfaRequest>({
                 query(data) {
                     return {
                         url: `/validate`,
@@ -25,5 +25,5 @@ export const tfaApi = createApi({
 });
 
 export const {
-    useValidateTfaRequestMutation,
+    useValidateTfaMutation,
 } = tfaApi;
