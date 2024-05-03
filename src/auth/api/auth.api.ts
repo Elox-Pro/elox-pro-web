@@ -13,7 +13,7 @@ export const authApi = createApi({
     }),
     endpoints(builder) {
         return {
-            signupRequest: builder.mutation<SignupResponse, SignupRequest>({
+            signup: builder.mutation<SignupResponse, SignupRequest>({
                 query(data) {
                     return {
                         url: `/signup`,
@@ -44,7 +44,7 @@ export const authApi = createApi({
 });
 
 export const {
-    useSignupRequestMutation,
+    useSignupMutation,
     useLoginMutation,
     useLogoutRequestMutation
 } = authApi;
