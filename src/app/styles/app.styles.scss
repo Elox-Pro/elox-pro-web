@@ -1,5 +1,6 @@
 :root {
   --bs-primary: rgb(82, 0, 174);
+  --bs-primary-dark: rgb(40, 0, 85);
   --bs-primary-rgb: 82, 0, 174;
   --bs-tertiary-bg: #f8f9fa;
   --bs-secondary-bg: #e9ecef;
@@ -19,6 +20,11 @@ body {
 
 .bg-tertiary {
   background-color: var(--bs-tertiary-bg) !important;
+}
+
+.bg-footer {
+  background-color: var(--bs-primary-dark) !important;
+  color: var(--bs-secondary-bg);
 }
 
 .container-fluid {
