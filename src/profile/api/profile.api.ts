@@ -15,12 +15,17 @@ import { UpdatePasswordRequest } from "../types/update-password/update-password-
 import { UpdatePasswordResponse } from "../types/update-password/update-password-response.type";
 import { UpdateTfaResponse } from "../types/update-tfa/update-tfa-response.type";
 import { UpdateTfaRequest } from "../types/update-tfa/update-tfa-request.type";
+import i18n from "../../app/i18n/i18n";
 
 export const profileApi = createApi({
     reducerPath: "profileApi",
     baseQuery: fetchBaseQuery({
         baseUrl: `${API_URL}/users/profile`,
         credentials: "include",
+        prepareHeaders: (headers) => {
+            headers.append('Accept-Language', `${i18n.language}`);
+            return headers;
+        },
     }),
     tagTypes: ["getProfile"],
     endpoints(builder) {

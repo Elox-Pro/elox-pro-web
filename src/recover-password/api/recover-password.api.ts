@@ -4,12 +4,17 @@ import { RecoverPasswordInitResponse } from "../types/recover-password-init/reco
 import { RecoverPasswordInitRequest } from "../types/recover-password-init/recover-password-init-request.type";
 import { RecoverPasswordResetResponse } from "../types/recover-password-reset/recover-password-reset-response.type";
 import { RecoverPasswordResetRequest } from "../types/recover-password-reset/recover-password-reset-request.type";
+import i18n from "../../app/i18n/i18n";
 
 export const recoverPasswordApi = createApi({
     reducerPath: "recoverPasswordApi",
     baseQuery: fetchBaseQuery({
         baseUrl: `${API_URL}/recover-password`,
         credentials: "include",
+        prepareHeaders: (headers) => {
+            headers.append('Accept-Language', `${i18n.language}`);
+            return headers;
+        },
     }),
     endpoints(builder) {
         return {

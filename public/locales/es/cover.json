@@ -5,8 +5,20 @@
         "action": "Comenzar"
     },
     "footer": {
-        "text1": "En Memoria Amorosa de Yadir Edilio Quintero Rodríguez. ❤",
-        "text2": "Desarrollo por Yonatan A Quintero R.",
-        "text3": "Copyright © 2024 Easy Loan Express Profesional. Todos los derechos reservados."
+        "about": {
+            "title": "Acerca de Elox Pro",
+            "text-1": "Elox Pro es una plataforma fácil de usar que simplifica la gestión de préstamos personales. Nuestra plataforma le permite crear, editar y monitorear préstamos, realizar un seguimiento de los pagos y generar informes con facilidad. Experimente la generación automatizada de contratos, la firma digital y el almacenamiento seguro de documentos.",
+            "text-2": "Con acceso multinivel, los prestamistas pueden gestionar préstamos dentro de sus áreas designadas, mientras que los superadministradores tienen supervisión de todo el sistema. Elox Pro prioriza la privacidad y la eficiencia, permitiéndole tomar el control de sus finanzas desde cualquier lugar."
+        },
+        "links": {
+            "title": "Enlances útiles",
+            "signin": "Iniciar sesión",
+            "signup": "Registrar",
+            "terms": "Términos de Servicio",
+            "privacy": "Política de Privacidad",
+            "contact": "Contáctanos"
+        },
+        "dedication": "En memoria a Yadir Edilio Quintero Rodríguez. ❤",
+        "copryright": "Copyright © 2024 Easy Loan Express Professional. Todos los derechos reservados."
     }
 }

@@ -6,5 +6,9 @@
     "nav": {
         "signin": "Sign in",
         "signup": "Sign up"
+    },
+    "language-switcher": {
+        "english": "English",
+        "spanish": "Spanish"
     }
 }

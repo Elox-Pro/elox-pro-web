@@ -6,5 +6,9 @@
     "nav": {
         "signin": "Iniciar sesión",
         "signup": "Registrarse"
+    },
+    "language-switcher": {
+        "english": "Inglés",
+        "spanish": "Español"
     }
 }

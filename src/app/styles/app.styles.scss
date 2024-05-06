@@ -1,6 +1,7 @@
 :root {
   --bs-primary: rgb(82, 0, 174);
   --bs-primary-dark: rgb(40, 0, 85);
+  --bs-primary-darker: rgb(30, 0, 50);
   --bs-primary-rgb: 82, 0, 174;
   --bs-tertiary-bg: #f8f9fa;
   --bs-secondary-bg: #e9ecef;
@@ -24,6 +25,11 @@ body {
 
 .bg-footer {
   background-color: var(--bs-primary-dark) !important;
+  color: var(--bs-secondary-bg);
+}
+
+.bg-footer-secondary {
+  background-color: var(--bs-primary-darker) !important;
   color: var(--bs-secondary-bg);
 }
 
