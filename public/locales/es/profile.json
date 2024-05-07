@@ -59,7 +59,9 @@
     "settings": {
         "title": "Configuraciones generales",
         "language": {
-            "label": "Idioma"
+            "label": "Idioma",
+            "en": "Inglés",
+            "es": "Español"
         },
         "theme": {
             "label": "Tema"
@@ -180,5 +182,20 @@
         },
         "NONE": "Ninguno",
         "EMAIL": "Correo electrónico"
+    },
+    "update-language": {
+        "success": {
+            "on-fullfilled": "Idioma actualizado exitosamente"
+        },
+        "modal": {
+            "title": "Editar idioma",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "Un idioma ayuda a personalizar tu cuenta",
+            "subtitle": "Por favor selecciona tu idioma preferido."
+        },
+        "en": "Inglés",
+        "es": "Español"
     }
 }

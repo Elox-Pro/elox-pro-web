@@ -5,7 +5,7 @@ import Row from "react-bootstrap/esm/Row"
 type ModalHeaderProps = {
     title: string
     buttonText: string
-    disabled: boolean,
+    disabled?: boolean,
     tabIndex?: number,
     onHide: () => void
     onSubmit?: () => void

@@ -4,4 +4,5 @@ import { Overlay } from "./overlay.type";
 export type CommonState = {
     overlay: Overlay,
     language: Language,
+    languages: Language[],
 }

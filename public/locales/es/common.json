@@ -8,7 +8,7 @@
         "signup": "Registrarse"
     },
     "language-switcher": {
-        "english": "Inglés",
-        "spanish": "Español"
+        "en": "Inglés",
+        "es": "Español"
     }
 }

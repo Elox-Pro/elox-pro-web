@@ -8,8 +8,15 @@ const initialState: CommonState = {
     },
     language: {
         code: null,
-        flag: null,
-    }
+        flag: null
+    },
+    languages: [{
+        code: "en",
+        flag: "us"
+    }, {
+        code: "es",
+        flag: "es"
+    }]
 }
 
 const commonSlice = createSlice({
@@ -22,9 +29,12 @@ const commonSlice = createSlice({
         setLanguage: (state, action: { payload: Language }) => {
             state.language = action.payload;
         },
+        setLanguages: (state, action: { payload: Language[] }) => {
+            state.languages = action.payload;
+        },
     }
 });
 
 const commonReducer = commonSlice.reducer;
-export const { setOverlay, setLanguage } = commonSlice.actions;
+export const { setOverlay, setLanguage, setLanguages } = commonSlice.actions;
 export default commonReducer;

@@ -59,7 +59,9 @@
     "settings": {
         "title": "General settings",
         "language": {
-            "label": "Language"
+            "label": "Language",
+            "en": "English",
+            "es": "Spanish"
         },
         "theme": {
             "label": "Theme"
@@ -161,5 +163,20 @@
         },
         "NONE": "None",
         "EMAIL": "Email"
+    },
+    "update-language": {
+        "success": {
+            "on-fullfilled": "Language updated successfully"
+        },
+        "modal": {
+            "title": "Edit language",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "A language helps personalize your account",
+            "subtitle": "Please select your preferred language."
+        },
+        "en": "English",
+        "es": "Spanish"
     }
 }
