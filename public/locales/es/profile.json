@@ -170,7 +170,7 @@
     },
     "update-tfa": {
         "success": {
-            "on-fullfilled": "Segunda autenticación de dos factores actualizada exitosamente"
+            "on-fullfilled": "El segundo factor de autenticación fue actualizado exitosamente"
         },
         "modal": {
             "title": "Editar 2FA",

@@ -1,3 +1,3 @@
-export type RecoverPasswordResetResponse = {
-    isOK: boolean,
-}
+import { SuccessResponse } from "../../../common/types/success-response.type";
+
+export type RecoverPasswordResetResponse = {} & SuccessResponse
