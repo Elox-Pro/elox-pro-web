@@ -2,9 +2,7 @@ import { Socket, io } from "socket.io-client";
 import { useAppSelector } from "../../../app/hooks/app.hooks";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { useTranslation } from "react-i18next";
 import { WS_URL } from "../../../app/constants/app.constants";
-
 /**
  * Component to validate Two-Factor Authentication (TFA) status using WebSocket events.
  * Handles success and failure events and displays corresponding toast messages.
@@ -13,7 +11,6 @@ import { WS_URL } from "../../../app/constants/app.constants";
  * @date 2024-04-29
  */
 export default function ValidateTfaStatus() {
-    const { t } = useTranslation("tfa", { keyPrefix: "validate-tfa-status" });
     const { tfaUsername } = useAppSelector((state) => state.tfa);
 
     /**
@@ -31,18 +28,21 @@ export default function ValidateTfaStatus() {
     /**
      * Handles a failed TFA event by displaying an error toast and logging the data.
      *
-     * @param {any} data - Data related to the failed event.
+     * @param {any} response - Data related to the failed event.
      */
-    const handleFailedEvent = (data: any): void => {
-        toast.error(t('failed'));
-        console.error(data);
+    const handleFailedEvent = (response: any): void => {
+        const message = response.message || "unknown message";
+        toast.error(message);
+        console.error(response);
     };
 
     /**
      * Handles a succeeded TFA event by displaying a success toast.
+     * @param {any} response - Data related to the succeeded event.
      */
-    const handleSucceededEvent = (): void => {
-        toast.success(t('succeeded'));
+    const handleSucceededEvent = (response: any): void => {
+        const message = response.message || "unknown message";
+        toast.success(message);
     };
 
     /**
