@@ -10,5 +10,9 @@
     "language-switcher": {
         "en": "English",
         "es": "Spanish"
+    },
+    "theme-switcher": {
+        "light": "Light",
+        "dark": "Dark"
     }
 }

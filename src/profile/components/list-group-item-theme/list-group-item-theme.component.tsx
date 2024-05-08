@@ -3,19 +3,26 @@ import { useAppSelector } from "../../../app/hooks/app.hooks";
 import ListGroup from "react-bootstrap/esm/ListGroup";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
+import { useState } from "react";
+import UpdateThemeModal from "../update-theme-modal/update-theme-modal.component";
+import ThemeIcon from "../../../common/components/theme-icon/theme-icon.component";
 
 export default function ListGroupItemTheme() {
-    const { profile, profileTranslations } = useAppSelector(state => state.profile);
+    const { profile } = useAppSelector(state => state.profile);
     const { t } = useTranslation("profile", { keyPrefix: "settings.theme" });
+    const theme = useAppSelector(state => state.common.theme);
+    const [showModal, setShowModal] = useState(false);
 
-    if (profile === null || profileTranslations === null) {
+    if (profile === null) {
         return null;
     }
 
-    const theme = profile.theme && profileTranslations[profile.theme];
-
     const onClick = () => {
-        alert("Not implemented");
+        setShowModal(true);
+    }
+
+    const onHide = () => {
+        setShowModal(false);
     }
 
     return (
@@ -31,7 +38,8 @@ export default function ListGroupItemTheme() {
                             </Col>
                             <Col xs={12} md={8}>
                                 <p className="mb-0">
-                                    {theme}
+                                    <ThemeIcon theme={theme.value} />&nbsp;
+                                    {t(theme.value)}
                                 </p>
                             </Col>
                         </Row>
@@ -41,6 +49,7 @@ export default function ListGroupItemTheme() {
                     </Col>
                 </Row>
             </ListGroup.Item>
+            <UpdateThemeModal show={showModal} onHide={onHide} />
         </>
     )
 }

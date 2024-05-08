@@ -13,7 +13,7 @@ export default function LanguageSwitcher() {
     const { languages, language, handleChange } = useAppLanguage();
 
     return (
-        <div>
+        <div className="mt-2">
             <Dropdown onSelect={handleChange}>
                 <Dropdown.Toggle variant="dark" id="language-dropdown">
                     <FlagIcon country={language.flag} />

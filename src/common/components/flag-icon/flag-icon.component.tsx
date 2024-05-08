@@ -7,6 +7,6 @@ export default function FlagIcon({ country }: FlagIconProps) {
         return null
     }
     return (
-        <span className={`m-1 flag-icon flag-icon-${country}`}></span>
+        <i className={`m-1 flag-icon flag-icon-${country}`}></i>
     )
 }

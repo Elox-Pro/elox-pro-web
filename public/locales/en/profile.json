@@ -64,7 +64,9 @@
             "es": "Spanish"
         },
         "theme": {
-            "label": "Theme"
+            "label": "Theme",
+            "light": "Light",
+            "dark": "Dark"
         }
     },
     "update-avatar": {
@@ -178,5 +180,20 @@
         },
         "en": "English",
         "es": "Spanish"
+    },
+    "update-theme": {
+        "success": {
+            "on-fullfilled": "Theme updated successfully"
+        },
+        "modal": {
+            "title": "Edit theme",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "A theme helps personalize your account",
+            "subtitle": "Please select your preferred theme."
+        },
+        "light": "Light",
+        "dark": "Dark"
     }
 }

@@ -64,7 +64,9 @@
             "es": "Español"
         },
         "theme": {
-            "label": "Tema"
+            "label": "Tema",
+            "light": "Claro",
+            "dark": "Oscuro"
         }
     },
     "update-avatar": {
@@ -197,5 +199,20 @@
         },
         "en": "Inglés",
         "es": "Español"
+    },
+    "update-theme": {
+        "success": {
+            "on-fullfilled": "Tema actualizado exitosamente"
+        },
+        "modal": {
+            "title": "Editar tema",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "Un tema ayuda a personalizar tu cuenta",
+            "subtitle": "Por favor selecciona tu tema preferido."
+        },
+        "light": "Claro",
+        "dark": "Oscuro"
     }
 }

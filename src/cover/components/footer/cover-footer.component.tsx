@@ -3,6 +3,7 @@ import Col from "react-bootstrap/Col"
 import { useTranslation } from "react-i18next"
 import LanguageSwitcher from "../../../common/components/language-switcher/language-switcher.component";
 import { NavLink } from "react-router-dom";
+import ThemeSwitcher from "../../../common/components/theme-switcher/theme-switcher.component";
 
 export default function CoverFooter() {
   const { t } = useTranslation("cover", { keyPrefix: "footer" });
@@ -49,6 +50,7 @@ export default function CoverFooter() {
               </li>
             </ul>
             <LanguageSwitcher />
+            <ThemeSwitcher />
           </Col>
         </Row>
       </footer>
