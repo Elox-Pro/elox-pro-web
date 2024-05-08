@@ -2,6 +2,9 @@ import { useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../app/hooks/app.hooks";
 import { setLanguage } from "../features/common.slice";
+import { getLanguageList } from "../helpers/get-language-list.helper";
+
+const languages = getLanguageList();
 
 /**
  * Custom hook for managing the application's language settings.
@@ -12,7 +15,6 @@ import { setLanguage } from "../features/common.slice";
 export default function useAppLanguage() {
     const dispatch = useAppDispatch();
     const language = useAppSelector((state) => state.common.language);
-    const languages = useAppSelector((state) => state.common.languages);
     const { i18n } = useTranslation();
 
     /**

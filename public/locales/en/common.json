@@ -9,10 +9,12 @@
     },
     "language-switcher": {
         "en": "English",
-        "es": "Spanish"
+        "es": "Spanish",
+        "success": "Language updated successfully"
     },
     "theme-switcher": {
         "light": "Light",
-        "dark": "Dark"
+        "dark": "Dark",
+        "success": "Theme updated successfully"
     }
 }

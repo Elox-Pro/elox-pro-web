@@ -5,7 +5,10 @@ import "./theme-switcher.style.scss";
 import ThemeIcon from "../theme-icon/theme-icon.component";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { Theme } from "../../enums/theme.enum";
-import { setTheme } from "../../features/common.slice";
+import { setOverlay, setTheme } from "../../features/common.slice";
+import { toast } from "react-toastify";
+
+const themes = getThemeList();
 
 /**
  * A React component that renders a theme switcher dropdown.
@@ -15,11 +18,13 @@ export default function ThemeSwitcher() {
     const { t } = useTranslation("common", { keyPrefix: "theme-switcher" });
     const dispatch = useAppDispatch();
     const theme = useAppSelector(state => state.common.theme);
-    const themes = getThemeList();
     const handleChange = (value: string | null) => {
         const theme = value as Theme | null;
         if (theme !== null) {
-            dispatch(setTheme(theme))
+            dispatch(setOverlay(true));
+            dispatch(setTheme(theme));
+            dispatch(setOverlay(false));
+            toast.success(t("success"));
         }
     }
 

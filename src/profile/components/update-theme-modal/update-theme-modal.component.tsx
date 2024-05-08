@@ -12,6 +12,8 @@ import { getThemeList } from "../../../common/helpers/get-theme-list.helper";
 import ThemeIcon from "../../../common/components/theme-icon/theme-icon.component";
 import { Theme } from "../../../common/enums/theme.enum";
 
+const themes = getThemeList();
+
 type UpdateThemeModalProps = {
     show: boolean,
     onHide: () => void
@@ -19,7 +21,6 @@ type UpdateThemeModalProps = {
 export default function UpdateThemeModal({ show, onHide }: UpdateThemeModalProps) {
     const { t } = useTranslation("profile", { keyPrefix: "update-theme" });
     const theme = useAppSelector(state => state.common.theme);
-    const themes = getThemeList();
     const [selectedTheme, setSelectedTheme] = useState<Theme>(theme.value);
     const dispatch = useAppDispatch();
 
@@ -48,7 +49,7 @@ export default function UpdateThemeModal({ show, onHide }: UpdateThemeModalProps
                     title={t("modal.title")}
                     buttonText={"OK"}
                     onHide={onHide}
-                    tabIndex={3}
+                    tabIndex={themes.length + 1}
                 />
                 <Modal.Body className="p-3">
                     <Container>
@@ -71,7 +72,7 @@ export default function UpdateThemeModal({ show, onHide }: UpdateThemeModalProps
                                             autoFocus={selectedTheme === theme}
                                             onChange={() => setSelectedTheme(theme)}
                                             value={theme}
-                                            tabIndex={idx + 1} />
+                                            tabIndex={idx} />
                                         <Form.Check.Label className="d-flex align-items-center">
                                             <ThemeIcon theme={theme} />&nbsp;
                                             {t(theme)}

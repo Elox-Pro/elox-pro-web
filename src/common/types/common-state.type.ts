@@ -5,6 +5,5 @@ import { ThemeType } from "./theme.type";
 export type CommonState = {
     overlay: Overlay,
     language: Language,
-    languages: Language[],
     theme: ThemeType,
 }

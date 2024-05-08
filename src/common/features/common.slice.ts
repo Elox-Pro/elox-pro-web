@@ -2,17 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { CommonState } from "../types/common-state.type";
 import { Language } from "../types/language.type";
 import { Theme } from "../enums/theme.enum";
+import { THEME_KEY, getInitalTheme } from "../helpers/get-initial-theme.helper";
 
-const KEY: string = "eloxpro-app-theme";
-function getInitalTheme(): Theme {
-
-    const theme = window.localStorage.getItem(KEY) as Theme | null;
-    if (theme !== null) {
-        return theme;
-    }
-    return window?.matchMedia?.('(prefers-color-scheme:dark)')?.matches ? Theme.DARK : Theme.LIGHT;
-
-}
 
 const initialState: CommonState = {
     overlay: {
@@ -22,13 +13,6 @@ const initialState: CommonState = {
         code: null,
         flag: null
     },
-    languages: [{
-        code: "en",
-        flag: "us"
-    }, {
-        code: "es",
-        flag: "es"
-    }],//TODO: Move to constants 
     theme: {
         value: getInitalTheme()
     }
@@ -46,7 +30,7 @@ const commonSlice = createSlice({
         },
         setTheme: (state, action: { payload: Theme }) => {
             state.theme.value = action.payload;
-            window.localStorage.setItem(KEY, action.payload);
+            window.localStorage.setItem(THEME_KEY, action.payload);
             document.documentElement.setAttribute("data-bs-theme", action.payload);
         }
     }
