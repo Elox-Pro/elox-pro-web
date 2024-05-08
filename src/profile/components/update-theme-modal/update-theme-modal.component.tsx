@@ -26,7 +26,7 @@ export default function UpdateThemeModal({ show, onHide }: UpdateThemeModalProps
 
     useEffect(() => {
         setSelectedTheme(theme.value);
-    }, [theme]);
+    }, [theme,onHide]);
 
     const handleSubmitRequest = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();

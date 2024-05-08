@@ -1,7 +1,6 @@
 import Dropdown from "react-bootstrap/esm/Dropdown";
 import { useTranslation } from "react-i18next";
 import { getThemeList } from "../../helpers/get-theme-list.helper";
-import "./theme-switcher.style.scss";
 import ThemeIcon from "../theme-icon/theme-icon.component";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { Theme } from "../../enums/theme.enum";
@@ -30,8 +29,8 @@ export default function ThemeSwitcher() {
 
     return (
         <div className="mt-2">
-            <Dropdown onSelect={handleChange}>
-                <Dropdown.Toggle variant="dark" id="theme-dropdown">
+            <Dropdown onSelect={handleChange} className="dropdown-transparent">
+                <Dropdown.Toggle id="theme-dropdown">
                     <ThemeIcon theme={theme.value} />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>

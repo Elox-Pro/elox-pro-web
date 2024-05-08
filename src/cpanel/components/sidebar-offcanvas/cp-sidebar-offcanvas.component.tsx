@@ -13,7 +13,7 @@ export default function CPSidebarOffcanvas() {
   }
 
   return (
-    <Offcanvas show={sidebarOffShow} onHide={handleCloseAction} className="cp-sidebar-offcanvas" data-bs-theme="dark">
+    <Offcanvas show={sidebarOffShow} onHide={handleCloseAction} className="cp-sidebar-offcanvas bg-body-tertiary">
       <Offcanvas.Header closeButton></Offcanvas.Header>
       <Offcanvas.Body>
         <CPSidebar />

@@ -1,6 +1,5 @@
 import Container from "react-bootstrap/Container"
 import Nav from "react-bootstrap/Nav"
-import Navbar from "react-bootstrap/Navbar"
 import NavDropdown from "react-bootstrap/NavDropdown"
 import { Link } from "react-router-dom"
 import "./cp-navbar.style.scss"
@@ -23,7 +22,7 @@ export default function CPNavbar() {
   }, []);
 
   return (
-    <Navbar expand="lg" className={`cp-navbar ${isScrolled ? 'scrolled' : ''}`}>
+    <nav className={`cp-navbar navbar bg-body-tertiary navbar-expand-lg ${isScrolled ? 'scrolled' : ''}`}>
       <Container fluid>
         <Nav className="me-auto">
           <CPNavbarToggle />
@@ -45,6 +44,6 @@ export default function CPNavbar() {
           </NavDropdown>
         </Nav>
       </Container>
-    </Navbar>
+    </nav>
   )
 }

@@ -12,7 +12,7 @@ export default function CoverMain() {
       <h1 className="cover-h1">Elox Pro</h1>
       <h2>{t("title")}.</h2>
       <p className="lead mt-4">{t("description")}.</p>
-      <Link to="/auth" className="btn btn-primary cover-btn-lg">
+      <Link to="/auth" className="btn btn-lg btn-primary">
         {t("action")}
       </Link>
     </main>

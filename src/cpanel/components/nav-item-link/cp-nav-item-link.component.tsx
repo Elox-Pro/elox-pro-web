@@ -20,7 +20,7 @@ export default function CPNavItemLink({ to, text, icon }: CPNavLinkProps) {
 
   return (
     <NavItem>
-      <NavLink to={to} className="nav-link text-white-50" onClick={handleCloseAction}>
+      <NavLink to={to} className="nav-link" onClick={handleCloseAction}>
         <OverlayTrigger placement="right" overlay={<Tooltip id={to}>{text}</Tooltip>}>
           <i className={`${icon} fs-5`}></i>
         </OverlayTrigger>

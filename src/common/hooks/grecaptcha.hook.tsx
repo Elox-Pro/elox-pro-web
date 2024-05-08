@@ -21,7 +21,7 @@ export function useGRecaptcha(): GoogleRecaptcha | null {
       script.id = ID
       document.body.appendChild(script)
     }
-    
+
     const intervalId = setInterval(() => {
       if ((window as any).grecaptcha) {
         clearInterval(intervalId)

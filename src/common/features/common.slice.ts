@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { CommonState } from "../types/common-state.type";
 import { Language } from "../types/language.type";
 import { Theme } from "../enums/theme.enum";
-import { THEME_KEY, getInitalTheme } from "../helpers/get-initial-theme.helper";
+import { getInitalTheme } from "../helpers/get-initial-theme.helper";
+import { updateTheme } from "../helpers/update-theme.helper";
 
 
 const initialState: CommonState = {
@@ -30,11 +31,13 @@ const commonSlice = createSlice({
         },
         setTheme: (state, action: { payload: Theme }) => {
             state.theme.value = action.payload;
-            window.localStorage.setItem(THEME_KEY, action.payload);
-            document.documentElement.setAttribute("data-bs-theme", action.payload);
+            updateTheme(action.payload);
         }
     }
 });
+
+// Update the theme
+updateTheme(getInitalTheme());
 
 const commonReducer = commonSlice.reducer;
 export const { setOverlay, setLanguage, setTheme } = commonSlice.actions;

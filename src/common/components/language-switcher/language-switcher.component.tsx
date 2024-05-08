@@ -1,6 +1,5 @@
 import FlagIcon from "../flag-icon/flag-icon.component";
 import Dropdown from "react-bootstrap/esm/Dropdown";
-import "./language-switcher.style.scss"
 import useAppLanguage from "../../hooks/app-language.hook";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch } from "../../../app/hooks/app.hooks";
@@ -25,8 +24,8 @@ export default function LanguageSwitcher() {
 
     return (
         <div className="mt-2">
-            <Dropdown onSelect={handleSelect}>
-                <Dropdown.Toggle variant="dark" id="language-dropdown">
+            <Dropdown onSelect={handleSelect} className="dropdown-transparent">
+                <Dropdown.Toggle id="language-dropdown">
                     <FlagIcon country={language.flag} />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>

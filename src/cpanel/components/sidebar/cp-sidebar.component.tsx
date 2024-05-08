@@ -8,8 +8,8 @@ export default function CPSidebar() {
   const { t } = useTranslation("cpanel", { keyPrefix: "sidebar" })
 
   return (
-    <section className="cp-sidebar text-bg-dark">
-      <CPNavbarBrand logo={CPNavbarBrandLogo.WHITE} size={24} text="Elox Pro" />
+    <section className="cp-sidebar border-right bg-body-tertiary">
+      <CPNavbarBrand logo={CPNavbarBrandLogo.COLOR} size={24} text="Elox Pro" />
       <Nav className="nav nav-pills flex-column mb-auto">
         <CPNavItemLink to="dashboard" text={t("home")} icon="bi bi-house" />
       </Nav>
