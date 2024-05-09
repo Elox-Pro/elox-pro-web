@@ -30,8 +30,9 @@ export default function CPLogout() {
     }, [status]);
 
     return (
-        <button type="button" disabled={isLoading} className="dropdown-item" onClick={onSubmit}>
-            {t("text")}
+        <button type="button" className="btn btn-outline-secondary btn-sm" disabled={isLoading} onClick={onSubmit}>
+            <i className="bi bi-box-arrow-right me-1"></i>
+            <span>{t("text")}</span>
         </button>
     )
 }

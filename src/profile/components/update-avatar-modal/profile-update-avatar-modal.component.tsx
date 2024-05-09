@@ -6,10 +6,12 @@ import { useEffect } from "react"
 import ModalHeader from "../../../common/components/modal/modal-header/modal-header.component"
 import { useUpdateAvatarMutation } from "../../api/profile.api"
 import { QueryStatus } from "@reduxjs/toolkit/query"
-import { useAppSelector } from "../../../app/hooks/app.hooks"
+import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks"
 import { useTranslation } from "react-i18next"
 import AvatarList from "../../../avatar/components/avatar-list/avatar-list"
 import { toast } from "react-toastify"
+import { setActiveUser } from "../../../auth/features/auth.slice"
+import { useActiveUser } from "../../../auth/hooks/active-user.hook"
 
 type ProfileUpdateAvatarModalProps = {
     show: boolean,
@@ -18,6 +20,8 @@ type ProfileUpdateAvatarModalProps = {
 export default function ProfileUpdateAvatarModal({ show, onHide }: ProfileUpdateAvatarModalProps) {
     const { t } = useTranslation("profile", { keyPrefix: "update-avatar" });
     const { profile } = useAppSelector(state => state.profile);
+    const activeUser = useActiveUser();
+    const dispatch = useAppDispatch();
 
     if (profile === null) {
         return null;
@@ -39,6 +43,9 @@ export default function ProfileUpdateAvatarModal({ show, onHide }: ProfileUpdate
 
     useEffect(() => {
         if (status === QueryStatus.fulfilled) {
+            if (selectedAvatar !== null) {
+                dispatch(setActiveUser({ ...activeUser, avatarUrl: selectedAvatar.url }));
+            }
             onHide();
             toast.success(t("success.on-fullfilled"));
         }

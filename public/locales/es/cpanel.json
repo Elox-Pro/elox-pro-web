@@ -6,6 +6,10 @@
             "error": "Error al intentar cerrar sesión"
         }
     },
+    "popover": {
+        "hi": "Hola",
+        "profile": "Administra tu cuenta"
+    },
     "navbar": {
         "profile": "Perfil",
         "logout": {

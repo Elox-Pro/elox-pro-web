@@ -5,11 +5,14 @@
     "navbar": {
         "profile": "Profile"
     },
+    "popover": {
+        "hi": "Hi",
+        "profile": "Manage your account"
+    },
     "logout": {
         "text": "Logout",
         "error": {
             "on-request": "Error trying to logout"
         }
-
     }
 }
