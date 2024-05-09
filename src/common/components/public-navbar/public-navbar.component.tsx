@@ -3,7 +3,6 @@ import Nav from "react-bootstrap/Nav"
 import Navbar from "react-bootstrap/Navbar"
 import { useTranslation } from "react-i18next"
 import { NavLink } from "react-router-dom"
-import "./public-navbar.style.scss"
 
 const autoCollapse = () => {
   const collapse = document.querySelector(".navbar-collapse.collapse");
@@ -13,7 +12,7 @@ const autoCollapse = () => {
 export default function PublicNavbar() {
   const { t } = useTranslation("common", { keyPrefix: "nav" });
   return (
-    <Navbar expand="lg" className="public-navbar mb-5 shadow" bg="primary" data-bs-theme="dark">
+    <Navbar expand="lg" className="public-navbar mb-5 shadow" bg="primary">
       <Container>
         <NavLink to={"/"} className="navbar-brand">
           <img

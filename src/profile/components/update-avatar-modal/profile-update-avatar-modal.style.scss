@@ -1,12 +1,14 @@
 .profile-update-avatar-modal {
     .btn-avatar {
         &:hover {
-            // background-color: var(--bs-tertiary-bg);
+            background-color: var(--bs-tertiary-bg);
+            border-color: var(--bs-secondary-bg);
         }
 
         &.active,
         &:active {
-            // background-color: var(--bs-secondary-bg);
+            border-color: var(--bs-tertiary-bg);
+            background-color: var(--bs-secondary-bg);
         }
     }
 }
