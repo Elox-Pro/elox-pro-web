@@ -2,19 +2,19 @@ import { createSlice } from "@reduxjs/toolkit";
 import { logout } from "../../auth/features/auth.slice";
 
 type CPSidebarOffcanvasState = {
-    sidebarOffShow: boolean;
+    sidebarOff: boolean;
 }
 
 const initialState: CPSidebarOffcanvasState = {
-    sidebarOffShow: false,
+    sidebarOff: false,
 }
 
 const cpSidebarOffcanvasSlice = createSlice({
     name: "cpSidebarOffcanvas",
     initialState,
     reducers: {
-        sidebarOffToggle: (state) => {
-            state.sidebarOffShow = !state.sidebarOffShow;
+        setSidebarOff: (state, action: { payload: boolean }) => {
+            state.sidebarOff = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -25,5 +25,5 @@ const cpSidebarOffcanvasSlice = createSlice({
 });
 
 const cpSidebarOffcanvasReducer = cpSidebarOffcanvasSlice.reducer;
-export const { sidebarOffToggle } = cpSidebarOffcanvasSlice.actions;
+export const { setSidebarOff } = cpSidebarOffcanvasSlice.actions;
 export default cpSidebarOffcanvasReducer;
