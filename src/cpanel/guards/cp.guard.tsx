@@ -3,8 +3,8 @@ import { Navigate, Outlet } from "react-router-dom";
 import { setActiveUser } from "../../auth/features/auth.slice";
 import { useActiveUser } from "../../auth/hooks/active-user.hook";
 import { useDispatch } from "react-redux";
-import { getActiveUserFromCookies } from "../../auth/helpers/get-active-user-from-cookies.helper";
-import useCheckSession from "../hooks/check-session.hook";
+import { getSession } from "../../auth/helpers/get-active-user-from-cookies.helper";
+import { useCheckSession } from "../hooks/check-session.hook";
 
 /**
  * CPGuard component acts as an authentication guard for protected routes.
@@ -38,7 +38,7 @@ export default function CPGuard({ children }: CPGuardProps): ReactNode {
         setRenderedNode(children || <Outlet />);
       } else {
         // Check for user information in cookies
-        const userFromCookie = getActiveUserFromCookies();
+        const userFromCookie = getSession();
 
         if (!userFromCookie?.isAuthenticated) {
           // User is not authenticated based on cookie or cookie is missing

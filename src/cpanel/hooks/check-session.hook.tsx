@@ -1,33 +1,41 @@
 import { useNavigate } from "react-router-dom";
-import { useActiveUser } from "../../auth/hooks/active-user.hook";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getActiveUserFromCookies } from "../../auth/helpers/get-active-user-from-cookies.helper";
 import { logout } from "../../auth/features/auth.slice";
+import { getSession } from "../../auth/helpers/get-active-user-from-cookies.helper";
+import { setShowSessionExpiryModal } from "../features/cp.slice";
 
-export default function useCheckSession() {
+export function useCheckSession() {
 
     const navigate = useNavigate();
-    const activeUser = useActiveUser();
     const dispatch = useDispatch();
 
     // Use effect to check the session from cookies periodically
     useEffect(() => {
 
         const checkSession = () => {
-            if (activeUser.isAuthenticated) {
-                const activeUserAux = getActiveUserFromCookies();
-                if (activeUserAux === null) {
-                    dispatch(logout())
-                    navigate("/auth/signin/", { replace: true });
+
+            const activeUser = getSession();
+            if (activeUser === null) {
+                dispatch(logout())
+                navigate("/auth/signin/", { replace: true });
+            } else {
+                const currentTime = Date.now();
+                const timeDifference = activeUser.exp - currentTime;
+                console.log("Time difference: ", timeDifference / 1000 / 60);
+
+                if (timeDifference <= 1 * 60 * 1000) {
+                    console.log("Session about to expire inactivity notification");
+                    dispatch(setShowSessionExpiryModal(true));
                 }
             }
+
         }
 
         checkSession();
 
         // Check session every 5 minutes
-        const interval = setInterval(checkSession, 5 * 60 * 1000);
+        const interval = setInterval(checkSession, 1 * 60 * 1000);
 
         // Clean up interval on component unmount
         return () => clearInterval(interval);

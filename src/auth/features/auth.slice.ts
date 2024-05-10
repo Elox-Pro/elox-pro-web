@@ -10,7 +10,9 @@ const initialState: AuthState = {
     activeUser: {
         username: null,
         role: null,
-        isAuthenticated: false
+        isAuthenticated: false,
+        exp: 0,
+        avatarUrl: null,
     },
 }
 

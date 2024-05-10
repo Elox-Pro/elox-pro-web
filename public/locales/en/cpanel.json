@@ -9,6 +9,17 @@
         "hi": "Hi",
         "profile": "Manage your account"
     },
+    "session-expiry": {
+        "modal": {
+            "header": "Session Expiration Warning",
+            "body": "Your session will expire soon. Do you want to stay logged in?",
+            "leave": "Logout",
+            "stay": "Stay"
+        },
+        "toast": {
+            "success": "Session confirmed successfully"
+        }
+    },
     "logout": {
         "text": "Logout",
         "error": {

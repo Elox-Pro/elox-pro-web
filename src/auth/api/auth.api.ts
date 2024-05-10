@@ -36,6 +36,14 @@ export const authApi = createApi({
                     }
                 },
             }),
+            check: builder.mutation<void, void>({
+                query() {
+                    return {
+                        url: `/check`,
+                        method: "POST",
+                    }
+                }
+            }),
             logout: builder.mutation<void, void>({
                 query() {
                     return {
@@ -51,5 +59,6 @@ export const authApi = createApi({
 export const {
     useSignupMutation,
     useLoginMutation,
+    useCheckMutation,
     useLogoutMutation
 } = authApi;

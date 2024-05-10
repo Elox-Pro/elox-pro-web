@@ -16,5 +16,22 @@
             "text": "Cerrar sesión",
             "error": "Error al intentar cerrar sesión"
         }
+    },
+    "session-expiry": {
+        "modal": {
+            "header": "Advertencia de cierre de sesión",
+            "body": "Su sesión caducará pronto. ¿Quieres permanecer conectado?",
+            "leave": "No, salir",
+            "stay": "Sí, permanecer"
+        },
+        "toast": {
+            "success": "Sesión confirmada exitosamente"
+        }
+    },
+    "logout": {
+        "text": "Logout",
+        "error": {
+            "on-request": "Error trying to logout"
+        }
     }
 }

@@ -14,6 +14,7 @@ import avatarReducer from "../../avatar/features/avatar.slice";
 import authReducer from "../../auth/features/auth.slice";
 import { rtkQueryMiddleware } from "../middlewares/rtk-api.middlaware";
 import errorReducer from "../../errors/features/error.slice";
+import cpReducer from "../../cpanel/features/cp.slice";
 
 
 export const appStore = configureStore({
@@ -22,6 +23,7 @@ export const appStore = configureStore({
         recoverPassword: recoverPasswordReducer,
         cpSidebar: cpSidebarReducer,
         cpSidebarOffcanvas: cpSidebarOffcanvasReducer,
+        cp: cpReducer,
         profile: profileReducer,
         common: commonReducer,
         avatar: avatarReducer,

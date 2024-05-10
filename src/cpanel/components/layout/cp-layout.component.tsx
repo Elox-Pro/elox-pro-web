@@ -5,6 +5,7 @@ import CPMain from "../main/cp-main.component"
 import { useAppSelector } from "../../../app/hooks/app.hooks"
 import "./cp-layout.stylce.scss"
 import CPSidebarOffcanvas from "../sidebar-offcanvas/cp-sidebar-offcanvas.component"
+import CPSessionExpiryModal from "../session-expiry-modal/cp-session-expiry-modal.component"
 
 export default function CPLayout() {
   const cpSidebar = useAppSelector((state) => state.cpSidebar)
@@ -17,6 +18,7 @@ export default function CPLayout() {
         <CPHeader />
         <Outlet />
       </CPMain>
+      <CPSessionExpiryModal />
     </div>
   )
 }

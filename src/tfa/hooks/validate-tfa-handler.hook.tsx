@@ -8,7 +8,7 @@ import { validateTfaSchema } from "../schemas/validate-tfa.schema";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { TfaAction } from "../enums/validate-tfa/tfa-action.enum";
-import { getActiveUserFromCookies } from "../../auth/helpers/get-active-user-from-cookies.helper";
+import { getSession } from "../../auth/helpers/get-active-user-from-cookies.helper";
 import { login } from "../../auth/features/auth.slice";
 import { setResetFormEnabled } from "../../recover-password/features/recover-password.slice";
 import { setProfile } from "../../profile/features/profile.slice";
@@ -67,7 +67,7 @@ export default function useValidateTfaHandler() {
      */
     const signinAction = () => {
         try {
-            const activeUser = getActiveUserFromCookies();
+            const activeUser = getSession();
             if (activeUser === null) {
                 throw new Error("Active user is null");
             }

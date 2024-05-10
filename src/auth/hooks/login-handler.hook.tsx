@@ -7,7 +7,7 @@ import { setTfaPending, setTfaUsername } from "../../tfa/features/tfa.slice";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { QueryStatus } from "@reduxjs/toolkit/query";
-import { getActiveUserFromCookies } from "../helpers/get-active-user-from-cookies.helper";
+import { getSession } from "../helpers/get-active-user-from-cookies.helper";
 import { login } from "../features/auth.slice";
 import { useTranslation } from "react-i18next";
 import { useZodForm } from "../../common/hooks/zod-form.hook";
@@ -49,7 +49,7 @@ export default function useLoginHandler() {
                     dispatch(setTfaPending(true));
                     navigate("/tfa/validate", { replace: true });
                 } else {
-                    const activeUser = getActiveUserFromCookies();
+                    const activeUser = getSession();
                     if (activeUser === null) {
                         throw new Error("Active user is null");
                     }
