@@ -43,6 +43,7 @@ export default function CPSessionExpiryModal() {
                 <Button
                     variant="primary"
                     onClick={handleStay}
+                    autoFocus={true}
                     disabled={logoutHandler.isLoading || statyInSession.isLoading}>
                     {t("modal.stay")}
                 </Button>

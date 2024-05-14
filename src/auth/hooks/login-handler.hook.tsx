@@ -7,11 +7,10 @@ import { setTfaPending, setTfaUsername } from "../../tfa/features/tfa.slice";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { QueryStatus } from "@reduxjs/toolkit/query";
-import { getSession } from "../helpers/get-active-user-from-cookies.helper";
-import { login } from "../features/auth.slice";
 import { useTranslation } from "react-i18next";
 import { useZodForm } from "../../common/hooks/zod-form.hook";
 import { loginSchema } from "../schemas/login.schema";
+import useLogin from "./login.hook";
 
 /**
  * Custom hook for handling the login functionality.
@@ -26,6 +25,7 @@ export default function useLoginHandler() {
     const { t } = useTranslation("auth", { keyPrefix: "login" });
     const zodForm = useZodForm<LoginRequest>(loginSchema);
     const [mutation, { data, status, isLoading }] = useLoginMutation();
+    const { handleLogin } = useLogin();
 
     /**
    * Handles the form submission
@@ -49,14 +49,7 @@ export default function useLoginHandler() {
                     dispatch(setTfaPending(true));
                     navigate("/tfa/validate", { replace: true });
                 } else {
-                    const activeUser = getSession();
-                    if (activeUser === null) {
-                        throw new Error("Active user is null");
-                    }
-                    dispatch(setTfaPending(false));
-                    dispatch(login(activeUser));
-                    navigate("/cpanel/dashboard", { replace: true });
-                    toast(t("welcome", { username: tfaUsername }));
+                    handleLogin();
                 }
             } catch (error) {
                 toast.error(JSON.stringify(error));

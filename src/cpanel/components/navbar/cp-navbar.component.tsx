@@ -16,7 +16,7 @@ export default function CPNavbar() {
   }, []);
 
   return (
-    <nav className={`cp-navbar navbar bg-body-tertiary navbar-expand-lg ${isScrolled ? 'scrolled' : ''}`}>
+    <nav className={`cp-navbar navbar navbar-expand-lg ${isScrolled ? 'scrolled' : ''}`}>
       <Container fluid>
         <Nav className="me-auto">
           <CPNavbarToggle />

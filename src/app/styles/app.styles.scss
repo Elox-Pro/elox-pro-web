@@ -13,6 +13,8 @@
 }
 
 .navbar {
+  background-color: var(--bs-body-bg);
+
   &.bg-primary {
     --bs-navbar-color: rgba(255, 255, 255, 0.55);
     --bs-navbar-hover-color: rgba(255, 255, 255, 0.75);
@@ -32,11 +34,10 @@ body {
 .nav-pills {
   .nav-link {
     &.active {
-      background-color: var(--bs-body-bg);
-      color: var(--bs-body-color);
+      border-left-width: 0.25rem;
+      border-left-style: solid;
+      color: var(--bs-light);
       border-radius: 0;
-      border-top: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
-      border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
     }
   }
 }

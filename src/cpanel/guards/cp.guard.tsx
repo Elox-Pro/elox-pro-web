@@ -3,7 +3,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { setActiveUser } from "../../auth/features/auth.slice";
 import { useActiveUser } from "../../auth/hooks/active-user.hook";
 import { useDispatch } from "react-redux";
-import { getSession } from "../../auth/helpers/get-active-user-from-cookies.helper";
+import { getSession } from "../../auth/helpers/get-session.helper";
 import { useCheckSession } from "../hooks/check-session.hook";
 
 /**
@@ -24,7 +24,7 @@ type CPGuardProps = {
 export default function CPGuard({ children }: CPGuardProps): ReactNode {
   const dispatch = useDispatch();
   const activeUser = useActiveUser();
-  const checkSession = useCheckSession();
+  const checkSession = useCheckSession(); // Active check session interval
   const [renderedNode, setRenderedNode] = useState<ReactNode | null>(null);
 
   if (!checkSession) {
@@ -32,27 +32,21 @@ export default function CPGuard({ children }: CPGuardProps): ReactNode {
   }
 
   useEffect(() => {
-    const handleAuthentication = async () => {
-      if (activeUser.isAuthenticated) {
-        // User is already authenticated (from Redux state)
-        setRenderedNode(children || <Outlet />);
-      } else {
-        // Check for user information in cookies
-        const userFromCookie = getSession();
+    const session = getSession();
 
-        if (!userFromCookie?.isAuthenticated) {
-          // User is not authenticated based on cookie or cookie is missing
-          setRenderedNode(<Navigate to="/error/401" replace />);
-        } else {
-          // User is potentially authenticated based on cookie
-          dispatch(setActiveUser({ ...userFromCookie }));
-          setRenderedNode(children || <Outlet />);
-        }
+    if (session.activeUser === null) {
+      setRenderedNode(<Navigate to="/error/401" replace />);
+    } else {
+      setRenderedNode(children || <Outlet />);
+
+      //  rehydrating the active user from cookies
+      if (activeUser.isAuthenticated === false) {
+        dispatch(setActiveUser({ ...session.activeUser }));
       }
-    };
 
-    handleAuthentication();
-  }, [activeUser.isAuthenticated, children, dispatch]);
+    }
+
+  }, [activeUser]);
 
   // Return the rendered content based on authentication status
   return renderedNode;

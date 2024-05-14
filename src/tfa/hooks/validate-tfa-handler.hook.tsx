@@ -8,10 +8,9 @@ import { validateTfaSchema } from "../schemas/validate-tfa.schema";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { TfaAction } from "../enums/validate-tfa/tfa-action.enum";
-import { getSession } from "../../auth/helpers/get-active-user-from-cookies.helper";
-import { login } from "../../auth/features/auth.slice";
 import { setResetFormEnabled } from "../../recover-password/features/recover-password.slice";
 import { setProfile } from "../../profile/features/profile.slice";
+import useLogin from "../../auth/hooks/login.hook";
 
 export default function useValidateTfaHandler() {
     const { t } = useTranslation("tfa", { keyPrefix: "validate-tfa" })
@@ -19,6 +18,7 @@ export default function useValidateTfaHandler() {
     const dispatch = useAppDispatch();
     const zodForm = useZodForm<ValidateTfaRequest>(validateTfaSchema);
     const navigate = useNavigate();
+    const { handleLogin } = useLogin();
     const [mutation, { data, status, isLoading }] = useValidateTfaMutation();
 
     /**
@@ -67,13 +67,7 @@ export default function useValidateTfaHandler() {
      */
     const signinAction = () => {
         try {
-            const activeUser = getSession();
-            if (activeUser === null) {
-                throw new Error("Active user is null");
-            }
-            dispatch(login(activeUser));
-            navigate("/cpanel/dashboard", { replace: true });
-            toast(t("success.signin", { username: tfaUsername }));
+            handleLogin();
         } catch (error) {
             toast.error(t("error.on-request"));
             console.error("Login Error:", error);
