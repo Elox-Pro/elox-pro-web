@@ -1,10 +1,11 @@
 {
     "sidebar": {
         "home": "Inicio",
-        "logout": {
-            "text": "Cerrar sesión",
-            "error": "Error al intentar cerrar sesión"
-        }
+        "orders": "Ordenes",
+        "products": "Productos",
+        "customers": "Clientes",
+        "reports": "Reportes",
+        "settings": "Configuración"
     },
     "popover": {
         "hi": "Hola",

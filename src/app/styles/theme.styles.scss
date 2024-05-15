@@ -4,20 +4,22 @@
         .nav-link {
             &.active {
                 border-left-color: var(--bs-dark);
+                background-color: rgba(var(--bs-dark-rgb), 0.1);
+                color: var(--bs-dark);
             }
         }
     }
 }
+
 [data-bs-theme=dark] {
     color-scheme: dark;
-    --bs-body-color: #dee2e6;
-    --bs-form-invalid-border-color: #ea868f;
-
 
     .nav-pills {
         .nav-link {
             &.active {
                 border-left-color: var(--bs-light);
+                background-color: rgba(var(--bs-light-rgb), 0.1);
+                color: var(--bs-light);
             }
         }
     }

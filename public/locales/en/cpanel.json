@@ -1,6 +1,11 @@
 {
     "sidebar": {
-        "home": "Home"
+        "home": "Home",
+        "orders": "Orders",
+        "products": "Products",
+        "customers": "Customers",
+        "reports": "Reports",
+        "settings": "Settings"
     },
     "navbar": {
         "profile": "Profile"

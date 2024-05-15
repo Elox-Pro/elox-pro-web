@@ -3,7 +3,7 @@ import { useAppDispatch } from "../../../app/hooks/app.hooks"
 import { NavLink } from "react-router-dom"
 import OverlayTrigger from "react-bootstrap/OverlayTrigger"
 import Tooltip from "react-bootstrap/Tooltip"
-import { setSidebarOff } from "../../features/cp-sidebar-off-canvas.slice"
+import { setSidebarOff } from "../../features/cp.slice"
 
 type CPNavLinkProps = {
   to: string
@@ -22,7 +22,7 @@ export default function CPNavItemLink({ to, text, icon }: CPNavLinkProps) {
     <NavItem>
       <NavLink to={to} className="nav-link" onClick={handleCloseAction}>
         <OverlayTrigger placement="bottom" overlay={<Tooltip id={to}>{text}</Tooltip>}>
-          <i className={`${icon} fs-5`}></i>
+          <i className={`${icon}`}></i>
         </OverlayTrigger>
         <span className="ms-2 nav-link-text">{text}</span>
       </NavLink>

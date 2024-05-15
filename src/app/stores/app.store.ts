@@ -2,8 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import { authApi } from "../../auth/api/auth.api";
 import { profileApi } from "../../profile/api/profile.api";
 import { tfaApi } from "../../tfa/api/tfa.api";
-import cpSidebarReducer from "../../cpanel/features/cp-sidebar.slice";
-import cpSidebarOffcanvasReducer from "../../cpanel/features/cp-sidebar-off-canvas.slice";
 import tfaReducer from "../../tfa/features/tfa.slice";
 import { recoverPasswordApi } from "../../recover-password/api/recover-password.api";
 import recoverPasswordReducer from "../../recover-password/features/recover-password.slice";
@@ -21,8 +19,6 @@ export const appStore = configureStore({
     reducer: {
         tfa: tfaReducer,
         recoverPassword: recoverPasswordReducer,
-        cpSidebar: cpSidebarReducer,
-        cpSidebarOffcanvas: cpSidebarOffcanvasReducer,
         cp: cpReducer,
         profile: profileReducer,
         common: commonReducer,

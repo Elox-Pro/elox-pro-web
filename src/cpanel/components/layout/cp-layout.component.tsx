@@ -8,10 +8,10 @@ import CPSidebarOffcanvas from "../sidebar-offcanvas/cp-sidebar-offcanvas.compon
 import CPSessionExpiryModal from "../session-expiry-modal/cp-session-expiry-modal.component"
 
 export default function CPLayout() {
-  const cpSidebar = useAppSelector((state) => state.cpSidebar)
+  const sidebar = useAppSelector((state) => state.cp.sidebar)
 
   return (
-    <div className={`cp-layout ${cpSidebar.hidden ? "cp-hide-sidebar" : ""}`}>
+    <div className={`cp-layout ${sidebar.hidden ? "cp-hide-sidebar" : ""}`}>
       <CPSidebarOffcanvas />
       <CPSidebar />
       <CPMain>

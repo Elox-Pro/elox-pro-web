@@ -1,6 +1,6 @@
 import { useAppDispatch } from "../../../app/hooks/app.hooks"
-import { setSidebarOff } from "../../features/cp-sidebar-off-canvas.slice"
-import { toggleSidebar } from "../../features/cp-sidebar.slice"
+import { setSidebarOff } from "../../features/cp.slice"
+import { toggleSidebar } from "../../features/cp.slice"
 import CPNavbarBrand, { CPNavbarBrandLogo } from "../navbar-brand/cp-navbar-brand.component"
 import "./cp-navbar-toggle.style.scss"
 export default function CPNavbarToggle() {

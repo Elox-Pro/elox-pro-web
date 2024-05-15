@@ -1,0 +1,3 @@
+type CPSidebar= {
+    hidden: boolean;
+}
