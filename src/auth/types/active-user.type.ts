@@ -1,10 +1,7 @@
 export type ActiveUser = {
-    /**
-     * The subject is the unique identifier of the user (username).
-     */
-    sub: string
-
-    role: string
-
+    username: string | null
+    role: string | null
+    avatarUrl: string | null
+    exp: number
     isAuthenticated: boolean
 }

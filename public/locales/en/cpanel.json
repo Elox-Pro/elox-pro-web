@@ -1,0 +1,34 @@
+{
+    "sidebar": {
+        "home": "Home",
+        "orders": "Orders",
+        "products": "Products",
+        "customers": "Customers",
+        "reports": "Reports",
+        "settings": "Settings"
+    },
+    "navbar": {
+        "profile": "Profile"
+    },
+    "popover": {
+        "hi": "Hi",
+        "profile": "Manage your account"
+    },
+    "session-expiry": {
+        "modal": {
+            "header": "Session Expiration Warning",
+            "body": "Your session will expire soon. Do you want to stay logged in?",
+            "leave": "Logout",
+            "stay": "Stay"
+        },
+        "toast": {
+            "success": "Session confirmed successfully"
+        }
+    },
+    "logout": {
+        "text": "Logout",
+        "error": {
+            "on-request": "Error trying to logout"
+        }
+    }
+}

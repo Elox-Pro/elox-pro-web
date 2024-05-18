@@ -1,0 +1,38 @@
+{
+    "sidebar": {
+        "home": "Inicio",
+        "orders": "Ordenes",
+        "products": "Productos",
+        "customers": "Clientes",
+        "reports": "Reportes",
+        "settings": "Configuración"
+    },
+    "popover": {
+        "hi": "Hola",
+        "profile": "Administra tu cuenta"
+    },
+    "navbar": {
+        "profile": "Perfil",
+        "logout": {
+            "text": "Cerrar sesión",
+            "error": "Error al intentar cerrar sesión"
+        }
+    },
+    "session-expiry": {
+        "modal": {
+            "header": "Advertencia de cierre de sesión",
+            "body": "Su sesión caducará pronto. ¿Quieres permanecer conectado?",
+            "leave": "No, salir",
+            "stay": "Sí, permanecer"
+        },
+        "toast": {
+            "success": "Sesión confirmada exitosamente"
+        }
+    },
+    "logout": {
+        "text": "Logout",
+        "error": {
+            "on-request": "Error trying to logout"
+        }
+    }
+}

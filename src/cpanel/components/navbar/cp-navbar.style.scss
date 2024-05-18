@@ -1,0 +1,13 @@
+.cp-navbar {
+  padding: 0.5rem;
+
+  .dropdown-menu {
+    position: absolute;
+    right: 0;
+    left: auto;
+  }
+
+  &.scrolled {
+    box-shadow: 0 4px 16px -8px var(--shadow-color);
+  }
+}

@@ -1,10 +1,10 @@
 import AuthHeader from "../header/auth-header.component"
-import { Outlet } from "react-router-dom"
+import AuthIndex from "../index/auth-index.component"
 export default function AuthLayout() {
   return (
     <>
       <AuthHeader />
-      <Outlet />
+      <AuthIndex />
     </>
   )
 }

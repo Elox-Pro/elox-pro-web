@@ -7,7 +7,7 @@ import CoverFooter from "../footer/cover-footer.component"
 export default function CoverIndex() {
   return (
     <section className="cover-index cover-bg">
-      <Container>
+      <Container fluid>
         <CoverHeader />
         <CoverMain />
         <CoverFooter />

@@ -1,9 +1,9 @@
-import AuthNavbar from "../navbar/auth-navbar.component"
+import PublicNavbar from "../../../common/components/public-navbar/public-navbar.component"
 
 export default function AuthHeader() {
   return (
-    <header className="p-3 text-bg-white">
-      <AuthNavbar />
+    <header className="text-bg-white">
+      <PublicNavbar />
     </header>
   )
 }

@@ -1,11 +1,13 @@
+import { Link } from "react-router-dom"
+
 type AuthLinkProps = {
   text: string
-  onClick?: () => void
+  to: string
 }
-export default function AuthLink({ text, onClick }: AuthLinkProps) {
+export default function AuthLink({ text, to }: AuthLinkProps) {
   return (
-    <a className="fw-semibold mt-2 ms-2" href="#" onClick={onClick}>
-      <small>{text}</small>
-    </a>
+    <Link className="fw-semibold mt-2 ms-2" to={to}>
+      {text}
+    </Link>
   )
 }

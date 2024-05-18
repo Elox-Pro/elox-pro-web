@@ -1,27 +1,14 @@
-$bd-dark-violet-rgb: rgb(82, 0, 174);
-$bd-accent-rgb: rgb(64, 98, 187);
-$bd-violet-rgb: rgb(102, 51, 153);
-
 .cover-index {
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  overflow-x: hidden;
 
   &.cover-bg {
-    background-image: linear-gradient(180deg,
-        rgba(var(--bs-body-bg-rgb), 0.01),
-        rgba(var(--bs-body-bg-rgb), 1) 85%),
-      radial-gradient(ellipse at top left,
-        rgba($bd-dark-violet-rgb, 0.5),
-        transparent 50%),
-      radial-gradient(ellipse at top right,
-        rgba($bd-accent-rgb, 0.5),
-        transparent 50%),
-      radial-gradient(ellipse at center right,
-        rgba($bd-violet-rgb, 0.5),
-        transparent 50%),
-      radial-gradient(ellipse at center left,
-        rgba($bd-dark-violet-rgb, 0.5),
-        transparent 50%);
+    background-image: linear-gradient(180deg, rgba(var(--bs-body-bg-rgb), 0.01), rgba(var(--bs-body-bg-rgb), 1) 85%),
+      radial-gradient(ellipse at top left, rgba(var(--bs-indigo-rgb), 0.5), transparent 50%),
+      radial-gradient(ellipse at top right, rgba(var(--bs-purple-rgb), 0.5), transparent 50%),
+      radial-gradient(ellipse at center right, rgba(var(--bs-blue-rgb), 0.5), transparent 50%),
+      radial-gradient(ellipse at center left, rgba(var(--bs-indigo-rgb), 0.5), transparent 50%);
   }
-
 }

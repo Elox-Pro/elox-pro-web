@@ -2,18 +2,32 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { LoginRequest } from "../types/login/login-request.type";
 import { LoginResponse } from "../types/login/login-response.type";
 import { API_URL } from "../../app/constants/app.constants";
-import { ValidateTfaResponse } from "../types/validate-tfa/validate-tfa-response.type";
-import { ValidateTfaRequest } from "../types/validate-tfa/validate-tfa-request.type";
+import { SignupResponse } from "../types/signup/signup-response.type";
+import { SignupRequest } from "../types/signup/signup-request.type";
+import i18n from "../../app/i18n/i18n";
 
-export const authenticationApi = createApi({
-    reducerPath: "authenticationApi",
+export const authApi = createApi({
+    reducerPath: "authApi",
     baseQuery: fetchBaseQuery({
         baseUrl: `${API_URL}/authentication`,
         credentials: "include",
+        prepareHeaders: (headers) => {
+            headers.append('Accept-Language', `${i18n.language}`);
+            return headers;
+        },
     }),
     endpoints(builder) {
         return {
-            loginRequest: builder.mutation<LoginResponse, LoginRequest>({
+            signup: builder.mutation<SignupResponse, SignupRequest>({
+                query(data) {
+                    return {
+                        url: `/signup`,
+                        method: "POST",
+                        body: data,
+                    }
+                },
+            }),
+            login: builder.mutation<LoginResponse, LoginRequest>({
                 query(data) {
                     return {
                         url: `/login`,
@@ -22,16 +36,15 @@ export const authenticationApi = createApi({
                     }
                 },
             }),
-            validateTfaRequest: builder.mutation<ValidateTfaResponse, ValidateTfaRequest>({
-                query(data) {
+            check: builder.mutation<void, void>({
+                query() {
                     return {
-                        url: `/validate-tfa`,
+                        url: `/check`,
                         method: "POST",
-                        body: data,
                     }
-                },
+                }
             }),
-            logoutRequest: builder.mutation<void, void>({
+            logout: builder.mutation<void, void>({
                 query() {
                     return {
                         url: `/logout`,
@@ -44,7 +57,8 @@ export const authenticationApi = createApi({
 });
 
 export const {
-    useLogoutRequestMutation,
-    useLoginRequestMutation,
-    useValidateTfaRequestMutation
-} = authenticationApi;
+    useSignupMutation,
+    useLoginMutation,
+    useCheckMutation,
+    useLogoutMutation
+} = authApi;

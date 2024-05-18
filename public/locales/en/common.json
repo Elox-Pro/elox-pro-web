@@ -1,4 +1,20 @@
 {
     "home": "Home",
-    "submit": "Submit"
+    "submit-button": {
+        "text": "Submit"
+    },
+    "nav": {
+        "signin": "Sign in",
+        "signup": "Sign up"
+    },
+    "language-switcher": {
+        "en": "English",
+        "es": "Spanish",
+        "success": "Language updated successfully"
+    },
+    "theme-switcher": {
+        "light": "Light",
+        "dark": "Dark",
+        "success": "Theme updated successfully"
+    }
 }

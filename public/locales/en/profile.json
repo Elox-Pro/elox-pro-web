@@ -1,0 +1,216 @@
+{
+    "index": {
+        "title": "Personal info",
+        "subtitle": "Info about you and your preferences"
+    },
+    "basic-info": {
+        "title": "Basic info",
+        "avatar": {
+            "label": "Profile picture",
+            "value": "A profile picture helps personalize your account"
+        },
+        "username": {
+            "label": "Username"
+        },
+        "role": {
+            "label": "Role"
+        },
+        "name": {
+            "label": "Name",
+            "value": "A name helps personalize your account"
+        },
+        "gender": {
+            "label": "Gender",
+            "value": "A gender helps personalize your account"
+        },
+        "updated-at": {
+            "label": "Updated at"
+        }
+    },
+    "contact-info": {
+        "title": "Contact info",
+        "email": {
+            "label": "Email",
+            "value": "An email helps personalize your account",
+            "verified": "Verified"
+        },
+        "phone": {
+            "label": "Phone",
+            "value": "A phone helps personalize your account",
+            "verified": "Verified"
+        }
+    },
+    "password-info": {
+        "title": "Password",
+        "subtitle": "A secure password helps protect your account",
+        "password": {
+            "label": "Password"
+        }
+    },
+    "tfa-info": {
+        "title": "Two-factor authentication",
+        "subtitle": "2FA helps your account security by adding an extra login step",
+        "email": {
+            "label": "Email",
+            "value": "Enable email verification for 2FA in your account",
+            "configured": "Configured"
+        }
+    },
+    "settings": {
+        "title": "General settings",
+        "language": {
+            "label": "Language",
+            "en": "English",
+            "es": "Spanish"
+        },
+        "theme": {
+            "label": "Theme",
+            "light": "Light",
+            "dark": "Dark"
+        }
+    },
+    "update-avatar": {
+        "success": {
+            "on-fullfilled": "Avatar updated successfully"
+        },
+        "modal": {
+            "title": "Edit avatar",
+            "submit": "OK",
+            "label": "Select a picture"
+        }
+    },
+    "update-name": {
+        "success": {
+            "on-fullfilled": "Name updated successfully"
+        },
+        "modal": {
+            "title": "Edit name",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "A name helps personalize your account",
+            "subtitle": "Please enter your full name."
+        },
+        "first-name": {
+            "label": "First name"
+        },
+        "last-name": {
+            "label": "Last name"
+        }
+    },
+    "update-gender": {
+        "success": {
+            "on-fullfilled": "Gender updated successfully"
+        },
+        "modal": {
+            "title": "Edit gender",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "A gender helps personalize your account",
+            "subtitle": "Please select your gender."
+        },
+        "MALE": "Male",
+        "FEMALE": "Female"
+    },
+    "update-email": {
+        "success": {
+            "on-fullfilled": "Email updated successfully"
+        },
+        "modal": {
+            "title": "Edit email",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "A email helps personalize your account",
+            "subtitle": "Please enter your new email."
+        },
+        "email": {
+            "label": "Email"
+        }
+    },
+    "update-phone": {
+        "success": {
+            "on-fullfilled": "Phone updated successfully"
+        },
+        "modal": {
+            "title": "Edit phone number",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "A phone helps personalize your account",
+            "subtitle": "Please enter your phone."
+        },
+        "phone": {
+            "label": "Phone number"
+        }
+    },
+    
+    "update-password": {
+        "success": {
+            "on-fullfilled": "Password updated successfully"
+        },
+        "modal": {
+            "title": "Edit password",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "A secure password helps protect your account",
+            "subtitle": "To change your password, please enter your current password and your new password."
+        },
+        "current-password": {
+            "label": "Current password"
+        },
+        "new-password": {
+            "label": "New password"
+        },
+        "confirm-password": {
+            "label": "Confirm password"
+        }
+    },
+    "update-tfa": {
+        "success": {
+            "on-fullfilled": "Two factor authentication updated successfully"
+        },
+        "modal": {
+            "title": "Edit TFA",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "A TFA helps protect your account",
+            "subtitle": "To change your tfa, please select one option."
+        },
+        "NONE": "None",
+        "EMAIL": "Email"
+    },
+    "update-language": {
+        "success": {
+            "on-fullfilled": "Language updated successfully"
+        },
+        "modal": {
+            "title": "Edit language",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "A language helps personalize your account",
+            "subtitle": "Please select your preferred language."
+        },
+        "en": "English",
+        "es": "Spanish"
+    },
+    "update-theme": {
+        "success": {
+            "on-fullfilled": "Theme updated successfully"
+        },
+        "modal": {
+            "title": "Edit theme",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "A theme helps personalize your account",
+            "subtitle": "Please select your preferred theme."
+        },
+        "light": "Light",
+        "dark": "Dark"
+    }
+}

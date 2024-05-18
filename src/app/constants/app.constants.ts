@@ -1,4 +1,4 @@
-export const DOMAIN = ".eloxpro-dev.com"
-export const API_URL = "https://api.eloxpro-dev.com"
-export const GOOGLE_RECAPTCHA_SITE_KEY = "6LfvxJYpAAAAAOQTd2nLxtZhCOUCiruAZiHhYgOA"
-
+export const DOMAIN = import.meta.env.VITE_DOMAIN || ".localhost";
+export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3024";
+export const GOOGLE_RECAPTCHA_SITE_KEY = import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY || "<SITE_KEY>"
+export const WS_URL = import.meta.env.VITE_WS_URL || "http://localhost:4025"

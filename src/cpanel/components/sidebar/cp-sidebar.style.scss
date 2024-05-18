@@ -1,0 +1,34 @@
+.cp-sidebar {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  height: 100%;
+  left: 0;
+  padding: 0;
+  position: fixed;
+  transition: all var(--nav-transition-duration) var(--nav-transition-timing-function);
+  width: var(--nav-width);
+
+  .nav {
+    width: 100%;
+  }
+
+  .nav-link {
+    align-items: center;
+    color: var(--bs-secondary-color);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding: 0.5rem;
+    margin: 0 0.5rem;
+  }
+
+  .nav-item {
+    width: 100%;
+  }
+
+  hr {
+    width: 100%;
+  }
+}

@@ -1,0 +1,218 @@
+{
+    "index": {
+        "title": "Información personal",
+        "subtitle": "Información sobre ti y tus preferencias"
+    },
+    "basic-info": {
+        "title": "Información básica",
+        "avatar": {
+            "label": "Foto de perfil",
+            "value": "Una foto de perfil ayuda a personalizar tu cuenta"
+        },
+        "username": {
+            "label": "Nombre de usuario"
+        },
+        "role": {
+            "label": "Rol"
+        },
+        "name": {
+            "label": "Nombre",
+            "value": "Un nombre ayuda a personalizar tu cuenta"
+        },
+        "gender": {
+            "label": "Género",
+            "value": "Un género ayuda a personalizar tu cuenta"
+        },
+        "updated-at": {
+            "label": "Actualizado en"
+        }
+    },
+    "contact-info": {
+        "title": "Información de contacto",
+        "email": {
+            "label": "Correo electrónico",
+            "value": "Un correo electrónico ayuda a personalizar tu cuenta",
+            "verified": "Verificado"
+        },
+        "phone": {
+            "label": "Teléfono",
+            "value": "Un teléfono ayuda a personalizar tu cuenta",
+            "verified": "Verificado"
+        }
+    },
+    "password-info": {
+        "title": "Contraseña",
+        "subtitle": "Una contraseña segura ayuda a proteger tu cuenta",
+        "password": {
+            "label": "Contraseña"
+        }
+    },
+    "tfa-info": {
+        "title": "Autenticación de dos factores",
+        "subtitle": "La 2FA mejora la seguridad de tu cuenta al agregar un paso adicional de inicio de sesión",
+        "email": {
+            "label": "Correo electrónico",
+            "value": "Habilitar verificación por correo electrónico para 2FA en tu cuenta",
+            "configured": "Configurado"
+        }
+    },
+    "settings": {
+        "title": "Configuraciones generales",
+        "language": {
+            "label": "Idioma",
+            "en": "Inglés",
+            "es": "Español"
+        },
+        "theme": {
+            "label": "Tema",
+            "light": "Claro",
+            "dark": "Oscuro"
+        }
+    },
+    "update-avatar": {
+        "success": {
+            "on-fullfilled": "Foto de perfil actualizada exitosamente"
+        },
+        "modal": {
+            "title": "Editar foto de perfil",
+            "submit": "OK",
+            "label": "Selecciona una imagen"
+        }
+    },
+    "update-name": {
+        "success": {
+            "on-fullfilled": "Nombre actualizado exitosamente"
+        },
+        "modal": {
+            "title": "Editar nombre",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "Un nombre ayuda a personalizar tu cuenta",
+            "subtitle": "Por favor ingresa tu nombre completo."
+        },
+        "first-name": {
+            "label": "Primer nombre"
+        },
+        "last-name": {
+            "label": "Apellido"
+        }
+    },
+    "update-gender": {
+        "success": {
+            "on-fullfilled": "Género actualizado exitosamente"
+        },
+        "modal": {
+            "title": "Editar género",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "Un género ayuda a personalizar tu cuenta",
+            "subtitle": "Por favor selecciona tu género."
+        },
+        "error": {
+            "on-request": "Error al actualizar el género"
+        },
+        "MALE": "Masculino",
+        "FEMALE": "Femenino"
+    },
+    "update-email": {
+        "success": {
+            "on-fullfilled": "Correo electrónico actualizado exitosamente"
+        },
+        "modal": {
+            "title": "Editar correo electrónico",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "Un correo electrónico ayuda a personalizar tu cuenta",
+            "subtitle": "Por favor ingresa tu nuevo correo electrónico."
+        },
+        "email": {
+            "label": "Correo electrónico"
+        }
+    },
+    "update-phone": {
+        "success": {
+            "on-fullfilled": "Teléfono actualizado exitosamente"
+        },
+        "modal": {
+            "title": "Editar teléfono",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "Un teléfono ayuda a personalizar tu cuenta",
+            "subtitle": "Por favor ingresa tu nuevo teléfono."
+        },
+        "phone": {
+            "label": "Teléfono"
+        }
+    },
+    "update-password": {
+        "success": {
+            "on-fullfilled": "Contraseña actualizada exitosamente"
+        },
+        "modal": {
+            "title": "Editar contraseña",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "Una contraseña segura ayuda a proteger tu cuenta",
+            "subtitle": "Para cambiar tu contraseña, por favor ingresa tu contraseña actual y tu nueva contraseña."
+        },
+        "current-password": {
+            "label": "Contraseña actual"
+        },
+        "new-password": {
+            "label": "Nueva contraseña"
+        },
+        "confirm-password": {
+            "label": "Confirmar contraseña"
+        }
+    },
+    "update-tfa": {
+        "success": {
+            "on-fullfilled": "El segundo factor de autenticación fue actualizado exitosamente"
+        },
+        "modal": {
+            "title": "Editar 2FA",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "El 2FA ayuda a proteger tu cuenta",
+            "subtitle": "Para cambiar tu 2FA, por favor seleccione una opción."
+        },
+        "NONE": "Ninguno",
+        "EMAIL": "Correo electrónico"
+    },
+    "update-language": {
+        "success": {
+            "on-fullfilled": "Idioma actualizado exitosamente"
+        },
+        "modal": {
+            "title": "Editar idioma",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "Un idioma ayuda a personalizar tu cuenta",
+            "subtitle": "Por favor selecciona tu idioma preferido."
+        },
+        "en": "Inglés",
+        "es": "Español"
+    },
+    "update-theme": {
+        "success": {
+            "on-fullfilled": "Tema actualizado exitosamente"
+        },
+        "modal": {
+            "title": "Editar tema",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "Un tema ayuda a personalizar tu cuenta",
+            "subtitle": "Por favor selecciona tu tema preferido."
+        },
+        "light": "Claro",
+        "dark": "Oscuro"
+    }
+}

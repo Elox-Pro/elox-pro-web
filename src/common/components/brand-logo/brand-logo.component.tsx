@@ -6,5 +6,5 @@ type BrandLogoProps = {
   type: BrandLogoType
 }
 export default function BrandLogo({ type }: BrandLogoProps) {
-  return <img className="img-fluid mb-3" src={type} width={96} alt="logo-color" />
+  return <img className="img-fluid pt-5 mb-5" src={type} width={128} alt="logo-color" />
 }

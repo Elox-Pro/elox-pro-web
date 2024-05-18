@@ -1,0 +1,26 @@
+:root,
+[data-bs-theme=light] {
+    .nav-pills {
+        .nav-link {
+            &.active {
+                border-left-color: var(--bs-dark);
+                background-color: rgba(var(--bs-dark-rgb), 0.1);
+                color: var(--bs-dark);
+            }
+        }
+    }
+}
+
+[data-bs-theme=dark] {
+    color-scheme: dark;
+
+    .nav-pills {
+        .nav-link {
+            &.active {
+                border-left-color: var(--bs-light);
+                background-color: rgba(var(--bs-light-rgb), 0.1);
+                color: var(--bs-light);
+            }
+        }
+    }
+}

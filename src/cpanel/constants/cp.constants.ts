@@ -1,0 +1,1 @@
+export const CP_SIDEBAR_KEY = "cp-sidebar-slice";

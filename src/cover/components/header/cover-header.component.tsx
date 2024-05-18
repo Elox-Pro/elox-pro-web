@@ -1,8 +1,8 @@
-import CoverNavbar from "../navbar/cover-navbar.component"
+import PublicNavbar from "../../../common/components/public-navbar/public-navbar.component"
 export default function CoverHeader() {
   return (
     <header>
-      <CoverNavbar />
+      <PublicNavbar />
     </header>
   )
 }

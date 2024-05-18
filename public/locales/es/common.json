@@ -1,3 +1,20 @@
 {
-    "submit": "Enviar"
+    "home": "Inicio",
+    "submit-button": {
+        "text": "Enviar"
+    },
+    "nav": {
+        "signin": "Iniciar sesión",
+        "signup": "Registrarse"
+    },
+    "language-switcher": {
+        "en": "Inglés",
+        "es": "Español",
+        "success": "Idioma actualizado con éxito"
+    },
+    "theme-switcher": {
+        "light": "Claro",
+        "dark": "Oscuro",
+        "success": "Tema actualizado con éxito"
+    }
 }

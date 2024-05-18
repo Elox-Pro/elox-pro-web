@@ -1,0 +1,27 @@
+{
+    "validate-tfa": {
+        "title": "Two-factor authentication",
+        "description": "Enter your two-factor authentication code",
+        "username": {
+            "label": "Username",
+            "placeholder": "Type username"
+        },
+        "validate-code": {
+            "label": "Validate code",
+            "placeholder": "Type code"
+        },
+        "error": {
+            "on-request": "Error submitting two-factor authentication"
+        },
+        "success": {
+            "signin": "Welcome back {{username}}!",
+            "signup": "Your account has been created successfully",
+            "update-email": "Your email has been updated successfully",
+            "update-password": "Your password has been updated successfully"
+        }
+    },
+    "validate-tfa-status": {
+        "succeeded": "Two-factor authentication was send successfully",
+        "failed": "Error sending two-factor authentication"
+    }
+}
