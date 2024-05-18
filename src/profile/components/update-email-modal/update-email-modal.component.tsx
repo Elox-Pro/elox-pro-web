@@ -16,6 +16,7 @@ import { UpdateEmailRequest } from "../../types/update-email/update-email-reques
 import { updateEmailSchema } from "../../schemas/update-emaill.schema";
 import { setTfaPending, setTfaUsername } from "../../../tfa/features/tfa.slice";
 import { useDispatch } from "react-redux";
+import { setOverlay } from "../../../common/features/common.slice";
 
 type UpdateEmailModalProps = {
     show: boolean,
@@ -28,6 +29,7 @@ export default function UpdateEmailModal({ show, onHide }: UpdateEmailModalProps
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { profile } = useAppSelector((state) => state.profile);
+    const { overlay } = useAppSelector((state) => state.common);
 
     if (profile === null) {
         return null;
@@ -35,10 +37,11 @@ export default function UpdateEmailModal({ show, onHide }: UpdateEmailModalProps
     const email = profile.email || "";
     const username = profile.username || "";
 
-    const [updateEmail, { data, status, isLoading }] = useUpdateEmailMutation();
+    const [updateEmail, { data, status }] = useUpdateEmailMutation();
 
     const onSubmit = async (req: UpdateEmailRequest) => {
         try {
+            dispatch(setOverlay(true));
             updateEmail({ email: req.email });
         } catch (error) {
             console.error(error);
@@ -68,7 +71,7 @@ export default function UpdateEmailModal({ show, onHide }: UpdateEmailModalProps
                     title={t("modal.title")}
                     buttonText={"OK"}
                     onHide={onHide}
-                    disabled={isLoading}
+                    disabled={overlay.active}
                     tabIndex={2}
                 />
                 <Modal.Body className="p-3">
@@ -85,7 +88,7 @@ export default function UpdateEmailModal({ show, onHide }: UpdateEmailModalProps
                             label={t("email.label")}
                             autoFocus
                             defaultValue={email}
-                            disabled={isLoading}
+                            disabled={overlay.active}
                             register={register}
                             error={errors.email as FieldError}
                         />

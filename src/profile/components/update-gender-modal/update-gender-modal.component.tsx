@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useZodForm } from "../../../common/hooks/zod-form.hook";
 import { UpdateGenderRequest } from "../../types/update-gender/update-gender-request.type";
 import { updateGenderSchema } from "../../schemas/update-gender.schema";
-import { useAppSelector } from "../../../app/hooks/app.hooks";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { useUpdateGenderMutation } from "../../api/profile.api";
 import { QueryStatus } from "@reduxjs/toolkit/query";
 import { toast } from "react-toastify";
@@ -11,6 +11,7 @@ import Modal from "react-bootstrap/esm/Modal";
 import { Form } from "react-bootstrap";
 import ModalHeader from "../../../common/components/modal/modal-header/modal-header.component";
 import { Gender } from "../../../users/enum/gender.enum";
+import { setOverlay } from "../../../common/features/common.slice";
 
 type UpdateGenderModalProps = {
     show: boolean,
@@ -21,6 +22,8 @@ export default function UpdateGenderModal({ show, onHide }: UpdateGenderModalPro
     const { t } = useTranslation("profile", { keyPrefix: "update-gender" });
     const { handleSubmit, register } = useZodForm<UpdateGenderRequest>(updateGenderSchema);
     const { profile } = useAppSelector((state) => state.profile);
+    const { overlay } = useAppSelector((state) => state.common);
+    const dispatch = useAppDispatch();
 
     if (profile === null) {
         return null;
@@ -29,10 +32,11 @@ export default function UpdateGenderModal({ show, onHide }: UpdateGenderModalPro
     const genderAux = profile.gender || Gender.MALE;
     const [checkedMale, checkedFemale] = genderAux === Gender.MALE ? [true, false] : [false, true];
 
-    const [mutation, { status, isLoading }] = useUpdateGenderMutation();
+    const [mutation, { status }] = useUpdateGenderMutation();
 
     const onSubmit = async (req: UpdateGenderRequest) => {
         try {
+            dispatch(setOverlay(true));
             mutation(req);
         } catch (error) {
             console.error(error);
@@ -62,7 +66,7 @@ export default function UpdateGenderModal({ show, onHide }: UpdateGenderModalPro
                     title={t("modal.title")}
                     buttonText={"OK"}
                     onHide={onHide}
-                    disabled={isLoading}
+                    disabled={overlay.active}
                     tabIndex={3} />
                 <Modal.Body className="p-3">
                     <h3>{t("container.title")}</h3>

@@ -129,6 +129,23 @@
             "label": "Email"
         }
     },
+    "update-phone": {
+        "success": {
+            "on-fullfilled": "Phone updated successfully"
+        },
+        "modal": {
+            "title": "Edit phone number",
+            "submit": "OK"
+        },
+        "container": {
+            "title": "A phone helps personalize your account",
+            "subtitle": "Please enter your phone."
+        },
+        "phone": {
+            "label": "Phone number"
+        }
+    },
+    
     "update-password": {
         "success": {
             "on-fullfilled": "Password updated successfully"

@@ -10,7 +10,7 @@ import useValidateTfaHandler from "../../hooks/validate-tfa-handler.hook";
  */
 export default function ValidateTfaForm() {
 
-  const { onSubmit, zodForm, isLoading, tfaUsername, t } = useValidateTfaHandler();
+  const { onSubmit, zodForm, overlay, tfaUsername, t } = useValidateTfaHandler();
   const { register, handleSubmit, errors } = zodForm;
 
   return (
@@ -37,11 +37,11 @@ export default function ValidateTfaForm() {
           register={register}
           error={errors.code as FieldError}
           autoFocus={true}
-          disabled={isLoading}
+          disabled={overlay.active}
         />
 
         <div className="input-group mb-3">
-          <SubmitButton disabled={isLoading} />
+          <SubmitButton disabled={overlay.active} />
         </div>
       </form>
     </>

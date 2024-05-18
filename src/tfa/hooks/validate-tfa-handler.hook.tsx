@@ -11,6 +11,7 @@ import { TfaAction } from "../enums/validate-tfa/tfa-action.enum";
 import { setResetFormEnabled } from "../../recover-password/features/recover-password.slice";
 import { setProfile } from "../../profile/features/profile.slice";
 import useLogin from "../../auth/hooks/login.hook";
+import { setOverlay } from "../../common/features/common.slice";
 
 export default function useValidateTfaHandler() {
     const { t } = useTranslation("tfa", { keyPrefix: "validate-tfa" })
@@ -18,8 +19,9 @@ export default function useValidateTfaHandler() {
     const dispatch = useAppDispatch();
     const zodForm = useZodForm<ValidateTfaRequest>(validateTfaSchema);
     const navigate = useNavigate();
+    const { overlay } = useAppSelector((state) => state.common);
     const { handleLogin } = useLogin();
-    const [mutation, { data, status, isLoading }] = useValidateTfaMutation();
+    const [mutation, { data, status }] = useValidateTfaMutation();
 
     /**
      * Handles the form submission.
@@ -28,6 +30,7 @@ export default function useValidateTfaHandler() {
      */
     const onSubmit = (req: ValidateTfaRequest) => {
         try {
+            dispatch(setOverlay(true));
             mutation(req);
         } catch (error) {
             console.error(error);
@@ -112,6 +115,6 @@ export default function useValidateTfaHandler() {
     }
 
     return {
-        onSubmit, zodForm, isLoading, tfaUsername, t
+        onSubmit, zodForm, overlay, tfaUsername, t
     }
 }

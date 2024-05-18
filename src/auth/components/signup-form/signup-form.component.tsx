@@ -9,7 +9,7 @@ import useSignupHandler from "../../hooks/signup-handler.hook";
  */
 export default function SignupForm() {
 
-  const { onSubmit, isLoading, zodForm, t } = useSignupHandler();
+  const { onSubmit, overlay, zodForm, t } = useSignupHandler();
   const { register, handleSubmit, errors } = zodForm;
 
   return (
@@ -24,7 +24,7 @@ export default function SignupForm() {
           register={register}
           error={errors.username as FieldError}
           autoFocus={true}
-          disabled={isLoading}
+          disabled={overlay.active}
           autoComplete="username"
         />
 
@@ -36,7 +36,7 @@ export default function SignupForm() {
           icon="bi bi-envelope"
           register={register}
           error={errors.email as FieldError}
-          disabled={isLoading}
+          disabled={overlay.active}
         />
 
         <IconInput
@@ -47,7 +47,7 @@ export default function SignupForm() {
           icon="bi bi-lock"
           register={register}
           error={errors.password1 as FieldError}
-          disabled={isLoading}
+          disabled={overlay.active}
           autoComplete="new-password"
         />
 
@@ -59,12 +59,12 @@ export default function SignupForm() {
           icon="bi bi-lock"
           register={register}
           error={errors.password2 as FieldError}
-          disabled={isLoading}
+          disabled={overlay.active}
           autoComplete="new-password"
         />
 
         <div className="input-group mb-3">
-          <SubmitButton disabled={isLoading} />
+          <SubmitButton disabled={overlay.active} />
         </div>
       </form>
     </>

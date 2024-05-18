@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { useZodForm } from "../../common/hooks/zod-form.hook";
 import { loginSchema } from "../schemas/login.schema";
 import useLogin from "./login.hook";
+import { setOverlay } from "../../common/features/common.slice";
 
 /**
  * Custom hook for handling the login functionality.
@@ -24,7 +25,8 @@ export default function useLoginHandler() {
     const { tfaUsername } = useAppSelector((state) => state.tfa);
     const { t } = useTranslation("auth", { keyPrefix: "login" });
     const zodForm = useZodForm<LoginRequest>(loginSchema);
-    const [mutation, { data, status, isLoading }] = useLoginMutation();
+    const { overlay } = useAppSelector((state) => state.common);
+    const [mutation, { data, status }] = useLoginMutation();
     const { handleLogin } = useLogin();
 
     /**
@@ -33,6 +35,7 @@ export default function useLoginHandler() {
    */
     const onSubmit = async (req: LoginRequest) => {
         try {
+            dispatch(setOverlay(true));
             dispatch(setTfaUsername(req.username));
             const grecaptchaToken = await getGRecaptchaToken(grecaptcha);
             mutation({ ...req, grecaptchaToken });
@@ -58,5 +61,5 @@ export default function useLoginHandler() {
         }
     }, [status, data]);
 
-    return { onSubmit, isLoading, tfaUsername, t, zodForm };
+    return { onSubmit, overlay, tfaUsername, t, zodForm };
 }

@@ -37,14 +37,14 @@ export default function CPSessionExpiryModal() {
                 <Button
                     variant="secondary"
                     onClick={handleLeave}
-                    disabled={logoutHandler.isLoading || statyInSession.isLoading}>
+                    disabled={logoutHandler.overlay.active || statyInSession.overlay.active}>
                     {t("modal.leave")}
                 </Button>
                 <Button
                     variant="primary"
                     onClick={handleStay}
                     autoFocus={true}
-                    disabled={logoutHandler.isLoading || statyInSession.isLoading}>
+                    disabled={logoutHandler.overlay.active || statyInSession.overlay.active}>
                     {t("modal.stay")}
                 </Button>
             </Modal.Footer>

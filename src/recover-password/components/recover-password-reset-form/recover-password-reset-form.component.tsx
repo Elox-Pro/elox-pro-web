@@ -13,18 +13,21 @@ import { useResetMutation } from "../../api/recover-password.api"
 import { setResetFormEnabled } from "../../features/recover-password.slice"
 import { toast } from "react-toastify"
 import SubmitButton from "../../../common/components/submit-button/submit-button"
+import { setOverlay } from "../../../common/features/common.slice"
 
 export default function RecoverPasswordResetForm() {
   const { t } = useTranslation("recover-password", { keyPrefix: "reset" })
   const dispatch = useAppDispatch()
   const { register, handleSubmit, errors } = useZodForm<RecoverPasswordResetRequest>(recoverPasswordResetSchema)
   const navigate = useNavigate()
-  const [mutation, { status, isLoading }] = useResetMutation()
+  const [mutation, { status }] = useResetMutation()
   const grecaptcha = useGRecaptcha()
   const { tfaUsername } = useAppSelector((state) => state.tfa)
+  const { overlay } = useAppSelector((state) => state.common)
 
   const onSubmit = async (req: RecoverPasswordResetRequest) => {
     try {
+      dispatch(setOverlay(true))
       const grecaptchaToken = await getGRecaptchaToken(grecaptcha)
       mutation({ ...req, grecaptchaToken })
     } catch (error) {
@@ -65,7 +68,7 @@ export default function RecoverPasswordResetForm() {
         register={register}
         error={errors.password1 as FieldError}
         autoFocus={true}
-        disabled={isLoading}
+        disabled={overlay.active}
         autoComplete="new-password"
       />
 
@@ -77,12 +80,12 @@ export default function RecoverPasswordResetForm() {
         icon="bi bi-lock"
         register={register}
         error={errors.password2 as FieldError}
-        disabled={isLoading}
+        disabled={overlay.active}
         autoComplete="new-password"
       />
 
       <div className="input-group mb-3">
-        <SubmitButton disabled={isLoading} />
+        <SubmitButton disabled={overlay.active} />
       </div>
     </form>
   )

@@ -7,12 +7,13 @@ import { useZodForm } from "../../../common/hooks/zod-form.hook";
 import FloatingInput from "../../../common/components/floating-input/floating-input.component";
 import { FieldError } from "react-hook-form";
 import Form from "react-bootstrap/esm/Form";
-import { useAppSelector } from "../../../app/hooks/app.hooks";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { useUpdatePhoneMutation } from "../../api/profile.api";
 import { toast } from "react-toastify";
 import { QueryStatus } from "@reduxjs/toolkit/query";
 import { UpdatePhoneRequest } from "../../types/update-phone/update-phone-request.type";
 import { updatePhoneSchema } from "../../schemas/update-phone.schema";
+import { setOverlay } from "../../../common/features/common.slice";
 
 type UpdatePhoneModalProps = {
     show: boolean,
@@ -23,16 +24,19 @@ export default function UpdatePhoneModal({ show, onHide }: UpdatePhoneModalProps
     const { t } = useTranslation("profile", { keyPrefix: "update-phone" });
     const { register, handleSubmit, errors } = useZodForm<UpdatePhoneRequest>(updatePhoneSchema);
     const { profile } = useAppSelector((state) => state.profile);
+    const { overlay } = useAppSelector((state) => state.common);
+    const dispatch = useAppDispatch();
 
     if (profile === null) {
         return null;
     }
     const phone = profile.phone || "";
 
-    const [mutation, { status, isLoading }] = useUpdatePhoneMutation();
+    const [mutation, { status }] = useUpdatePhoneMutation();
 
     const handleSubmitRequest = async (req: UpdatePhoneRequest) => {
         try {
+            dispatch(setOverlay(true));
             mutation({ phone: req.phone });
         } catch (error) {
             console.error(error);
@@ -62,7 +66,7 @@ export default function UpdatePhoneModal({ show, onHide }: UpdatePhoneModalProps
                     title={t("modal.title")}
                     buttonText={"OK"}
                     onHide={onHide}
-                    disabled={isLoading}
+                    disabled={overlay.active}
                     tabIndex={2}
                 />
                 <Modal.Body className="p-3">
@@ -80,7 +84,7 @@ export default function UpdatePhoneModal({ show, onHide }: UpdatePhoneModalProps
                             autoFocus
                             autoComplete="phone"
                             defaultValue={phone}
-                            disabled={isLoading}
+                            disabled={overlay.active}
                             register={register}
                             error={errors.phone as FieldError}
                         />

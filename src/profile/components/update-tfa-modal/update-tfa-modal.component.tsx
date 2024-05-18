@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useZodForm } from "../../../common/hooks/zod-form.hook";
-import { useAppSelector } from "../../../app/hooks/app.hooks";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { toast } from "react-toastify";
 import Modal from "react-bootstrap/esm/Modal";
 import { Form } from "react-bootstrap";
@@ -11,6 +11,7 @@ import { updateTfaSchema } from "../../schemas/update-tfa.schema";
 import { TfaType } from "../../../tfa/enums/validate-tfa/tfa-type.enum";
 import { useUpdateTfaMutation } from "../../api/profile.api";
 import { QueryStatus } from "@reduxjs/toolkit/query";
+import { setOverlay } from "../../../common/features/common.slice";
 
 type UpdateTfaModalProps = {
     show: boolean,
@@ -21,6 +22,8 @@ export default function UpdateTfaModal({ show, onHide }: UpdateTfaModalProps) {
     const { t } = useTranslation("profile", { keyPrefix: "update-tfa" });
     const { handleSubmit, register } = useZodForm<UpdateTfaRequest>(updateTfaSchema);
     const { profile } = useAppSelector((state) => state.profile);
+    const { overlay } = useAppSelector((state) => state.common);
+    const dispatch = useAppDispatch();
 
     if (profile === null) {
         return null;
@@ -29,10 +32,11 @@ export default function UpdateTfaModal({ show, onHide }: UpdateTfaModalProps) {
     const tfaTypeAux = profile.tfaType || TfaType.NONE;
     const [checkedNone, checkedEmail] = tfaTypeAux === TfaType.NONE ? [true, false] : [false, true];
 
-    const [mutation, { status, isLoading }] = useUpdateTfaMutation();
+    const [mutation, { status }] = useUpdateTfaMutation();
 
     const onSubmit = async (req: UpdateTfaRequest) => {
         try {
+            dispatch(setOverlay(true));
             mutation(req);
         } catch (error) {
             console.error(error);
@@ -60,7 +64,7 @@ export default function UpdateTfaModal({ show, onHide }: UpdateTfaModalProps) {
                     title={t("modal.title")}
                     buttonText={"OK"}
                     onHide={onHide}
-                    disabled={isLoading}
+                    disabled={overlay.active}
                     tabIndex={3} />
                 <Modal.Body className="p-3">
                     <h3>{t("container.title")}</h3>

@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
-import { useAppDispatch } from "../../app/hooks/app.hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks/app.hooks";
 import { useZodForm } from "../../common/hooks/zod-form.hook";
 import { SignupRequest } from "../types/signup/signup-request.type";
 import { signupSchema } from "../schemas/signup.schema";
 import { useSignupMutation } from "../api/auth.api";
 import { getGRecaptchaToken, useGRecaptcha } from "../../common/hooks/grecaptcha.hook";
 import { setTfaPending, setTfaUsername } from "../../tfa/features/tfa.slice";
+import { setOverlay } from "../../common/features/common.slice";
 
 export default function useSignupHandler() {
 
@@ -17,7 +18,8 @@ export default function useSignupHandler() {
     const { t } = useTranslation("auth", { keyPrefix: "signup" })
     const zodForm = useZodForm<SignupRequest>(signupSchema);
     const navigate = useNavigate();
-    const [mutation, { data, status, isLoading }] = useSignupMutation();
+    const [mutation, { data, status }] = useSignupMutation();
+    const { overlay } = useAppSelector((state) => state.common);
     const grecaptcha = useGRecaptcha();
 
     /**
@@ -27,6 +29,7 @@ export default function useSignupHandler() {
      */
     const onSubmit = async (req: SignupRequest) => {
         try {
+            dispatch(setOverlay(true))
             dispatch(setTfaUsername(req.username));
             const grecaptchaToken = await getGRecaptchaToken(grecaptcha);
             mutation({ ...req, grecaptchaToken });
@@ -50,7 +53,7 @@ export default function useSignupHandler() {
     }, [status, data]);
 
     return {
-        onSubmit, zodForm, isLoading, t
+        onSubmit, zodForm, overlay, t
     }
 
 }

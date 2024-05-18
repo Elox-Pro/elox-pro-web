@@ -10,7 +10,7 @@ import useLoginHandler from "../../hooks/login-handler.hook";
  * @returns {JSX.Element} - The login form
  */
 export default function LoginForm() {
-  const { onSubmit, tfaUsername, isLoading, zodForm, t } = useLoginHandler();
+  const { onSubmit, tfaUsername, overlay, zodForm, t } = useLoginHandler();
   const { register, handleSubmit, errors } = zodForm;
 
   return (
@@ -26,7 +26,7 @@ export default function LoginForm() {
           defaultValue={tfaUsername}
           error={errors.username as FieldError}
           autoFocus={true}
-          disabled={isLoading}
+          disabled={overlay.active}
           autoComplete="username"
         />
 
@@ -38,12 +38,12 @@ export default function LoginForm() {
           icon="bi bi-lock"
           register={register}
           error={errors.password as FieldError}
-          disabled={isLoading}
+          disabled={overlay.active}
           autoComplete="current-password"
         />
 
         <div className="input-group mb-3">
-          <SubmitButton disabled={isLoading} />
+          <SubmitButton disabled={overlay.active} />
         </div>
       </form>
 

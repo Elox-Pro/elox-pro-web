@@ -15,6 +15,7 @@ import { QueryStatus } from "@reduxjs/toolkit/query";
 import { updatePasswordSchema } from "../../schemas/update-password.schema";
 import { UpdatePasswordRequest } from "../../types/update-password/update-password-request.type";
 import { setTfaPending, setTfaUsername } from "../../../tfa/features/tfa.slice";
+import { setOverlay } from "../../../common/features/common.slice";
 
 type UpdatePasswordModalProps = {
     show: boolean,
@@ -28,16 +29,18 @@ export default function UpdatePasswordModal({ show, onHide }: UpdatePasswordModa
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { profile } = useAppSelector((state) => state.profile);
+    const { overlay } = useAppSelector((state) => state.common);
 
     if (profile === null) {
         return null;
     }
     const username = profile.username || "";
 
-    const [mutation, { data, status, isLoading }] = useUpdatePasswordMutation();
+    const [mutation, { data, status }] = useUpdatePasswordMutation();
 
     const onSubmit = async (req: UpdatePasswordRequest) => {
         try {
+            dispatch(setOverlay(true));
             mutation(req);
         } catch (error) {
             console.error(error);
@@ -76,7 +79,7 @@ export default function UpdatePasswordModal({ show, onHide }: UpdatePasswordModa
                     title={t("modal.title")}
                     buttonText={"OK"}
                     onHide={handleHide}
-                    disabled={isLoading}
+                    disabled={overlay.active}
                     tabIndex={4}
                 />
                 <Modal.Body className="p-3">
@@ -101,7 +104,7 @@ export default function UpdatePasswordModal({ show, onHide }: UpdatePasswordModa
                             name="currentPassword"
                             label={t("current-password.label")}
                             autoFocus
-                            disabled={isLoading}
+                            disabled={overlay.active}
                             register={register}
                             error={errors.currentPassword as FieldError}
                             autoComplete="current-password"
@@ -112,7 +115,7 @@ export default function UpdatePasswordModal({ show, onHide }: UpdatePasswordModa
                             type="password"
                             name="newPassword"
                             label={t("new-password.label")}
-                            disabled={isLoading}
+                            disabled={overlay.active}
                             register={register}
                             error={errors.newPassword as FieldError}
                             autoComplete="new-password"
@@ -123,7 +126,7 @@ export default function UpdatePasswordModal({ show, onHide }: UpdatePasswordModa
                             type="password"
                             name="confirmPassword"
                             label={t("confirm-password.label")}
-                            disabled={isLoading}
+                            disabled={overlay.active}
                             register={register}
                             error={errors.confirmPassword as FieldError}
                             autoComplete="new-password"
