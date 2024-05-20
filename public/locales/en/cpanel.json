@@ -5,7 +5,8 @@
         "products": "Products",
         "customers": "Customers",
         "reports": "Reports",
-        "settings": "Settings"
+        "settings": "Settings",
+        "company": "Companies"
     },
     "navbar": {
         "profile": "Profile"

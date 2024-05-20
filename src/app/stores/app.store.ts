@@ -13,7 +13,7 @@ import authReducer from "../../auth/features/auth.slice";
 import { rtkQueryMiddleware } from "../middlewares/rtk-api.middlaware";
 import errorReducer from "../../errors/features/error.slice";
 import cpReducer from "../../cpanel/features/cp.slice";
-
+import { companyApi } from "../../company/api/company.api";
 
 export const appStore = configureStore({
     reducer: {
@@ -30,6 +30,7 @@ export const appStore = configureStore({
         [profileApi.reducerPath]: profileApi.reducer,
         [recoverPasswordApi.reducerPath]: recoverPasswordApi.reducer,
         [avatarApi.reducerPath]: avatarApi.reducer,
+        [companyApi.reducerPath]: companyApi.reducer,
     },
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware().concat(
@@ -38,7 +39,8 @@ export const appStore = configureStore({
             tfaApi.middleware,
             profileApi.middleware,
             recoverPasswordApi.middleware,
-            avatarApi.middleware
+            avatarApi.middleware,
+            companyApi.middleware
         )
     },
 })

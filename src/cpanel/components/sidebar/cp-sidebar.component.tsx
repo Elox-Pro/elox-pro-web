@@ -16,6 +16,7 @@ export default function CPSidebar() {
         <CPNavItemLink to="products" text={t("products")} icon="bi bi-cart" />
         <CPNavItemLink to="customers" text={t("customers")} icon="bi bi-people" />
         <CPNavItemLink to="reports" text={t("reports")} icon="bi bi-graph-up" />
+        <CPNavItemLink to="companies" text={t("company")} icon="bi bi-building" />
       </Nav>
       <hr />
       <Nav className="nav nav-pills flex-column mb-auto">

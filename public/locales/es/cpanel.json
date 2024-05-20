@@ -5,7 +5,8 @@
         "products": "Productos",
         "customers": "Clientes",
         "reports": "Reportes",
-        "settings": "Configuración"
+        "settings": "Configuración",
+        "company": "Compañías"
     },
     "popover": {
         "hi": "Hola",
