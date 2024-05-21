@@ -5,6 +5,7 @@ import { useGetCompaniesQuery } from "../../api/company.api";
 import { Company } from "../../types/company.type";
 import { usePagination } from "../../../common/hooks/pagination.hook";
 import { getCurrentPageFromUrl } from "../../../common/helpers/get-current-page-from-url.helper";
+import BackToTopButton from "../../../common/components/back-to-top/back-to-top-button.component";
 
 export default function Companies() {
     const itemsPerPage = 10;
@@ -57,6 +58,7 @@ export default function Companies() {
                     </Col>
                 </Row>
             </div>
+            <BackToTopButton />
         </CPWrapperPage>
     );
 }

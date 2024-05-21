@@ -9,6 +9,11 @@
             }
         }
     }
+
+    .back-to-top {
+        background-color: rgba(var(--bs-dark-rgb), 0.8);
+        color: var(--bs-light);
+    }
 }
 
 [data-bs-theme=dark] {
@@ -22,5 +27,10 @@
                 color: var(--bs-light);
             }
         }
+    }
+
+    .back-to-top {
+        background-color: rgba(var(--bs-light-rgb), 0.8);
+        color: var(--bs-dark);
     }
 }
