@@ -8,7 +8,7 @@ import { getCurrentPageFromUrl } from "../../../common/helpers/get-current-page-
 import BackToTopButton from "../../../common/components/back-to-top/back-to-top-button.component";
 
 export default function Companies() {
-    const itemsPerPage = 10;
+    const itemsPerPage = 20;
     const { t } = useTranslation("company", { keyPrefix: "companies" });
 
     const { data, isSuccess } = useGetCompaniesQuery({
@@ -22,6 +22,8 @@ export default function Companies() {
     const {
         renderPaginationItems,
     } = usePagination({ totalCount, itemsPerPage });
+
+    // TODO: Implemenat search component https://chatgpt.com/c/ba9611bc-9ac2-44d1-bf5c-1dfb0a2a57ab
 
     return (
         <CPWrapperPage show={isSuccess} >

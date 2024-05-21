@@ -6,7 +6,6 @@ export default function BackToTopButton() {
     const [isVisible, setIsVisible] = useState(false);
 
     const toggleVisibility = () => {
-        console.log(window.scrollY);
         if (window.scrollY > 150) {
             setIsVisible(true);
         } else {
