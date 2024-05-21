@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { API_URL } from "../../app/constants/app.constants";
 import i18n from "../../app/i18n/i18n";
 import { CompaniesResponse } from "../types/find-many-companies/companies-response.type";
+import { CompaniesRequest } from "../types/find-many-companies/companies-request.type";
 
 export const companyApi = createApi({
     reducerPath: "companyApi",
@@ -15,8 +16,13 @@ export const companyApi = createApi({
     }),
     endpoints(builder) {
         return {
-            getCompanies: builder.query<CompaniesResponse, void>({
-                query() { return "/" }
+            getCompanies: builder.query<CompaniesResponse, CompaniesRequest>({
+                query(data) {
+                    return {
+                        url: `/?page=${data.page}&limit=${data.limit}`,
+                        method: "GET",
+                    }
+                }
             }),
         }
     },

@@ -1,16 +1,31 @@
 import { useTranslation } from "react-i18next";
 import CPWrapperPage from "../../../cpanel/components/wrapper-page/cp-wrapper-page.component";
-import { Button, Col, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+import { Button, Card, Col, ListGroup, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import { useGetCompaniesQuery } from "../../api/company.api";
+import { Company } from "../../types/company.type";
+import { usePagination } from "../../../common/hooks/pagination.hook";
+import { getCurrentPageFromUrl } from "../../../common/helpers/get-current-page-from-url.helper";
 
 export default function Companies() {
+    const itemsPerPage = 10;
     const { t } = useTranslation("company", { keyPrefix: "companies" });
-    const { data, isSuccess } = useGetCompaniesQuery();
+
+    const { data, isSuccess } = useGetCompaniesQuery({
+        page: getCurrentPageFromUrl(),
+        limit: itemsPerPage,
+    });
+
+    const totalCount = data?.total || 0;
+    const items = data?.companies || [];
+
+    const {
+        renderPaginationItems,
+    } = usePagination({ totalCount, itemsPerPage });
+
     return (
         <CPWrapperPage show={isSuccess} >
-            
             <div className="companies">
-                <Row>
+                <Row className="mb-3">
                     <Col xs={12} className="text-start">
                         <p className="fs-6">{t("title")}</p>
                     </Col>
@@ -21,45 +36,37 @@ export default function Companies() {
                             onClick={() => {
                                 alert(t("add_company_alert"))
                             }} />
-                        <ActionButton
-                            text={t("add")}
-                            icon="bi bi-plus-circle"
-                            onClick={() => {
-                                alert(t("add_company_alert"))
-                            }} />
-                        <ActionButton
-                            text={t("add")}
-                            icon="bi bi-plus-circle"
-                            onClick={() => {
-                                alert(t("add_company_alert"))
-                            }} />
                     </Col>
                 </Row>
-                <hr />
-                <div className="sticky-top bg-body p-5" style={{top:"3.5rem"}}>
-                <h1>Companies</h1>
-            </div>
+                <Row className="mb-3">
+                    <Col xs={12}>
+                        <Card>
+                            <Card.Body>
+                                <ListGroup variant="flush">
+                                    {items.map((company, index) => (
+                                        <ListGroupItemCompany company={company} key={index} />
+                                    ))}
+                                </ListGroup>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
                 <Row>
                     <Col xs={12}>
-                        {data?.companies.map((company, index) => (
-                            <div key={index}>
-                                <img width={16} src={company.imageUrl} alt="company-image" />
-                                <p>{company.name}</p>
-                                <hr />
-                            </div>
-                        ))}
+                        {renderPaginationItems()}
                     </Col>
                 </Row>
             </div>
         </CPWrapperPage>
-    )
+    );
 }
 
 type ActionButtonProps = {
-    text: string
-    icon: string
-    onClick: () => void
-}
+    text: string;
+    icon: string;
+    onClick: () => void;
+};
+
 function ActionButton({ text, icon, onClick }: ActionButtonProps) {
     return (
         <div className="d-inline-flex flex-column align-items-center mx-2">
@@ -69,5 +76,31 @@ function ActionButton({ text, icon, onClick }: ActionButtonProps) {
                 </Button>
             </OverlayTrigger>
         </div>
-    )
+    );
+}
+
+type ListGroupItemCompanyProps = {
+    company: Company;
+};
+
+function ListGroupItemCompany({ company }: ListGroupItemCompanyProps) {
+    return (
+        <ListGroup.Item className="px-0 py-3" action>
+            <Row className="w-100 align-items-center g-0">
+                <Col xs={9}>
+                    <Row className="w-100 align-items-center g-0">
+                        <Col xs={3} md={3}>
+                            <img width={24} src={company.imageUrl} alt="company-image" />
+                        </Col>
+                        <Col xs={9} md={9}>
+                            <p className="mb-0 text-muted">{company.name}</p>
+                        </Col>
+                    </Row>
+                </Col>
+                <Col xs={3} className="text-end">
+                    <i className="bi bi-three-dots-vertical fs-4 fw-bold"></i>
+                </Col>
+            </Row>
+        </ListGroup.Item>
+    );
 }
