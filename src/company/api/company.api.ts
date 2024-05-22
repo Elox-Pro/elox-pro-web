@@ -19,7 +19,7 @@ export const companyApi = createApi({
             getCompanies: builder.query<CompaniesResponse, CompaniesRequest>({
                 query(data) {
                     return {
-                        url: `/?page=${data.page}&limit=${data.limit}`,
+                        url: `/?page=${data.page}&limit=${data.limit}&searchTerm=${data.searchTerm || ""}`,
                         method: "GET",
                     }
                 }

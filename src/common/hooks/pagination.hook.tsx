@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Pagination } from "react-bootstrap";
-import { getCurrentPageFromUrl } from "../helpers/get-current-page-from-url.helper";
+import { getCurrentPageFromUrl } from "../helpers/get-param-from-url.helper";
 
 type PaginationProps = {
     totalCount: number;
@@ -30,8 +30,18 @@ export function usePagination({ totalCount, itemsPerPage = 10 }: PaginationProps
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
         queryParams.set('page', String(currentPage));
-        navigate(`${location.pathname}?${queryParams.toString()}`, { replace: true });
-    }, [currentPage, location.pathname, navigate]);
+        navigate(`${window.location.pathname}?${queryParams.toString()}`, { replace: true });
+    }, [currentPage, window.location.pathname, navigate]);
+
+    /**
+     * Scrolls to the top of the page.
+     */
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
 
     /**
      * Handles the change of page number.
@@ -40,6 +50,7 @@ export function usePagination({ totalCount, itemsPerPage = 10 }: PaginationProps
      */
     const handlePageChange = (pageNumber: number) => {
         setCurrentPage(pageNumber);
+        scrollToTop();
     };
 
     /**
@@ -48,6 +59,7 @@ export function usePagination({ totalCount, itemsPerPage = 10 }: PaginationProps
     const handleOnPrevious = () => {
         if (currentPage > 1) {
             handlePageChange(currentPage - 1);
+            scrollToTop();
         }
     };
 
@@ -57,6 +69,7 @@ export function usePagination({ totalCount, itemsPerPage = 10 }: PaginationProps
     const handleOnNext = () => {
         if (currentPage < totalPages) {
             handlePageChange(currentPage + 1);
+            scrollToTop();
         }
     };
 
@@ -149,6 +162,7 @@ export function usePagination({ totalCount, itemsPerPage = 10 }: PaginationProps
     };
 
     return {
-        renderPaginationItems
+        renderPaginationItems,
+        setCurrentPage
     };
 }

@@ -4,16 +4,22 @@ import { Button, Card, Col, ListGroup, OverlayTrigger, Row, Tooltip } from "reac
 import { useGetCompaniesQuery } from "../../api/company.api";
 import { Company } from "../../types/company.type";
 import { usePagination } from "../../../common/hooks/pagination.hook";
-import { getCurrentPageFromUrl } from "../../../common/helpers/get-current-page-from-url.helper";
+import { getCurrentPageFromUrl, getSearchFromUrl } from "../../../common/helpers/get-param-from-url.helper";
 import BackToTopButton from "../../../common/components/back-to-top/back-to-top-button.component";
+import { useState } from "react";
+import SearchBar from "../../../common/components/search-bar/search-bar.component";
+import { useNavigate } from "react-router-dom";
 
 export default function Companies() {
-    const itemsPerPage = 20;
+    const itemsPerPage = 5;
     const { t } = useTranslation("company", { keyPrefix: "companies" });
+    const [searchTerm, setSearchTerm] = useState(getSearchFromUrl());
+    //TODO: Implement feauture slice to handle pagination and search bar results
 
     const { data, isSuccess } = useGetCompaniesQuery({
         page: getCurrentPageFromUrl(),
         limit: itemsPerPage,
+        searchTerm: searchTerm,
     });
 
     const totalCount = data?.total || 0;
@@ -21,9 +27,12 @@ export default function Companies() {
 
     const {
         renderPaginationItems,
+        setCurrentPage,
     } = usePagination({ totalCount, itemsPerPage });
 
-    // TODO: Implemenat search component https://chatgpt.com/c/ba9611bc-9ac2-44d1-bf5c-1dfb0a2a57ab
+    const handleReset = () => {
+        setCurrentPage(1);
+    }
 
     return (
         <CPWrapperPage show={isSuccess} >
@@ -37,8 +46,18 @@ export default function Companies() {
                             text={t("add")}
                             icon="bi bi-plus-circle"
                             onClick={() => {
-                                alert(t("add_company_alert"))
+                                alert(t("add-company-alert"))
                             }} />
+                    </Col>
+                </Row>
+                <Row className="mb-3">
+                    <Col xs={12}>
+                        <SearchBar
+                            autoFocus={true}
+                            placeholder={t("search-placeholder")}
+                            resultCount={totalCount}
+                            onSearch={setSearchTerm}
+                            onReset={handleReset} />
                     </Col>
                 </Row>
                 <Row className="mb-3">

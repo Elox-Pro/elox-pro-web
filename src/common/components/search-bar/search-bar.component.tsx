@@ -1,0 +1,107 @@
+import React, { useEffect, useRef, useState } from 'react';
+import Form from 'react-bootstrap/esm/Form';
+import { useTranslation } from 'react-i18next';
+import "./search-bar.styles.scss"
+import { getSearchFromUrl } from '../../helpers/get-param-from-url.helper';
+import { useNavigate } from 'react-router-dom';
+
+type SearchProps = {
+    onSearch: (searchTerm: string) => void
+    placeholder: string
+    onReset?: () => void
+    autoFocus?: boolean
+    resultCount?: number
+}
+
+export default function SearchBar({
+    onSearch,
+    onReset,
+    placeholder,
+    autoFocus = false,
+    resultCount = 0
+}: SearchProps) {
+    const { t } = useTranslation("common", { keyPrefix: "search-bar" });
+    const navigate = useNavigate();
+    const [searchTerm, setSearchTerm] = useState(getSearchFromUrl());
+    const [focus, setFocus] = useState(autoFocus);
+    const [showResultCount, setShowResultCount] = useState(getSearchFromUrl().trim().length > 0);
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+        event.target.select();
+        setFocus(true);
+    };
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        onSearch(searchTerm);
+        setShowResultCount(searchTerm.trim().length > 0);
+    };
+
+    const handleReset = () => {
+        setSearchTerm('');
+        setShowResultCount(false);
+        if (onReset) {
+            onReset();
+        }
+        onSearch('');
+        inputRef.current?.focus();
+
+    }
+
+    // Effect to update the URL with the current page whenever it changes
+    useEffect(() => {
+        const queryParams = new URLSearchParams(window.location.search);
+        if (!searchTerm || searchTerm.trim().length === 0) {
+            queryParams.delete('search');
+        } else {
+            queryParams.set('search', searchTerm);
+        }
+        navigate(`${window.location.pathname}?${queryParams.toString()}`, { replace: true });
+    }, [searchTerm, window.location.pathname, navigate]);
+
+    return (
+        <div className="search-bar">
+            <Form onSubmit={handleSubmit}>
+                <div className={`input-group mb-3 ${focus && "active"}`}>
+                    <span className="input-group-text bg-transparent">
+                        <i className="bi bi-search"></i>
+                    </span>
+
+                    <input
+                        ref={inputRef}
+                        autoFocus={focus}
+                        className="form-control"
+                        type="search"
+                        placeholder={placeholder}
+                        value={searchTerm}
+                        onChange={handleChange}
+                        onFocus={handleFocus}
+                        onBlur={() => setFocus(false)}
+                    />
+
+                    <button type="submit" className='btn btn-primary' onFocus={() => setFocus(true)}
+                        onBlur={() => setFocus(false)} >
+                        {t("search")}
+                    </button>
+                </div>
+            </Form>
+            <div className="d-flex flex-column">
+                <p className="text-end">
+                    <small className="text-muted me-3">{resultCount} {t("result-found")}</small>
+                    {showResultCount && (
+                        <button role="link" className="btn btn-link link-reset" onClick={handleReset}>
+                            <small><span>{t("reset")}</span>
+                                <i className="ms-1 bi bi-x-circle"></i>
+                            </small>
+                        </button>
+                    )}
+                </p>
+            </div>
+        </div>
+    );
+};
