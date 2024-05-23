@@ -24,7 +24,7 @@ export default function SearchBar({
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState(getSearchFromUrl());
     const [focus, setFocus] = useState(autoFocus);
-    const [showResultCount, setShowResultCount] = useState(getSearchFromUrl().trim().length > 0);
+    const [showReset, setShowReset] = useState(getSearchFromUrl().trim().length > 0);
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,28 +32,30 @@ export default function SearchBar({
     };
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-        event.target.select();
         setFocus(true);
+        event.target.select();
+    };
+
+    const setInputFocus = () => {
+        inputRef.current?.focus();
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         onSearch(searchTerm);
-        setShowResultCount(searchTerm.trim().length > 0);
+        setShowReset(searchTerm.trim().length > 0);
     };
 
     const handleReset = () => {
-        setSearchTerm('');
-        setShowResultCount(false);
-        if (onReset) {
+        setShowReset(false);
+        setInputFocus();
+        setSearchTerm("");
+        onSearch("");
+        if (onReset !== undefined) {
             onReset();
         }
-        onSearch('');
-        inputRef.current?.focus();
+    };
 
-    }
-
-    // Effect to update the URL with the current page whenever it changes
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
         if (!searchTerm || searchTerm.trim().length === 0) {
@@ -63,6 +65,18 @@ export default function SearchBar({
         }
         navigate(`${window.location.pathname}?${queryParams.toString()}`, { replace: true });
     }, [searchTerm, window.location.pathname, navigate]);
+
+
+    const handlePaginationEvent = () => {
+        inputRef.current?.focus();
+    };
+
+    useEffect(() => {
+        window.addEventListener('paginationEvent', handlePaginationEvent);
+        return () => {
+            window.removeEventListener('paginationEvent', handlePaginationEvent);
+        };
+    }, []);
 
     return (
         <div className="search-bar">
@@ -93,7 +107,7 @@ export default function SearchBar({
             <div className="d-flex flex-column">
                 <p className="text-end">
                     <small className="text-muted me-3">{resultCount} {t("result-found")}</small>
-                    {showResultCount && (
+                    {showReset && (
                         <button role="link" className="btn btn-link link-reset" onClick={handleReset}>
                             <small><span>{t("reset")}</span>
                                 <i className="ms-1 bi bi-x-circle"></i>

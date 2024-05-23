@@ -6,15 +6,14 @@ import { Company } from "../../types/company.type";
 import { usePagination } from "../../../common/hooks/pagination.hook";
 import { getCurrentPageFromUrl, getSearchFromUrl } from "../../../common/helpers/get-param-from-url.helper";
 import BackToTopButton from "../../../common/components/back-to-top/back-to-top-button.component";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchBar from "../../../common/components/search-bar/search-bar.component";
-import { useNavigate } from "react-router-dom";
 
 export default function Companies() {
     const itemsPerPage = 5;
     const { t } = useTranslation("company", { keyPrefix: "companies" });
     const [searchTerm, setSearchTerm] = useState(getSearchFromUrl());
-    //TODO: Implement feauture slice to handle pagination and search bar results
+    const [searchAutoFocus, setSearchAutoFocus] = useState(true);
 
     const { data, isSuccess } = useGetCompaniesQuery({
         page: getCurrentPageFromUrl(),
@@ -22,17 +21,29 @@ export default function Companies() {
         searchTerm: searchTerm,
     });
 
-    const totalCount = data?.total || 0;
+    const resultCount = data?.total || 0;
     const items = data?.companies || [];
 
     const {
         renderPaginationItems,
-        setCurrentPage,
-    } = usePagination({ totalCount, itemsPerPage });
+        handlePaginationReset
+    } = usePagination({ resultCount, itemsPerPage });
+
+    const handleSearch = (serchTerm: string) => {
+        setSearchTerm(serchTerm);
+        setSearchAutoFocus(true);
+        handlePaginationReset();
+    };
 
     const handleReset = () => {
-        setCurrentPage(1);
+        setSearchTerm("");
+        handlePaginationReset();
     }
+
+    useEffect(() => {
+        // console.log("renderPaginationItems");
+        setSearchAutoFocus(true);
+    }, [renderPaginationItems]);
 
     return (
         <CPWrapperPage show={isSuccess} >
@@ -53,10 +64,10 @@ export default function Companies() {
                 <Row className="mb-3">
                     <Col xs={12}>
                         <SearchBar
-                            autoFocus={true}
+                            autoFocus={searchAutoFocus}
                             placeholder={t("search-placeholder")}
-                            resultCount={totalCount}
-                            onSearch={setSearchTerm}
+                            resultCount={resultCount}
+                            onSearch={handleSearch}
                             onReset={handleReset} />
                     </Col>
                 </Row>

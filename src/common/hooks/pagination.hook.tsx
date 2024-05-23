@@ -4,7 +4,7 @@ import { Pagination } from "react-bootstrap";
 import { getCurrentPageFromUrl } from "../helpers/get-param-from-url.helper";
 
 type PaginationProps = {
-    totalCount: number;
+    resultCount: number;
     itemsPerPage?: number;
 };
 
@@ -12,13 +12,13 @@ type PaginationProps = {
  * Custom hook for handling pagination logic.
  * 
  * @param {PaginationProps} props - The properties for pagination.
- * @param {number} props.totalCount - The total number of items.
+ * @param {number} props.resultCount - The total number of items.
  * @param {number} [props.itemsPerPage=10] - The number of items per page. Defaults to 10.
  * @returns {object} An object containing the renderPaginationItems function.
  */
-export function usePagination({ totalCount, itemsPerPage = 10 }: PaginationProps) {
+export function usePagination({ resultCount, itemsPerPage = 10 }: PaginationProps) {
     // Calculate the total number of pages
-    const totalPages = Math.ceil(totalCount / itemsPerPage);
+    const totalPages = Math.ceil(resultCount / itemsPerPage);
 
     // Hook to navigate programmatically
     const navigate = useNavigate();
@@ -33,15 +33,8 @@ export function usePagination({ totalCount, itemsPerPage = 10 }: PaginationProps
         navigate(`${window.location.pathname}?${queryParams.toString()}`, { replace: true });
     }, [currentPage, window.location.pathname, navigate]);
 
-    /**
-     * Scrolls to the top of the page.
-     */
-    const scrollToTop = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    };
+
+    const paginationEvent = new CustomEvent('paginationEvent');
 
     /**
      * Handles the change of page number.
@@ -50,7 +43,8 @@ export function usePagination({ totalCount, itemsPerPage = 10 }: PaginationProps
      */
     const handlePageChange = (pageNumber: number) => {
         setCurrentPage(pageNumber);
-        scrollToTop();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.dispatchEvent(paginationEvent);
     };
 
     /**
@@ -59,7 +53,6 @@ export function usePagination({ totalCount, itemsPerPage = 10 }: PaginationProps
     const handleOnPrevious = () => {
         if (currentPage > 1) {
             handlePageChange(currentPage - 1);
-            scrollToTop();
         }
     };
 
@@ -69,9 +62,12 @@ export function usePagination({ totalCount, itemsPerPage = 10 }: PaginationProps
     const handleOnNext = () => {
         if (currentPage < totalPages) {
             handlePageChange(currentPage + 1);
-            scrollToTop();
         }
     };
+
+    const handlePaginationReset = () => {
+        handlePageChange(1);
+    }
 
     /**
      * Renders the pagination items.
@@ -162,7 +158,7 @@ export function usePagination({ totalCount, itemsPerPage = 10 }: PaginationProps
     };
 
     return {
-        renderPaginationItems,
-        setCurrentPage
+        handlePaginationReset,
+        renderPaginationItems
     };
 }
