@@ -1,30 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Pagination } from "react-bootstrap";
-import { getCurrentPageFromUrl } from "../helpers/get-param-from-url.helper";
+import { useAppDispatch } from "../../app/hooks/app.hooks";
+import { PaginationState } from "../types/pagination-state.type";
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 
-type PaginationProps = {
-    resultCount: number;
-    itemsPerPage?: number;
+export type PaginationProps = {
+    pagination: PaginationState;
+    setCurrentPage: ActionCreatorWithPayload<number>;
+    setSearchBarFocus: ActionCreatorWithPayload<boolean>;
 };
 
 /**
  * Custom hook for handling pagination logic.
  * 
- * @param {PaginationProps} props - The properties for pagination.
- * @param {number} props.resultCount - The total number of items.
- * @param {number} [props.itemsPerPage=10] - The number of items per page. Defaults to 10.
+ * @param {PaginationProps} props - The properties required for pagination.
  * @returns {object} An object containing the renderPaginationItems function.
  */
-export function usePagination({ resultCount, itemsPerPage = 10 }: PaginationProps) {
-    // Calculate the total number of pages
-    const totalPages = Math.ceil(resultCount / itemsPerPage);
-
-    // Hook to navigate programmatically
+export function usePagination({ pagination, setCurrentPage, setSearchBarFocus }: PaginationProps) {
+    const { currentPage, resultCount, itemsPerPage } = pagination;
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    // State to keep track of the current page
-    const [currentPage, setCurrentPage] = useState(getCurrentPageFromUrl());
+    // Calculate the total number of pages
+    const totalPages = Math.ceil(resultCount / itemsPerPage);
 
     // Effect to update the URL with the current page whenever it changes
     useEffect(() => {
@@ -33,18 +32,15 @@ export function usePagination({ resultCount, itemsPerPage = 10 }: PaginationProp
         navigate(`${window.location.pathname}?${queryParams.toString()}`, { replace: true });
     }, [currentPage, window.location.pathname, navigate]);
 
-
-    const paginationEvent = new CustomEvent('paginationEvent');
-
     /**
      * Handles the change of page number.
      * 
      * @param {number} pageNumber - The new page number.
      */
     const handlePageChange = (pageNumber: number) => {
-        setCurrentPage(pageNumber);
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        window.dispatchEvent(paginationEvent);
+        dispatch(setCurrentPage(pageNumber));
+        dispatch(setSearchBarFocus(true));
     };
 
     /**
@@ -65,16 +61,12 @@ export function usePagination({ resultCount, itemsPerPage = 10 }: PaginationProp
         }
     };
 
-    const handlePaginationReset = () => {
-        handlePageChange(1);
-    }
-
     /**
      * Renders the pagination items.
      * 
      * @returns {JSX.Element} A JSX element containing the pagination items.
      */
-    const renderPaginationItems = () => {
+    const renderPaginationItems = (): JSX.Element => {
         // Array to hold the pagination items
         const paginationItems = [];
         // Maximum number of visible pages in the pagination bar
@@ -158,7 +150,6 @@ export function usePagination({ resultCount, itemsPerPage = 10 }: PaginationProp
     };
 
     return {
-        handlePaginationReset,
         renderPaginationItems
     };
 }

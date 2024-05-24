@@ -5,7 +5,6 @@ import { Theme } from "../enums/theme.enum";
 import { getInitalTheme } from "../helpers/get-initial-theme.helper";
 import { updateTheme } from "../helpers/update-theme.helper";
 
-
 const initialState: CommonState = {
     overlay: {
         active: false,
@@ -32,7 +31,7 @@ const commonSlice = createSlice({
         setTheme: (state, action: { payload: Theme }) => {
             state.theme.value = action.payload;
             updateTheme(action.payload);
-        }
+        },
     }
 });
 

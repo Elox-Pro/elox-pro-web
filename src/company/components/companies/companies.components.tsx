@@ -4,46 +4,37 @@ import { Button, Card, Col, ListGroup, OverlayTrigger, Row, Tooltip } from "reac
 import { useGetCompaniesQuery } from "../../api/company.api";
 import { Company } from "../../types/company.type";
 import { usePagination } from "../../../common/hooks/pagination.hook";
-import { getCurrentPageFromUrl, getSearchFromUrl } from "../../../common/helpers/get-param-from-url.helper";
+import { getCurrentPageFromUrl } from "../../../common/helpers/get-param-from-url.helper";
 import BackToTopButton from "../../../common/components/back-to-top/back-to-top-button.component";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import SearchBar from "../../../common/components/search-bar/search-bar.component";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
+import { setCurrentPage, setItemsPerPage, setResultCount } from "../../features/company-pagination.slice";
+import { setSearchBarFocus, setSearchBarReset, setSearchBarText } from "../../features/company-search-bar.slice";
+import { setCompanyList } from "../../features/company.slice";
 
 export default function Companies() {
-    const itemsPerPage = 5;
     const { t } = useTranslation("company", { keyPrefix: "companies" });
-    const [searchTerm, setSearchTerm] = useState(getSearchFromUrl());
-    const [searchAutoFocus, setSearchAutoFocus] = useState(true);
+    const pagination = useAppSelector((state) => state.companyPagination);
+    const searchBar = useAppSelector((state) => state.companySearchBar);
+    const company = useAppSelector((state) => state.company);
+    const dispatch = useAppDispatch();
 
     const { data, isSuccess } = useGetCompaniesQuery({
         page: getCurrentPageFromUrl(),
-        limit: itemsPerPage,
-        searchTerm: searchTerm,
+        limit: pagination.itemsPerPage,
+        searchTerm: searchBar.searchText,
     });
 
-    const resultCount = data?.total || 0;
-    const items = data?.companies || [];
+    useEffect(() => {
+        dispatch(setCompanyList(data?.companies || []));
+        dispatch(setResultCount(data?.total || 0));
+        dispatch(setItemsPerPage(pagination.itemsPerPage));
+    }, [data]);
 
     const {
         renderPaginationItems,
-        handlePaginationReset
-    } = usePagination({ resultCount, itemsPerPage });
-
-    const handleSearch = (serchTerm: string) => {
-        setSearchTerm(serchTerm);
-        setSearchAutoFocus(true);
-        handlePaginationReset();
-    };
-
-    const handleReset = () => {
-        setSearchTerm("");
-        handlePaginationReset();
-    }
-
-    useEffect(() => {
-        // console.log("renderPaginationItems");
-        setSearchAutoFocus(true);
-    }, [renderPaginationItems]);
+    } = usePagination({ pagination, setCurrentPage, setSearchBarFocus });
 
     return (
         <CPWrapperPage show={isSuccess} >
@@ -64,11 +55,14 @@ export default function Companies() {
                 <Row className="mb-3">
                     <Col xs={12}>
                         <SearchBar
-                            autoFocus={searchAutoFocus}
+                            pagination={pagination}
+                            searchBar={searchBar}
+                            setSearchText={setSearchBarText}
+                            setFocus={setSearchBarFocus}
+                            setReset={setSearchBarReset}
+                            setCurrentPage={setCurrentPage}
                             placeholder={t("search-placeholder")}
-                            resultCount={resultCount}
-                            onSearch={handleSearch}
-                            onReset={handleReset} />
+                        />
                     </Col>
                 </Row>
                 <Row className="mb-3">
@@ -76,7 +70,7 @@ export default function Companies() {
                         <Card>
                             <Card.Body>
                                 <ListGroup variant="flush">
-                                    {items.map((company, index) => (
+                                    {company.list.map((company, index) => (
                                         <ListGroupItemCompany company={company} key={index} />
                                     ))}
                                 </ListGroup>

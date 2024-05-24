@@ -14,6 +14,9 @@ import { rtkQueryMiddleware } from "../middlewares/rtk-api.middlaware";
 import errorReducer from "../../errors/features/error.slice";
 import cpReducer from "../../cpanel/features/cp.slice";
 import { companyApi } from "../../company/api/company.api";
+import companyPaginationReducer from "../../company/features/company-pagination.slice";
+import companySearchBarReducer from "../../company/features/company-search-bar.slice";
+import companyReducer from "../../company/features/company.slice";
 
 export const appStore = configureStore({
     reducer: {
@@ -25,6 +28,9 @@ export const appStore = configureStore({
         avatar: avatarReducer,
         auth: authReducer,
         error: errorReducer,
+        company: companyReducer,
+        companyPagination: companyPaginationReducer,
+        companySearchBar: companySearchBarReducer,
         [authApi.reducerPath]: authApi.reducer,
         [tfaApi.reducerPath]: tfaApi.reducer,
         [profileApi.reducerPath]: profileApi.reducer,

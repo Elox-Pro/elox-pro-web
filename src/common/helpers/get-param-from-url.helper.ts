@@ -4,7 +4,7 @@ export function getCurrentPageFromUrl() {
     return page === null ? 1 : parseInt(page);
 };
 
-export function getSearchFromUrl() {
+export function getSearchTextFromUrl() {
     const queryParams = new URLSearchParams(window.location.search);
     const search = queryParams.get("search");
     return search === null ? "" : search;

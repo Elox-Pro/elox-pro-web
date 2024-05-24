@@ -11,8 +11,8 @@
     }
 
     button {
-        &[type="submit"] {
-            width: 6rem;
+        &[type="button"] {
+            width: 4rem;
 
             &:focus {
                 box-shadow: none;
