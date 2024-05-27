@@ -1,9 +1,17 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Pagination } from "react-bootstrap";
 import { useAppDispatch } from "../../app/hooks/app.hooks";
 import { PaginationState } from "../types/pagination-state.type";
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
+
+export type PaginationItem = {
+    label: string;
+    type: "page" | "ellipsis" | "button";
+    disabled: boolean;
+    active: boolean;
+    page?: number;
+    onClick?: () => void;
+};
 
 export type PaginationProps = {
     pagination: PaginationState;
@@ -61,14 +69,9 @@ export function usePagination({ pagination, setCurrentPage, setSearchBarFocus }:
         }
     };
 
-    /**
-     * Renders the pagination items.
-     * 
-     * @returns {JSX.Element} A JSX element containing the pagination items.
-     */
-    const renderPaginationItems = (): JSX.Element => {
+    const getPaginationItems = (): PaginationItem[] => {
         // Array to hold the pagination items
-        const paginationItems = [];
+        const paginationItems: PaginationItem[] = [];
         // Maximum number of visible pages in the pagination bar
         const maxVisiblePages = 3;
         // Half of the maximum visible pages, used for calculating the range of pages to display
@@ -102,54 +105,82 @@ export function usePagination({ pagination, setCurrentPage, setSearchBarFocus }:
         // Add the first page and ellipsis if necessary
         if (startPage > 1) {
             // Add the first page
-            paginationItems.push(
-                <Pagination.Item key={1} onClick={() => handlePageChange(1)}>
-                    1
-                </Pagination.Item>
-            );
+            paginationItems.push({
+                label: "1",
+                type: "page",
+                disabled: false,
+                active: currentPage === 1,
+                page: 1,
+                onClick: () => handlePageChange(1),
+            });
             // Add an ellipsis if there's a gap between the first page and the start page
             if (startPage > 2) {
-                paginationItems.push(<Pagination.Ellipsis key="start-ellipsis" disabled />);
+                paginationItems.push({
+                    label: "...",
+                    type: "ellipsis",
+                    disabled: true,
+                    active: false,
+                });
             }
         }
 
         // Add the range of visible pages
         for (let page = startPage; page <= endPage; page++) {
-            paginationItems.push(
-                <Pagination.Item key={page} active={page === currentPage} onClick={() => handlePageChange(page)}>
-                    {page}
-                </Pagination.Item>
-            );
+            paginationItems.push({
+                label: String(page),
+                type: "page",
+                disabled: false,
+                active: currentPage === page,
+                page: page,
+                onClick: () => handlePageChange(page),
+            });
         }
 
         // Add the last page and ellipsis if necessary
         if (endPage < totalPages) {
             // Add an ellipsis if there's a gap between the end page and the last page
             if (endPage < totalPages - 1) {
-                paginationItems.push(<Pagination.Ellipsis key="end-ellipsis" disabled />);
+                paginationItems.push({
+                    label: "...",
+                    type: "ellipsis",
+                    disabled: true,
+                    active: false,
+                });
             }
             // Add the last page
-            paginationItems.push(
-                <Pagination.Item key={totalPages} onClick={() => handlePageChange(totalPages)}>
-                    {totalPages}
-                </Pagination.Item>
-            );
+            paginationItems.push({
+                label: String(totalPages),
+                type: "page",
+                disabled: false,
+                active: currentPage === totalPages,
+                page: totalPages,
+                onClick: () => handlePageChange(totalPages),
+            });
+
         }
 
-        // Return the complete pagination bar with previous, page items, and next buttons
-        return (
-            <Pagination>
-                {/* Previous button, disabled if on the first page */}
-                <Pagination.Prev onClick={handleOnPrevious} disabled={currentPage === 1} />
-                {/* Pagination items */}
-                {paginationItems}
-                {/* Next button, disabled if on the last page */}
-                <Pagination.Next onClick={handleOnNext} disabled={currentPage === totalPages} />
-            </Pagination>
-        );
+        paginationItems.push({
+            label: "›",
+            type: "button",
+            disabled: currentPage === totalPages,
+            active: false,
+            onClick: handleOnNext,
+        });
+
+        paginationItems.unshift({
+            label: "‹",
+            type: "button",
+            disabled: currentPage === 1,
+            active: false,
+            onClick: handleOnPrevious,
+        });
+
+        return paginationItems;
     };
 
+    const paginationItems = getPaginationItems();
+
     return {
-        renderPaginationItems
+        paginationItems,
     };
 }

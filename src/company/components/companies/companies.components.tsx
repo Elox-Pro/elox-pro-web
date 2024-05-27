@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import CPWrapperPage from "../../../cpanel/components/wrapper-page/cp-wrapper-page.component";
-import { Button, Card, Col, ListGroup, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+import { Button, Card, Col, ListGroup, OverlayTrigger, Pagination, Row, Tooltip } from "react-bootstrap";
 import { useGetCompaniesQuery } from "../../api/company.api";
 import { Company } from "../../types/company.type";
 import { usePagination } from "../../../common/hooks/pagination.hook";
@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { setCurrentPage, setItemsPerPage, setResultCount } from "../../features/company-pagination.slice";
 import { setSearchBarFocus, setSearchBarReset, setSearchBarText } from "../../features/company-search-bar.slice";
 import { setCompanyList } from "../../features/company.slice";
+import CommonPagination from "../../../common/components/pagination/common-pagination.component";
 
 export default function Companies() {
     const { t } = useTranslation("company", { keyPrefix: "companies" });
@@ -31,10 +32,6 @@ export default function Companies() {
         dispatch(setResultCount(data?.total || 0));
         dispatch(setItemsPerPage(pagination.itemsPerPage));
     }, [data]);
-
-    const {
-        renderPaginationItems,
-    } = usePagination({ pagination, setCurrentPage, setSearchBarFocus });
 
     return (
         <CPWrapperPage show={isSuccess} >
@@ -80,7 +77,7 @@ export default function Companies() {
                 </Row>
                 <Row>
                     <Col xs={12}>
-                        {renderPaginationItems()}
+                        <PaginationCompany />
                     </Col>
                 </Row>
             </div>
@@ -131,4 +128,10 @@ function ListGroupItemCompany({ company }: ListGroupItemCompanyProps) {
             </Row>
         </ListGroup.Item>
     );
+}
+
+function PaginationCompany() {
+    const pagination = useAppSelector((state) => state.companyPagination);
+    const { paginationItems } = usePagination({ pagination, setCurrentPage, setSearchBarFocus });
+    return <CommonPagination items={paginationItems} />;
 }
