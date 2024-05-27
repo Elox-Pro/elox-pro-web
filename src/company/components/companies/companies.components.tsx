@@ -13,6 +13,7 @@ import { setCurrentPage, setItemsPerPage, setResultCount } from "../../features/
 import { setSearchBarFocus, setSearchBarReset, setSearchBarText } from "../../features/company-search-bar.slice";
 import { setCompanyList } from "../../features/company.slice";
 import CommonPagination from "../../../common/components/pagination/common-pagination.component";
+import "./sticky-header.style.scss"
 
 export default function Companies() {
     const { t } = useTranslation("company", { keyPrefix: "companies" });
@@ -34,55 +35,61 @@ export default function Companies() {
     }, [data]);
 
     return (
-        <CPWrapperPage show={isSuccess} >
-            <div className="companies">
-                <Row className="mb-3">
-                    <Col xs={12} className="text-start">
-                        <p className="fs-6">{t("title")}</p>
-                    </Col>
-                    <Col xs={12} className="text-end">
-                        <ActionButton
-                            text={t("add")}
-                            icon="bi bi-plus-circle"
-                            onClick={() => {
-                                alert(t("add-company-alert"))
-                            }} />
-                    </Col>
-                </Row>
-                <Row className="mb-3">
-                    <Col xs={12}>
-                        <SearchBar
-                            pagination={pagination}
-                            searchBar={searchBar}
-                            setSearchText={setSearchBarText}
-                            setFocus={setSearchBarFocus}
-                            setReset={setSearchBarReset}
-                            setCurrentPage={setCurrentPage}
-                            placeholder={t("search-placeholder")}
-                        />
-                    </Col>
-                </Row>
-                <Row className="mb-3">
-                    <Col xs={12}>
-                        <Card>
-                            <Card.Body>
-                                <ListGroup variant="flush">
-                                    {company.list.map((company, index) => (
-                                        <ListGroupItemCompany company={company} key={index} />
-                                    ))}
-                                </ListGroup>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={12}>
-                        <PaginationCompany />
-                    </Col>
-                </Row>
-            </div>
-            <BackToTopButton />
-        </CPWrapperPage>
+        <>
+            <header className="sticky-header bg-success">
+                <div className="sticky-header-container">
+                    <Row className="mb-3">
+                        <Col xs={12} className="text-start">
+                            <p className="fs-6">{t("title")}</p>
+                        </Col>
+                        <Col xs={12} className="text-end">
+                            <ActionButton
+                                text={t("add")}
+                                icon="bi bi-plus-circle"
+                                onClick={() => {
+                                    alert(t("add-company-alert"))
+                                }} />
+                        </Col>
+                    </Row>
+                    <Row className="mb-3 sticky-top">
+                        <Col xs={12}>
+                            <SearchBar
+                                pagination={pagination}
+                                searchBar={searchBar}
+                                setSearchText={setSearchBarText}
+                                setFocus={setSearchBarFocus}
+                                setReset={setSearchBarReset}
+                                setCurrentPage={setCurrentPage}
+                                placeholder={t("search-placeholder")}
+                            />
+                        </Col>
+                    </Row>
+                </div>
+            </header>
+            <CPWrapperPage show={isSuccess} >
+                <div className="companies">
+                    <Row className="mb-3">
+                        <Col xs={12}>
+                            <Card>
+                                <Card.Body>
+                                    <ListGroup variant="flush">
+                                        {company.list.map((company, index) => (
+                                            <ListGroupItemCompany company={company} key={index} />
+                                        ))}
+                                    </ListGroup>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={12}>
+                            <PaginationCompany />
+                        </Col>
+                    </Row>
+                </div>
+                <BackToTopButton />
+            </CPWrapperPage>
+        </>
     );
 }
 

@@ -1,8 +1,9 @@
 import CPNavbar from "../navbar/cp-navbar.component"
+import "./cp-header.style.scss";
 
 export default function CPHeader() {
   return (
-    <header className="sticky-top">
+    <header className="cp-header sticky-top">
       <CPNavbar />
     </header>
   )
