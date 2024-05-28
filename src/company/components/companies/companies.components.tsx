@@ -19,9 +19,10 @@ import ListGroupItem from "../../../common/components/list-group-item/list-group
 
 export default function Companies() {
     const { t } = useTranslation("company", { keyPrefix: "companies" });
-    const pagination = useAppSelector((state) => state.companyPagination);
     const searchBar = useAppSelector((state) => state.companySearchBar);
     const company = useAppSelector((state) => state.company);
+    const pagination = useAppSelector((state) => state.companyPagination);
+    const { paginationItems } = usePagination({ pagination, setCurrentPage, setSearchBarFocus });
     const dispatch = useAppDispatch();
 
     const { data, isSuccess } = useGetCompaniesQuery({
@@ -103,7 +104,7 @@ export default function Companies() {
                     </Row>
                     <Row>
                         <Col xs={12}>
-                            <PaginationCompany />
+                            <CommonPagination items={paginationItems} />
                         </Col>
                     </Row>
                 </div>
@@ -111,10 +112,4 @@ export default function Companies() {
             </CPWrapperPage>
         </>
     );
-}
-
-function PaginationCompany() {
-    const pagination = useAppSelector((state) => state.companyPagination);
-    const { paginationItems } = usePagination({ pagination, setCurrentPage, setSearchBarFocus });
-    return <CommonPagination items={paginationItems} />;
 }
