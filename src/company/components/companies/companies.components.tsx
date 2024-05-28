@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import CPWrapperPage from "../../../cpanel/components/wrapper-page/cp-wrapper-page.component";
-import { Button, Card, Col, ListGroup, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+import { Card, Col, ListGroup, Row } from "react-bootstrap";
 import { useGetCompaniesQuery } from "../../api/company.api";
 import { Company } from "../../types/company.type";
 import { usePagination } from "../../../common/hooks/pagination.hook";
@@ -14,6 +14,7 @@ import { setSearchBarFocus, setSearchBarReset, setSearchBarText } from "../../fe
 import { setCompanyList } from "../../features/company.slice";
 import CommonPagination from "../../../common/components/pagination/common-pagination.component";
 import StickyWrapper from "../../../common/components/sticky-wrapper/sticky-wrapper.component";
+import IconButton from "../../../common/components/icon-button/icon-button.component";
 
 export default function Companies() {
     const { t } = useTranslation("company", { keyPrefix: "companies" });
@@ -42,7 +43,7 @@ export default function Companies() {
                         <p className="fs-6">{t("title")}</p>
                     </Col>
                     <Col xs={12} className="text-end">
-                        <ActionButton
+                        <IconButton
                             text={t("add")}
                             icon="bi bi-plus-circle"
                             onClick={() => {
@@ -90,24 +91,6 @@ export default function Companies() {
                 <BackToTopButton />
             </CPWrapperPage>
         </>
-    );
-}
-
-type ActionButtonProps = {
-    text: string;
-    icon: string;
-    onClick: () => void;
-};
-
-function ActionButton({ text, icon, onClick }: ActionButtonProps) {
-    return (
-        <div className="d-inline-flex flex-column align-items-center mx-2">
-            <OverlayTrigger placement="bottom" overlay={<Tooltip>{text}</Tooltip>}>
-                <Button type="button" variant="outline-primary" onClick={onClick}>
-                    <i className={icon}></i>
-                </Button>
-            </OverlayTrigger>
-        </div>
     );
 }
 
