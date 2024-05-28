@@ -31,9 +31,11 @@ const Container = ({ children }: ContainerProps): JSX.Element => {
  * Props for the Body component.
  * @typedef {Object} BodyProps
  * @property {ReactNode} children - The content to be wrapped inside the body.
+ * @property {Function} [onClick] - Optional click handler for the body.
  */
 type BodyProps = {
     children: ReactNode;
+    onClick?: () => void;
 };
 
 /**
@@ -41,9 +43,9 @@ type BodyProps = {
  * @param {BodyProps} props - Component props.
  * @returns {JSX.Element} A Bootstrap column containing the children.
  */
-const Body = ({ children }: BodyProps): JSX.Element => {
+const Body = ({ children, onClick }: BodyProps): JSX.Element => {
     return (
-        <Col xs={9}>
+        <Col xs={9} onClick={onClick}>
             <Row className="w-100 align-items-center g-0">
                 {children}
             </Row>
