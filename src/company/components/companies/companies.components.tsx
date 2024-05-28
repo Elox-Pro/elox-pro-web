@@ -6,14 +6,14 @@ import { Company } from "../../types/company.type";
 import { usePagination } from "../../../common/hooks/pagination.hook";
 import { getCurrentPageFromUrl } from "../../../common/helpers/get-param-from-url.helper";
 import BackToTopButton from "../../../common/components/back-to-top/back-to-top-button.component";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import SearchBar from "../../../common/components/search-bar/search-bar.component";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { setCurrentPage, setItemsPerPage, setResultCount } from "../../features/company-pagination.slice";
 import { setSearchBarFocus, setSearchBarReset, setSearchBarText } from "../../features/company-search-bar.slice";
 import { setCompanyList } from "../../features/company.slice";
 import CommonPagination from "../../../common/components/pagination/common-pagination.component";
-import "./sticky-header.style.scss"
+import StickyWrapper from "../../../common/components/sticky-wrapper/sticky-wrapper.component";
 
 export default function Companies() {
     const { t } = useTranslation("company", { keyPrefix: "companies" });
@@ -34,53 +34,38 @@ export default function Companies() {
         dispatch(setItemsPerPage(pagination.itemsPerPage));
     }, [data]);
 
-    const [isScrolled, setIsScrolled] = useState(false);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 0);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
     return (
         <>
-            <section className="sticky-header bg-body">
-                <div className="wrapper-container">
-                    <Row className="mb-3">
-                        <Col xs={12} className="text-start">
-                            <p className="fs-6">{t("title")}</p>
-                        </Col>
-                        <Col xs={12} className="text-end">
-                            <ActionButton
-                                text={t("add")}
-                                icon="bi bi-plus-circle"
-                                onClick={() => {
-                                    alert(t("add-company-alert"))
-                                }} />
-                        </Col>
-                    </Row>
-                </div>
-            </section>
-            <section className={`sticky-header sticky-top bg-body ${isScrolled ? 'scrolled' : ''}`}>
-                <div className="wrapper-container">
-                    <Row className="mb-3">
-                        <Col xs={12}>
-                            <SearchBar
-                                pagination={pagination}
-                                searchBar={searchBar}
-                                setSearchText={setSearchBarText}
-                                setFocus={setSearchBarFocus}
-                                setReset={setSearchBarReset}
-                                setCurrentPage={setCurrentPage}
-                                placeholder={t("search-placeholder")}
-                            />
-                        </Col>
-                    </Row>
-                </div>
-            </section>
-
+            <StickyWrapper>
+                <Row className="mb-3">
+                    <Col xs={12} className="text-start">
+                        <p className="fs-6">{t("title")}</p>
+                    </Col>
+                    <Col xs={12} className="text-end">
+                        <ActionButton
+                            text={t("add")}
+                            icon="bi bi-plus-circle"
+                            onClick={() => {
+                                alert(t("add-company-alert"))
+                            }} />
+                    </Col>
+                </Row>
+            </StickyWrapper>
+            <StickyWrapper sticky>
+                <Row className="mb-3">
+                    <Col xs={12}>
+                        <SearchBar
+                            pagination={pagination}
+                            searchBar={searchBar}
+                            setSearchText={setSearchBarText}
+                            setFocus={setSearchBarFocus}
+                            setReset={setSearchBarReset}
+                            setCurrentPage={setCurrentPage}
+                            placeholder={t("search-placeholder")}
+                        />
+                    </Col>
+                </Row>
+            </StickyWrapper>
             <CPWrapperPage show={isSuccess} >
                 <div className="companies">
                     <Row className="mb-3">
