@@ -1,7 +1,7 @@
 .sticky-header {
-    .sticky-header-container {
-        margin: 0 auto;
-        max-width: 960px;
-        padding: 1rem;
+    &.scrolled {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: var(--bs-border-color);
     }
 }

@@ -1,12 +1,12 @@
 import { useTranslation } from "react-i18next";
 import CPWrapperPage from "../../../cpanel/components/wrapper-page/cp-wrapper-page.component";
-import { Button, Card, Col, ListGroup, OverlayTrigger, Pagination, Row, Tooltip } from "react-bootstrap";
+import { Button, Card, Col, ListGroup, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import { useGetCompaniesQuery } from "../../api/company.api";
 import { Company } from "../../types/company.type";
 import { usePagination } from "../../../common/hooks/pagination.hook";
 import { getCurrentPageFromUrl } from "../../../common/helpers/get-param-from-url.helper";
 import BackToTopButton from "../../../common/components/back-to-top/back-to-top-button.component";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import SearchBar from "../../../common/components/search-bar/search-bar.component";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { setCurrentPage, setItemsPerPage, setResultCount } from "../../features/company-pagination.slice";
@@ -34,10 +34,20 @@ export default function Companies() {
         dispatch(setItemsPerPage(pagination.itemsPerPage));
     }, [data]);
 
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 0);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     return (
         <>
-            <header className="sticky-header bg-success">
-                <div className="sticky-header-container">
+            <section className="sticky-header bg-body">
+                <div className="wrapper-container">
                     <Row className="mb-3">
                         <Col xs={12} className="text-start">
                             <p className="fs-6">{t("title")}</p>
@@ -51,7 +61,11 @@ export default function Companies() {
                                 }} />
                         </Col>
                     </Row>
-                    <Row className="mb-3 sticky-top">
+                </div>
+            </section>
+            <section className={`sticky-header sticky-top bg-body ${isScrolled ? 'scrolled' : ''}`}>
+                <div className="wrapper-container">
+                    <Row className="mb-3">
                         <Col xs={12}>
                             <SearchBar
                                 pagination={pagination}
@@ -65,7 +79,8 @@ export default function Companies() {
                         </Col>
                     </Row>
                 </div>
-            </header>
+            </section>
+
             <CPWrapperPage show={isSuccess} >
                 <div className="companies">
                     <Row className="mb-3">

@@ -6,7 +6,6 @@
   --nav-width-negative: calc(-1 * var(--nav-width));
   --nav-transition-duration: 0.3s;
   --nav-transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
-  --nav-header-height: 54px;
   --offcanvas-header-width: calc(var(--nav-width) - 3rem);
   --bs-blue-rgb: 13, 110, 253;
   --bs-indigo-rgb: 102, 16, 242;
@@ -45,6 +44,12 @@ body {
 .container-fluid {
   margin: 0;
   padding: 0;
+}
+
+.wrapper-container {
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 1rem;
 }
 
 .card {
