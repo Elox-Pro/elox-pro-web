@@ -7,6 +7,7 @@ import ProfileTfaInfo from "../tfa-info/profile-tfa-info.component"
 import ProfileSettings from "../settings/profile-settings.component"
 import CPWrapperPage from "../../../cpanel/components/wrapper-page/cp-wrapper-page.component"
 import { useGetProfile } from "../../hooks/get-profile-handler.hook"
+import BackToTopButton from "../../../common/components/back-to-top/back-to-top-button.component"
 
 export default function ProfileIndex() {
 
@@ -39,6 +40,7 @@ export default function ProfileIndex() {
           </Col>
         </Row>
       </div>
+      <BackToTopButton />
     </CPWrapperPage>
   )
 }

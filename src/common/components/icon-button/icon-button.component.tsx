@@ -10,7 +10,7 @@ type IconButtonProps = {
 
 export default function IconButton({ text, icon, onClick }: IconButtonProps) {
     return (
-        <div className="d-inline-flex flex-column align-items-center mx-2">
+        <div className="d-inline-flex flex-column align-items-center mx-1">
             <OverlayTrigger placement="bottom" overlay={<Tooltip>{text}</Tooltip>}>
                 <Button type="button" variant="outline-primary" onClick={onClick}>
                     <i className={icon}></i>

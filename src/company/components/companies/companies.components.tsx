@@ -6,7 +6,7 @@ import { Company } from "../../types/company.type";
 import { usePagination } from "../../../common/hooks/pagination.hook";
 import { getCurrentPageFromUrl } from "../../../common/helpers/get-param-from-url.helper";
 import BackToTopButton from "../../../common/components/back-to-top/back-to-top-button.component";
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import SearchBar from "../../../common/components/search-bar/search-bar.component";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { setCurrentPage, setItemsPerPage, setResultCount } from "../../features/company-pagination.slice";
@@ -15,6 +15,7 @@ import { setCompanyList } from "../../features/company.slice";
 import CommonPagination from "../../../common/components/pagination/common-pagination.component";
 import StickyWrapper from "../../../common/components/sticky-wrapper/sticky-wrapper.component";
 import IconButton from "../../../common/components/icon-button/icon-button.component";
+import ListGroupItem from "../../../common/components/list-group-item/list-group-item.component";
 
 export default function Companies() {
     const { t } = useTranslation("company", { keyPrefix: "companies" });
@@ -29,6 +30,14 @@ export default function Companies() {
         searchTerm: searchBar.searchText,
     });
 
+    const handleSearchBarFocus = () => {
+        dispatch(setSearchBarFocus(true));
+    }
+
+    const showDetail = () => {
+        alert("Show options: delete, edit, show detail");
+    }
+
     useEffect(() => {
         dispatch(setCompanyList(data?.companies || []));
         dispatch(setResultCount(data?.total || 0));
@@ -38,7 +47,7 @@ export default function Companies() {
     return (
         <>
             <StickyWrapper>
-                <Row className="mb-3">
+                <Row>
                     <Col xs={12} className="text-start">
                         <p className="fs-6">{t("title")}</p>
                     </Col>
@@ -53,7 +62,7 @@ export default function Companies() {
                 </Row>
             </StickyWrapper>
             <StickyWrapper sticky>
-                <Row className="mb-3">
+                <Row>
                     <Col xs={12}>
                         <SearchBar
                             pagination={pagination}
@@ -75,7 +84,17 @@ export default function Companies() {
                                 <Card.Body>
                                     <ListGroup variant="flush">
                                         {company.list.map((company, index) => (
-                                            <ListGroupItemCompany company={company} key={index} />
+                                            <ListGroupItem.Container key={index}>
+                                                <ListGroupItem.Body>
+                                                    <ListGroupItem.BodyImage
+                                                        src={company.imageUrl}
+                                                        alt={company.name} />
+                                                    <ListGroupItem.BodySection>
+                                                        <p className="mb-0 text-muted">{company.name}</p>
+                                                    </ListGroupItem.BodySection>
+                                                </ListGroupItem.Body>
+                                                <ListGroupItem.Dots onClick={showDetail} />
+                                            </ListGroupItem.Container>
                                         ))}
                                     </ListGroup>
                                 </Card.Body>
@@ -88,35 +107,9 @@ export default function Companies() {
                         </Col>
                     </Row>
                 </div>
-                <BackToTopButton />
+                <BackToTopButton onClick={handleSearchBarFocus} />
             </CPWrapperPage>
         </>
-    );
-}
-
-type ListGroupItemCompanyProps = {
-    company: Company;
-};
-
-function ListGroupItemCompany({ company }: ListGroupItemCompanyProps) {
-    return (
-        <ListGroup.Item className="px-0 py-3" action>
-            <Row className="w-100 align-items-center g-0">
-                <Col xs={9}>
-                    <Row className="w-100 align-items-center g-0">
-                        <Col xs={3} md={3}>
-                            <img width={24} src={company.imageUrl} alt="company-image" />
-                        </Col>
-                        <Col xs={9} md={9}>
-                            <p className="mb-0 text-muted">{company.name}</p>
-                        </Col>
-                    </Row>
-                </Col>
-                <Col xs={3} className="text-end">
-                    <i className="bi bi-three-dots-vertical fs-4 fw-bold"></i>
-                </Col>
-            </Row>
-        </ListGroup.Item>
     );
 }
 

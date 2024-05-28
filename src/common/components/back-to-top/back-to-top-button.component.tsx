@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import "./back-to-top.style.scss";
 
-export default function BackToTopButton() {
+type BackToTopButtonProps = {
+    onClick?: () => void;
+}
+export default function BackToTopButton({ onClick }: BackToTopButtonProps) {
     const [isVisible, setIsVisible] = useState(false);
 
     const toggleVisibility = () => {
@@ -18,6 +21,7 @@ export default function BackToTopButton() {
             top: 0,
             behavior: 'smooth'
         });
+        if (onClick) { onClick(); }
     };
 
     useEffect(() => {
