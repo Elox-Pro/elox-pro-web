@@ -5,7 +5,8 @@ import { logout } from "../../auth/features/auth.slice";
 
 const initialState: CompanyState = {
     list: [],
-    selected: null
+    selected: null,
+    manageModal: false
 }
 
 const companySlice = createSlice({
@@ -15,8 +16,11 @@ const companySlice = createSlice({
         setCompanyList: (state, action: PayloadAction<Company[]>) => {
             state.list = action.payload;
         },
-        setSelectedCompany: (state, action: PayloadAction<Company | null>) => {
+        setCompanySelected: (state, action: PayloadAction<Company | null>) => {
             state.selected = action.payload;
+        },
+        setCompanyManageModal: (state, action: PayloadAction<boolean>) => {
+            state.manageModal = action.payload;
         },
     }, extraReducers: (builder) => {
         builder.addCase(logout, () => {
@@ -29,7 +33,8 @@ const companyReducer = companySlice.reducer;
 
 export const {
     setCompanyList,
-    setSelectedCompany,
+    setCompanySelected,
+    setCompanyManageModal,
 } = companySlice.actions;
 
 export default companyReducer;
