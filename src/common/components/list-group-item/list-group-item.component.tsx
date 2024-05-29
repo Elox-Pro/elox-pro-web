@@ -7,9 +7,11 @@ import Row from "react-bootstrap/esm/Row";
  * Props for the Container component.
  * @typedef {Object} ContainerProps
  * @property {ReactNode} children - The content to be wrapped inside the container.
+ * @property {Function} [onClick] - Optional click handler for item.
  */
 type ContainerProps = {
     children: ReactNode;
+    onClick?: () => void;
 };
 
 /**
@@ -17,9 +19,9 @@ type ContainerProps = {
  * @param {ContainerProps} props - Component props.
  * @returns {JSX.Element} A styled ListGroup.Item containing the children.
  */
-const Container = ({ children }: ContainerProps): JSX.Element => {
+const Container = ({ children, onClick }: ContainerProps): JSX.Element => {
     return (
-        <ListGroup.Item className="px-0 py-3" action>
+        <ListGroup.Item className="px-0 py-3" action onClick={onClick}>
             <Row className="w-100 align-items-center g-0">
                 {children}
             </Row>
@@ -31,11 +33,10 @@ const Container = ({ children }: ContainerProps): JSX.Element => {
  * Props for the Body component.
  * @typedef {Object} BodyProps
  * @property {ReactNode} children - The content to be wrapped inside the body.
- * @property {Function} [onClick] - Optional click handler for the body.
+ 
  */
 type BodyProps = {
     children: ReactNode;
-    onClick?: () => void;
 };
 
 /**
@@ -43,9 +44,9 @@ type BodyProps = {
  * @param {BodyProps} props - Component props.
  * @returns {JSX.Element} A Bootstrap column containing the children.
  */
-const Body = ({ children, onClick }: BodyProps): JSX.Element => {
+const Body = ({ children }: BodyProps): JSX.Element => {
     return (
-        <Col xs={9} onClick={onClick}>
+        <Col xs={9}>
             <Row className="w-100 align-items-center g-0">
                 {children}
             </Row>
@@ -54,23 +55,25 @@ const Body = ({ children, onClick }: BodyProps): JSX.Element => {
 };
 
 /**
- * Props for the Dots component.
- * @typedef {Object} DotsProps
- * @property {Function} [onClick] - Optional click handler for the icon.
+ * Dots Icon component to display icon with three vertical dots.
+ * @returns {JSX.Element} A Bootstrap column containing the icon.
  */
-type DotsProps = {
-    onClick?: () => void;
+const DotsIcon = (): JSX.Element => {
+    return (
+        <Col xs={3} className="text-end">
+            <i className="bi bi-three-dots-vertical fs-4 fw-bold"></i>
+        </Col>
+    );
 };
 
 /**
- * Dots component to display a clickable icon with three vertical dots.
- * @param {DotsProps} props - Component props.
- * @returns {JSX.Element} A Bootstrap column containing the clickable icon.
+ * Chevron Icon component to display icon with a chevron right.
+ * @returns {JSX.Element} A Bootstrap column containing the icon.
  */
-const Dots = ({ onClick }: DotsProps): JSX.Element => {
+const ChevronIcon = (): JSX.Element => {
     return (
         <Col xs={3} className="text-end">
-            <i className="bi bi-three-dots-vertical fs-4 fw-bold" onClick={onClick}></i>
+            <i className="bi bi-chevron-right fs-4 fw-bold"></i>
         </Col>
     );
 };
@@ -102,6 +105,31 @@ const BodyImage = ({ src, alt, col = 3 }: BodyImageProps): JSX.Element => {
 };
 
 /**
+ * Props for the BodyIcon component.
+ * @typedef {Object} BodyIconProps
+ * @property {string} iconClass - The iconClass for the icon.
+ * @property {number} [col=3] - Optional column size for the image.
+ */
+type BodyIconProps = {
+    iconClass: string;
+    col?: number;
+}
+
+/**
+ * BodyIcon component to display an icon inside a Bootstrap column.
+ * @param {BodyIconProps} props - Component props.
+ * @returns {JSX.Element} A Bootstrap column containing the icon.
+ * @remarks The icon is displayed in the rightmost column of the row.
+ */
+const BodyIcon = ({ iconClass, col = 3 }: BodyIconProps) => {
+    return (
+        <Col xs={col}>
+            <i className={`${iconClass} fs-3`}></i>
+        </Col>
+    )
+}
+
+/**
  * Props for the BodySection component.
  * @typedef {Object} BodySectionProps
  * @property {ReactNode} children - The content to be wrapped inside the body section.
@@ -130,9 +158,11 @@ const BodySection = ({ children, col = 9 }: BodySectionProps): JSX.Element => {
  */
 const ListGroupItem = {
     Container,
-    Dots,
+    DotsIcon,
+    ChevronIcon,
     Body,
     BodyImage,
+    BodyIcon,
     BodySection
 };
 

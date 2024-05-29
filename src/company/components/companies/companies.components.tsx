@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import CPWrapperPage from "../../../cpanel/components/wrapper-page/cp-wrapper-page.component";
-import { Card, Col, ListGroup, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, ListGroup, Row } from "react-bootstrap";
 import { useGetCompaniesQuery } from "../../api/company.api";
 import { usePagination } from "../../../common/hooks/pagination.hook";
 import { getCurrentPageFromUrl } from "../../../common/helpers/get-param-from-url.helper";
@@ -10,12 +10,13 @@ import SearchBar from "../../../common/components/search-bar/search-bar.componen
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { setCurrentPage, setItemsPerPage, setResultCount } from "../../features/company-pagination.slice";
 import { setSearchBarFocus, setSearchBarReset, setSearchBarText } from "../../features/company-search-bar.slice";
-import { setCompanyList } from "../../features/company.slice";
+import { setCompanyList, setSelectedCompany } from "../../features/company.slice";
 import CommonPagination from "../../../common/components/pagination/common-pagination.component";
 import StickyWrapper from "../../../common/components/sticky-wrapper/sticky-wrapper.component";
 import IconButton from "../../../common/components/icon-button/icon-button.component";
 import ListGroupItem from "../../../common/components/list-group-item/list-group-item.component";
 import ModalAction from "../../../common/components/modal-action/modal-action.component";
+import { Company } from "../../types/company.type";
 
 export default function Companies() {
     const { t } = useTranslation("company", { keyPrefix: "companies" });
@@ -46,8 +47,12 @@ export default function Companies() {
     }, [data]);
 
     const [showModal, setShowModal] = useState(false);
-    const handleShowModal = () => {
+    const handleShowModal = (company: Company) => {
+        dispatch(setSelectedCompany(company));
         setShowModal(true);
+    }
+    const handleHideModal = () => {
+        setShowModal(false);
     }
     //TODO: Make component card list group
     return (
@@ -90,8 +95,12 @@ export default function Companies() {
                                 <Card.Body>
                                     <ListGroup variant="flush">
                                         {company.list.map((company, index) => (
-                                            <ListGroupItem.Container key={index}>
-                                                <ListGroupItem.Body onClick={showDetails}>
+                                            <ListGroupItem.Container
+                                                key={index}
+                                                onClick={() => {
+                                                    handleShowModal(company)
+                                                }}>
+                                                <ListGroupItem.Body>
                                                     <ListGroupItem.BodyImage
                                                         src={company.imageUrl}
                                                         alt={company.name} />
@@ -101,7 +110,7 @@ export default function Companies() {
                                                         </p>
                                                     </ListGroupItem.BodySection>
                                                 </ListGroupItem.Body>
-                                                <ListGroupItem.Dots onClick={handleShowModal} />
+                                                <ListGroupItem.DotsIcon />
                                             </ListGroupItem.Container>
                                         ))}
                                     </ListGroup>
@@ -117,12 +126,76 @@ export default function Companies() {
                 </div>
                 <BackToTopButton onClick={handleSearchBarFocus} />
             </CPWrapperPage>
-            <ModalAction.Wrapper show={showModal}>
-                <ModalAction.Header />
-                <ModalAction.Body>
-                    <p>Actions here</p>
-                </ModalAction.Body>
-            </ModalAction.Wrapper>
+            {
+                company.selected &&
+                <ModalAction.Wrapper show={showModal}>
+                    <ModalAction.Header onClose={handleHideModal}>
+                        <ModalAction.HeaderTitle
+                            img={company.selected.imageUrl}
+                            alt={company.selected.name}
+                            title={company.selected.name} />
+                    </ModalAction.Header>
+                    <ModalAction.Body>
+                        <Container>
+                            <Row>
+                                <Col xs={12}>
+                                    <p className="text-muted">
+                                        <small>
+                                            <i className="bi bi-gear me-2"></i>
+                                            <span>Manage Company</span>
+                                        </small>
+                                    </p>
+                                </Col>
+                                <Col xs={12}>
+                                    <Card>
+                                        <Card.Body>
+                                            <ListGroup variant="flush">
+                                                <ListGroupItem.Container>
+                                                    <ListGroupItem.Body>
+                                                        <ListGroupItem.BodyIcon
+                                                            iconClass="bi bi-eye" />
+                                                        <ListGroupItem.BodySection>
+                                                            <p className="mb-0 text-muted">
+                                                                Show company
+                                                            </p>
+                                                        </ListGroupItem.BodySection>
+                                                    </ListGroupItem.Body>
+                                                    <ListGroupItem.ChevronIcon />
+                                                </ListGroupItem.Container>
+                                                <ListGroupItem.Container>
+                                                    <ListGroupItem.Body>
+                                                        <ListGroupItem.BodyIcon
+                                                            iconClass="bi bi-pencil-square" />
+                                                        <ListGroupItem.BodySection>
+                                                            <p className="mb-0 text-muted">
+                                                                Edit company
+                                                            </p>
+                                                        </ListGroupItem.BodySection>
+                                                    </ListGroupItem.Body>
+                                                    <ListGroupItem.ChevronIcon />
+                                                </ListGroupItem.Container>
+                                                <ListGroupItem.Container>
+                                                    <ListGroupItem.Body>
+                                                        <ListGroupItem.BodyIcon
+                                                            iconClass="bi bi-trash" />
+                                                        <ListGroupItem.BodySection>
+                                                            <p className="mb-0 text-muted">
+                                                                Delete company
+                                                            </p>
+                                                        </ListGroupItem.BodySection>
+                                                    </ListGroupItem.Body>
+                                                    <ListGroupItem.ChevronIcon />
+                                                </ListGroupItem.Container>
+                                            </ListGroup>
+                                        </Card.Body>
+                                    </Card>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </ModalAction.Body>
+                </ModalAction.Wrapper>
+            }
+
         </>
     );
 }
