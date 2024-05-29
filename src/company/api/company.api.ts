@@ -3,6 +3,8 @@ import { API_URL } from "../../app/constants/app.constants";
 import i18n from "../../app/i18n/i18n";
 import { CompaniesResponse } from "../types/find-many-companies/companies-response.type";
 import { CompaniesRequest } from "../types/find-many-companies/companies-request.type";
+import { CompanyResponse } from "../types/find-company-by-id/company-response.type";
+import { CompanyRequest } from "../types/find-company-by-id/company-request.type";
 
 export const companyApi = createApi({
     reducerPath: "companyApi",
@@ -24,8 +26,19 @@ export const companyApi = createApi({
                     }
                 }
             }),
+            getCompany: builder.query<CompanyResponse, CompanyRequest>({
+                query(data) {
+                    return {
+                        url: `/${data.id}`,
+                        method: "GET",
+                    }
+                }
+            }),
         }
     },
 });
 
-export const { useGetCompaniesQuery } = companyApi;
+export const {
+    useGetCompaniesQuery,
+    useGetCompanyQuery
+} = companyApi;

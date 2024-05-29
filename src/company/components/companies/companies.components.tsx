@@ -18,6 +18,7 @@ import ListGroupItem from "../../../common/components/list-group-item/list-group
 import ModalAction from "../../../common/components/modal-action/modal-action.component";
 import { Company } from "../../types/company.type";
 import CardListGroup from "../../../common/components/card-list-group/card-list-group.component";
+import { useNavigate } from "react-router-dom";
 
 export default function Companies() {
     return (
@@ -76,6 +77,7 @@ function Body() {
     const pagination = useAppSelector((state) => state.companyPagination);
     const { paginationItems } = usePagination({ pagination, setCurrentPage, setSearchBarFocus });
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const { data, isSuccess } = useGetCompaniesQuery({
         page: getCurrentPageFromUrl(),
@@ -93,9 +95,9 @@ function Body() {
         dispatch(setItemsPerPage(pagination.itemsPerPage));
     }, [data]);
 
-    const handleShowModal = (company: Company) => {
+    const handleCompanyInfo = (company: Company) => {
         dispatch(setCompanySelected(company));
-        dispatch(setCompanyManageModal(true));
+        navigate(`/cpanel/companies/${company.id}`);
     }
 
     return (
@@ -103,12 +105,12 @@ function Body() {
             <div className="companies">
                 <Row className="mb-3">
                     <Col xs={12}>
-                        <CardListGroup>
+                        <CardListGroup.Container>
                             {company.list.map((company, index) => (
                                 <ListGroupItem.Container
                                     key={index}
                                     onClick={() => {
-                                        handleShowModal(company)
+                                        handleCompanyInfo(company)
                                     }}>
                                     <ListGroupItem.Body>
                                         <ListGroupItem.BodyImage
@@ -120,10 +122,10 @@ function Body() {
                                             </p>
                                         </ListGroupItem.BodySection>
                                     </ListGroupItem.Body>
-                                    <ListGroupItem.DotsIcon />
+                                    <ListGroupItem.ChevronIcon />
                                 </ListGroupItem.Container>
                             ))}
-                        </CardListGroup>
+                        </CardListGroup.Container>
                     </Col>
                 </Row>
                 <Row>
@@ -170,7 +172,7 @@ function ManageCompanyModal() {
                             </p>
                         </Col>
                         <Col xs={12}>
-                            <CardListGroup>
+                            <CardListGroup.Container>
                                 <ListGroupItem.Container>
                                     <ListGroupItem.Body>
                                         <ListGroupItem.BodyIcon
@@ -207,7 +209,7 @@ function ManageCompanyModal() {
                                     </ListGroupItem.Body>
                                     <ListGroupItem.ChevronIcon />
                                 </ListGroupItem.Container>
-                            </CardListGroup>
+                            </CardListGroup.Container>
                         </Col>
                     </Row>
                 </Container>

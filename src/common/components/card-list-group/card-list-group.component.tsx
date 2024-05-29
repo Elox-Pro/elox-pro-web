@@ -2,10 +2,11 @@ import { ReactNode } from "react"
 import Card from "react-bootstrap/esm/Card"
 import ListGroup from "react-bootstrap/esm/ListGroup"
 
-type CardListGroupProps = {
+type ContainerProps = {
     children: ReactNode
 }
-export default function CardListGroup({ children }: CardListGroupProps) {
+
+const Container = ({ children }: ContainerProps) => {
     return (
         <Card>
             <Card.Body>
@@ -16,3 +17,24 @@ export default function CardListGroup({ children }: CardListGroupProps) {
         </Card>
     )
 }
+
+type IconTitleProps = {
+    value: string,
+    iconClass?: string
+}
+
+const IconTitle = ({ value, iconClass = "bi bi-info-square" }: IconTitleProps) => {
+    return (
+        <Card.Title>
+            <i className={`${iconClass} me-3`}></i>
+            {value}
+        </Card.Title>
+    )
+}
+
+const CardListGroup = {
+    Container,
+    IconTitle
+}
+
+export default CardListGroup;

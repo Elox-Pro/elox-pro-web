@@ -119,7 +119,6 @@ type BodyIconProps = {
  * BodyIcon component to display an icon inside a Bootstrap column.
  * @param {BodyIconProps} props - Component props.
  * @returns {JSX.Element} A Bootstrap column containing the icon.
- * @remarks The icon is displayed in the rightmost column of the row.
  */
 const BodyIcon = ({ iconClass, col = 3 }: BodyIconProps) => {
     return (
@@ -128,6 +127,56 @@ const BodyIcon = ({ iconClass, col = 3 }: BodyIconProps) => {
         </Col>
     )
 }
+
+/**
+ * Props for the BodyLabel component.
+ * @typedef {Object} BodyLabelProps
+ * @property {string} value - The value of the label.
+ */
+type BodyLabelProps = {
+    value: string;
+}
+
+/**
+ * BodyLabel component to display label inside a Bootstrap column.
+ * @param {BodyLabelProps} props - Component props.
+ * @returns The JSX.Element containing the label.
+ */
+const BodyLabel = ({ value }: BodyLabelProps) => {
+    return (
+        <Col xs={12} md={4}>
+            <p className="mb-0 text-muted">
+                {value}
+            </p>
+        </Col>
+    )
+}
+
+/**
+ * Props for the BodyValue component.
+ * @typedef {Object} BodyValueProps
+ * @property {string} value - The value of the component.
+ */
+type BodyValueProps = {
+    value: string;
+}
+
+/**
+ * BodyValue component to display value inside a Bootstrap column.
+ * @param {BodyValueProps} props - Component props.
+ * @returns {JSX.Element} The JSX.Element containing the value.
+ */
+const BodyValue = ({ value }: BodyValueProps) => {
+    return (
+        <Col xs={12} md={8}>
+            <p className="mb-0">
+                <span className="me-3">
+                    {value}
+                </span>
+            </p>
+        </Col>
+    )
+};
 
 /**
  * Props for the BodySection component.
@@ -163,7 +212,9 @@ const ListGroupItem = {
     Body,
     BodyImage,
     BodyIcon,
-    BodySection
+    BodySection,
+    BodyLabel,
+    BodyValue,
 };
 
 export default ListGroupItem;
