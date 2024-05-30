@@ -55,15 +55,33 @@ const Body = ({ children }: BodyProps): JSX.Element => {
 };
 
 /**
+ * Props for the Icon Col component.
+ * @typedef {Object} IconColProps
+ * @property {string} iconClass - The icon class to be used.
+ */
+type IconColProps = {
+    iconClass: string;
+}
+
+/**
+ * Icon Col component to display icon column.
+ * @param {IconColProps} props - Component props.
+ * @returns {JSX.Element} A Bootstrap column containing the icon.
+ */
+const IconCol = ({ iconClass }: IconColProps): JSX.Element => {
+    return (
+        <Col xs={3} className="text-end">
+            <i className={`fs-4 fw-bold ${iconClass}`}></i>
+        </Col>
+    );
+}
+
+/**
  * Dots Icon component to display icon with three vertical dots.
  * @returns {JSX.Element} A Bootstrap column containing the icon.
  */
 const DotsIcon = (): JSX.Element => {
-    return (
-        <Col xs={3} className="text-end">
-            <i className="bi bi-three-dots-vertical fs-4 fw-bold"></i>
-        </Col>
-    );
+    return <IconCol iconClass="bi bi-three-dots-vertical" />;
 };
 
 /**
@@ -71,12 +89,34 @@ const DotsIcon = (): JSX.Element => {
  * @returns {JSX.Element} A Bootstrap column containing the icon.
  */
 const ChevronIcon = (): JSX.Element => {
+    return <IconCol iconClass="bi bi-chevron-right" />;
+};
+
+/**
+ * Props for the ImageCol component.
+ * @typedef {Object} ImageColProps
+ * @property {string} src - The source URL of the image.
+ * @property {string} alt - The alt text for the image.
+ * @property {number} [width=24] - Optional width for the image.
+ */
+type ImageColProps = {
+    src: string;
+    alt: string;
+    width?: number;
+}
+
+/**
+ * Image Col component to display image column.
+ * @param {ImageColProps} props - Component props.
+ * @returns {JSX.Element} A Bootstrap column containing the image.
+ */
+const ImageCol = ({ src, alt, width = 24 }: ImageColProps): JSX.Element => {
     return (
         <Col xs={3} className="text-end">
-            <i className="bi bi-chevron-right fs-4 fw-bold"></i>
+            <img width={width} src={src} alt={alt} />
         </Col>
     );
-};
+}
 
 /**
  * Props for the BodyImage component.
@@ -123,7 +163,7 @@ type BodyIconProps = {
 const BodyIcon = ({ iconClass, col = 3 }: BodyIconProps) => {
     return (
         <Col xs={col}>
-            <i className={`${iconClass} fs-3`}></i>
+            <i className={`${iconClass} fs-4`}></i>
         </Col>
     )
 }
@@ -207,6 +247,8 @@ const BodySection = ({ children, col = 9 }: BodySectionProps): JSX.Element => {
  */
 const ListGroupItem = {
     Container,
+    IconCol,
+    ImageCol,
     DotsIcon,
     ChevronIcon,
     Body,

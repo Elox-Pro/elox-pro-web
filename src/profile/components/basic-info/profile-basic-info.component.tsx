@@ -9,15 +9,15 @@ import ListGroupItemFullName from "../list-group-item-full-name/list-group-item-
 import ListGroupItemGender from "../list-group-item-gender/list-group-item-gender.component";
 
 export default function ProfileBasicInfo() {
-    const { profile, profileTranslations } = useAppSelector(state => state.profile);
+    const { profile } = useAppSelector(state => state.profile);
     const { t } = useTranslation("profile", { keyPrefix: "basic-info" });
 
-    if (profile === null || profileTranslations === null) {
+    if (profile === null) {
         return null;
     }
 
     const username = profile.username;
-    const role = profile.role ? profileTranslations[profile.role] : null;
+    const role = profile.roleText;
     const updatedAt = getFormatDate(profile.updatedAt);
 
     return (

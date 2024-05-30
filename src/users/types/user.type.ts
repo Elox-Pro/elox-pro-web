@@ -7,6 +7,7 @@ export type User = {
     createdAt: Date | null;
 
     role: string | null;
+    roleText: string | null;
     username: string | null;
     email: string | null;
     firstName: string | null;
@@ -14,6 +15,7 @@ export type User = {
     phone: string | null;
 
     gender: string | null;
+    genderText: string | null;
 
     avatarUrl: Gender | null;
 
@@ -25,13 +27,16 @@ export type User = {
 
     // The TFA authentication type to 
     tfaType: TfaType | null;
+    tfaTypeText: string | null;
 
     // Last login timestamp
     lastLoginAt: Date | null;
 
     // The user language
     lang: string | null;
+    langText: string | null;
 
     // The UI user theme
     theme: string | null;
+    themeText: string | null;
 }

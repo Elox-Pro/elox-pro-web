@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useGetProfileQuery } from "../api/profile.api";
 import { QueryStatus } from "@reduxjs/toolkit/query";
 import { useEffect } from "react";
-import { setProfile, setProfileTranslations } from "../features/profile.slice";
+import { setProfile } from "../features/profile.slice";
 import { useActiveUser } from "../../auth/hooks/active-user.hook";
 import { useTranslation } from "react-i18next";
 
@@ -36,7 +36,6 @@ export function useGetProfile() {
   useEffect(() => {
     if (status === QueryStatus.fulfilled && data) {
       dispatch(setProfile(data.user));
-      dispatch(setProfileTranslations(data.userTranslations));
     }
   }, [status, data]);
 

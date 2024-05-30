@@ -7,15 +7,15 @@ import { useState } from "react";
 import UpdateGenderModal from "../update-gender-modal/update-gender-modal.component";
 
 export default function ListGroupItemGender() {
-    const { profile, profileTranslations } = useAppSelector(state => state.profile);
+    const { profile } = useAppSelector(state => state.profile);
     const { t } = useTranslation("profile", { keyPrefix: "basic-info.gender" });
     const [showModal, setShowModal] = useState(false);
 
-    if (profile === null || profileTranslations === null) {
+    if (profile === null) {
         return null;
     }
 
-    const gender = profile.gender && profileTranslations[profile.gender] || t("value");
+    const gender = profile.genderText || t("value");
 
     const onClick = () => {
         setShowModal(true);

@@ -4,8 +4,7 @@ import { ProfileState } from "../types/profile-state.type";
 import { logout } from "../../auth/features/auth.slice";
 
 const initialState: ProfileState = {
-    profile: null,
-    profileTranslations: null
+    profile: null
 }
 
 const profileSlice = createSlice({
@@ -14,10 +13,7 @@ const profileSlice = createSlice({
     reducers: {
         setProfile: (state, action: { payload: User | null }) => {
             state.profile = action.payload;
-        },
-        setProfileTranslations: (state, action: { payload: Record<string, string> }) => {
-            state.profileTranslations = action.payload;
-        },
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(logout, () => {
@@ -29,8 +25,7 @@ const profileSlice = createSlice({
 const profileReducer = profileSlice.reducer;
 
 export const {
-    setProfile,
-    setProfileTranslations,
+    setProfile
 } = profileSlice.actions;
 
 export default profileReducer;
