@@ -19,6 +19,7 @@ import ModalAction from "../../../common/components/modal-action/modal-action.co
 import { Company } from "../../types/company.type";
 import CardListGroup from "../../../common/components/card-list-group/card-list-group.component";
 import { useNavigate } from "react-router-dom";
+import { resetCompanyCreateState } from "../../features/create-company.slice";
 
 export default function Companies() {
     return (
@@ -34,6 +35,14 @@ function Header() {
     const { t } = useTranslation("company", { keyPrefix: "companies" });
     const searchBar = useAppSelector((state) => state.companySearchBar);
     const pagination = useAppSelector((state) => state.companyPagination);
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+
+    const handleCreateCompany = () => {
+        dispatch(resetCompanyCreateState());
+        navigate("new");
+    }
+
     return (
         <>
             <StickyWrapper>
@@ -45,9 +54,7 @@ function Header() {
                         <IconButton
                             text={t("add")}
                             icon="bi bi-plus-circle"
-                            onClick={() => {
-                                alert(t("add-company-alert"))
-                            }} />
+                            onClick={handleCreateCompany} />
                     </Col>
                 </Row>
             </StickyWrapper>
@@ -153,7 +160,7 @@ function ManageCompanyModal() {
     }
 
     return (
-        <ModalAction.Wrapper show={company.manageModal}>
+        <ModalAction.Form show={company.manageModal} onSubmit={() => { console.log("submit") }}>
             <ModalAction.Header onClose={handleHideModal}>
                 <ModalAction.HeaderTitle
                     img={company.selected.imageUrl}
@@ -214,6 +221,6 @@ function ManageCompanyModal() {
                     </Row>
                 </Container>
             </ModalAction.Body>
-        </ModalAction.Wrapper>
+        </ModalAction.Form>
     );
 }

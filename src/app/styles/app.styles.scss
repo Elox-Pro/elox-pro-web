@@ -83,3 +83,32 @@ body {
     }
   }
 }
+
+.rounded-icon {
+  border-width: 1px;
+  border-style: solid;
+  color: var(--bs-body-bg);
+  border-radius: 50%;
+  width: 2.5rem;
+  display: block;
+  height: 2.5rem;
+  text-align: center;
+  position: relative;
+  padding-top: 2px;
+
+  &.rounded-icon-default {
+    border-color: var(--bs-border-color);
+    background: var(--bs-border-color);
+  }
+
+  &.rounded-icon-success {
+    border-color: var(--bs-success);
+    background: var(--bs-success);
+  }
+
+  &.rounded-icon-danger {
+    border-color: var(--bs-danger);
+    background: var(--bs-danger);
+  }
+
+}

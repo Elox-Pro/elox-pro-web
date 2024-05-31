@@ -29,7 +29,7 @@ export const companyApi = createApi({
             getCompany: builder.query<CompanyResponse, CompanyRequest>({
                 query(data) {
                     return {
-                        url: `/${data.id}`,
+                        url: `/find/${data.id}`,
                         method: "GET",
                     }
                 }

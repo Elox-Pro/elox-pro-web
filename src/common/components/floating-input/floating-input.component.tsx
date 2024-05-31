@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next"
 type IconInputProps = {
   label: string
   register: UseFormRegister<any>
-  error: FieldError | undefined
+  error?: FieldError
   valueAsNumber?: boolean
 } & InputHTMLAttributes<HTMLInputElement>
 

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import Col from "react-bootstrap/esm/Col";
-import ListGroup from "react-bootstrap/esm/ListGroup";
+import ListGroup, { ListGroupProps } from "react-bootstrap/esm/ListGroup";
 import Row from "react-bootstrap/esm/Row";
 
 /**
@@ -12,16 +12,17 @@ import Row from "react-bootstrap/esm/Row";
 type ContainerProps = {
     children: ReactNode;
     onClick?: () => void;
-};
+    disabled?: boolean;
+} & ListGroupProps;
 
 /**
  * Container component to wrap children elements inside a ListGroup.Item.
  * @param {ContainerProps} props - Component props.
  * @returns {JSX.Element} A styled ListGroup.Item containing the children.
  */
-const Container = ({ children, onClick }: ContainerProps): JSX.Element => {
+const Container = ({ children, onClick, disabled = false, ...props }: ContainerProps): JSX.Element => {
     return (
-        <ListGroup.Item className="px-0 py-3" action onClick={onClick}>
+        <ListGroup.Item className="px-0 py-3" action onClick={onClick} disabled={disabled} {...props}>
             <Row className="w-100 align-items-center g-0">
                 {children}
             </Row>

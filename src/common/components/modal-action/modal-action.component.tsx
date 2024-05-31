@@ -3,34 +3,37 @@ import Modal from "react-bootstrap/esm/Modal";
 import Row from "react-bootstrap/esm/Row";
 import Container from "react-bootstrap/esm/Container";
 import Col from "react-bootstrap/esm/Col";
-import "./modal-action.styles.scss";
 
 /**
- * Props for the Wrapper component.
- * @typedef {Object} WrapperProps
+ * Props for the Form Modal component.
+ * @typedef {Object} FormProps
  * @property {boolean} show - Determines if the modal is shown.
  * @property {ReactNode} children - The content to be displayed within the modal.
+ * @property {() => void} onSubmit - Function to call when the submit button is clicked.
  */
-type WrapperProps = {
+type FormProps = {
     show: boolean;
     children: ReactNode;
+    onSubmit: () => void;
 }
 
 /**
- * Wrapper component for the modal.
- * @param {WrapperProps} props - The properties for the Wrapper component.
- * @returns {JSX.Element} The Wrapper component.
+ * Form component for the modal.
+ * @param {FormProps} props - The properties for the Modal Form component.
+ * @returns {JSX.Element} The Form Modal component.
  */
-const Wrapper = ({ show, children }: WrapperProps): JSX.Element => {
+const Form = ({ show, children, onSubmit }: FormProps): JSX.Element => {
     return (
         <Modal
-            className="modal-action modal-action-wrapper"
+            className="modal-action"
             show={show}
             fullscreen="lg-down"
             scrollable
             backdrop="static"
             keyboard={false}>
-            {children}
+            <form onSubmit={onSubmit} noValidate>
+                {children}
+            </form>
         </Modal>
     );
 }
@@ -40,12 +43,11 @@ const Wrapper = ({ show, children }: WrapperProps): JSX.Element => {
  * @typedef {Object} HeaderProps
  * @property {ReactNode} children - The content to be displayed within the header.
  * @property {() => void} onClose - Function to call when the close button is clicked.
- * @property {() => void} [onBack] - Optional function to call when the back button is clicked.
  */
 type HeaderProps = {
     children: ReactNode;
     onClose: () => void;
-    onBack?: () => void;
+    tabIndex?: number;
 }
 
 /**
@@ -53,29 +55,28 @@ type HeaderProps = {
  * @param {HeaderProps} props - The properties for the Header component.
  * @returns {JSX.Element} The Header component.
  */
-const Header = ({ children, onBack, onClose }: HeaderProps): JSX.Element => {
+const Header = ({ children, onClose, tabIndex = 0 }: HeaderProps): JSX.Element => {
     return (
         <div className="modal-header px-0">
             <Container fluid>
                 <Row className="g-0 align-items-center text-center">
                     <Col xs={2}>
-                        {
-                            onBack &&
-                            <button
-                                type="button"
-                                className="btn btn-action btn-action-back"
-                                onClick={onBack}>
-                            </button>
-                        }
+                        <button
+                            type="button"
+                            tabIndex={tabIndex + 1}
+                            className="btn btn-close"
+                            onClick={onClose}>
+                        </button>
                     </Col>
                     <Col xs={8}>
                         {children}
                     </Col>
                     <Col xs={2}>
                         <button
-                            type="button"
-                            className="btn btn-action btn-action-close"
-                            onClick={onClose}>
+                            type="submit"
+                            tabIndex={tabIndex}
+                            className="btn btn-link">
+                            OK
                         </button>
                     </Col>
                 </Row>
@@ -112,7 +113,7 @@ const HeaderTitle = ({ title, img, alt }: HeaderTitleProps): JSX.Element => {
                     alt={alt}
                     width={16} />
             }
-            <h1 className="modal-title fs-6">{title}</h1>
+            <h1 className="modal-title fs-5">{title}</h1>
         </>
     );
 }
@@ -144,7 +145,7 @@ const Body = ({ children }: BodyProps): JSX.Element => {
  * ModalAction object containing all modal-related components.
  */
 const ModalAction = {
-    Wrapper,
+    Form,
     Header,
     HeaderTitle,
     Body
