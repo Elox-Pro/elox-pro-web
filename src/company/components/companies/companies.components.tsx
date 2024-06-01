@@ -19,7 +19,6 @@ import ModalAction from "../../../common/components/modal-action/modal-action.co
 import { Company } from "../../types/company.type";
 import CardListGroup from "../../../common/components/card-list-group/card-list-group.component";
 import { useNavigate } from "react-router-dom";
-import { resetCompanyCreateState } from "../../features/create-company.slice";
 
 export default function Companies() {
     return (
@@ -36,10 +35,8 @@ function Header() {
     const searchBar = useAppSelector((state) => state.companySearchBar);
     const pagination = useAppSelector((state) => state.companyPagination);
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
 
     const handleCreateCompany = () => {
-        dispatch(resetCompanyCreateState());
         navigate("new");
     }
 
