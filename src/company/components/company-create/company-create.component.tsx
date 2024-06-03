@@ -15,6 +15,8 @@ import { ZodType, z } from "zod";
 import { ZodErrorKey } from "../../../app/constants/zod-error.constants";
 import { FieldError } from "react-hook-form";
 import { useEffect } from "react";
+import ProgressBar from "react-bootstrap/esm/ProgressBar";
+import { addCompanyProgressBarSubmitNow, setCompanyProgressBarSubmitFull, setCompanyProgressBarSubmitNow, setCompanyProgressBarSubmitValue } from "../../features/company-progress-bar-submit.slice";
 
 export default function CompanyCreate() {
 
@@ -22,16 +24,21 @@ export default function CompanyCreate() {
 
     useEffect(() => {
         dispatch(resetCompanyCreateState());
+        dispatch(setCompanyProgressBarSubmitFull(2));
+        dispatch(setCompanyProgressBarSubmitNow(0));
+        dispatch(setCompanyProgressBarSubmitValue(100 / 2))
     }, []);
 
     return (
-        <CPWrapperPage show={true} >
-            <Header />
-            <CompanySection />
-            <CompanyNameModal />
-            <OwnerUsernameModal />
-            <BackToTopButton />
-        </CPWrapperPage>
+        <>
+            <CPWrapperPage show={true} >
+                <Header />
+                <CompanySection />
+                <CompanyNameModal />
+                <OwnerUsernameModal />
+                <BackToTopButton />
+            </CPWrapperPage>
+        </>
     )
 }
 
@@ -44,22 +51,30 @@ function Header() {
                 <p>{t("subtitle")}</p>
             </Col>
         </Row>
+
     )
 }
 
+
 function CompanySection() {
     return (
-        <Row className="mb-3">
-            <Col xs={12}>
-                <CardListGroup.Container>
-                    <CardListGroup.Body>
-                        <CompanyNameItem />
-                        <OwnerUsernameItem />
-                        <CreateCompanyItem />
-                    </CardListGroup.Body>
-                </CardListGroup.Container>
-            </Col>
-        </Row>
+        <>
+            <Row className="mb-3">
+                <Col xs={12}>
+                    <CardListGroup.Container>
+                        <CardListGroup.Body>
+                            <CompanyNameItem />
+                            <OwnerUsernameItem />
+                        </CardListGroup.Body>
+                    </CardListGroup.Container>
+                </Col>
+            </Row>
+            <Row className="mb-3">
+                <Col xs={12}>
+                    <ProgressBarSubmit />
+                </Col>
+            </Row>
+        </>
     )
 }
 
@@ -118,31 +133,6 @@ function OwnerUsernameItem() {
     )
 }
 
-function CreateCompanyItem() {
-
-    const { companyNameValue, ownerUsernameValue } = useAppSelector(state => state.companyCreate);
-
-    return (
-        <ListGroupItem.Container
-            onClick={() => alert("create company")}
-            disabled={!(companyNameValue && ownerUsernameValue)}
-        >
-            <ListGroupItem.Body>
-                <ListGroupItem.BodyIcon
-                    iconClass={`bi bi-check rounded-icon ${companyNameValue && ownerUsernameValue ? 'rounded-icon-success' : 'rounded-icon-default'}`}
-                />
-                <ListGroupItem.BodySection>
-                    <p className="mb-0">
-                        Confirm and create company
-                    </p>
-                </ListGroupItem.BodySection>
-            </ListGroupItem.Body>
-            <ListGroupItem.IconCol
-                iconClass="bi bi-save" />
-        </ListGroupItem.Container>
-    )
-}
-
 function CompanyNameModal() {
 
     const { companyNameModal } = useAppSelector(state => state.companyCreate);
@@ -164,6 +154,7 @@ function CompanyNameModal() {
     const onSubmit = (field: FieldValues) => {
         dispatch(setCompanyNameValue(field.name));
         dispatch(setCompanyNameModal(false));
+        dispatch(addCompanyProgressBarSubmitNow());
     }
 
     return (
@@ -218,6 +209,7 @@ function OwnerUsernameModal() {
     const onSubmit = (field: FieldValues) => {
         dispatch(setOwnerUsernameValue(field.username));
         dispatch(setOwnerUsernameModal(false));
+        dispatch(addCompanyProgressBarSubmitNow());
     }
 
     return (
@@ -249,5 +241,34 @@ function OwnerUsernameModal() {
                 </Container>
             </ModalAction.Body>
         </ModalAction.Form>
+    )
+}
+
+function ProgressBarSubmit() {
+    const { now } = useAppSelector(state => state.companyProgressBarSubmit);
+    const { companyNameValue, ownerUsernameValue } = useAppSelector(state => state.companyCreate);
+
+    const handleSubmit = () => {
+        console.log(companyNameValue, ownerUsernameValue);
+    }
+
+    return (
+        <CardListGroup.Container>
+            <CardListGroup.Body>
+                <ListGroupItem.Container disabled={now < 100} onClick={handleSubmit}>
+                    <ListGroupItem.Body>
+                        <ListGroupItem.BodyIcon
+                            iconClass={`bi bi-check rounded-icon ${now >= 100 ? 'rounded-icon-success' : 'rounded-icon-default'}`} />
+                        <ListGroupItem.BodySection>
+                            <p className="mb-0 text-muted">
+                                <small>Confirm and Submit</small>
+                            </p>
+                            <ProgressBar now={now} style={{ "height": "5px" }} className="mt-1" />
+                        </ListGroupItem.BodySection>
+                    </ListGroupItem.Body>
+                    <ListGroupItem.IconCol iconClass="bi bi-send" />
+                </ListGroupItem.Container>
+            </CardListGroup.Body>
+        </CardListGroup.Container>
     )
 }

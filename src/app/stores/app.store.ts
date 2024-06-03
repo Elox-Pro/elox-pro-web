@@ -18,6 +18,7 @@ import companyPaginationReducer from "../../company/features/company-pagination.
 import companySearchBarReducer from "../../company/features/company-search-bar.slice";
 import companyReducer from "../../company/features/company.slice";
 import companyCreateReducer from "../../company/features/create-company.slice";
+import companyProgressBarSubmitReducer from "../../company/features/company-progress-bar-submit.slice";
 
 export const appStore = configureStore({
     reducer: {
@@ -32,6 +33,7 @@ export const appStore = configureStore({
         company: companyReducer,
         companyPagination: companyPaginationReducer,
         companySearchBar: companySearchBarReducer,
+        companyProgressBarSubmit: companyProgressBarSubmitReducer,
         companyCreate: companyCreateReducer,
         [authApi.reducerPath]: authApi.reducer,
         [tfaApi.reducerPath]: tfaApi.reducer,
