@@ -20,6 +20,7 @@ import companyReducer from "../../company/features/company.slice";
 import companyCreateReducer from "../../company/features/create-company.slice";
 import companyProgressBarSubmitReducer from "../../company/features/company-progress-bar-submit.slice";
 import companyCreateModalReducer from "../../company/features/company-create-modal.slice";
+import companyInfoReducer from "../../company/features/company-info.slice";
 
 export const appStore = configureStore({
     reducer: {
@@ -37,6 +38,7 @@ export const appStore = configureStore({
         companyProgressBarSubmit: companyProgressBarSubmitReducer,
         companyCreate: companyCreateReducer,
         companyCreateModal: companyCreateModalReducer,
+        companyInfo: companyInfoReducer,
         [authApi.reducerPath]: authApi.reducer,
         [tfaApi.reducerPath]: tfaApi.reducer,
         [profileApi.reducerPath]: profileApi.reducer,

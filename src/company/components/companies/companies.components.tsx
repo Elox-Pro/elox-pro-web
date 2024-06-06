@@ -102,7 +102,6 @@ function Body() {
     }, [data]);
 
     const handleCompanyInfo = (company: Company) => {
-        dispatch(companyAction.setSelected(company));
         navigate(`/cpanel/companies/${company.id}`);
     }
 

@@ -5,6 +5,8 @@ import { CompaniesResponse } from "../types/find-many-companies/companies-respon
 import { CompaniesRequest } from "../types/find-many-companies/companies-request.type";
 import { CompanyResponse } from "../types/find-company-by-id/company-response.type";
 import { CompanyRequest } from "../types/find-company-by-id/company-request.type";
+import { CreateCompanyResponse } from "../types/create-company/create-company-response.type";
+import { CreateCompanyRequest } from "../types/create-company/create-company-request.type";
 
 export const companyApi = createApi({
     reducerPath: "companyApi",
@@ -16,6 +18,7 @@ export const companyApi = createApi({
             return headers;
         },
     }),
+    tagTypes: ["getCompanies"],
     endpoints(builder) {
         return {
             getCompanies: builder.query<CompaniesResponse, CompaniesRequest>({
@@ -24,7 +27,8 @@ export const companyApi = createApi({
                         url: `/?page=${data.page}&limit=${data.limit}&searchTerm=${data.searchTerm || ""}`,
                         method: "GET",
                     }
-                }
+                },
+                providesTags: ["getCompanies"]
             }),
             getCompany: builder.query<CompanyResponse, CompanyRequest>({
                 query(data) {
@@ -34,11 +38,22 @@ export const companyApi = createApi({
                     }
                 }
             }),
+            createCompany: builder.mutation<CreateCompanyResponse, CreateCompanyRequest>({
+                query(data) {
+                    return {
+                        url: `/create`,
+                        method: "POST",
+                        body: data,
+                    }
+                },
+                invalidatesTags: ["getCompanies"]
+            }),
         }
     },
 });
 
 export const {
     useGetCompaniesQuery,
-    useGetCompanyQuery
+    useGetCompanyQuery,
+    useCreateCompanyMutation,
 } = companyApi;

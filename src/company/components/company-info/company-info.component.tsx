@@ -1,4 +1,3 @@
-import { useTranslation } from "react-i18next";
 import CPWrapperPage from "../../../cpanel/components/wrapper-page/cp-wrapper-page.component";
 import { useGetCompanyQuery } from "../../api/company.api";
 import Row from "react-bootstrap/esm/Row";
@@ -11,32 +10,37 @@ import { User } from "../../../users/types/user.type";
 import { getProfileAvatar } from "../../../profile/helpers/get-profile-avatar";
 import { Company } from "../../types/company.type";
 import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
+import { setCompany, setCustomers, setTotalCustomers, setTotalUsers, setUsers } from "../../features/company-info.slice";
 
 type Params = {
     id: string;
 }
 export default function CompanyInfo() {
-    const { t } = useTranslation("company", { keyPrefix: "info" });
-    const { id } = useParams<Params>();
-
-    if (!id || isNaN(parseInt(id))) {
-        return null;
-    }
+    const params = useParams<Params>();
+    const dispatch = useAppDispatch();
 
     const { data, isSuccess } = useGetCompanyQuery({
-        id: parseInt(id)
+        id: params && params.id ? parseInt(params.id) : 0
     });
 
-    if (!isSuccess || !data) {
-        return null;
-    }
+    useEffect(() => {
+        if (isSuccess && data) {
+            dispatch(setCompany(data.company));
+            dispatch(setUsers(data.users));
+            dispatch(setCustomers(data.customers));
+            dispatch(setTotalUsers(data.totalUsers));
+            dispatch(setTotalCustomers(data.totalCustomers));
+        }
+    }, [data, isSuccess]);
 
     return (
         <CPWrapperPage show={isSuccess} >
             <Header />
-            <CompanySection company={data.company} />
-            <UsersSection users={data.users} totalUsers={data.totalUsers} />
-            <CustomersSection customers={data.customers} totalCustomers={data.totalCustomers} />
+            <CompanySection />
+            <UsersSection />
+            <CustomersSection />
             <ManageCompanySection />
             <BackToTopButton />
         </CPWrapperPage>
@@ -44,29 +48,29 @@ export default function CompanyInfo() {
 }
 
 function Header() {
-    const { t } = useTranslation("company", { keyPrefix: "info" });
     return (
         <Row className="text-center">
             <Col xs={12}>
-                <p className="fs-1 mb-0">{t("title")}</p>
-                <p>{t("subtitle")}</p>
+                <p className="fs-1 mb-0">
+                    Company Info
+                </p>
+                <p>Info About the company</p>
             </Col>
         </Row>
     )
 }
 
-type CompanySectionProps = {
-    company: Company;
-}
-function CompanySection({ company }: CompanySectionProps) {
+function CompanySection() {
+    const company = useAppSelector((state) => state.companyInfo.company);
+    if (!company) {
+        return null;
+    }
     return (
         <Row className="mb-3">
             <Col xs={12}>
                 <CardListGroup.Container>
                     <CardListGroup.IconTitle value={"Basic Info"} />
                     <CardListGroup.Body>
-                        <CompanyPictureItem
-                            company={company} />
                         <CompanyNameItem
                             company={company}
                             onClick={() => alert(1)} />
@@ -79,11 +83,15 @@ function CompanySection({ company }: CompanySectionProps) {
     )
 }
 
-type UsersSectionProps = {
-    users: User[];
-    totalUsers: number;
-}
-function UsersSection({ users, totalUsers }: UsersSectionProps) {
+function UsersSection() {
+    const {
+        users,
+        totalUsers,
+    } = useAppSelector((state) => state.companyInfo);
+
+    if (users.length === 0) {
+        return null;
+    }
     return (
         <Row className="mb-3">
             <Col xs={12}>
@@ -111,11 +119,17 @@ function UsersSection({ users, totalUsers }: UsersSectionProps) {
     )
 }
 
-type CustomersSectionProps = {
-    customers: User[];
-    totalCustomers: number;
-}
-function CustomersSection({ customers, totalCustomers }: CustomersSectionProps) {
+function CustomersSection() {
+
+    const {
+        customers,
+        totalCustomers,
+    } = useAppSelector((state) => state.companyInfo);
+
+    if (customers.length === 0) {
+        return null;
+    }
+
     return (
         <Row className="mb-3">
             <Col xs={12}>
@@ -153,12 +167,39 @@ function ManageCompanySection() {
                         iconClass="bi bi-gear"
                     />
                     <CardListGroup.Body>
+
+                        <ListGroupItem.Container onClick={() => alert("Add user to company")}>
+                            <ListGroupItem.Body>
+                                <ListGroupItem.BodyIcon
+                                    iconClass="bi bi-plus-circle text-info" />
+                                <ListGroupItem.BodySection>
+                                    <p className="mb-0">
+                                        Add user to company
+                                    </p>
+                                </ListGroupItem.BodySection>
+                            </ListGroupItem.Body>
+                            <ListGroupItem.ChevronIcon />
+                        </ListGroupItem.Container>
+
+                        <ListGroupItem.Container onClick={() => alert("remove user from company")}>
+                            <ListGroupItem.Body>
+                                <ListGroupItem.BodyIcon
+                                    iconClass="bi bi-trash text-danger" />
+                                <ListGroupItem.BodySection>
+                                    <p className="mb-0">
+                                        Remove user from company
+                                    </p>
+                                </ListGroupItem.BodySection>
+                            </ListGroupItem.Body>
+                            <ListGroupItem.ChevronIcon />
+                        </ListGroupItem.Container>
+
                         <ListGroupItem.Container onClick={() => alert("delete company")}>
                             <ListGroupItem.Body>
                                 <ListGroupItem.BodyIcon
                                     iconClass="bi bi-trash text-danger" />
                                 <ListGroupItem.BodySection>
-                                    <p className="mb-0 text-muted">
+                                    <p className="mb-0">
                                         Delete company
                                     </p>
                                 </ListGroupItem.BodySection>
@@ -177,27 +218,18 @@ type CompanyItemProps = {
     company: Company;
     onClick?: () => void;
 }
-function CompanyPictureItem({ company }: CompanyItemProps) {
-    return (
-        <ListGroupItem.Container>
-            <ListGroupItem.Body>
-                <ListGroupItem.BodyLabel value="Company picture" />
-                <ListGroupItem.BodyValue value="A company picture helps personalize your account" />
-            </ListGroupItem.Body>
-            <ListGroupItem.ImageCol
-                src={company.imageUrl}
-                alt={company.name}
-            />
-        </ListGroupItem.Container>
-    )
-}
 
 function CompanyNameItem({ company, onClick }: CompanyItemProps) {
     return (
         <ListGroupItem.Container onClick={onClick}>
             <ListGroupItem.Body>
                 <ListGroupItem.BodyLabel value="Company Name" />
-                <ListGroupItem.BodyValue value={company.name} />
+                <ListGroupItem.BodySection col={8} >
+                    <p className="mb-0">
+                        <img src={company.imageUrl} alt={company.name} width={24} />
+                        <span className="ms-3">{company.name}</span>
+                    </p>
+                </ListGroupItem.BodySection>
             </ListGroupItem.Body>
             <ListGroupItem.ChevronIcon />
         </ListGroupItem.Container>

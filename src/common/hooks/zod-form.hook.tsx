@@ -7,7 +7,8 @@ export function useZodForm<T extends FieldValues>(type: ZodType) {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    watch,
+    formState: { errors, },
   } = useForm<T>({
     resolver: zodResolver(type),
   })
@@ -17,5 +18,6 @@ export function useZodForm<T extends FieldValues>(type: ZodType) {
     handleSubmit,
     reset,
     errors,
+    watch
   }
 }

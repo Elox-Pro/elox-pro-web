@@ -9,28 +9,50 @@ import { ZodErrorKey } from "../../../app/constants/zod-error.constants";
 import { useZodForm } from "../../../common/hooks/zod-form.hook";
 import { FieldError } from "react-hook-form";
 import FloatingInput from "../../../common/components/floating-input/floating-input.component";
+import { useCreateCompanyMutation } from "../../api/company.api";
+import { CreateCompanyRequest } from "../../types/create-company/create-company-request.type";
+import { useEffect } from "react";
+import { setOverlay } from "../../../common/features/common.slice";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { QueryStatus } from "@reduxjs/toolkit/query/react";
 
 export default function CompanyCreateModal() {
 
     const companyCreateModal = useAppSelector((state) => state.companyCreateModal);
+    const overlay = useAppSelector((state) => state.common.overlay);
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const [mutation, { status, data }] = useCreateCompanyMutation();
 
-    type FieldValues = {
-        name: string;
-    };
-
-    const schema: ZodType<FieldValues> = z.object({
+    const schema: ZodType<CreateCompanyRequest> = z.object({
         name: z.string().min(3, { message: ZodErrorKey.required })
     });
 
-    const zodForm = useZodForm<FieldValues>(schema);
+    const zodForm = useZodForm<CreateCompanyRequest>(schema);
+    const nameWatch = zodForm.watch("name");
 
-    const onSubmit = () => {
-        alert("submit");
+    const onSubmit = (req: CreateCompanyRequest) => {
+        try {
+            dispatch(setOverlay(true));
+            mutation(req);
+        } catch (error) {
+            console.error(error);
+            toast.error(JSON.stringify(error));
+        }
     }
+
+    useEffect(() => {
+        if (status === QueryStatus.fulfilled && data) {
+            onClose();
+            navigate(`/cpanel/companies/${data.company.id}`);
+            toast.success("Company created successfully");
+        }
+    }, [status, data])
 
     const onClose = () => {
         dispatch(companyCreateModalAction.setShow(false));
+        zodForm.reset();
     }
 
     return (
@@ -60,7 +82,7 @@ export default function CompanyCreateModal() {
                 </Row>
             </ModalForm.Body>
             <ModalForm.Footer>
-                <SubmitButton disabled={false} />
+                <SubmitButton disabled={!nameWatch || nameWatch.length < 3 || overlay.active} />
             </ModalForm.Footer>
         </ModalForm.Content>
     );
