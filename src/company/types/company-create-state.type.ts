@@ -3,4 +3,5 @@ export type CompanyCreateState = {
     ownerUsernameModal: boolean;
     companyNameValue: string | null;
     ownerUsernameValue: string | null;
+    companySubmitFocus: boolean;
 }

@@ -10,11 +10,13 @@ import Col from "react-bootstrap/esm/Col";
  * @property {boolean} show - Determines if the modal is shown.
  * @property {ReactNode} children - The content to be displayed within the modal.
  * @property {() => void} onSubmit - Function to call when the submit button is clicked.
+ * @property {() => void} onShow - Function to call when the modal is shown.
  */
 type FormProps = {
     show: boolean;
     children: ReactNode;
     onSubmit: () => void;
+    onShow?: () => void;
 }
 
 /**
@@ -22,7 +24,7 @@ type FormProps = {
  * @param {FormProps} props - The properties for the Modal Form component.
  * @returns {JSX.Element} The Form Modal component.
  */
-const Form = ({ show, children, onSubmit }: FormProps): JSX.Element => {
+const Form = ({ show, children, onSubmit, onShow }: FormProps): JSX.Element => {
     return (
         <Modal
             className="modal-action"
@@ -30,6 +32,7 @@ const Form = ({ show, children, onSubmit }: FormProps): JSX.Element => {
             fullscreen="lg-down"
             scrollable
             backdrop="static"
+            onShow={onShow}
             keyboard={false}>
             <form onSubmit={onSubmit} noValidate>
                 {children}

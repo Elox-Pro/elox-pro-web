@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, useId } from "react"
+import { InputHTMLAttributes, RefAttributes, useId } from "react"
 import { FieldError, UseFormRegister } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
@@ -8,6 +8,7 @@ type IconInputProps = {
   error?: FieldError
   valueAsNumber?: boolean
 } & InputHTMLAttributes<HTMLInputElement>
+  & RefAttributes<HTMLInputElement>
 
 export default function FloatingInput({ label, register, error, valueAsNumber, ...props }: IconInputProps) {
 

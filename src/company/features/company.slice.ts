@@ -5,23 +5,19 @@ import { logout } from "../../auth/features/auth.slice";
 
 const initialState: CompanyState = {
     list: [],
-    selected: null,
-    manageModal: false
+    selected: null
 }
 
 const companySlice = createSlice({
     name: "company",
     initialState,
     reducers: {
-        setCompanyList: (state, action: PayloadAction<Company[]>) => {
+        setList: (state, action: PayloadAction<Company[]>) => {
             state.list = action.payload;
         },
-        setCompanySelected: (state, action: PayloadAction<Company | null>) => {
+        setSelected: (state, action: PayloadAction<Company | null>) => {
             state.selected = action.payload;
-        },
-        setCompanyManageModal: (state, action: PayloadAction<boolean>) => {
-            state.manageModal = action.payload;
-        },
+        }
     }, extraReducers: (builder) => {
         builder.addCase(logout, () => {
             return companySlice.getInitialState();
@@ -30,11 +26,6 @@ const companySlice = createSlice({
 });
 
 const companyReducer = companySlice.reducer;
-
-export const {
-    setCompanyList,
-    setCompanySelected,
-    setCompanyManageModal,
-} = companySlice.actions;
+export const companyAction = companySlice.actions;
 
 export default companyReducer;

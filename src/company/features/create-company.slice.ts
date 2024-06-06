@@ -7,6 +7,7 @@ const initialState: CompanyCreateState = {
     companyNameValue: null,
     ownerUsernameModal: false,
     ownerUsernameValue: null,
+    companySubmitFocus: false,
 }
 
 const companyCreateSlice = createSlice({
@@ -24,6 +25,9 @@ const companyCreateSlice = createSlice({
         },
         setOwnerUsernameValue: (state, action: PayloadAction<string>) => {
             state.ownerUsernameValue = action.payload;
+        },
+        setCompanySubmitFocus: (state, action: PayloadAction<boolean>) => {
+            state.companySubmitFocus = action.payload;
         },
         resetCompanyCreateState: (state) => {
             state.companyNameModal = false;
@@ -46,6 +50,7 @@ export const {
     setOwnerUsernameModal,
     setOwnerUsernameValue,
     resetCompanyCreateState,
+    setCompanySubmitFocus,
 } = companyCreateSlice.actions;
 
 export default companyCreateReducer;

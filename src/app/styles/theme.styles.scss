@@ -1,5 +1,20 @@
 :root,
 [data-bs-theme=light] {
+    .modal-form {
+
+        form {
+            display: contents;
+        }
+
+        .modal-header {
+            border: none;
+        }
+
+        .modal-footer {
+            border: none;
+        }
+    }
+
     .nav-pills {
         .nav-link {
             &.active {

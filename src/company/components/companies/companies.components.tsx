@@ -10,7 +10,7 @@ import SearchBar from "../../../common/components/search-bar/search-bar.componen
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { setCurrentPage, setItemsPerPage, setResultCount } from "../../features/company-pagination.slice";
 import { setSearchBarFocus, setSearchBarReset, setSearchBarText } from "../../features/company-search-bar.slice";
-import { setCompanyManageModal, setCompanyList, setCompanySelected } from "../../features/company.slice";
+import { companyAction } from "../../features/company.slice";
 import CommonPagination from "../../../common/components/pagination/common-pagination.component";
 import StickyWrapper from "../../../common/components/sticky-wrapper/sticky-wrapper.component";
 import IconButton from "../../../common/components/icon-button/icon-button.component";
@@ -19,13 +19,14 @@ import ModalAction from "../../../common/components/modal-action/modal-action.co
 import { Company } from "../../types/company.type";
 import CardListGroup from "../../../common/components/card-list-group/card-list-group.component";
 import { useNavigate } from "react-router-dom";
+import CompanyCreateModal from "../company-create-modal/company-create-modal.component";
+import { companyCreateModalAction } from "../../features/company-create-modal.slice";
 
 export default function Companies() {
     return (
         <>
             <Header />
             <Body />
-            <ManageCompanyModal />
         </>
     );
 }
@@ -34,10 +35,10 @@ function Header() {
     const { t } = useTranslation("company", { keyPrefix: "companies" });
     const searchBar = useAppSelector((state) => state.companySearchBar);
     const pagination = useAppSelector((state) => state.companyPagination);
-    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
-    const handleCreateCompany = () => {
-        navigate("new");
+    const showCompanyCreateModal = () => {
+        dispatch(companyCreateModalAction.setShow(true));
     }
 
     return (
@@ -51,7 +52,7 @@ function Header() {
                         <IconButton
                             text={t("add")}
                             icon="bi bi-plus-circle"
-                            onClick={handleCreateCompany} />
+                            onClick={showCompanyCreateModal} />
                     </Col>
                 </Row>
             </StickyWrapper>
@@ -70,6 +71,7 @@ function Header() {
                     </Col>
                 </Row>
             </StickyWrapper>
+            <CompanyCreateModal />
         </>
     )
 }
@@ -94,13 +96,13 @@ function Body() {
     }
 
     useEffect(() => {
-        dispatch(setCompanyList(data?.companies || []));
+        dispatch(companyAction.setList(data?.companies || []));
         dispatch(setResultCount(data?.total || 0));
         dispatch(setItemsPerPage(pagination.itemsPerPage));
     }, [data]);
 
     const handleCompanyInfo = (company: Company) => {
-        dispatch(setCompanySelected(company));
+        dispatch(companyAction.setSelected(company));
         navigate(`/cpanel/companies/${company.id}`);
     }
 
@@ -149,7 +151,7 @@ function ManageCompanyModal() {
     const dispatch = useAppDispatch();
 
     const handleHideModal = () => {
-        dispatch(setCompanyManageModal(false));
+        // dispatch(setCompanyManageModal(false));
     }
 
     if (company.selected === null) {
@@ -157,7 +159,7 @@ function ManageCompanyModal() {
     }
 
     return (
-        <ModalAction.Form show={company.manageModal} onSubmit={() => { console.log("submit") }}>
+        <ModalAction.Form show={false} onSubmit={() => { console.log("submit") }}>
             <ModalAction.Header onClose={handleHideModal}>
                 <ModalAction.HeaderTitle
                     img={company.selected.imageUrl}

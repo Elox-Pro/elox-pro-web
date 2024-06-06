@@ -8,13 +8,13 @@ import ListGroupItem from "../../../common/components/list-group-item/list-group
 import ModalAction from "../../../common/components/modal-action/modal-action.component";
 import Container from "react-bootstrap/esm/Container";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
-import { resetCompanyCreateState, setCompanyNameModal, setCompanyNameValue, setOwnerUsernameModal, setOwnerUsernameValue } from "../../features/create-company.slice";
+import { resetCompanyCreateState, setCompanyNameModal, setCompanyNameValue, setCompanySubmitFocus, setOwnerUsernameModal, setOwnerUsernameValue } from "../../features/create-company.slice";
 import FloatingInput from "../../../common/components/floating-input/floating-input.component";
 import { useZodForm } from "../../../common/hooks/zod-form.hook";
 import { ZodType, z } from "zod";
 import { ZodErrorKey } from "../../../app/constants/zod-error.constants";
 import { FieldError } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import ProgressBar from "react-bootstrap/esm/ProgressBar";
 import { addCompanyProgressBarSubmitNow, setCompanyProgressBarSubmitFull, setCompanyProgressBarSubmitNow, setCompanyProgressBarSubmitValue } from "../../features/company-progress-bar-submit.slice";
 
@@ -154,6 +154,7 @@ function CompanyNameModal() {
     const onSubmit = (field: FieldValues) => {
         dispatch(setCompanyNameValue(field.name));
         dispatch(setCompanyNameModal(false));
+        dispatch(setOwnerUsernameModal(true));
         dispatch(addCompanyProgressBarSubmitNow());
     }
 
@@ -192,6 +193,7 @@ function CompanyNameModal() {
 function OwnerUsernameModal() {
     const { ownerUsernameModal } = useAppSelector(state => state.companyCreate);
     const dispatch = useAppDispatch();
+
     const onHide = () => {
         dispatch(setOwnerUsernameModal(false));
     }
@@ -210,10 +212,13 @@ function OwnerUsernameModal() {
         dispatch(setOwnerUsernameValue(field.username));
         dispatch(setOwnerUsernameModal(false));
         dispatch(addCompanyProgressBarSubmitNow());
+        dispatch(setCompanySubmitFocus(true));
     }
 
     return (
-        <ModalAction.Form show={ownerUsernameModal} onSubmit={handleSubmit(onSubmit)}>
+        <ModalAction.Form
+            show={ownerUsernameModal}
+            onSubmit={handleSubmit(onSubmit)}>
             <ModalAction.Header onClose={onHide} tabIndex={2}>
                 <ModalAction.HeaderTitle
                     title={"Owner username"} />
@@ -232,7 +237,7 @@ function OwnerUsernameModal() {
                                 type="text"
                                 name="username"
                                 label={"username"}
-                                autoFocus
+                                autoFocus={true}
                                 register={register}
                                 error={errors.username as FieldError}
                             />
@@ -246,7 +251,14 @@ function OwnerUsernameModal() {
 
 function ProgressBarSubmit() {
     const { now } = useAppSelector(state => state.companyProgressBarSubmit);
-    const { companyNameValue, ownerUsernameValue } = useAppSelector(state => state.companyCreate);
+    const { companyNameValue, ownerUsernameValue, companySubmitFocus } = useAppSelector(state => state.companyCreate);
+
+    useEffect(() => {
+        console.log(companySubmitFocus)
+        if (companySubmitFocus) {
+            document.getElementById("123")?.focus();
+        }
+    }, [companySubmitFocus]);
 
     const handleSubmit = () => {
         console.log(companyNameValue, ownerUsernameValue);

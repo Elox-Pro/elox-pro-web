@@ -97,7 +97,7 @@ function UsersSection({ users, totalUsers }: UsersSectionProps) {
                             <CompanyUserItem
                                 key={index}
                                 user={user}
-                                onClick={() => alert("show user info")}
+                                onClick={() => alert("options: show user info, remove user from company (not system)")}
                             />
                         ))}
                         <ShowMoreItem onClick={() => alert("show more users")} />
