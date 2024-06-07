@@ -7,6 +7,8 @@ import { CompanyResponse } from "../types/find-company-by-id/company-response.ty
 import { CompanyRequest } from "../types/find-company-by-id/company-request.type";
 import { CreateCompanyResponse } from "../types/create-company/create-company-response.type";
 import { CreateCompanyRequest } from "../types/create-company/create-company-request.type";
+import { UpdateCompanyNameResponse } from "../types/update-company-name/update-company-name-response.type";
+import { UpdateCompanyNameRequest } from "../types/update-company-name/update-company-name-request.type";
 
 export const companyApi = createApi({
     reducerPath: "companyApi",
@@ -18,7 +20,7 @@ export const companyApi = createApi({
             return headers;
         },
     }),
-    tagTypes: ["getCompanies"],
+    tagTypes: ["getCompanies", "getCompany"],
     endpoints(builder) {
         return {
             getCompanies: builder.query<CompaniesResponse, CompaniesRequest>({
@@ -36,7 +38,8 @@ export const companyApi = createApi({
                         url: `/find/${data.id}`,
                         method: "GET",
                     }
-                }
+                },
+                providesTags: ["getCompany"]
             }),
             createCompany: builder.mutation<CreateCompanyResponse, CreateCompanyRequest>({
                 query(data) {
@@ -48,6 +51,16 @@ export const companyApi = createApi({
                 },
                 invalidatesTags: ["getCompanies"]
             }),
+            updateCompanyName: builder.mutation<UpdateCompanyNameResponse, UpdateCompanyNameRequest>({
+                query(data) {
+                    return {
+                        url: `/update/name`,
+                        method: "PATCH",
+                        body: data,
+                    }
+                },
+                invalidatesTags: ["getCompanies","getCompany"]
+            })
         }
     },
 });
@@ -56,4 +69,5 @@ export const {
     useGetCompaniesQuery,
     useGetCompanyQuery,
     useCreateCompanyMutation,
+    useUpdateCompanyNameMutation,
 } = companyApi;

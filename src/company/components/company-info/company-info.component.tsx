@@ -13,6 +13,8 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { setCompany, setCustomers, setTotalCustomers, setTotalUsers, setUsers } from "../../features/company-info.slice";
+import companyUpdateNameReducer, { setShowModal } from "../../features/company-update-name.slice";
+import CompanyUpdateNameModal from "../company-update-name-modal/company-update-name-modal.component";
 
 type Params = {
     id: string;
@@ -71,11 +73,8 @@ function CompanySection() {
                 <CardListGroup.Container>
                     <CardListGroup.IconTitle value={"Basic Info"} />
                     <CardListGroup.Body>
-                        <CompanyNameItem
-                            company={company}
-                            onClick={() => alert(1)} />
-                        <CompanyUpdateAtItem
-                            company={company} />
+                        <CompanyNameItem />
+                        <CompanyUpdateAtItem />
                     </CardListGroup.Body>
                 </CardListGroup.Container>
             </Col>
@@ -214,29 +213,40 @@ function ManageCompanySection() {
     )
 }
 
-type CompanyItemProps = {
-    company: Company;
-    onClick?: () => void;
-}
 
-function CompanyNameItem({ company, onClick }: CompanyItemProps) {
+function CompanyNameItem() {
+    const company = useAppSelector((state) => state.companyInfo.company);
+    const dispatch = useAppDispatch();
+    if (!company) {
+        return null;
+    }
+    const onClick = () => {
+        dispatch(setShowModal(true));
+    }
     return (
-        <ListGroupItem.Container onClick={onClick}>
-            <ListGroupItem.Body>
-                <ListGroupItem.BodyLabel value="Company Name" />
-                <ListGroupItem.BodySection col={8} >
-                    <p className="mb-0">
-                        <img src={company.imageUrl} alt={company.name} width={24} />
-                        <span className="ms-3">{company.name}</span>
-                    </p>
-                </ListGroupItem.BodySection>
-            </ListGroupItem.Body>
-            <ListGroupItem.ChevronIcon />
-        </ListGroupItem.Container>
+        <>
+            <ListGroupItem.Container onClick={onClick}>
+                <ListGroupItem.Body>
+                    <ListGroupItem.BodyLabel value="Company Name" />
+                    <ListGroupItem.BodySection col={8} >
+                        <p className="mb-0">
+                            <img src={company.imageUrl} alt={company.name} width={24} />
+                            <span className="ms-3">{company.name}</span>
+                        </p>
+                    </ListGroupItem.BodySection>
+                </ListGroupItem.Body>
+                <ListGroupItem.ChevronIcon />
+            </ListGroupItem.Container>
+            <CompanyUpdateNameModal />
+        </>
     )
 }
 
-function CompanyUpdateAtItem({ company }: CompanyItemProps) {
+function CompanyUpdateAtItem() {
+    const company = useAppSelector((state) => state.companyInfo.company);
+    if (!company) {
+        return null;
+    }
     const formatDate = getFormatDate(company.updatedAt);
     return (
         <ListGroupItem.Container>
