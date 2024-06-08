@@ -10,6 +10,8 @@ export default function CoverIndex() {
       <Container fluid>
         <CoverHeader />
         <CoverMain />
+      </Container>
+      <Container fluid className="bg-body-tertiary border-top">
         <CoverFooter />
       </Container>
     </section>

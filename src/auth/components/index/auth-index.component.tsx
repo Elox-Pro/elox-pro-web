@@ -14,7 +14,7 @@ export default function AuthIndex() {
           </Col>
         </Row>
       </Container>
-      <Container fluid>
+      <Container fluid className="bg-body-tertiary border-top">
         <CoverFooter />
       </Container>
     </>

@@ -9,9 +9,9 @@ export default function CoverFooter() {
   const { t } = useTranslation("cover", { keyPrefix: "footer" });
 
   return (
-    <div className="border-top mt-5">
-      <footer className="pt-5 px-5 bg-body-tertiary">
-        <Row>
+    <div className="mt-5 ">
+      <footer className="pt-5 px-5">
+        <Row className="g-0">
           <Col md={6}>
             <h4>{t("about.title")}</h4>
             <p>
@@ -54,15 +54,15 @@ export default function CoverFooter() {
           </Col>
         </Row>
       </footer>
-      <footer className="bg-body-tertiary">
-        <Row className="py-5">
+      <footer>
+        <Row className="py-5 g-0">
           <Col>
             <p className="text-center"><small>{t("dedication")}</small></p>
           </Col>
         </Row>
       </footer>
       <footer>
-        <Row className="py-5">
+        <Row className="py-5 g-0">
           <Col>
             <p className="text-center"><small>{t("copryright")}</small></p>
           </Col>
