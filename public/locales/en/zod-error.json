@@ -4,6 +4,7 @@
     "zodError.invalidEmail": "This field must be a valid email address.",
     "zodError.passwordsDoNotMatch": "The passwords do not match.",
     "zodError.emailAlreadyExists": "This email address is already in use.",
-    "zodError.invalidPhone":"This field must be a valid phone number.",
-    "zodError.phoneAlreadyExists": "This phone number is already in use."
+    "zodError.invalidPhone": "This field must be a valid phone number.",
+    "zodError.phoneAlreadyExists": "This phone number is already in use.",
+    "zodError.namesAreSame": "The names are the same."
 }

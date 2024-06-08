@@ -17,6 +17,15 @@ import { UpdateCompanyNameRequest } from "../../types/update-company-name/update
 import { setShowModal } from "../../features/company-update-name.slice";
 import { setCompany } from "../../features/company-info.slice";
 
+const schema: ZodType<UpdateCompanyNameRequest> = z.object({
+    name: z.string().min(3, { message: ZodErrorKey.required }),
+    id: z.coerce.number(),
+    currentName: z.string()
+}).refine(({ name, currentName }) => name !== currentName, {
+    message: ZodErrorKey.namesAreSame,
+    path: ["name"]
+});
+
 export default function CompanyUpdateNameModal() {
 
     const state = useAppSelector((state) => state.companyUpdateName);
@@ -32,19 +41,14 @@ export default function CompanyUpdateNameModal() {
 
     const name = company.name || "";
     const id = company.id || 0;
-
-    const schema: ZodType<UpdateCompanyNameRequest> = z.object({
-        name: z.string().min(3, { message: ZodErrorKey.required }),
-        id: z.coerce.number()
-    });
-
     const zodForm = useZodForm<UpdateCompanyNameRequest>(schema);
     const nameWatch = zodForm.watch("name");
+    const disabledSubmit = !nameWatch || nameWatch.length < 3 || overlay.active || nameWatch === name;
 
     const onSubmit = (req: UpdateCompanyNameRequest) => {
         try {
             dispatch(setOverlay(true));
-            mutation(req);
+            mutation({ name: req.name, id: req.id });
         } catch (error) {
             console.error(error);
             toast.error(JSON.stringify(error));
@@ -93,11 +97,16 @@ export default function CompanyUpdateNameModal() {
                             defaultValue={id}
                             {...zodForm.register("id")}
                         />
+                        <input
+                            type="hidden"
+                            defaultValue={name}
+                            {...zodForm.register("currentName")}
+                        />
                     </Col>
                 </Row>
             </ModalForm.Body>
             <ModalForm.Footer>
-                <SubmitButton disabled={!nameWatch || nameWatch.length < 3 || overlay.active} />
+                <SubmitButton disabled={disabledSubmit} />
             </ModalForm.Footer>
         </ModalForm.Content>
     );
