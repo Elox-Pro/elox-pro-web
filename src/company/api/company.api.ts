@@ -9,6 +9,8 @@ import { CreateCompanyResponse } from "../types/create-company/create-company-re
 import { CreateCompanyRequest } from "../types/create-company/create-company-request.type";
 import { UpdateCompanyNameResponse } from "../types/update-company-name/update-company-name-response.type";
 import { UpdateCompanyNameRequest } from "../types/update-company-name/update-company-name-request.type";
+import { AddUserToCompanyResponse } from "../types/add-user-to-company/add-user-to-company-response.type";
+import { AddUserToCompanyRequest } from "../types/add-user-to-company/add-user-to-company-request.type";
 
 export const companyApi = createApi({
     reducerPath: "companyApi",
@@ -59,7 +61,17 @@ export const companyApi = createApi({
                         body: data,
                     }
                 },
-                invalidatesTags: ["getCompanies","getCompany"]
+                invalidatesTags: ["getCompanies", "getCompany"]
+            }),
+            addUserToCompany: builder.mutation<AddUserToCompanyResponse, AddUserToCompanyRequest>({
+                query(data) {
+                    return {
+                        url: `/add/user`,
+                        method: "PATCH",
+                        body: data,
+                    }
+                },
+                invalidatesTags: ["getCompany"]
             })
         }
     },
@@ -70,4 +82,5 @@ export const {
     useGetCompanyQuery,
     useCreateCompanyMutation,
     useUpdateCompanyNameMutation,
+    useAddUserToCompanyMutation
 } = companyApi;

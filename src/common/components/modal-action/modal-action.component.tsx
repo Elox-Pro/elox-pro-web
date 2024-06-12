@@ -41,9 +41,10 @@ const Form = ({ children, onSubmit }: FormProps): JSX.Element => {
 
 type HeaderProps = {
     onClose: () => void;
+    children?: ReactNode;
 }
 
-const Header = ({ onClose }: HeaderProps): JSX.Element => {
+const Header = ({ onClose, children }: HeaderProps): JSX.Element => {
     return (
         <div className="modal-header">
             <Container fluid>
@@ -55,10 +56,23 @@ const Header = ({ onClose }: HeaderProps): JSX.Element => {
                             onClick={onClose}>
                         </button>
                     </Col>
+                    <Col xs={8}>{children}</Col>
                 </Row>
             </Container>
         </div>
     );
+}
+
+type TitleProps = {
+    value: string;
+}
+
+const Title = ({ value }: TitleProps): JSX.Element => {
+    return (
+        <h5>
+            {value}
+        </h5>
+    )
 }
 
 
@@ -137,6 +151,7 @@ const ModalAction = {
     Content,
     Form,
     Header,
+    Title,
     Body,
     Footer
 }

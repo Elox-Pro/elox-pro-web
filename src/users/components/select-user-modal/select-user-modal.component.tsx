@@ -14,6 +14,11 @@ import { getProfileAvatar } from "../../../profile/helpers/get-profile-avatar";
 import Paginator from "../../../common/components/paginator/paginator.component";
 import { setPaginatorCurrentPage, setPaginatorResults } from "../../../common/features/paginator.slice";
 import { setModalActionBackToTop } from "../../../common/features/modal-action.slice";
+import { useAddUserToCompanyMutation } from "../../../company/api/company.api";
+import { Company } from "../../../company/types/company.type";
+import { setOverlay } from "../../../common/features/common.slice";
+import { toast } from "react-toastify";
+import { QueryStatus } from "@reduxjs/toolkit/query";
 
 export default function SelectUserModal() {
 
@@ -32,8 +37,6 @@ export default function SelectUserModal() {
 
     const onClose = () => {
         dispatch(showSelectUserModal(false));
-        dispatch(setSearchBarText(""));
-        dispatch(setPaginatorCurrentPage(1));
     }
 
     const handleBackToTop = () => {
@@ -55,7 +58,12 @@ export default function SelectUserModal() {
     };
 
     useEffect(() => {
-        dispatch(setSearchBarFocus(true));
+        if (selectUser.modal.show) {
+            dispatch(setSearchBarFocus(true));
+        } else {
+            dispatch(setSearchBarText(""));
+            dispatch(setPaginatorCurrentPage(1));
+        }
     }, [selectUser.modal.show]);
 
     useEffect(() => {
@@ -72,12 +80,17 @@ export default function SelectUserModal() {
     return (
         <ModalAction.Content
             show={selectUser.modal.show}>
-            <ModalAction.Header onClose={onClose} />
+            <ModalAction.Header onClose={onClose} >
+                <ModalAction.Title value="Select user" />
+            </ModalAction.Header>
             <ModalAction.Body onBackToTop={handleBackToTop}>
                 <Row>
                     <Col xs={12}>
+                        <p className="text-muted">
+                            Please select a user from the list below.
+                        </p>
                         <SearchBar
-                            placeholder="Select an user..."
+                            placeholder="Search by username..."
                             onChange={searchBarOnChange}
                             onReset={searchBarOnReset}
                         />
@@ -85,7 +98,7 @@ export default function SelectUserModal() {
                     <Col xs={12}>
                         <ListGroup variant="flush" className="mb-5">
                             {selectUser.users.map((user, index) => (
-                                <UserItem user={user} key={index} />
+                                <UserItem user={user} company={companyInfo.company} key={index} />
                             ))}
                         </ListGroup>
                     </Col>
@@ -100,17 +113,41 @@ export default function SelectUserModal() {
 
 type UserItemProps = {
     user: User | null;
+    company: Company | null;
 }
-function UserItem({ user }: UserItemProps) {
+function UserItem({ user, company }: UserItemProps) {
 
-    if (!user || !user.username) return null;
+    if (!user
+        || !user.username
+        || !user.id
+        || !company
+        || !company.id
+    ) return null;
 
     const avatarUrl = getProfileAvatar(user.avatarUrl);
     const username = user.username;
+    const dispatch = useAppDispatch();
+    const [mutation, { status, data }] = useAddUserToCompanyMutation();
 
     const onSubmit = () => {
-        console.log(user.username, user.roleText, user.id);
-    };
+        try {
+            dispatch(setOverlay(true));
+            mutation({
+                companyId: company.id,
+                userId: user.id,
+            });
+        } catch (error) {
+            console.error(error);
+            toast.error(JSON.stringify(error));
+        }
+    }
+
+    useEffect(() => {
+        if (status === QueryStatus.fulfilled && data) {
+            dispatch(showSelectUserModal(false));
+            toast.success("User added successfully");
+        }
+    }, [status, data])
 
     return (
         <ListItem.Content onClick={onSubmit}>
