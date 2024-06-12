@@ -1,6 +1,6 @@
 import Row from "react-bootstrap/esm/Row";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
-import ModalForm from "../../../common/components/modal-form/modal-form.component";
+import ModalAction from "../../../common/components/modal-action/modal-action.component";
 import Col from "react-bootstrap/esm/Col";
 import SubmitButton from "../../../common/components/submit-button/submit-button";
 import { ZodType, z } from "zod";
@@ -69,45 +69,45 @@ export default function CompanyUpdateNameModal() {
     }
 
     return (
-        <ModalForm.Content
-            show={state.modal.show}
-            onSubmit={zodForm.handleSubmit(onSubmit)}>
-            <ModalForm.Header onClose={onClose} />
-            <ModalForm.Body>
-                <Row>
-                    <Col xs={12}>
-                        <p className="text-muted">
-                            Please provide the official name of your company.
-                        </p>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={12}>
-                        <FloatingInput
-                            type="text"
-                            name="name"
-                            label={"name"}
-                            defaultValue={name}
-                            autoFocus={true}
-                            register={zodForm.register}
-                            error={zodForm.errors.name as FieldError}
-                        />
-                        <input
-                            type="hidden"
-                            defaultValue={id}
-                            {...zodForm.register("id")}
-                        />
-                        <input
-                            type="hidden"
-                            defaultValue={name}
-                            {...zodForm.register("currentName")}
-                        />
-                    </Col>
-                </Row>
-            </ModalForm.Body>
-            <ModalForm.Footer>
-                <SubmitButton disabled={disabledSubmit} />
-            </ModalForm.Footer>
-        </ModalForm.Content>
+        <ModalAction.Content show={state.modal.show}>
+            <ModalAction.Form onSubmit={zodForm.handleSubmit(onSubmit)}>
+                <ModalAction.Header onClose={onClose} />
+                <ModalAction.Body>
+                    <Row>
+                        <Col xs={12}>
+                            <p className="text-muted">
+                                Please provide the official name of your company.
+                            </p>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={12}>
+                            <FloatingInput
+                                type="text"
+                                name="name"
+                                label={"name"}
+                                defaultValue={name}
+                                autoFocus={true}
+                                register={zodForm.register}
+                                error={zodForm.errors.name as FieldError}
+                            />
+                            <input
+                                type="hidden"
+                                defaultValue={id}
+                                {...zodForm.register("id")}
+                            />
+                            <input
+                                type="hidden"
+                                defaultValue={name}
+                                {...zodForm.register("currentName")}
+                            />
+                        </Col>
+                    </Row>
+                </ModalAction.Body>
+                <ModalAction.Footer>
+                    <SubmitButton disabled={disabledSubmit} />
+                </ModalAction.Footer>
+            </ModalAction.Form>
+        </ModalAction.Content>
     );
 }

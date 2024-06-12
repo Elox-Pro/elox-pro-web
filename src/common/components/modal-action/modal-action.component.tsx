@@ -1,85 +1,58 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
+import Col from "react-bootstrap/esm/Col";
+import Container from "react-bootstrap/esm/Container";
 import Modal from "react-bootstrap/esm/Modal";
 import Row from "react-bootstrap/esm/Row";
-import Container from "react-bootstrap/esm/Container";
-import Col from "react-bootstrap/esm/Col";
+import Button from "react-bootstrap/esm/Button";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
+import { setModalActionBackToTop } from "../../features/modal-action.slice";
 
-/**
- * Props for the Form Modal component.
- * @typedef {Object} FormProps
- * @property {boolean} show - Determines if the modal is shown.
- * @property {ReactNode} children - The content to be displayed within the modal.
- * @property {() => void} onSubmit - Function to call when the submit button is clicked.
- * @property {() => void} onShow - Function to call when the modal is shown.
- */
-type FormProps = {
+type ContentProps = {
     show: boolean;
     children: ReactNode;
-    onSubmit: () => void;
-    onShow?: () => void;
 }
 
-/**
- * Form component for the modal.
- * @param {FormProps} props - The properties for the Modal Form component.
- * @returns {JSX.Element} The Form Modal component.
- */
-const Form = ({ show, children, onSubmit, onShow }: FormProps): JSX.Element => {
+const Content = ({ show, children }: ContentProps): JSX.Element => {
     return (
         <Modal
-            className="modal-action"
+            className="modal-form"
             show={show}
-            fullscreen="lg-down"
+            fullscreen="md-down"
             scrollable
             backdrop="static"
-            onShow={onShow}
+            autoFocus={true}
             keyboard={false}>
-            <form onSubmit={onSubmit} noValidate>
-                {children}
-            </form>
+            {children}
         </Modal>
     );
 }
 
-/**
- * Props for the Header component.
- * @typedef {Object} HeaderProps
- * @property {ReactNode} children - The content to be displayed within the header.
- * @property {() => void} onClose - Function to call when the close button is clicked.
- */
-type HeaderProps = {
+type FormProps = {
     children: ReactNode;
-    onClose: () => void;
-    tabIndex?: number;
+    onSubmit: () => void;
+}
+const Form = ({ children, onSubmit }: FormProps): JSX.Element => {
+    return (
+        <form onSubmit={onSubmit} noValidate>
+            {children}
+        </form>
+    );
 }
 
-/**
- * Header component for the modal.
- * @param {HeaderProps} props - The properties for the Header component.
- * @returns {JSX.Element} The Header component.
- */
-const Header = ({ children, onClose, tabIndex = 0 }: HeaderProps): JSX.Element => {
+type HeaderProps = {
+    onClose: () => void;
+}
+
+const Header = ({ onClose }: HeaderProps): JSX.Element => {
     return (
-        <div className="modal-header px-0">
+        <div className="modal-header">
             <Container fluid>
-                <Row className="g-0 align-items-center text-center">
+                <Row>
                     <Col xs={2}>
                         <button
                             type="button"
-                            tabIndex={tabIndex + 1}
                             className="btn btn-close"
                             onClick={onClose}>
-                        </button>
-                    </Col>
-                    <Col xs={8}>
-                        {children}
-                    </Col>
-                    <Col xs={2}>
-                        <button
-                            type="submit"
-                            tabIndex={tabIndex}
-                            className="btn btn-link">
-                            OK
                         </button>
                     </Col>
                 </Row>
@@ -88,70 +61,84 @@ const Header = ({ children, onClose, tabIndex = 0 }: HeaderProps): JSX.Element =
     );
 }
 
-/**
- * Props for the HeaderTitle component.
- * @typedef {Object} HeaderTitleProps
- * @property {string} title - The title text to be displayed.
- * @property {string} [img] - Optional URL of an image to be displayed alongside the title.
- * @property {string} [alt] - Optional alt text for the image.
- */
-type HeaderTitleProps = {
-    title: string;
-    img?: string;
-    alt?: string;
+
+type BodyProps = {
+    children: ReactNode;
+    onBackToTop?: () => void;
 }
 
-/**
- * HeaderTitle component for the modal.
- * @param {HeaderTitleProps} props - The properties for the HeaderTitle component.
- * @returns {JSX.Element} The HeaderTitle component.
- */
-const HeaderTitle = ({ title, img, alt }: HeaderTitleProps): JSX.Element => {
+const Body = ({ children, onBackToTop }: BodyProps): JSX.Element => {
+
+    const modalRef = useRef<HTMLDivElement>(null);
+    const modalAction = useAppSelector((state) => state.modalAction);
+    const dispatch = useAppDispatch();
+    const [isVisible, setIsVisible] = useState(false);
+
+    const toggleVisibility = () => {
+        if (modalRef && modalRef.current && modalRef.current.scrollTop > 150) {
+            setIsVisible(true);
+        } else {
+            setIsVisible(false);
+        }
+    };
+
+    useEffect(() => {
+        if (modalAction.backToTop && modalRef?.current) {
+            modalRef.current.scrollTop = 0;
+            if (onBackToTop) {
+                onBackToTop();
+            }
+        }
+        return () => {
+            dispatch(setModalActionBackToTop(false));
+        }
+    }, [modalAction.backToTop]);
+
+    const scrollToTop = () => {
+        dispatch(setModalActionBackToTop(true));
+    };
+
+    useEffect(() => {
+        modalRef?.current?.addEventListener('scroll', toggleVisibility);
+        return () => {
+            modalRef?.current?.removeEventListener('scroll', toggleVisibility);
+        };
+    }, []);
+
     return (
         <>
-            {
-                img && alt &&
-                <img
-                    src={img}
-                    alt={alt}
-                    width={16} />
-            }
-            <h1 className="modal-title fs-5">{title}</h1>
+            <div ref={modalRef} className="modal-body">
+                {children}
+            </div>
+            <Button
+                onClick={scrollToTop}
+                variant="primary"
+                style={{ display: isVisible ? 'block' : 'none' }}
+                className="back-to-top">
+                <i className="bi bi-chevron-up"></i>
+            </Button>
         </>
     );
 }
 
-/**
- * Props for the Body component.
- * @typedef {Object} BodyProps
- * @property {ReactNode} children - The content to be displayed within the body.
- */
-type BodyProps = {
+
+type FooterProps = {
     children: ReactNode;
 }
-
-/**
- * Body component for the modal.
- * @param {BodyProps} props - The properties for the Body component.
- * @returns {JSX.Element} The Body component.
- */
-const Body = ({ children }: BodyProps): JSX.Element => {
+const Footer = ({ children }: FooterProps) => {
     return (
-        <Modal.Body className="pt-2 pb-5 px-0">
+        <Modal.Footer>
             {children}
-        </Modal.Body>
-    );
+        </Modal.Footer>
+    )
 }
 
-
-/**
- * ModalAction object containing all modal-related components.
- */
 const ModalAction = {
+    Content,
     Form,
     Header,
-    HeaderTitle,
-    Body
-};
+    Body,
+    Footer
+}
 
 export default ModalAction;

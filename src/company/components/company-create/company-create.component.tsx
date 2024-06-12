@@ -5,7 +5,7 @@ import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
 import CardListGroup from "../../../common/components/card-list-group/card-list-group.component";
 import ListGroupItem from "../../../common/components/list-group-item/list-group-item.component";
-import ModalAction from "../../../common/components/modal-action/modal-action.component";
+import ModalAction from "../../../common/components/modal-action-1/modal-action.component";
 import Container from "react-bootstrap/esm/Container";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { resetCompanyCreateState, setCompanyNameModal, setCompanyNameValue, setCompanySubmitFocus, setOwnerUsernameModal, setOwnerUsernameValue } from "../../features/create-company.slice";

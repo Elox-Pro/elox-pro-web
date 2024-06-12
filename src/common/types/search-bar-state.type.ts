@@ -1,5 +1,6 @@
 export type SearchBarState = {
-    searchText: string
+    text: string
     focus: boolean
     reset: boolean
+    results: number
 }

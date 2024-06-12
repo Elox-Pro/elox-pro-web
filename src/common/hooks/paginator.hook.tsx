@@ -1,10 +1,7 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../app/hooks/app.hooks";
-import { PaginationState } from "../types/pagination-state.type";
-import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
+import { useAppDispatch, useAppSelector } from "../../app/hooks/app.hooks";
+import { setPaginatorCurrentPage } from "../features/paginator.slice";
 
-export type PaginationItem = {
+export type PaginatorItem = {
     label: string;
     type: "page" | "ellipsis" | "button";
     disabled: boolean;
@@ -13,32 +10,20 @@ export type PaginationItem = {
     onClick?: () => void;
 };
 
-export type PaginationProps = {
-    pagination: PaginationState;
-    setCurrentPage: ActionCreatorWithPayload<number>;
-    setSearchBarFocus: ActionCreatorWithPayload<boolean>;
-};
-
+type PaginatorProps = {
+    onChange?: () => void;
+}
 /**
  * Custom hook for handling pagination logic.
  * 
- * @param {PaginationProps} props - The properties required for pagination.
  * @returns {object} An object containing the renderPaginationItems function.
  */
-export function usePagination({ pagination, setCurrentPage, setSearchBarFocus }: PaginationProps) {
-    const { currentPage, resultCount, itemsPerPage } = pagination;
+export function usePaginator({ onChange }: PaginatorProps) {
+    const { currentPage, results, itemsPerPage } = useAppSelector((state) => state.paginator);
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
 
     // Calculate the total number of pages
-    const totalPages = Math.ceil(resultCount / itemsPerPage);
-
-    // Effect to update the URL with the current page whenever it changes
-    useEffect(() => {
-        const queryParams = new URLSearchParams(window.location.search);
-        queryParams.set('page', String(currentPage));
-        navigate(`${window.location.pathname}?${queryParams.toString()}`, { replace: true });
-    }, [currentPage, window.location.pathname, navigate]);
+    const pages = Math.ceil(results / itemsPerPage);
 
     /**
      * Handles the change of page number.
@@ -47,8 +32,11 @@ export function usePagination({ pagination, setCurrentPage, setSearchBarFocus }:
      */
     const handlePageChange = (pageNumber: number) => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        dispatch(setCurrentPage(pageNumber));
-        dispatch(setSearchBarFocus(true));
+        dispatch(setPaginatorCurrentPage(pageNumber));
+        if (onChange) {
+            onChange();
+        }
+        // dispatch(setSearchBarFocus(true));
     };
 
     /**
@@ -64,14 +52,14 @@ export function usePagination({ pagination, setCurrentPage, setSearchBarFocus }:
      * Handles the event when the next page button is clicked.
      */
     const handleOnNext = () => {
-        if (currentPage < totalPages) {
+        if (currentPage < pages) {
             handlePageChange(currentPage + 1);
         }
     };
 
-    const getPaginationItems = (): PaginationItem[] => {
+    const getItems = (): PaginatorItem[] => {
         // Array to hold the pagination items
-        const paginationItems: PaginationItem[] = [];
+        const items: PaginatorItem[] = [];
         // Maximum number of visible pages in the pagination bar
         const maxVisiblePages = 3;
         // Half of the maximum visible pages, used for calculating the range of pages to display
@@ -81,21 +69,21 @@ export function usePagination({ pagination, setCurrentPage, setSearchBarFocus }:
         let startPage, endPage;
 
         // Determine the start and end pages for pagination display
-        if (totalPages <= maxVisiblePages) {
+        if (pages <= maxVisiblePages) {
             // If the total number of pages is less than or equal to the maximum visible pages,
             // display all pages
             startPage = 1;
-            endPage = totalPages;
+            endPage = pages;
         } else if (currentPage <= halfVisiblePages + 1) {
             // If the current page is close to the start (within half the max visible pages),
             // display the first set of pages
             startPage = 1;
             endPage = maxVisiblePages;
-        } else if (currentPage + halfVisiblePages >= totalPages) {
+        } else if (currentPage + halfVisiblePages >= pages) {
             // If the current page is close to the end (within half the max visible pages),
             // display the last set of pages
-            startPage = totalPages - maxVisiblePages + 1;
-            endPage = totalPages;
+            startPage = pages - maxVisiblePages + 1;
+            endPage = pages;
         } else {
             // Otherwise, display pages around the current page
             startPage = currentPage - halfVisiblePages;
@@ -105,7 +93,7 @@ export function usePagination({ pagination, setCurrentPage, setSearchBarFocus }:
         // Add the first page and ellipsis if necessary
         if (startPage > 1) {
             // Add the first page
-            paginationItems.push({
+            items.push({
                 label: "1",
                 type: "page",
                 disabled: false,
@@ -115,7 +103,7 @@ export function usePagination({ pagination, setCurrentPage, setSearchBarFocus }:
             });
             // Add an ellipsis if there's a gap between the first page and the start page
             if (startPage > 2) {
-                paginationItems.push({
+                items.push({
                     label: "...",
                     type: "ellipsis",
                     disabled: true,
@@ -126,7 +114,7 @@ export function usePagination({ pagination, setCurrentPage, setSearchBarFocus }:
 
         // Add the range of visible pages
         for (let page = startPage; page <= endPage; page++) {
-            paginationItems.push({
+            items.push({
                 label: String(page),
                 type: "page",
                 disabled: false,
@@ -137,10 +125,10 @@ export function usePagination({ pagination, setCurrentPage, setSearchBarFocus }:
         }
 
         // Add the last page and ellipsis if necessary
-        if (endPage < totalPages) {
+        if (endPage < pages) {
             // Add an ellipsis if there's a gap between the end page and the last page
-            if (endPage < totalPages - 1) {
-                paginationItems.push({
+            if (endPage < pages - 1) {
+                items.push({
                     label: "...",
                     type: "ellipsis",
                     disabled: true,
@@ -148,26 +136,26 @@ export function usePagination({ pagination, setCurrentPage, setSearchBarFocus }:
                 });
             }
             // Add the last page
-            paginationItems.push({
-                label: String(totalPages),
+            items.push({
+                label: String(pages),
                 type: "page",
                 disabled: false,
-                active: currentPage === totalPages,
-                page: totalPages,
-                onClick: () => handlePageChange(totalPages),
+                active: currentPage === pages,
+                page: pages,
+                onClick: () => handlePageChange(pages),
             });
 
         }
 
-        paginationItems.push({
+        items.push({
             label: "›",
             type: "button",
-            disabled: currentPage === totalPages,
+            disabled: currentPage === pages,
             active: false,
             onClick: handleOnNext,
         });
 
-        paginationItems.unshift({
+        items.unshift({
             label: "‹",
             type: "button",
             disabled: currentPage === 1,
@@ -175,12 +163,12 @@ export function usePagination({ pagination, setCurrentPage, setSearchBarFocus }:
             onClick: handleOnPrevious,
         });
 
-        return paginationItems;
+        return items;
     };
 
-    const paginationItems = getPaginationItems();
+    const items = getItems();
 
     return {
-        paginationItems,
+        items,
     };
 }

@@ -55,7 +55,7 @@ const Body = ({ children }: BodyProps): JSX.Element => {
     );
 };
 
-/**
+/*  *
  * Props for the Icon Col component.
  * @typedef {Object} IconColProps
  * @property {string} iconClass - The icon class to be used.

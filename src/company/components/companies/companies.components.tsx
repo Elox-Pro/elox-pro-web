@@ -2,25 +2,25 @@ import { useTranslation } from "react-i18next";
 import CPWrapperPage from "../../../cpanel/components/wrapper-page/cp-wrapper-page.component";
 import { Col, Container, Row } from "react-bootstrap";
 import { useGetCompaniesQuery } from "../../api/company.api";
-import { usePagination } from "../../../common/hooks/pagination.hook";
+import { usePaginator } from "../../../common/hooks/paginator.hook";
 import { getCurrentPageFromUrl } from "../../../common/helpers/get-param-from-url.helper";
 import BackToTopButton from "../../../common/components/back-to-top/back-to-top-button.component";
 import { useEffect } from "react";
-import SearchBar from "../../../common/components/search-bar/search-bar.component";
+import SearchBar from "../../../common/components/search-bar/search-bar.component-1";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { setCurrentPage, setItemsPerPage, setResultCount } from "../../features/company-pagination.slice";
 import { setSearchBarFocus, setSearchBarReset, setSearchBarText } from "../../features/company-search-bar.slice";
 import { companyAction } from "../../features/company.slice";
-import CommonPagination from "../../../common/components/pagination/common-pagination.component";
 import StickyWrapper from "../../../common/components/sticky-wrapper/sticky-wrapper.component";
 import IconButton from "../../../common/components/icon-button/icon-button.component";
 import ListGroupItem from "../../../common/components/list-group-item/list-group-item.component";
-import ModalAction from "../../../common/components/modal-action/modal-action.component";
+import ModalAction from "../../../common/components/modal-action-1/modal-action.component";
 import { Company } from "../../types/company.type";
 import CardListGroup from "../../../common/components/card-list-group/card-list-group.component";
 import { useNavigate } from "react-router-dom";
 import CompanyCreateModal from "../company-create-modal/company-create-modal.component";
 import { companyCreateModalAction } from "../../features/company-create-modal.slice";
+import Paginator from "../../../common/components/paginator/paginator.component";
 
 export default function Companies() {
     return (
@@ -81,14 +81,13 @@ function Body() {
     const searchBar = useAppSelector((state) => state.companySearchBar);
     const company = useAppSelector((state) => state.company);
     const pagination = useAppSelector((state) => state.companyPagination);
-    const { paginationItems } = usePagination({ pagination, setCurrentPage, setSearchBarFocus });
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const { data, isSuccess } = useGetCompaniesQuery({
         page: getCurrentPageFromUrl(),
         limit: pagination.itemsPerPage,
-        searchTerm: searchBar.searchText,
+        searchTerm: searchBar.text,
     });
 
     const handleSearchBarFocus = () => {
@@ -135,7 +134,7 @@ function Body() {
                 </Row>
                 <Row>
                     <Col xs={12}>
-                        <CommonPagination items={paginationItems} />
+                        <Paginator />
                     </Col>
                 </Row>
             </div>

@@ -110,5 +110,8 @@ body {
     border-color: var(--bs-danger);
     background: var(--bs-danger);
   }
+}
 
+.modal-body {
+  scroll-behavior: smooth;
 }

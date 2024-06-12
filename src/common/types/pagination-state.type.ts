@@ -1,5 +1,5 @@
-export type PaginationState = {
+export type PaginatorState = {
     currentPage: number
-    resultCount: number
+    results: number
     itemsPerPage: number
 }

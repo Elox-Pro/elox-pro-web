@@ -22,6 +22,11 @@ import companyProgressBarSubmitReducer from "../../company/features/company-prog
 import companyCreateModalReducer from "../../company/features/company-create-modal.slice";
 import companyInfoReducer from "../../company/features/company-info.slice";
 import companyUpdateNameReducer from "../../company/features/company-update-name.slice";
+import selectUserReducer from "../../users/features/select-user-slice";
+import searchBarReducer from "../../common/features/search-bar.slice";
+import { userApi } from "../../users/api/user.api";
+import paginatorReducer from "../../common/features/paginator.slice";
+import modalActionReducer from "../../common/features/modal-action.slice";
 
 export const appStore = configureStore({
     reducer: {
@@ -41,12 +46,17 @@ export const appStore = configureStore({
         companyCreateModal: companyCreateModalReducer,
         companyInfo: companyInfoReducer,
         companyUpdateName: companyUpdateNameReducer,
+        selectUser: selectUserReducer,
+        searchBar: searchBarReducer,
+        paginator: paginatorReducer,
+        modalAction: modalActionReducer,
         [authApi.reducerPath]: authApi.reducer,
         [tfaApi.reducerPath]: tfaApi.reducer,
         [profileApi.reducerPath]: profileApi.reducer,
         [recoverPasswordApi.reducerPath]: recoverPasswordApi.reducer,
         [avatarApi.reducerPath]: avatarApi.reducer,
         [companyApi.reducerPath]: companyApi.reducer,
+        [userApi.reducerPath]: userApi.reducer,
     },
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware().concat(
@@ -56,7 +66,8 @@ export const appStore = configureStore({
             profileApi.middleware,
             recoverPasswordApi.middleware,
             avatarApi.middleware,
-            companyApi.middleware
+            companyApi.middleware,
+            userApi.middleware
         )
     },
 })

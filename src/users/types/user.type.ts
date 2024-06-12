@@ -3,6 +3,7 @@ import { Gender } from "../enum/gender.enum";
 
 export type User = {
 
+    id: number;
     updatedAt: Date | null;
     createdAt: Date | null;
 

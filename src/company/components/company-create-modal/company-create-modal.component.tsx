@@ -1,6 +1,6 @@
 import Row from "react-bootstrap/esm/Row";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
-import ModalForm from "../../../common/components/modal-form/modal-form.component";
+import ModalAction from "../../../common/components/modal-action/modal-action.component";
 import Col from "react-bootstrap/esm/Col";
 import SubmitButton from "../../../common/components/submit-button/submit-button";
 import { companyCreateModalAction } from "../../features/company-create-modal.slice";
@@ -56,34 +56,34 @@ export default function CompanyCreateModal() {
     }
 
     return (
-        <ModalForm.Content
-            show={companyCreateModal.show}
-            onSubmit={zodForm.handleSubmit(onSubmit)}>
-            <ModalForm.Header onClose={onClose} />
-            <ModalForm.Body>
-                <Row>
-                    <Col xs={12}>
-                        <p className="text-muted">
-                            Please provide the official name of your company.
-                        </p>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={12}>
-                        <FloatingInput
-                            type="text"
-                            name="name"
-                            label={"name"}
-                            autoFocus={true}
-                            register={zodForm.register}
-                            error={zodForm.errors.name as FieldError}
-                        />
-                    </Col>
-                </Row>
-            </ModalForm.Body>
-            <ModalForm.Footer>
-                <SubmitButton disabled={!nameWatch || nameWatch.length < 3 || overlay.active} />
-            </ModalForm.Footer>
-        </ModalForm.Content>
+        <ModalAction.Content show={companyCreateModal.show}>
+            <ModalAction.Form onSubmit={zodForm.handleSubmit(onSubmit)}>
+                <ModalAction.Header onClose={onClose} />
+                <ModalAction.Body>
+                    <Row>
+                        <Col xs={12}>
+                            <p className="text-muted">
+                                Please provide the official name of your company.
+                            </p>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={12}>
+                            <FloatingInput
+                                type="text"
+                                name="name"
+                                label={"name"}
+                                autoFocus={true}
+                                register={zodForm.register}
+                                error={zodForm.errors.name as FieldError}
+                            />
+                        </Col>
+                    </Row>
+                </ModalAction.Body>
+                <ModalAction.Footer>
+                    <SubmitButton disabled={!nameWatch || nameWatch.length < 3 || overlay.active} />
+                </ModalAction.Footer>
+            </ModalAction.Form>
+        </ModalAction.Content>
     );
 }

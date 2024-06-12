@@ -8,13 +8,12 @@ import ListGroupItem from "../../../common/components/list-group-item/list-group
 import { getFormatDate } from "../../../common/helpers/get-format-date";
 import { User } from "../../../users/types/user.type";
 import { getProfileAvatar } from "../../../profile/helpers/get-profile-avatar";
-import { Company } from "../../types/company.type";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { setCompany, setCustomers, setTotalCustomers, setTotalUsers, setUsers } from "../../features/company-info.slice";
-import companyUpdateNameReducer, { setShowModal } from "../../features/company-update-name.slice";
-import CompanyUpdateNameModal from "../company-update-name-modal/company-update-name-modal.component";
+import CompanyNameItem from "../company-name-item/company-name-item.component";
+import AddUserToCompanyItem from "../add-user-to-company-item/add-user-to-company-item.component";
 
 type Params = {
     id: string;
@@ -167,19 +166,7 @@ function ManageCompanySection() {
                     />
                     <CardListGroup.Body>
 
-                        <ListGroupItem.Container onClick={() => alert("Add user to company")}>
-                            <ListGroupItem.Body>
-                                <ListGroupItem.BodyIcon
-                                    iconClass="bi bi-plus-circle text-info" />
-                                <ListGroupItem.BodySection>
-                                    <p className="mb-0">
-                                        Add user to company
-                                    </p>
-                                </ListGroupItem.BodySection>
-                            </ListGroupItem.Body>
-                            <ListGroupItem.ChevronIcon />
-                        </ListGroupItem.Container>
-
+                        <AddUserToCompanyItem />
                         <ListGroupItem.Container onClick={() => alert("remove user from company")}>
                             <ListGroupItem.Body>
                                 <ListGroupItem.BodyIcon
@@ -210,35 +197,6 @@ function ManageCompanySection() {
                 </CardListGroup.Container>
             </Col>
         </Row>
-    )
-}
-
-
-function CompanyNameItem() {
-    const company = useAppSelector((state) => state.companyInfo.company);
-    const dispatch = useAppDispatch();
-    if (!company) {
-        return null;
-    }
-    const onClick = () => {
-        dispatch(setShowModal(true));
-    }
-    return (
-        <>
-            <ListGroupItem.Container onClick={onClick}>
-                <ListGroupItem.Body>
-                    <ListGroupItem.BodyLabel value="Company Name" />
-                    <ListGroupItem.BodySection col={8} >
-                        <p className="mb-0">
-                            <img src={company.imageUrl} alt={company.name} width={24} />
-                            <span className="ms-3">{company.name}</span>
-                        </p>
-                    </ListGroupItem.BodySection>
-                </ListGroupItem.Body>
-                <ListGroupItem.ChevronIcon />
-            </ListGroupItem.Container>
-            <CompanyUpdateNameModal />
-        </>
     )
 }
 

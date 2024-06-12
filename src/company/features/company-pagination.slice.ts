@@ -5,7 +5,7 @@ import { logout } from "../../auth/features/auth.slice";
 
 const initialState: CompanyPaginationState = {
     currentPage: getCurrentPageFromUrl(),
-    resultCount: 0,
+    results: 0,
     itemsPerPage: 20
 }
 
@@ -17,7 +17,7 @@ const companyPaginationSlice = createSlice({
             state.currentPage = action.payload;
         },
         setResultCount(state, action: PayloadAction<number>) {
-            state.resultCount = action.payload;
+            state.results = action.payload;
         },
         setItemsPerPage(state, action: PayloadAction<number>) {
             state.itemsPerPage = action.payload;

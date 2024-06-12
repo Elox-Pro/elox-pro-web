@@ -1,11 +1,14 @@
 import Pagination from "react-bootstrap/esm/Pagination";
-import { PaginationItem } from "../../hooks/pagination.hook";
+import { usePaginator } from "../../hooks/paginator.hook";
 
-type CommonPaginationProps = {
-    items: PaginationItem[];
+type PaginatorProps = {
+    onChange?: () => void;
 }
 
-export default function CommonPagination({ items }: CommonPaginationProps) {
+export default function Paginator({ onChange }: PaginatorProps) {
+
+    const { items } = usePaginator({ onChange });
+
     return (
         <Pagination>
             {items.map((item, index) => {
