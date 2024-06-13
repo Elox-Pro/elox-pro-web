@@ -69,7 +69,7 @@ type TitleProps = {
 
 const Title = ({ value }: TitleProps): JSX.Element => {
     return (
-        <h5>
+        <h5 className="m-0">
             {value}
         </h5>
     )

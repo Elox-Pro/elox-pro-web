@@ -11,6 +11,8 @@ import { UpdateCompanyNameResponse } from "../types/update-company-name/update-c
 import { UpdateCompanyNameRequest } from "../types/update-company-name/update-company-name-request.type";
 import { AddUserToCompanyResponse } from "../types/add-user-to-company/add-user-to-company-response.type";
 import { AddUserToCompanyRequest } from "../types/add-user-to-company/add-user-to-company-request.type";
+import { RemoveUserFromCompanyResponse } from "../types/remove-user-from-company/remove-user-from-company-response.type";
+import { RemoveUserFromCompanyRequest } from "../types/remove-user-from-company/remove-user-from-company-request.type";
 
 export const companyApi = createApi({
     reducerPath: "companyApi",
@@ -72,6 +74,16 @@ export const companyApi = createApi({
                     }
                 },
                 invalidatesTags: ["getCompany"]
+            }),
+            removeUserFromCompany: builder.mutation<RemoveUserFromCompanyResponse, RemoveUserFromCompanyRequest>({
+                query(data) {
+                    return {
+                        url: `/remove/user`,
+                        method: "DELETE",
+                        body: data,
+                    }
+                },
+                invalidatesTags: ["getCompany"]
             })
         }
     },
@@ -82,5 +94,6 @@ export const {
     useGetCompanyQuery,
     useCreateCompanyMutation,
     useUpdateCompanyNameMutation,
-    useAddUserToCompanyMutation
+    useAddUserToCompanyMutation,
+    useRemoveUserFromCompanyMutation
 } = companyApi;

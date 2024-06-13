@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { setSelectUserTotal, setSelectUserUsers, showSelectUserModal } from "../../features/select-user-slice";
 import SearchBar from "../../../common/components/search-bar/search-bar.component";
 import { useEffect } from "react";
-import { useGetUsersQuery } from "../../api/user.api";
+import { useGetUsersQuery, userApi } from "../../api/user.api";
 import { setSearchBarFocus, setSearchBarResults, setSearchBarText } from "../../../common/features/search-bar.slice";
 import ListGroup from "react-bootstrap/esm/ListGroup";
 import ListItem from "../../../common/components/list-item/list-item.component";
@@ -19,6 +19,7 @@ import { Company } from "../../../company/types/company.type";
 import { setOverlay } from "../../../common/features/common.slice";
 import { toast } from "react-toastify";
 import { QueryStatus } from "@reduxjs/toolkit/query";
+import { Card } from "react-bootstrap";
 
 export default function SelectUserModal() {
 
@@ -81,26 +82,28 @@ export default function SelectUserModal() {
         <ModalAction.Content
             show={selectUser.modal.show}>
             <ModalAction.Header onClose={onClose} >
-                <ModalAction.Title value="Select user" />
+                <ModalAction.Title value="Select User" />
             </ModalAction.Header>
             <ModalAction.Body onBackToTop={handleBackToTop}>
                 <Row>
                     <Col xs={12}>
-                        <p className="text-muted">
-                            Please select a user from the list below.
-                        </p>
                         <SearchBar
                             placeholder="Search by username..."
                             onChange={searchBarOnChange}
                             onReset={searchBarOnReset}
                         />
                     </Col>
-                    <Col xs={12}>
-                        <ListGroup variant="flush" className="mb-5">
-                            {selectUser.users.map((user, index) => (
-                                <UserItem user={user} company={companyInfo.company} key={index} />
-                            ))}
-                        </ListGroup>
+                    <Col xs={12} className="mb-5">
+                        <Card>
+                            <Card.Body>
+                                <p>Please select a user from the list below.</p>
+                                <ListGroup variant="flush">
+                                    {selectUser.users.map((user, index) => (
+                                        <UserItem user={user} company={companyInfo.company} key={index} />
+                                    ))}
+                                </ListGroup>
+                            </Card.Body>
+                        </Card>
                     </Col>
                     <Col xs={12}>
                         <Paginator onChange={paginatorOnChange} />
@@ -145,6 +148,7 @@ function UserItem({ user, company }: UserItemProps) {
     useEffect(() => {
         if (status === QueryStatus.fulfilled && data) {
             dispatch(showSelectUserModal(false));
+            dispatch(userApi.util.invalidateTags(["getUsers"]));
             toast.success("User added successfully");
         }
     }, [status, data])

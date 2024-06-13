@@ -27,6 +27,7 @@ import searchBarReducer from "../../common/features/search-bar.slice";
 import { userApi } from "../../users/api/user.api";
 import paginatorReducer from "../../common/features/paginator.slice";
 import modalActionReducer from "../../common/features/modal-action.slice";
+import manageCompanyUserModalReducer from "../../company/features/manage-company-user-modal.slice";
 
 export const appStore = configureStore({
     reducer: {
@@ -50,6 +51,7 @@ export const appStore = configureStore({
         searchBar: searchBarReducer,
         paginator: paginatorReducer,
         modalAction: modalActionReducer,
+        manageCompanyUserModal: manageCompanyUserModalReducer,
         [authApi.reducerPath]: authApi.reducer,
         [tfaApi.reducerPath]: tfaApi.reducer,
         [profileApi.reducerPath]: profileApi.reducer,

@@ -14,6 +14,8 @@ import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { setCompany, setCustomers, setTotalCustomers, setTotalUsers, setUsers } from "../../features/company-info.slice";
 import CompanyNameItem from "../company-name-item/company-name-item.component";
 import AddUserToCompanyItem from "../add-user-to-company-item/add-user-to-company-item.component";
+import { setManageCompanyUserModalUser, setManageCompanyUserModalUserCompany, showManageCompanyUserModal } from "../../features/manage-company-user-modal.slice";
+import { ManageCompanyUserModal } from "../manage-company-user-modal/manage-company-user-modal.component";
 
 type Params = {
     id: string;
@@ -83,13 +85,22 @@ function CompanySection() {
 
 function UsersSection() {
     const {
+        company,
         users,
         totalUsers,
     } = useAppSelector((state) => state.companyInfo);
+    const dispatch = useAppDispatch();
 
     if (users.length === 0) {
         return null;
     }
+
+    const handleShowManageCompanyUserModal = (user: User) => {
+        dispatch(showManageCompanyUserModal(true));
+        dispatch(setManageCompanyUserModalUser(user));
+        dispatch(setManageCompanyUserModalUserCompany(company));
+    }
+
     return (
         <Row className="mb-3">
             <Col xs={12}>
@@ -103,9 +114,12 @@ function UsersSection() {
                             <CompanyUserItem
                                 key={index}
                                 user={user}
-                                onClick={() => alert("options: show user info, remove user from company (not system)")}
+                                onClick={() =>
+                                    handleShowManageCompanyUserModal(user)
+                                }
                             />
                         ))}
+                        <ManageCompanyUserModal />
                         <ShowMoreItem onClick={() => alert("show more users")} />
                         <CompanyTotalItem
                             value="Total Users"
@@ -167,18 +181,6 @@ function ManageCompanySection() {
                     <CardListGroup.Body>
 
                         <AddUserToCompanyItem />
-                        <ListGroupItem.Container onClick={() => alert("remove user from company")}>
-                            <ListGroupItem.Body>
-                                <ListGroupItem.BodyIcon
-                                    iconClass="bi bi-trash text-danger" />
-                                <ListGroupItem.BodySection>
-                                    <p className="mb-0">
-                                        Remove user from company
-                                    </p>
-                                </ListGroupItem.BodySection>
-                            </ListGroupItem.Body>
-                            <ListGroupItem.ChevronIcon />
-                        </ListGroupItem.Container>
 
                         <ListGroupItem.Container onClick={() => alert("delete company")}>
                             <ListGroupItem.Body>
