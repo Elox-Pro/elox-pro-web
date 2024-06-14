@@ -36,7 +36,7 @@ export function ManageCompanyUserModal() {
                                         <ListItem.BodyContent>
                                             <ListItem.Icon
                                                 icon="bi bi-file-earmark-spreadsheet"
-                                                value="View details" />
+                                                title="View details" />
                                         </ListItem.BodyContent>
                                         <ListItem.BodyIcon icon="bi bi-chevron-right" />
                                     </ListItem.Content>

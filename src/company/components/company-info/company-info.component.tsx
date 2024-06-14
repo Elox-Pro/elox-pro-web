@@ -16,6 +16,7 @@ import CompanyNameItem from "../company-name-item/company-name-item.component";
 import AddUserToCompanyItem from "../add-user-to-company-item/add-user-to-company-item.component";
 import { setManageCompanyUserModalUser, setManageCompanyUserModalUserCompany, showManageCompanyUserModal } from "../../features/manage-company-user-modal.slice";
 import { ManageCompanyUserModal } from "../manage-company-user-modal/manage-company-user-modal.component";
+import DeleteCompanyItem from "../delete-company-item/delete-company-item.component";
 
 type Params = {
     id: string;
@@ -179,22 +180,8 @@ function ManageCompanySection() {
                         iconClass="bi bi-gear"
                     />
                     <CardListGroup.Body>
-
                         <AddUserToCompanyItem />
-
-                        <ListGroupItem.Container onClick={() => alert("delete company")}>
-                            <ListGroupItem.Body>
-                                <ListGroupItem.BodyIcon
-                                    iconClass="bi bi-trash text-danger" />
-                                <ListGroupItem.BodySection>
-                                    <p className="mb-0">
-                                        Delete company
-                                    </p>
-                                </ListGroupItem.BodySection>
-                            </ListGroupItem.Body>
-                            <ListGroupItem.ChevronIcon />
-                        </ListGroupItem.Container>
-
+                        <DeleteCompanyItem />
                     </CardListGroup.Body>
                 </CardListGroup.Container>
             </Col>

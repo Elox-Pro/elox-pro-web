@@ -4,13 +4,18 @@ import ListGroup from "react-bootstrap/esm/ListGroup";
 import Row from "react-bootstrap/esm/Row";
 
 type ContentProps = {
-    onClick?: () => void;
     children: ReactNode;
+    disabled?: boolean;
+    onClick?: () => void;
 };
 
-const Content = ({ children, onClick }: ContentProps): JSX.Element => {
+const Content = ({ children, disabled = false, onClick }: ContentProps): JSX.Element => {
     return (
-        <ListGroup.Item className="p-3" action onClick={onClick}>
+        <ListGroup.Item
+            className={`py-3 px-1 ${disabled ? 'disabled opacity-75' : ''}`}
+            onClick={onClick}
+            disabled={disabled}
+            action>
             <Row className="w-100 align-items-center g-0">
                 {children}
             </Row>
@@ -24,7 +29,7 @@ type BodyContentProps = {
 
 const BodyContent = ({ children }: BodyContentProps): JSX.Element => {
     return (
-        <Col xs={9}>
+        <Col xs={10}>
             <Row className="w-100 align-items-center g-0">
                 {children}
             </Row>
@@ -38,7 +43,7 @@ type BodyIconProps = {
 
 const BodyIcon = ({ icon }: BodyIconProps): JSX.Element => {
     return (
-        <Col xs={3} className="text-end">
+        <Col xs={2} className="fs-4 text-end">
             <i className={icon}></i>
         </Col>
     );
@@ -63,7 +68,7 @@ type LabelProps = {
 
 const Label = ({ value }: LabelProps) => {
     return (
-        <Col xs={12} md={4}>
+        <Col xs={12} md={3}>
             <p className="mb-0 text-muted">
                 {value}
             </p>
@@ -77,7 +82,7 @@ type ValueProps = {
 
 const Value = ({ value }: ValueProps) => {
     return (
-        <Col xs={12} md={8}>
+        <Col xs={12} md={9}>
             <p className="mb-0 me-3">
                 {value}
             </p>
@@ -88,10 +93,11 @@ const Value = ({ value }: ValueProps) => {
 type ImageProps = {
     src: string;
     alt: string;
-    value: string;
+    title: string;
+    description?: string | null;
 };
 
-const Image = ({ src, alt, value }: ImageProps) => {
+const Image = ({ src, alt, title, description }: ImageProps) => {
     return (
         <>
             <Col xs={3}>
@@ -99,7 +105,11 @@ const Image = ({ src, alt, value }: ImageProps) => {
             </Col>
             <Col xs={9}>
                 <p className="mb-0 me-3">
-                    {value}
+                    <span>{title}</span>
+                    {
+                        description &&
+                        <small className="text-muted"><br />{description}</small>
+                    }
                 </p>
             </Col>
         </>
@@ -108,10 +118,11 @@ const Image = ({ src, alt, value }: ImageProps) => {
 
 type IconProps = {
     icon: string;
-    value: string;
+    title: string;
+    description?: string | null;
 }
 
-const Icon = ({ icon, value }: IconProps) => {
+const Icon = ({ icon, title, description }: IconProps) => {
     return (
         <>
             <Col xs={3}>
@@ -119,7 +130,11 @@ const Icon = ({ icon, value }: IconProps) => {
             </Col>
             <Col xs={9}>
                 <p className="mb-0 me-3">
-                    {value}
+                    <span>{title}</span>
+                    {
+                        description &&
+                        <small className="text-muted"><br />{description}</small>
+                    }
                 </p>
             </Col>
         </>

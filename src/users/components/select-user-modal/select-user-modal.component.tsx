@@ -129,6 +129,7 @@ function UserItem({ user, company }: UserItemProps) {
 
     const avatarUrl = getProfileAvatar(user.avatarUrl);
     const username = user.username;
+    const roleText = user.roleText;
     const dispatch = useAppDispatch();
     const [mutation, { status, data }] = useAddUserToCompanyMutation();
 
@@ -159,7 +160,9 @@ function UserItem({ user, company }: UserItemProps) {
                 <ListItem.Image
                     src={avatarUrl}
                     alt={username}
-                    value={username} />
+                    title={username}
+                    description={roleText}
+                />
             </ListItem.BodyContent>
             <ListItem.BodyIcon icon="bi bi-plus-circle" />
         </ListItem.Content>

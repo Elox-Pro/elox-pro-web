@@ -45,7 +45,7 @@ export default function RemoveUserFromCompanyItem() {
             <ListItem.BodyContent>
                 <ListItem.Icon
                     icon="bi bi-trash text-danger"
-                    value="Remove user from company" />
+                    title="Remove user from company" />
             </ListItem.BodyContent>
             <ListItem.BodyIcon icon="bi bi-chevron-right" />
         </ListItem.Content>

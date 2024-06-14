@@ -84,6 +84,16 @@ export const companyApi = createApi({
                     }
                 },
                 invalidatesTags: ["getCompany"]
+            }),
+            deleteCompany: builder.mutation<void, CompanyRequest>({
+                query(data) {
+                    return {
+                        url: `/delete/company`,
+                        method: "DELETE",
+                        body: data,
+                    }
+                },
+                invalidatesTags: ["getCompanies"]
             })
         }
     },
@@ -95,5 +105,6 @@ export const {
     useCreateCompanyMutation,
     useUpdateCompanyNameMutation,
     useAddUserToCompanyMutation,
-    useRemoveUserFromCompanyMutation
+    useRemoveUserFromCompanyMutation,
+    useDeleteCompanyMutation
 } = companyApi;
