@@ -1,8 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks/app.hooks';
-import { setSearchBarFocus, setSearchBarReset, setSearchBarText } from '../../features/search-bar.slice';
+import { setSearchBarClear, setSearchBarFocus, setSearchBarReset, setSearchBarText } from '../../features/search-bar.slice';
 import "./search-bar.styles.scss";
 
 type SearchBarProps = {
@@ -17,13 +16,12 @@ type SearchBarProps = {
  * @returns {JSX.Element} - The rendered SearchBar component.
  */
 export default function SearchBar({ placeholder, onChange, onReset }: SearchBarProps): JSX.Element {
-    const { t } = useTranslation("common", { keyPrefix: "search-bar" });
     const searchBar = useAppSelector((state) => state.searchBar);
     const searchText = searchBar.text;
     const focus = searchBar.focus;
     const reset = searchBar.reset;
-    const results = searchBar.results;
     const inputRef = useRef<HTMLInputElement>(null);
+    const [buttonFocus, setButtonFocus] = useState(false);
     const dispatch = useAppDispatch();
 
     /**
@@ -37,7 +35,6 @@ export default function SearchBar({ placeholder, onChange, onReset }: SearchBarP
         if (onChange) {
             onChange();
         }
-        // dispatch(setCurrentPage(1));
     };
 
     /**
@@ -60,14 +57,20 @@ export default function SearchBar({ placeholder, onChange, onReset }: SearchBarP
      */
     const handleReset = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        dispatch(setSearchBarText(""));
-        dispatch(setSearchBarReset(false));
+        dispatch(setSearchBarClear());
         dispatch(setSearchBarFocus(true));
         inputRef.current?.focus();
         if (onReset) {
             onReset();
         }
-        // dispatch(setCurrentPage(1));
+    };
+
+    const buttonFocusOnFocus = () => {
+        setButtonFocus(true);
+    };
+
+    const buttonFocusOnBlur = () => {
+        setButtonFocus(false);
     };
 
     useEffect(() => {
@@ -79,14 +82,14 @@ export default function SearchBar({ placeholder, onChange, onReset }: SearchBarP
     return (
         <div className="search-bar">
             <Form>
-                <div className={`input-group mb-3 ${focus ? "active" : ""}`}>
+                <div className={`input-group mb-3 ${focus || buttonFocus ? "active" : ""}`}>
                     <span className="input-group-text bg-transparent">
                         <i className="bi bi-search"></i>
                     </span>
                     <input
                         ref={inputRef}
                         autoFocus={focus}
-                        className="form-control p-3"
+                        className="form-control"
                         type="text"
                         placeholder={placeholder}
                         value={searchText}
@@ -96,19 +99,16 @@ export default function SearchBar({ placeholder, onChange, onReset }: SearchBarP
                     />
                     <button
                         type="button"
-                        className="btn btn-primary"
+                        className="btn btn-reset"
                         onClick={handleReset}
+                        onFocus={buttonFocusOnFocus}
+                        onBlur={buttonFocusOnBlur}
                         disabled={!reset}
                     >
-                        <i className="bi bi-x-circle"></i>
+                        {reset && <i className="bi bi-x"></i>}
                     </button>
                 </div>
             </Form>
-            <div className="d-flex flex-column">
-                <p className="text-end">
-                    <small className="text-muted me-3">{results} {t("result-found")}</small>
-                </p>
-            </div>
         </div>
     );
 }

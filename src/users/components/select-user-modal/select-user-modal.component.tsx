@@ -6,7 +6,7 @@ import { setSelectUserTotal, setSelectUserUsers, showSelectUserModal } from "../
 import SearchBar from "../../../common/components/search-bar/search-bar.component";
 import { useEffect } from "react";
 import { useGetUsersQuery, userApi } from "../../api/user.api";
-import { setSearchBarFocus, setSearchBarResults, setSearchBarText } from "../../../common/features/search-bar.slice";
+import { setSearchBarClear, setSearchBarFocus } from "../../../common/features/search-bar.slice";
 import ListGroup from "react-bootstrap/esm/ListGroup";
 import ListItem from "../../../common/components/list-item/list-item.component";
 import { User } from "../../types/user.type";
@@ -62,7 +62,7 @@ export default function SelectUserModal() {
         if (selectUser.modal.show) {
             dispatch(setSearchBarFocus(true));
         } else {
-            dispatch(setSearchBarText(""));
+            dispatch(setSearchBarClear());
             dispatch(setPaginatorCurrentPage(1));
         }
     }, [selectUser.modal.show]);
@@ -73,7 +73,6 @@ export default function SelectUserModal() {
             const total = data.total || 0;
             dispatch(setSelectUserUsers(users));
             dispatch(setSelectUserTotal(total));
-            dispatch(setSearchBarResults(total));
             dispatch(setPaginatorResults(total));
         }
     }, [data, isSuccess]);

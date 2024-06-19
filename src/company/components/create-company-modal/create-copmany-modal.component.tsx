@@ -3,36 +3,36 @@ import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import ModalAction from "../../../common/components/modal-action/modal-action.component";
 import Col from "react-bootstrap/esm/Col";
 import SubmitButton from "../../../common/components/submit-button/submit-button";
-import { companyCreateModalAction } from "../../features/company-create-modal.slice";
 import { ZodType, z } from "zod";
 import { ZodErrorKey } from "../../../app/constants/zod-error.constants";
 import { useZodForm } from "../../../common/hooks/zod-form.hook";
 import { FieldError } from "react-hook-form";
 import FloatingInput from "../../../common/components/floating-input/floating-input.component";
 import { useCreateCompanyMutation } from "../../api/company.api";
-import { CreateCompanyRequest } from "../../types/create-company/create-company-request.type";
+import { CreateCompanyModalRequest } from "../../requests/create-company-modal.request";
 import { useEffect } from "react";
 import { setOverlay } from "../../../common/features/common.slice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { QueryStatus } from "@reduxjs/toolkit/query/react";
+import { showCreateCompanyModal } from "../../features/create-company-modal.slice";
 
-export default function CompanyCreateModal() {
+export default function CreateCompanyModal() {
 
-    const companyCreateModal = useAppSelector((state) => state.companyCreateModal);
+    const { modal } = useAppSelector((state) => state.createCompanyModal);
     const overlay = useAppSelector((state) => state.common.overlay);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [mutation, { status, data }] = useCreateCompanyMutation();
 
-    const schema: ZodType<CreateCompanyRequest> = z.object({
+    const schema: ZodType<CreateCompanyModalRequest> = z.object({
         name: z.string().min(3, { message: ZodErrorKey.required })
     });
 
-    const zodForm = useZodForm<CreateCompanyRequest>(schema);
+    const zodForm = useZodForm<CreateCompanyModalRequest>(schema);
     const nameWatch = zodForm.watch("name");
 
-    const onSubmit = (req: CreateCompanyRequest) => {
+    const onSubmit = (req: CreateCompanyModalRequest) => {
         try {
             dispatch(setOverlay(true));
             mutation(req);
@@ -51,14 +51,16 @@ export default function CompanyCreateModal() {
     }, [status, data])
 
     const onClose = () => {
-        dispatch(companyCreateModalAction.setShow(false));
+        dispatch(showCreateCompanyModal(false));
         zodForm.reset();
     }
 
     return (
-        <ModalAction.Content show={companyCreateModal.show}>
+        <ModalAction.Content show={modal.show}>
             <ModalAction.Form onSubmit={zodForm.handleSubmit(onSubmit)}>
-                <ModalAction.Header onClose={onClose} />
+                <ModalAction.Header onClose={onClose}>
+                    <ModalAction.Title value="Create Company" />
+                </ModalAction.Header>
                 <ModalAction.Body>
                     <Row>
                         <Col xs={12}>

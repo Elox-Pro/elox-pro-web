@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { API_URL } from "../../app/constants/app.constants";
 import i18n from "../../app/i18n/i18n";
-import { CompaniesResponse } from "../types/find-many-companies/companies-response.type";
-import { CompaniesRequest } from "../types/find-many-companies/companies-request.type";
+import { CompanyListResponse } from "../responses/company-list.response";
+import { CompanyListRequest } from "../requests/company-list.request";
 import { CompanyResponse } from "../types/find-company-by-id/company-response.type";
 import { CompanyRequest } from "../types/find-company-by-id/company-request.type";
-import { CreateCompanyResponse } from "../types/create-company/create-company-response.type";
-import { CreateCompanyRequest } from "../types/create-company/create-company-request.type";
+import { CreateCompanyModalResponse } from "../responses/create-company-modal.response";
+import { CreateCompanyModalRequest } from "../requests/create-company-modal.request";
 import { UpdateCompanyNameResponse } from "../types/update-company-name/update-company-name-response.type";
 import { UpdateCompanyNameRequest } from "../types/update-company-name/update-company-name-request.type";
 import { AddUserToCompanyResponse } from "../types/add-user-to-company/add-user-to-company-response.type";
@@ -27,11 +27,12 @@ export const companyApi = createApi({
     tagTypes: ["getCompanies", "getCompany"],
     endpoints(builder) {
         return {
-            getCompanies: builder.query<CompaniesResponse, CompaniesRequest>({
+            getCompanies: builder.query<CompanyListResponse, CompanyListRequest>({
                 query(data) {
                     return {
-                        url: `/?page=${data.page}&limit=${data.limit}&searchTerm=${data.searchTerm || ""}`,
-                        method: "GET",
+                        url: "/",
+                        method: "POST",
+                        body: data,
                     }
                 },
                 providesTags: ["getCompanies"]
@@ -45,7 +46,7 @@ export const companyApi = createApi({
                 },
                 providesTags: ["getCompany"]
             }),
-            createCompany: builder.mutation<CreateCompanyResponse, CreateCompanyRequest>({
+            createCompany: builder.mutation<CreateCompanyModalResponse, CreateCompanyModalRequest>({
                 query(data) {
                     return {
                         url: `/create`,

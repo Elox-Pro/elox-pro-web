@@ -29,6 +29,10 @@
         background-color: rgba(var(--bs-dark-rgb), 0.8);
         color: var(--bs-light);
     }
+
+    .list-group-item {
+        border: none;
+    }
 }
 
 [data-bs-theme=dark] {

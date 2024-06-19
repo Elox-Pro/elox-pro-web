@@ -5,8 +5,7 @@ import { SearchBarState } from "../types/search-bar-state.type";
 const initialState: SearchBarState = {
     text: "",
     reset: false,
-    focus: true,
-    results: 0
+    focus: true
 }
 
 const slice = createSlice({
@@ -22,8 +21,10 @@ const slice = createSlice({
         setSearchBarReset(state, action: PayloadAction<boolean>) {
             state.reset = action.payload;
         },
-        setSearchBarResults(state, action: PayloadAction<number>) {
-            state.results = action.payload;
+        setSearchBarClear(state) {
+            state.text = "";
+            state.reset = false;
+            state.focus = false;
         }
     }, extraReducers(builder) {
         builder.addCase(logout, () => {
@@ -37,6 +38,6 @@ export const {
     setSearchBarText,
     setSearchBarFocus,
     setSearchBarReset,
-    setSearchBarResults
+    setSearchBarClear
 } = slice.actions;
 export default searchBarReducer;

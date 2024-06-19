@@ -14,12 +14,9 @@ import { rtkQueryMiddleware } from "../middlewares/rtk-api.middlaware";
 import errorReducer from "../../errors/features/error.slice";
 import cpReducer from "../../cpanel/features/cp.slice";
 import { companyApi } from "../../company/api/company.api";
-import companyPaginationReducer from "../../company/features/company-pagination.slice";
-import companySearchBarReducer from "../../company/features/company-search-bar.slice";
-import companyReducer from "../../company/features/company.slice";
-import companyCreateReducer from "../../company/features/create-company.slice";
+import companyListReducer from "../../company/features/company-list.slice";
 import companyProgressBarSubmitReducer from "../../company/features/company-progress-bar-submit.slice";
-import companyCreateModalReducer from "../../company/features/company-create-modal.slice";
+import createCompanyModalReducer from "../../company/features/create-company-modal.slice";
 import companyInfoReducer from "../../company/features/company-info.slice";
 import companyUpdateNameReducer from "../../company/features/company-update-name.slice";
 import selectUserReducer from "../../users/features/select-user-slice";
@@ -39,12 +36,9 @@ export const appStore = configureStore({
         avatar: avatarReducer,
         auth: authReducer,
         error: errorReducer,
-        company: companyReducer,
-        companyPagination: companyPaginationReducer,
-        companySearchBar: companySearchBarReducer,
+        companyList: companyListReducer,
         companyProgressBarSubmit: companyProgressBarSubmitReducer,
-        companyCreate: companyCreateReducer,
-        companyCreateModal: companyCreateModalReducer,
+        createCompanyModal: createCompanyModalReducer,
         companyInfo: companyInfoReducer,
         companyUpdateName: companyUpdateNameReducer,
         selectUser: selectUserReducer,

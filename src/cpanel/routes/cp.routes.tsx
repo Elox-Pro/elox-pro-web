@@ -5,7 +5,6 @@ import { Navigate } from "react-router-dom"
 import CPGuard from "../guards/cp.guard"
 import CompanyIndex from "../../company/components/index/company-index.component"
 import CompanyInfo from "../../company/components/company-info/company-info.component"
-import CompanyCreate from "../../company/components/company-create/company-create.component"
 
 const CPRoutes = [
   {
@@ -31,10 +30,6 @@ const CPRoutes = [
       {
         path: "/cpanel/companies/:id",
         element: <CompanyInfo />
-      },
-      {
-        path: "/cpanel/companies/new",
-        element: <CompanyCreate />
       }
     ],
   },
