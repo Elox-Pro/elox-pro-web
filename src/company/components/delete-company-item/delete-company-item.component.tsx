@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function DeleteCompanyItem() {
 
-    const { company, totalCustomers, totalUsers } = useAppSelector((state) => state.companyInfo);
+    const { company, totalCustomers, totalUsers } = useAppSelector((state) => state.companyInfoPage);
     const disabled = totalUsers > 0 || totalCustomers > 0;
     const dispatch = useAppDispatch();
     const navigate = useNavigate();

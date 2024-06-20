@@ -15,11 +15,11 @@ import { setOverlay } from "../../../common/features/common.slice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { QueryStatus } from "@reduxjs/toolkit/query/react";
-import { showCreateCompanyModal } from "../../features/create-company-modal.slice";
+import { setShowCreateCompanyModal } from "../../features/company.slice";
 
 export default function CreateCompanyModal() {
 
-    const { modal } = useAppSelector((state) => state.createCompanyModal);
+    const { showCreateCompanyModal } = useAppSelector((state) => state.company);
     const overlay = useAppSelector((state) => state.common.overlay);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -51,12 +51,12 @@ export default function CreateCompanyModal() {
     }, [status, data])
 
     const onClose = () => {
-        dispatch(showCreateCompanyModal(false));
+        dispatch(setShowCreateCompanyModal(false));
         zodForm.reset();
     }
 
     return (
-        <ModalAction.Content show={modal.show}>
+        <ModalAction.Content show={showCreateCompanyModal}>
             <ModalAction.Form onSubmit={zodForm.handleSubmit(onSubmit)}>
                 <ModalAction.Header onClose={onClose}>
                     <ModalAction.Title value="Create Company" />

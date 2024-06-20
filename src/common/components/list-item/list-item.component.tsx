@@ -90,6 +90,19 @@ const Value = ({ value }: ValueProps) => {
     )
 }
 
+
+type SectionProps = {
+    children: ReactNode;
+};
+
+const Section = ({ children }: SectionProps) => {
+    return (
+        <Col xs={12} md={9}>
+            {children}
+        </Col>
+    );
+}
+
 type ImageProps = {
     src: string;
     alt: string;
@@ -141,17 +154,6 @@ const Icon = ({ icon, title, description }: IconProps) => {
     )
 }
 
-type SectionProps = {
-    children: ReactNode;
-};
-
-const Section = ({ children }: SectionProps) => {
-    return (
-        <Col xs={12}>
-            {children}
-        </Col>
-    );
-}
 
 
 const ListItem = {
@@ -160,10 +162,10 @@ const ListItem = {
     BodyIcon,
     BodyImage,
     Label,
+    Section,
     Value,
     Image,
     Icon,
-    Section,
 }
 
 export default ListItem;

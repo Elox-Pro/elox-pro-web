@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 import { QueryStatus } from "@reduxjs/toolkit/query/react";
 import { UpdateCompanyNameRequest } from "../../types/update-company-name/update-company-name-request.type";
 import { setShowModal } from "../../features/company-update-name.slice";
-import { setCompany } from "../../features/company-info.slice";
+import { setCompany, setShowEditCompanyNameModal } from "../../features/company.slice";
 
 const schema: ZodType<UpdateCompanyNameRequest> = z.object({
     name: z.string().min(3, { message: ZodErrorKey.required }),
@@ -26,18 +26,18 @@ const schema: ZodType<UpdateCompanyNameRequest> = z.object({
     path: ["name"]
 });
 
-export default function CompanyUpdateNameModal() {
+export default function EditCompanyNameModal() {
 
-    const state = useAppSelector((state) => state.companyUpdateName);
+    const { company, showEditCompanyNameModal: showEditCompanyModal } = useAppSelector((state) => state.company);
+
+    if (company === null) {
+        return null;
+    }
+
     const overlay = useAppSelector((state) => state.common.overlay);
-    const company = useAppSelector((state) => state.companyInfo.company);
-
     const dispatch = useAppDispatch();
     const [mutation, { status, data }] = useUpdateCompanyNameMutation();
 
-    if (!company) {
-        return null;
-    }
 
     const name = company.name || "";
     const id = company.id || 0;
@@ -57,19 +57,19 @@ export default function CompanyUpdateNameModal() {
 
     useEffect(() => {
         if (status === QueryStatus.fulfilled && data) {
-            dispatch(setCompany(null));
+            // dispatch(setCompany(null));
             onClose();
             toast.success("Company name updated successfully");
         }
     }, [status, data])
 
     const onClose = () => {
-        dispatch(setShowModal(false));
+        dispatch(setShowEditCompanyNameModal(false));
         zodForm.reset();
     }
 
     return (
-        <ModalAction.Content show={state.modal.show}>
+        <ModalAction.Content show={showEditCompanyModal}>
             <ModalAction.Form onSubmit={zodForm.handleSubmit(onSubmit)}>
                 <ModalAction.Header onClose={onClose} />
                 <ModalAction.Body>

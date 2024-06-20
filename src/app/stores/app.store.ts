@@ -17,7 +17,7 @@ import { companyApi } from "../../company/api/company.api";
 import companyListReducer from "../../company/features/company-list.slice";
 import companyProgressBarSubmitReducer from "../../company/features/company-progress-bar-submit.slice";
 import createCompanyModalReducer from "../../company/features/create-company-modal.slice";
-import companyInfoReducer from "../../company/features/company-info.slice";
+import companyInfoPageReducer from "../../company/features/company-info-page.slice";
 import companyUpdateNameReducer from "../../company/features/company-update-name.slice";
 import selectUserReducer from "../../users/features/select-user-slice";
 import searchBarReducer from "../../common/features/search-bar.slice";
@@ -25,6 +25,7 @@ import { userApi } from "../../users/api/user.api";
 import paginatorReducer from "../../common/features/paginator.slice";
 import modalActionReducer from "../../common/features/modal-action.slice";
 import manageCompanyUserModalReducer from "../../company/features/manage-company-user-modal.slice";
+import companyReducer from "../../company/features/company.slice";
 
 export const appStore = configureStore({
     reducer: {
@@ -36,10 +37,11 @@ export const appStore = configureStore({
         avatar: avatarReducer,
         auth: authReducer,
         error: errorReducer,
+        company: companyReducer,
         companyList: companyListReducer,
         companyProgressBarSubmit: companyProgressBarSubmitReducer,
         createCompanyModal: createCompanyModalReducer,
-        companyInfo: companyInfoReducer,
+        companyInfoPage: companyInfoPageReducer,
         companyUpdateName: companyUpdateNameReducer,
         selectUser: selectUserReducer,
         searchBar: searchBarReducer,

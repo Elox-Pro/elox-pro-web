@@ -1,10 +1,10 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit/react";
 import { Company } from "../types/company.type";
 import { logout } from "../../auth/features/auth.slice";
-import { CompanyInfoState } from "../types/company-info.state.type";
 import { User } from "../../users/types/user.type";
+import { CompanyInfoPageState } from "../states/company-info-page.state";
 
-const initialState: CompanyInfoState = {
+const initialState: CompanyInfoPageState = {
     company: null,
     users: [],
     totalUsers: 0,
@@ -13,7 +13,7 @@ const initialState: CompanyInfoState = {
 }
 
 const slice = createSlice({
-    name: "companyInfo",
+    name: "companyInfoPage",
     initialState,
     reducers: {
         setCompany: (state, action: PayloadAction<Company | null>) => {
@@ -38,7 +38,7 @@ const slice = createSlice({
     }
 });
 
-const companyInfoReducer = slice.reducer;
+const companyInfoPageReducer = slice.reducer;
 export const {
     setCompany,
     setUsers,
@@ -46,4 +46,4 @@ export const {
     setCustomers,
     setTotalCustomers,
 } = slice.actions;
-export default companyInfoReducer;
+export default companyInfoPageReducer;

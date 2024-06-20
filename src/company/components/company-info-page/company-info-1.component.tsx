@@ -11,7 +11,7 @@ import { getProfileAvatar } from "../../../profile/helpers/get-profile-avatar";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
-import { setCompany, setCustomers, setTotalCustomers, setTotalUsers, setUsers } from "../../features/company-info.slice";
+import { setCompany, setCustomers, setTotalCustomers, setTotalUsers, setUsers } from "../../features/company-info-page.slice";
 import CompanyNameItem from "../company-name-item/company-name-item.component";
 import AddUserToCompanyItem from "../add-user-to-company-item/add-user-to-company-item.component";
 import { setManageCompanyUserModalUser, setManageCompanyUserModalUserCompany, showManageCompanyUserModal } from "../../features/manage-company-user-modal.slice";
@@ -65,7 +65,7 @@ function Header() {
 }
 
 function CompanySection() {
-    const company = useAppSelector((state) => state.companyInfo.company);
+    const company = useAppSelector((state) => state.companyInfoPage.company);
     if (!company) {
         return null;
     }
@@ -89,7 +89,7 @@ function UsersSection() {
         company,
         users,
         totalUsers,
-    } = useAppSelector((state) => state.companyInfo);
+    } = useAppSelector((state) => state.companyInfoPage);
     const dispatch = useAppDispatch();
 
     if (users.length === 0) {
@@ -137,7 +137,7 @@ function CustomersSection() {
     const {
         customers,
         totalCustomers,
-    } = useAppSelector((state) => state.companyInfo);
+    } = useAppSelector((state) => state.companyInfoPage);
 
     if (customers.length === 0) {
         return null;
@@ -190,7 +190,7 @@ function ManageCompanySection() {
 }
 
 function CompanyUpdateAtItem() {
-    const company = useAppSelector((state) => state.companyInfo.company);
+    const company = useAppSelector((state) => state.companyInfoPage.company);
     if (!company) {
         return null;
     }

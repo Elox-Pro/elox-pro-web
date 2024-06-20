@@ -10,9 +10,7 @@ export default function PageHeader({ title, subtitle, description }: PageHeaderP
     return (
         <Row className="text-center">
             <Col xs={12}>
-                <p className="fs-1 mb-0">
-                    {title}
-                </p>
+                <p className="fs-1 mb-0">{title}</p>
                 <p className="fs-4 mb-1">{subtitle}</p>
                 <p className="fs-6">{description}</p>
             </Col>

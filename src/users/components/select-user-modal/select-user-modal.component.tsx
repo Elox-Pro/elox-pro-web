@@ -26,7 +26,7 @@ export default function SelectUserModal() {
     const selectUser = useAppSelector((state) => state.selectUser);
     const searchBar = useAppSelector((state) => state.searchBar);
     const paginator = useAppSelector((state) => state.paginator);
-    const companyInfo = useAppSelector((state) => state.companyInfo);
+    const companyInfo = useAppSelector((state) => state.companyInfoPage);
     const dispatch = useAppDispatch();
 
     const { data, isSuccess } = useGetUsersQuery({
