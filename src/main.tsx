@@ -9,7 +9,7 @@ import { appStore } from "./app/stores/app.store.ts"
 import { RouterProvider } from "react-router-dom"
 import { AppRoutes } from "./app/routes/app.routes.tsx"
 import i18n from "./app/i18n/i18n.ts"
-import { Overlay } from "./common/components/overlay/overlay.component.tsx"
+import { Overlay } from "./common/components/overlay/overlay.tsx"
 import Loading from "./common/components/loading/loading.component.tsx"
 import "react-toastify/dist/ReactToastify.min.css";
 import DefaultToast from "./common/components/default-toast/default-toast.component.tsx"
