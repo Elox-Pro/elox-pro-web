@@ -1,0 +1,7 @@
+.wrapper-header {
+    &.scrolled {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: var(--bs-border-color);
+    }
+}
