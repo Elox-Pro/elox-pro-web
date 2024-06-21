@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import ListItem from "../../../common/components/list-item/list-item.component";
+import { IconType } from "../../../common/enums/icon-type.enum";
 import { setShowEditCompanyNameModal } from "../../features/company.slice";
 
 export default function CompanyNameItem() {
@@ -22,7 +23,7 @@ export default function CompanyNameItem() {
                     </p>
                 </ListItem.Section>
             </ListItem.BodyContent>
-            <ListItem.BodyIcon icon="bi bi-chevron-right" />
+            <ListItem.BodyIcon icon={IconType.ChevronRight} />
         </ListItem.Content>
     )
 }

@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../../app/hooks/app.hooks";
 import { setPaginatorCurrentPage } from "../features/paginator.slice";
+import { setSearchBarFocus } from "../features/search-bar.slice";
 
 export type PaginatorItem = {
     label: string;
@@ -11,6 +12,7 @@ export type PaginatorItem = {
 };
 
 type PaginatorProps = {
+    withSearchBar?: boolean;
     onChange?: () => void;
 }
 /**
@@ -18,7 +20,7 @@ type PaginatorProps = {
  * 
  * @returns {object} An object containing the renderPaginationItems function.
  */
-export function usePaginator({ onChange }: PaginatorProps) {
+export function usePaginator({ withSearchBar = false, onChange }: PaginatorProps) {
     const { currentPage, results, itemsPerPage } = useAppSelector((state) => state.paginator);
     const dispatch = useAppDispatch();
 
@@ -36,7 +38,9 @@ export function usePaginator({ onChange }: PaginatorProps) {
         if (onChange) {
             onChange();
         }
-        // dispatch(setSearchBarFocus(true));
+        if (withSearchBar) {
+            dispatch(setSearchBarFocus(true));
+        }
     };
 
     /**

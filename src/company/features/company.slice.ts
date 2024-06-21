@@ -9,8 +9,10 @@ const initialState: CompanyState = {
     company: null,
     companyUsers: [],
     totalCompanyUsers: 0,
+    companyUser: null,
     showEditCompanyNameModal: false,
-    showCreateCompanyModal: false
+    showCreateCompanyModal: false,
+    showManageCompanyUserModal: false,
 
 }
 
@@ -30,12 +32,18 @@ const slice = createSlice({
         setTotalCompanyUsers: (state, action: PayloadAction<number>) => {
             state.totalCompanyUsers = action.payload;
         },
+        setCompanyUser: (state, action: PayloadAction<User | null>) => {
+            state.companyUser = action.payload;
+        },
         setShowEditCompanyNameModal: (state, action: PayloadAction<boolean>) => {
             state.showEditCompanyNameModal = action.payload;
         },
         setShowCreateCompanyModal: (state, action: PayloadAction<boolean>) => {
             state.showCreateCompanyModal = action.payload;
-        }
+        },
+        setShowManageCompanyUserModal: (state, action: PayloadAction<boolean>) => {
+            state.showManageCompanyUserModal = action.payload;
+        },
     }, extraReducers(builder) {
         builder.addCase(logout, () => {
             return slice.getInitialState();
@@ -50,8 +58,10 @@ export const {
     setCompany,
     setCompanyUsers,
     setTotalCompanyUsers,
+    setCompanyUser,
     setShowEditCompanyNameModal,
     setShowCreateCompanyModal,
+    setShowManageCompanyUserModal
 } = slice.actions;
 
 export default companyReducer;

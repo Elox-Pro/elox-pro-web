@@ -1,3 +1,3 @@
-type CompanyInfoPageParams = {
+type CompanyInfoIndexParams = {
     id: string;
 }

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Company } from "../../types/company.type";
 import ListItem from "../../../common/components/list-item/list-item.component";
+import { IconType } from "../../../common/enums/icon-type.enum";
 
 type CompanyListItemProps = {
     company: Company;
@@ -24,7 +25,7 @@ export default function CompanyListItem({ company }: CompanyListItemProps) {
                     description={String(company.updatedAt)}
                 />
             </ListItem.BodyContent>
-            <ListItem.BodyIcon icon="bi bi-chevron-right" />
+            <ListItem.BodyIcon icon={IconType.ChevronRight} />
         </ListItem.Content>
 
     )

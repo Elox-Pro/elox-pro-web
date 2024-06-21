@@ -32,7 +32,14 @@
 
     .list-group-item {
         border: none;
+        border-radius: 0.35rem;
     }
+
+    .list-group-item-danger,
+    .list-group-item-info {
+        --bs-list-group-bg: transparent;
+    }
+
 }
 
 [data-bs-theme=dark] {

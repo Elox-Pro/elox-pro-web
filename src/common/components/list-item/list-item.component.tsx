@@ -2,19 +2,22 @@ import { ReactNode } from "react";
 import { Col } from "react-bootstrap";
 import ListGroup from "react-bootstrap/esm/ListGroup";
 import Row from "react-bootstrap/esm/Row";
+import { IconType } from "../../enums/icon-type.enum";
 
 type ContentProps = {
     children: ReactNode;
     disabled?: boolean;
+    variant?: 'danger' | 'warning' | 'success' | 'info' | 'default';
     onClick?: () => void;
 };
 
-const Content = ({ children, disabled = false, onClick }: ContentProps): JSX.Element => {
+const Content = ({ children, disabled = false, variant = "default", onClick }: ContentProps): JSX.Element => {
     return (
         <ListGroup.Item
-            className={`py-3 px-1 ${disabled ? 'disabled opacity-75' : ''}`}
+            className={`py-3 px-2 ${disabled ? 'disabled opacity-75' : ''}`}
             onClick={onClick}
             disabled={disabled}
+            variant={variant}
             action>
             <Row className="w-100 align-items-center g-0">
                 {children}
@@ -38,7 +41,7 @@ const BodyContent = ({ children }: BodyContentProps): JSX.Element => {
 };
 
 type BodyIconProps = {
-    icon: string;
+    icon: IconType;
 };
 
 const BodyIcon = ({ icon }: BodyIconProps): JSX.Element => {
@@ -130,7 +133,7 @@ const Image = ({ src, alt, title, description }: ImageProps) => {
 }
 
 type IconProps = {
-    icon: string;
+    icon: IconType;
     title: string;
     description?: string | null;
 }

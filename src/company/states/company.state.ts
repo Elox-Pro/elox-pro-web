@@ -6,6 +6,8 @@ export type CompanyState = {
     company: Company | null;
     companyUsers: User[];
     totalCompanyUsers: number;
+    companyUser: User | null;
     showEditCompanyNameModal: boolean;
     showCreateCompanyModal: boolean;
+    showManageCompanyUserModal: boolean;
 }

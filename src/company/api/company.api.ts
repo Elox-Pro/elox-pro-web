@@ -5,10 +5,10 @@ import { CompanyListResponse } from "../responses/company-list.response";
 import { CompanyListRequest } from "../requests/company-list.request";
 import { CompanyResponse } from "../types/find-company-by-id/company-response.type";
 import { CompanyRequest } from "../types/find-company-by-id/company-request.type";
-import { CreateCompanyModalResponse } from "../responses/create-company-modal.response";
-import { CreateCompanyModalRequest } from "../requests/create-company-modal.request";
-import { UpdateCompanyNameResponse } from "../types/update-company-name/update-company-name-response.type";
-import { UpdateCompanyNameRequest } from "../types/update-company-name/update-company-name-request.type";
+import { CreateCompanyResponse } from "../responses/create-company.response";
+import { CreateCompanyRequest } from "../requests/create-company.request";
+import { EditCompanyNameResponse } from "../responses/edit-company-name.response";
+import { EditCompanyNameRequest } from "../requests/edit-company-name.request";
 import { AddUserToCompanyResponse } from "../types/add-user-to-company/add-user-to-company-response.type";
 import { AddUserToCompanyRequest } from "../types/add-user-to-company/add-user-to-company-request.type";
 import { RemoveUserFromCompanyResponse } from "../types/remove-user-from-company/remove-user-from-company-response.type";
@@ -46,7 +46,7 @@ export const companyApi = createApi({
                 },
                 providesTags: ["getCompany"]
             }),
-            createCompany: builder.mutation<CreateCompanyModalResponse, CreateCompanyModalRequest>({
+            createCompany: builder.mutation<CreateCompanyResponse, CreateCompanyRequest>({
                 query(data) {
                     return {
                         url: `/create`,
@@ -56,7 +56,7 @@ export const companyApi = createApi({
                 },
                 invalidatesTags: ["getCompanies"]
             }),
-            updateCompanyName: builder.mutation<UpdateCompanyNameResponse, UpdateCompanyNameRequest>({
+            updateCompanyName: builder.mutation<EditCompanyNameResponse, EditCompanyNameRequest>({
                 query(data) {
                     return {
                         url: `/update/name`,

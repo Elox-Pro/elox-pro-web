@@ -1,9 +1,9 @@
 import Row from "react-bootstrap/esm/Row";
-import ModalAction from "../../../common/components/modal-action/modal-action.component";
+import ModalAction from "../../../common/components/modal-action/modal-action";
 import Col from "react-bootstrap/esm/Col";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { setSelectUserTotal, setSelectUserUsers, showSelectUserModal } from "../../features/select-user-slice";
-import SearchBar from "../../../common/components/search-bar/search-bar.component";
+import SearchBar from "../../../common/components/search-bar/search-bar";
 import { useEffect } from "react";
 import { useGetUsersQuery, userApi } from "../../api/user.api";
 import { setSearchBarClear, setSearchBarFocus } from "../../../common/features/search-bar.slice";
@@ -11,7 +11,7 @@ import ListGroup from "react-bootstrap/esm/ListGroup";
 import ListItem from "../../../common/components/list-item/list-item.component";
 import { User } from "../../types/user.type";
 import { getProfileAvatar } from "../../../profile/helpers/get-profile-avatar";
-import Paginator from "../../../common/components/paginator/paginator.component";
+import Paginator from "../../../common/components/paginator/paginator";
 import { setPaginatorCurrentPage, setPaginatorResults } from "../../../common/features/paginator.slice";
 import { setModalActionBackToTop } from "../../../common/features/modal-action.slice";
 import { useAddUserToCompanyMutation } from "../../../company/api/company.api";
@@ -20,20 +20,21 @@ import { setOverlay } from "../../../common/features/common.slice";
 import { toast } from "react-toastify";
 import { QueryStatus } from "@reduxjs/toolkit/query";
 import { Card } from "react-bootstrap";
+import { IconType } from "../../../common/enums/icon-type.enum";
 
 export default function SelectUserModal() {
 
     const selectUser = useAppSelector((state) => state.selectUser);
     const searchBar = useAppSelector((state) => state.searchBar);
     const paginator = useAppSelector((state) => state.paginator);
-    const companyInfo = useAppSelector((state) => state.companyInfoPage);
+    const { company } = useAppSelector((state) => state.company);
     const dispatch = useAppDispatch();
 
     const { data, isSuccess } = useGetUsersQuery({
         page: paginator.currentPage,
         limit: paginator.itemsPerPage,
         searchTerm: searchBar.text,
-        skipUsersFromCompanyId: companyInfo.company?.id,
+        skipUsersFromCompanyId: company?.id || 0,
     }, { skip: !selectUser.modal.show });
 
     const onClose = () => {
@@ -80,10 +81,9 @@ export default function SelectUserModal() {
     return (
         <ModalAction.Content
             show={selectUser.modal.show}>
-            <ModalAction.Header onClose={onClose} >
-                <ModalAction.Title value="Select User" />
-            </ModalAction.Header>
+            <ModalAction.Header onClose={onClose} />
             <ModalAction.Body onBackToTop={handleBackToTop}>
+                <p><strong>Add user to {company?.name} company</strong></p>
                 <Row>
                     <Col xs={12}>
                         <SearchBar
@@ -98,7 +98,7 @@ export default function SelectUserModal() {
                                 <p>Please select a user from the list below.</p>
                                 <ListGroup variant="flush">
                                     {selectUser.users.map((user, index) => (
-                                        <UserItem user={user} company={companyInfo.company} key={index} />
+                                        <UserItem user={user} company={company} key={index} />
                                     ))}
                                 </ListGroup>
                             </Card.Body>
@@ -119,16 +119,9 @@ type UserItemProps = {
 }
 function UserItem({ user, company }: UserItemProps) {
 
-    if (!user
-        || !user.username
-        || !user.id
-        || !company
-        || !company.id
-    ) return null;
-
-    const avatarUrl = getProfileAvatar(user.avatarUrl);
-    const username = user.username;
-    const roleText = user.roleText;
+    const avatarUrl = getProfileAvatar(user?.avatarUrl || null);
+    const username = user?.username || "";
+    const roleText = user?.roleText || "";
     const dispatch = useAppDispatch();
     const [mutation, { status, data }] = useAddUserToCompanyMutation();
 
@@ -136,8 +129,8 @@ function UserItem({ user, company }: UserItemProps) {
         try {
             dispatch(setOverlay(true));
             mutation({
-                companyId: company.id,
-                userId: user.id,
+                companyId: company?.id || 0,
+                userId: user?.id || 0,
             });
         } catch (error) {
             console.error(error);
@@ -163,7 +156,7 @@ function UserItem({ user, company }: UserItemProps) {
                     description={roleText}
                 />
             </ListItem.BodyContent>
-            <ListItem.BodyIcon icon="bi bi-plus-circle" />
+            <ListItem.BodyIcon icon={IconType.PlusCircle} />
         </ListItem.Content>
     )
 }

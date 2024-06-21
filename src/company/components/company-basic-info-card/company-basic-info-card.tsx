@@ -3,7 +3,10 @@ import ListGroup from "react-bootstrap/esm/ListGroup";
 import CompanyNameItem from "../company-name-item/company-name-item";
 import CompanyUpdateAtItem from "../company-update-at-item/company-update-at-item";
 
-export default function CompanyBasicInfoCard() {
+export type CompanyBasicInfoCardProps = {
+    children: React.ReactNode;
+};
+export default function CompanyBasicInfoCard({ children }: CompanyBasicInfoCardProps) {
     return (
         <Card>
             <Card.Body>
@@ -12,8 +15,7 @@ export default function CompanyBasicInfoCard() {
                     <span>Basic Info</span>
                 </Card.Title>
                 <ListGroup variant="flush">
-                    <CompanyNameItem />
-                    <CompanyUpdateAtItem />
+                    {children}
                 </ListGroup>
             </Card.Body>
         </Card>
