@@ -1,6 +1,6 @@
 import Row from "react-bootstrap/esm/Row";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
-import ModalAction from "../../../common/components/modal-action/modal-action";
+import ModalAction from "../../../common/components/modal-action/modal-action-v1";
 import Col from "react-bootstrap/esm/Col";
 import SubmitButton from "../../../common/components/submit-button/submit-button";
 import { ZodType, z } from "zod";

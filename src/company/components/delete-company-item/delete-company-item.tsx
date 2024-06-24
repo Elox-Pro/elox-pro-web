@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
-import ListItem from "../../../common/components/list-item/list-item.component";
+import ListItem from "../../../common/components/list-item/list-item";
 import { setOverlay } from "../../../common/features/common.slice";
 import { useDeleteCompanyMutation } from "../../api/company.api";
 import { useEffect } from "react";
@@ -40,14 +40,13 @@ export default function DeleteCompanyItem() {
     const description = "The company cannot be deleted if it has active users or customers. Please remove or transfer them first.";
 
     return (
-        <ListItem.Content onClick={onSubmit} disabled={disabled} variant="danger">
-            <ListItem.BodyContent>
+        <ListItem onClick={onSubmit} disabled={disabled} variant="danger">
+            <ListItem.Body icon={IconType.ChevronRight}>
                 <ListItem.Icon
                     icon={IconType.Trash}
-                    title="Delete company"
+                    value="Delete company"
                     description={description} />
-            </ListItem.BodyContent>
-            <ListItem.BodyIcon icon={IconType.ChevronRight} />
-        </ListItem.Content>
+            </ListItem.Body>
+        </ListItem>
     )
 }

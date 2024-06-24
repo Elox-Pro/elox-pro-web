@@ -1,4 +1,4 @@
-import ListItem from "../../../common/components/list-item/list-item.component";
+import ListItem from "../../../common/components/list-item/list-item-v1";
 import { IconType } from "../../../common/enums/icon-type.enum";
 
 export default function ShowCompanyUserDetailsItem() {

@@ -1,18 +1,19 @@
-import CPWrapperPage from "../../../cpanel/components/wrapper-page/cp-wrapper-page.component";
-import { Card, Col, ListGroup, Row } from "react-bootstrap";
+import WrapperPage from "../../../common/components/wrapper-page/wrapper-page";
+import { Col, Row } from "react-bootstrap";
 import { useGetCompaniesQuery } from "../../api/company.api";
 import { useEffect } from "react";
 import SearchBar from "../../../common/components/search-bar/search-bar";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import WrapperHeader from "../../../common/components/wrapper-header/wrapper-header";
 import IconButton from "../../../common/components/icon-button/icon-button.component";
-import CreateCompanyModal from "../create-company-modal/create-copmany-modal";
+import CreateCompanyModal from "../create-company-modal/create-company-modal";
 import Paginator from "../../../common/components/paginator/paginator";
-import { setPaginatorCurrentPage, setPaginatorResults } from "../../../common/features/paginator.slice";
+import { setPaginatorResults } from "../../../common/features/paginator.slice";
 import { setSearchBarFocus } from "../../../common/features/search-bar.slice";
-import CompanyListItem from "../company-list-item/company-list-item.component";
+import CompanyListItem from "../company-list-item/company-list-item";
 import { setCompanies, setShowCreateCompanyModal } from "../../features/company.slice";
 import PageTitle from "../../../common/components/page-title/page-title";
+import CardList from "../../../common/components/card-list/card-list";
 
 export default function CompanyListIndex() {
 
@@ -65,18 +66,14 @@ export default function CompanyListIndex() {
                     </Col>
                 </Row>
             </WrapperHeader>
-            <CPWrapperPage show={isSuccess} backToTopOnClick={backToTopOnClick} >
+            <WrapperPage show={isSuccess} backToTopOnClick={backToTopOnClick} >
                 <Row className="mb-3">
                     <Col xs={12}>
-                        <Card>
-                            <Card.Body>
-                                <ListGroup variant="flush">
-                                    {companies.map((company, index) => (
-                                        <CompanyListItem company={company} key={index} />
-                                    ))}
-                                </ListGroup>
-                            </Card.Body>
-                        </Card>
+                        <CardList>
+                            {companies.map((company, index) => (
+                                <CompanyListItem company={company} key={index} />
+                            ))}
+                        </CardList>
                     </Col>
                 </Row>
                 <Row>
@@ -85,7 +82,7 @@ export default function CompanyListIndex() {
                     </Col>
                 </Row>
                 <CreateCompanyModal />
-            </CPWrapperPage>
+            </WrapperPage>
         </>
     );
 }

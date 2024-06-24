@@ -1,5 +1,5 @@
 import { useAppDispatch } from "../../../app/hooks/app.hooks";
-import ListItem from "../../../common/components/list-item/list-item.component";
+import ListItem from "../../../common/components/list-item/list-item";
 import { IconType } from "../../../common/enums/icon-type.enum";
 import { getProfileAvatar } from "../../../profile/helpers/get-profile-avatar";
 import { User } from "../../../users/types/user.type";
@@ -14,6 +14,7 @@ export default function CompanyUserItem({ user }: CompanyUserItemProps) {
 
     const avatar = getProfileAvatar(user.avatarUrl);
     const username = user.username || "";
+    const roleText = user.roleText || "";
 
     const onClick = () => {
         dispatch(setCompanyUser(user));
@@ -21,16 +22,15 @@ export default function CompanyUserItem({ user }: CompanyUserItemProps) {
     }
 
     return (
-        <ListItem.Content onClick={onClick}>
-            <ListItem.BodyContent>
+        <ListItem onClick={onClick}>
+            <ListItem.Body icon={IconType.ChevronRight}>
                 <ListItem.Image
                     src={avatar}
                     alt={username}
-                    title={username}
-                    description={user.roleText}
+                    value={username}
+                    description={roleText}
                 />
-            </ListItem.BodyContent>
-            <ListItem.BodyIcon icon={IconType.ChevronRight} />
-        </ListItem.Content>
+            </ListItem.Body>
+        </ListItem>
     )
 }

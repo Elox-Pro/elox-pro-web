@@ -1,5 +1,5 @@
 import Row from "react-bootstrap/esm/Row";
-import ModalAction from "../../../common/components/modal-action/modal-action";
+import ModalAction from "../../../common/components/modal-action/modal-action-v1";
 import Col from "react-bootstrap/esm/Col";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { setSelectUserTotal, setSelectUserUsers, showSelectUserModal } from "../../features/select-user-slice";
@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { useGetUsersQuery, userApi } from "../../api/user.api";
 import { setSearchBarClear, setSearchBarFocus } from "../../../common/features/search-bar.slice";
 import ListGroup from "react-bootstrap/esm/ListGroup";
-import ListItem from "../../../common/components/list-item/list-item.component";
+import ListItem from "../../../common/components/list-item/list-item-v1";
 import { User } from "../../types/user.type";
 import { getProfileAvatar } from "../../../profile/helpers/get-profile-avatar";
 import Paginator from "../../../common/components/paginator/paginator";

@@ -1,5 +1,5 @@
 import { IconType } from "../../../common/enums/icon-type.enum";
-import ListItem from "../../../common/components/list-item/list-item.component";
+import ListItem from "../../../common/components/list-item/list-item";
 
 export default function ShowMoreCompanyUsersItem() {
 
@@ -7,11 +7,10 @@ export default function ShowMoreCompanyUsersItem() {
         alert("Show more users");
     }
     return (
-        <ListItem.Content onClick={onClick}>
-            <ListItem.BodyContent>
-                <ListItem.Label value={"Show more users"} />
-            </ListItem.BodyContent>
-            <ListItem.BodyIcon icon={IconType.ChevronRight} />
-        </ListItem.Content>
+        <ListItem onClick={onClick}>
+            <ListItem.Body icon={IconType.ChevronRight}>
+                <ListItem.Label label={"Show more users"} />
+            </ListItem.Body>
+        </ListItem>
     )
 }

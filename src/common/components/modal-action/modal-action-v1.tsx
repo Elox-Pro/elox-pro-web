@@ -7,12 +7,12 @@ import Button from "react-bootstrap/esm/Button";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { setModalActionBackToTop } from "../../features/modal-action.slice";
 
-type ModalActionProps = {
+type ContentProps = {
     show: boolean;
     children: ReactNode;
 }
 
-const ModalAction = ({ show, children }: ModalActionProps): JSX.Element => {
+const Content = ({ show, children }: ContentProps): JSX.Element => {
     return (
         <Modal
             className="modal-form"
@@ -31,7 +31,7 @@ type FormProps = {
     children: ReactNode;
     onSubmit: () => void;
 }
-ModalAction.Form = ({ children, onSubmit }: FormProps): JSX.Element => {
+const Form = ({ children, onSubmit }: FormProps): JSX.Element => {
     return (
         <form onSubmit={onSubmit} noValidate>
             {children}
@@ -44,7 +44,7 @@ type HeaderProps = {
     children?: ReactNode;
 }
 
-ModalAction.Header = ({ onClose, children }: HeaderProps): JSX.Element => {
+const Header = ({ onClose, children }: HeaderProps): JSX.Element => {
     return (
         <div className="modal-header">
             <Container fluid>
@@ -63,11 +63,11 @@ ModalAction.Header = ({ onClose, children }: HeaderProps): JSX.Element => {
     );
 }
 
-type HeaderTitleProps = {
+type TitleProps = {
     value: string;
 }
 
-ModalAction.HeaderTitle = ({ value }: HeaderTitleProps): JSX.Element => {
+const Title = ({ value }: TitleProps): JSX.Element => {
     return (
         <h5 className="m-0">
             {value}
@@ -75,12 +75,13 @@ ModalAction.HeaderTitle = ({ value }: HeaderTitleProps): JSX.Element => {
     )
 }
 
+
 type BodyProps = {
     children: ReactNode;
     onBackToTop?: () => void;
 }
 
-ModalAction.Body = ({ children, onBackToTop }: BodyProps): JSX.Element => {
+const Body = ({ children, onBackToTop }: BodyProps): JSX.Element => {
 
     const modalRef = useRef<HTMLDivElement>(null);
     const modalAction = useAppSelector((state) => state.modalAction);
@@ -134,31 +135,42 @@ ModalAction.Body = ({ children, onBackToTop }: BodyProps): JSX.Element => {
     );
 }
 
-type TitleProps = {
+type BodyTitleProps = {
     value: string;
 }
 
-ModalAction.Title = ({ value }: TitleProps): JSX.Element => {
+const BodyTitle = ({ value }: BodyTitleProps): JSX.Element => {
     return <p><strong>{value}</strong></p>
 }
 
-type DescriptionProps = {
+type BodyDescriptionProps = {
     value: string;
 }
 
-ModalAction.Description = ({ value }: DescriptionProps): JSX.Element => {
+const BodyDescription = ({ value }: BodyDescriptionProps): JSX.Element => {
     return <p className="text-muted">{value}</p>
 }
 
 type FooterProps = {
     children: ReactNode;
 }
-ModalAction.Footer = ({ children }: FooterProps) => {
+const Footer = ({ children }: FooterProps) => {
     return (
         <Modal.Footer>
             {children}
         </Modal.Footer>
     )
+}
+
+const ModalAction = {
+    Content,
+    Form,
+    Header,
+    Title,
+    Body,
+    BodyTitle,
+    BodyDescription,
+    Footer
 }
 
 export default ModalAction;

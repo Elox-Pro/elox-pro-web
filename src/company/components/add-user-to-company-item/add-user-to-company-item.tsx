@@ -1,5 +1,5 @@
 import { useAppDispatch } from "../../../app/hooks/app.hooks";
-import ListItem from "../../../common/components/list-item/list-item.component";
+import ListItem from "../../../common/components/list-item/list-item";
 import { IconType } from "../../../common/enums/icon-type.enum";
 import { showSelectUserModal } from "../../../users/features/select-user-slice";
 
@@ -11,13 +11,12 @@ export default function AddUserToCompanyItem() {
     };
 
     return (
-        <ListItem.Content onClick={onClick}>
-            <ListItem.BodyContent>
+        <ListItem onClick={onClick}>
+            <ListItem.Body icon={IconType.ChevronRight}>
                 <ListItem.Icon
                     icon={IconType.PlusCircle}
-                    title="Add user to company" />
-            </ListItem.BodyContent>
-            <ListItem.BodyIcon icon={IconType.ChevronRight} />
-        </ListItem.Content>
+                    value="Add user to company" />
+            </ListItem.Body>
+        </ListItem>
     )
 }

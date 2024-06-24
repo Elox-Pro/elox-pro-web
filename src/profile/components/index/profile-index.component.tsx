@@ -5,7 +5,7 @@ import ProfileContactInfo from "../contact-info/profile-contact-info.component"
 import ProfilePasswordInfo from "../password-info/profile-password-info.component"
 import ProfileTfaInfo from "../tfa-info/profile-tfa-info.component"
 import ProfileSettings from "../settings/profile-settings.component"
-import CPWrapperPage from "../../../cpanel/components/wrapper-page/cp-wrapper-page.component"
+import WrapperPage from "../../../common/components/wrapper-page/wrapper-page"
 import { useGetProfile } from "../../hooks/get-profile-handler.hook"
 import BackToTopButton from "../../../common/components/back-to-top/back-to-top-button.component"
 
@@ -14,7 +14,7 @@ export default function ProfileIndex() {
   const { isSuccess, profile, t } = useGetProfile();
 
   return (
-    <CPWrapperPage show={isSuccess && profile !== null} >
+    <WrapperPage show={isSuccess && profile !== null} >
       <div className="profile-index">
         <Row className="text-center">
           <Col xs={12}>
@@ -41,6 +41,6 @@ export default function ProfileIndex() {
         </Row>
       </div>
       <BackToTopButton />
-    </CPWrapperPage>
+    </WrapperPage>
   )
 }

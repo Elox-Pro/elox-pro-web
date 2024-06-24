@@ -5,7 +5,7 @@ import { useRemoveUserFromCompanyMutation } from "../../api/company.api";
 import { useEffect } from "react";
 import { QueryStatus } from "@reduxjs/toolkit/query/react";
 import { userApi } from "../../../users/api/user.api";
-import ListItem from "../../../common/components/list-item/list-item.component";
+import ListItem from "../../../common/components/list-item/list-item-v1";
 import { setShowManageCompanyUserModal } from "../../features/company.slice";
 import { IconType } from "../../../common/enums/icon-type.enum";
 

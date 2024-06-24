@@ -56,12 +56,12 @@ export default function CreateCompanyModal() {
     }
 
     return (
-        <ModalAction.Content show={showCreateCompanyModal}>
+        <ModalAction show={showCreateCompanyModal}>
             <ModalAction.Form onSubmit={zodForm.handleSubmit(onSubmit)}>
                 <ModalAction.Header onClose={onClose} />
                 <ModalAction.Body>
-                    <ModalAction.BodyTitle value={"Create Company"} />
-                    <ModalAction.BodyDescription value={"Please provide the official name of your company."} />
+                    <ModalAction.Title value={"Create Company"} />
+                    <ModalAction.Description value={"Please provide the official name of your company."} />
                     <Row>
                         <Col xs={12}>
                             <FloatingInput
@@ -79,6 +79,6 @@ export default function CreateCompanyModal() {
                     <SubmitButton disabled={!nameWatch || nameWatch.length < 3 || overlay.active} />
                 </ModalAction.Footer>
             </ModalAction.Form>
-        </ModalAction.Content>
+        </ModalAction>
     );
 }

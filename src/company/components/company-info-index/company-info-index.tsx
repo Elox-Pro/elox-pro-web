@@ -1,7 +1,7 @@
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import CompanyBasicInfoCard from "../company-basic-info-card/company-basic-info-card";
-import CPWrapperPage from "../../../cpanel/components/wrapper-page/cp-wrapper-page.component";
+import WrapperPage from "../../../common/components/wrapper-page/wrapper-page";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import { useGetCompanyQuery } from "../../api/company.api";
 import { useEffect } from "react";
@@ -19,12 +19,15 @@ import DeleteCompanyItem from "../delete-company-item/delete-company-item";
 import SelectUserModal from "../../../users/components/select-user-modal/select-user-modal.component";
 import ShowMoreCompanyUsersItem from "../show-more-company-users-item/show-more-company-users-item";
 import TotalCompanyUsersItem from "../total-company-users-item/total-company-users-item";
+import PageTitle from "../../../common/components/page-title/page-title";
+import PageImage from "../../../common/components/page-image/page-image";
+import PageDescription from "../../../common/components/page-description/page-description";
 
 
 export function CompanyInfoIndex() {
 
     const params = useParams<CompanyInfoIndexParams>();
-    const { companyUsers } = useAppSelector((state) => state.company);
+    const { company, companyUsers } = useAppSelector((state) => state.company);
     const dispatch = useAppDispatch();
     const { data, isSuccess } = useGetCompanyQuery({
         id: params && params.id ? parseInt(params.id) : 0
@@ -38,13 +41,14 @@ export function CompanyInfoIndex() {
         }
     }, [data, isSuccess]);
 
+    const companyName = company?.name || "";
+    const companyImage = company?.imageUrl || "";
+
     return (
-        <CPWrapperPage show={isSuccess}>
-            <Row className="text-center">
-                <Col xs={12}>
-                    <p className="fs-1">Company Info</p>
-                </Col>
-            </Row>
+        <WrapperPage show={isSuccess}>
+            <PageImage src={companyImage} alt={companyName} />
+            <PageTitle value={companyName} />
+            <PageDescription text="Company Info" />
             <Row>
                 <Col xs={12}>
                     <CardList icon={IconType.FileCheck} title="Basic Info">
@@ -76,6 +80,6 @@ export function CompanyInfoIndex() {
             <EditCompanyNameModal />
             <ManageCompanyUserModal />
             <SelectUserModal />
-        </CPWrapperPage>
+        </WrapperPage>
     )
 }
