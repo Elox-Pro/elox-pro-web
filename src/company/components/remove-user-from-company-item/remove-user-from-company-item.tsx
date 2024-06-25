@@ -4,8 +4,7 @@ import { setOverlay } from "../../../common/features/common.slice";
 import { useRemoveUserFromCompanyMutation } from "../../api/company.api";
 import { useEffect } from "react";
 import { QueryStatus } from "@reduxjs/toolkit/query/react";
-import { userApi } from "../../../users/api/user.api";
-import ListItem from "../../../common/components/list-item/list-item-v1";
+import ListItem from "../../../common/components/list-item/list-item";
 import { setShowManageCompanyUserModal } from "../../features/company.slice";
 import { IconType } from "../../../common/enums/icon-type.enum";
 
@@ -31,20 +30,18 @@ export default function RemoveUserFromCompanyItem() {
     useEffect(() => {
         if (status === QueryStatus.fulfilled && data) {
             dispatch(setShowManageCompanyUserModal(false));
-            dispatch(userApi.util.invalidateTags(["getUsers"]));
             toast.success("User removed from company successfully");
         }
     }, [status, data]);
 
     return (
         companyUser && company &&
-        <ListItem.Content onClick={onSubmit} variant="danger">
-            <ListItem.BodyContent>
+        <ListItem onClick={onSubmit} variant="danger">
+            <ListItem.Body icon={IconType.ChevronRight}>
                 <ListItem.Icon
                     icon={IconType.Trash}
-                    title="Remove user from company" />
-            </ListItem.BodyContent>
-            <ListItem.BodyIcon icon={IconType.ChevronRight} />
-        </ListItem.Content>
+                    value="Remove user from company" />
+            </ListItem.Body>
+        </ListItem>
     )
 }

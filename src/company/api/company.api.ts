@@ -1,18 +1,21 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { API_URL } from "../../app/constants/app.constants";
 import i18n from "../../app/i18n/i18n";
-import { CompanyListResponse } from "../responses/company-list.response";
-import { CompanyListRequest } from "../requests/company-list.request";
-import { CompanyResponse } from "../types/find-company-by-id/company-response.type";
-import { CompanyRequest } from "../types/find-company-by-id/company-request.type";
+import { FindCompaniesResponse } from "../responses/find-companies.response";
+import { FindCompaniesRequest } from "../requests/find-companies.request";
 import { CreateCompanyResponse } from "../responses/create-company.response";
 import { CreateCompanyRequest } from "../requests/create-company.request";
 import { EditCompanyNameResponse } from "../responses/edit-company-name.response";
 import { EditCompanyNameRequest } from "../requests/edit-company-name.request";
-import { AddUserToCompanyResponse } from "../types/add-user-to-company/add-user-to-company-response.type";
-import { AddUserToCompanyRequest } from "../types/add-user-to-company/add-user-to-company-request.type";
-import { RemoveUserFromCompanyResponse } from "../types/remove-user-from-company/remove-user-from-company-response.type";
-import { RemoveUserFromCompanyRequest } from "../types/remove-user-from-company/remove-user-from-company-request.type";
+import { AddUserToCompanyResponse } from "../responses/add-user-to-company.response";
+import { AddUserToCompanyRequest } from "../requests/add-user-to-company.request";
+import { FindManyUsersRequest } from "../requests/find-many-users.request";
+import { FindManyUsersResponse } from "../responses/find-many-users.response";
+import { FindCompanyResponse } from "../responses/find-company.response";
+import { FindCompanyRequest } from "../requests/find-company.request";
+import { RemoveUserFromCompanyResponse } from "../responses/remove-user-from-company.response";
+import { RemoveUserFromCompanyRequest } from "../requests/remove-user-from-company.request";
+import { DeleteCompanyRequest } from "../requests/delete-company.request";
 
 export const companyApi = createApi({
     reducerPath: "companyApi",
@@ -24,10 +27,10 @@ export const companyApi = createApi({
             return headers;
         },
     }),
-    tagTypes: ["getCompanies", "getCompany"],
+    tagTypes: ["findCompanies", "findCompany", "findManyUsers"],
     endpoints(builder) {
         return {
-            getCompanies: builder.query<CompanyListResponse, CompanyListRequest>({
+            findCompanies: builder.query<FindCompaniesResponse, FindCompaniesRequest>({
                 query(data) {
                     return {
                         url: "/",
@@ -35,16 +38,16 @@ export const companyApi = createApi({
                         body: data,
                     }
                 },
-                providesTags: ["getCompanies"]
+                providesTags: ["findCompanies"]
             }),
-            getCompany: builder.query<CompanyResponse, CompanyRequest>({
+            findCompany: builder.query<FindCompanyResponse, FindCompanyRequest>({
                 query(data) {
                     return {
-                        url: `/find/${data.id}`,
                         method: "GET",
+                        url: `/find/${data.id}`,
                     }
                 },
-                providesTags: ["getCompany"]
+                providesTags: ["findCompany"]
             }),
             createCompany: builder.mutation<CreateCompanyResponse, CreateCompanyRequest>({
                 query(data) {
@@ -54,9 +57,9 @@ export const companyApi = createApi({
                         body: data,
                     }
                 },
-                invalidatesTags: ["getCompanies"]
+                invalidatesTags: ["findCompanies"]
             }),
-            updateCompanyName: builder.mutation<EditCompanyNameResponse, EditCompanyNameRequest>({
+            editCompanyName: builder.mutation<EditCompanyNameResponse, EditCompanyNameRequest>({
                 query(data) {
                     return {
                         url: `/update/name`,
@@ -64,7 +67,7 @@ export const companyApi = createApi({
                         body: data,
                     }
                 },
-                invalidatesTags: ["getCompanies", "getCompany"]
+                invalidatesTags: ["findCompanies", "findCompany"]
             }),
             addUserToCompany: builder.mutation<AddUserToCompanyResponse, AddUserToCompanyRequest>({
                 query(data) {
@@ -74,7 +77,7 @@ export const companyApi = createApi({
                         body: data,
                     }
                 },
-                invalidatesTags: ["getCompany"]
+                invalidatesTags: ["findCompany", "findManyUsers"]
             }),
             removeUserFromCompany: builder.mutation<RemoveUserFromCompanyResponse, RemoveUserFromCompanyRequest>({
                 query(data) {
@@ -84,9 +87,9 @@ export const companyApi = createApi({
                         body: data,
                     }
                 },
-                invalidatesTags: ["getCompany"]
+                invalidatesTags: ["findCompany", "findManyUsers"]
             }),
-            deleteCompany: builder.mutation<void, CompanyRequest>({
+            deleteCompany: builder.mutation<void, DeleteCompanyRequest>({
                 query(data) {
                     return {
                         url: `/delete/company`,
@@ -94,18 +97,29 @@ export const companyApi = createApi({
                         body: data,
                     }
                 },
-                invalidatesTags: ["getCompanies"]
-            })
+                invalidatesTags: ["findCompanies"]
+            }),
+            findManyUsers: builder.query<FindManyUsersResponse, FindManyUsersRequest>({
+                query(data) {
+                    return {
+                        url: '/find-many/users',
+                        method: "POST",
+                        body: data,
+                    }
+                },
+                providesTags: ["findManyUsers"]
+            }),
         }
     },
 });
 
 export const {
-    useGetCompaniesQuery,
-    useGetCompanyQuery,
+    useFindCompaniesQuery,
+    useFindCompanyQuery,
     useCreateCompanyMutation,
-    useUpdateCompanyNameMutation,
+    useEditCompanyNameMutation,
     useAddUserToCompanyMutation,
     useRemoveUserFromCompanyMutation,
-    useDeleteCompanyMutation
+    useDeleteCompanyMutation,
+    useFindManyUsersQuery,
 } = companyApi;

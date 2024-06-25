@@ -10,9 +10,12 @@ const initialState: CompanyState = {
     companyUsers: [],
     totalCompanyUsers: 0,
     companyUser: null,
+    users: [],
+    totalUsers: 0,
     showEditCompanyNameModal: false,
     showCreateCompanyModal: false,
     showManageCompanyUserModal: false,
+    showAddUserToCompanyModal: false,
 
 }
 
@@ -35,6 +38,12 @@ const slice = createSlice({
         setCompanyUser: (state, action: PayloadAction<User | null>) => {
             state.companyUser = action.payload;
         },
+        setUsers: (state, action: PayloadAction<User[]>) => {
+            state.users = action.payload;
+        },
+        setTotalUsers: (state, action: PayloadAction<number>) => {
+            state.totalUsers = action.payload;
+        },
         setShowEditCompanyNameModal: (state, action: PayloadAction<boolean>) => {
             state.showEditCompanyNameModal = action.payload;
         },
@@ -43,6 +52,9 @@ const slice = createSlice({
         },
         setShowManageCompanyUserModal: (state, action: PayloadAction<boolean>) => {
             state.showManageCompanyUserModal = action.payload;
+        },
+        setShowAddUserToCompanyModal: (state, action: PayloadAction<boolean>) => {
+            state.showAddUserToCompanyModal = action.payload;
         },
     }, extraReducers(builder) {
         builder.addCase(logout, () => {
@@ -59,9 +71,12 @@ export const {
     setCompanyUsers,
     setTotalCompanyUsers,
     setCompanyUser,
+    setUsers,
+    setTotalUsers,
     setShowEditCompanyNameModal,
     setShowCreateCompanyModal,
-    setShowManageCompanyUserModal
+    setShowManageCompanyUserModal,
+    setShowAddUserToCompanyModal,
 } = slice.actions;
 
 export default companyReducer;

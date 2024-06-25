@@ -1,15 +1,14 @@
-import ListItem from "../../../common/components/list-item/list-item-v1";
+import ListItem from "../../../common/components/list-item/list-item";
 import { IconType } from "../../../common/enums/icon-type.enum";
 
 export default function ShowCompanyUserDetailsItem() {
     return (
-        <ListItem.Content>
-            <ListItem.BodyContent>
+        <ListItem>
+            <ListItem.Body icon={IconType.ChevronRight}>
                 <ListItem.Icon
                     icon={IconType.FileEarmarkSpreadsheet}
-                    title="View details" />
-            </ListItem.BodyContent>
-            <ListItem.BodyIcon icon={IconType.ChevronRight} />
-        </ListItem.Content>
+                    value="View details" />
+            </ListItem.Body>
+        </ListItem>
     )
 }

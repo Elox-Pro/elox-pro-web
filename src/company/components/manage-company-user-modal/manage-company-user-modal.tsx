@@ -1,11 +1,11 @@
 import Row from "react-bootstrap/esm/Row";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
-import ModalAction from "../../../common/components/modal-action/modal-action-v1";
+import ModalAction from "../../../common/components/modal-action/modal-action";
 import Col from "react-bootstrap/esm/Col";
-import { Card, ListGroup } from "react-bootstrap";
 import RemoveUserFromCompanyItem from "../remove-user-from-company-item/remove-user-from-company-item";
 import { setShowManageCompanyUserModal } from "../../features/company.slice";
 import ShowCompanyUserDetailsItem from "../show-company-user-details-item/show-company-user-details-item";
+import CardList from "../../../common/components/card-list/card-list";
 
 export function ManageCompanyUserModal() {
 
@@ -17,25 +17,21 @@ export function ManageCompanyUserModal() {
 
     return (
         companyUser &&
-        <ModalAction.Content show={showManageCompanyUserModal}>
+        <ModalAction show={showManageCompanyUserModal}>
             <ModalAction.Header onClose={onClose} />
             <ModalAction.Body>
+                <ModalAction.Title value={`Manage ${companyUser.username}`} />
+                <ModalAction.Description value={"Please select an action from the list below."} />
                 <Row>
                     <Col xs={12}>
-                        <p><strong>{`Manage ${companyUser.username}`}</strong></p>
-                        <Card>
-                            <Card.Body>
-                                <p>Select an action from the list below.</p>
-                                <ListGroup variant="flush">
-                                    <ShowCompanyUserDetailsItem />
-                                    <RemoveUserFromCompanyItem />
-                                </ListGroup>
-                            </Card.Body>
-                        </Card>
+                        <CardList>
+                            <ShowCompanyUserDetailsItem />
+                            <RemoveUserFromCompanyItem />
+                        </CardList>
                     </Col>
                 </Row>
             </ModalAction.Body>
-        </ModalAction.Content >
+        </ModalAction >
     );
 }
 

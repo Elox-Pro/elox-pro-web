@@ -1,6 +1,6 @@
 import { Company } from "../types/company.type"
 
-export type CompanyListResponse = {
+export type FindCompaniesResponse = {
     companies: Company[],
     total:number
 }

@@ -1,20 +1,20 @@
 import Row from "react-bootstrap/esm/Row";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
-import ModalAction from "../../../common/components/modal-action/modal-action-v1";
+import ModalAction from "../../../common/components/modal-action/modal-action";
 import Col from "react-bootstrap/esm/Col";
 import SubmitButton from "../../../common/components/submit-button/submit-button";
 import { ZodType, z } from "zod";
 import { ZodErrorKey } from "../../../app/constants/zod-error.constants";
 import { useZodForm } from "../../../common/hooks/zod-form.hook";
 import { FieldError } from "react-hook-form";
-import FloatingInput from "../../../common/components/floating-input/floating-input.component";
-import { useUpdateCompanyNameMutation } from "../../api/company.api";
+import FloatingInput from "../../../common/components/floating-input/floating-input";
 import { useEffect } from "react";
 import { setOverlay } from "../../../common/features/common.slice";
 import { toast } from "react-toastify";
 import { QueryStatus } from "@reduxjs/toolkit/query/react";
 import { EditCompanyNameRequest } from "../../requests/edit-company-name.request";
 import { setShowEditCompanyNameModal } from "../../features/company.slice";
+import { useEditCompanyNameMutation } from "../../api/company.api";
 
 const schema: ZodType<EditCompanyNameRequest> = z.object({
     name: z.string().min(3, { message: ZodErrorKey.required }),
@@ -31,7 +31,7 @@ export default function EditCompanyNameModal() {
     const overlay = useAppSelector((state) => state.common.overlay);
     const dispatch = useAppDispatch();
 
-    const [mutation, { status, data }] = useUpdateCompanyNameMutation();
+    const [mutation, { status, data }] = useEditCompanyNameMutation();
 
     const name = company?.name || "";
     const id = company?.id || 0;
@@ -63,17 +63,12 @@ export default function EditCompanyNameModal() {
 
     return (
         company != null &&
-        <ModalAction.Content show={showEditCompanyNameModal}>
+        <ModalAction show={showEditCompanyNameModal}>
             <ModalAction.Form onSubmit={zodForm.handleSubmit(onSubmit)}>
                 <ModalAction.Header onClose={onClose} />
                 <ModalAction.Body>
-                    <Row>
-                        <Col xs={12}>
-                            <p className="text-muted">
-                                Please provide the official name of your company.
-                            </p>
-                        </Col>
-                    </Row>
+                    <ModalAction.Title value={"Update Company Name"} />
+                    <ModalAction.Description value={"Please provide the official name of your company."} />
                     <Row>
                         <Col xs={12}>
                             <FloatingInput
@@ -102,6 +97,6 @@ export default function EditCompanyNameModal() {
                     <SubmitButton disabled={disabledSubmit} />
                 </ModalAction.Footer>
             </ModalAction.Form>
-        </ModalAction.Content>
+        </ModalAction>
     );
 }

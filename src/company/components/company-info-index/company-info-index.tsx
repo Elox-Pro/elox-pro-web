@@ -1,9 +1,7 @@
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
-import CompanyBasicInfoCard from "../company-basic-info-card/company-basic-info-card";
 import WrapperPage from "../../../common/components/wrapper-page/wrapper-page";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
-import { useGetCompanyQuery } from "../../api/company.api";
 import { useEffect } from "react";
 import { setCompany, setCompanyUsers, setTotalCompanyUsers } from "../../features/company.slice";
 import { useParams } from "react-router-dom";
@@ -16,20 +14,20 @@ import CompanyUserItem from "../company-user-item/company-user-item";
 import { ManageCompanyUserModal } from "../manage-company-user-modal/manage-company-user-modal";
 import AddUserToCompanyItem from "../add-user-to-company-item/add-user-to-company-item";
 import DeleteCompanyItem from "../delete-company-item/delete-company-item";
-import SelectUserModal from "../../../users/components/select-user-modal/select-user-modal.component";
 import ShowMoreCompanyUsersItem from "../show-more-company-users-item/show-more-company-users-item";
 import TotalCompanyUsersItem from "../total-company-users-item/total-company-users-item";
 import PageTitle from "../../../common/components/page-title/page-title";
 import PageImage from "../../../common/components/page-image/page-image";
 import PageDescription from "../../../common/components/page-description/page-description";
-
+import AddUserToCompanyModal from "../add-user-to-company-modal/add-user-to-company-modal";
+import { useFindCompanyQuery } from "../../api/company.api";
 
 export function CompanyInfoIndex() {
 
     const params = useParams<CompanyInfoIndexParams>();
     const { company, companyUsers } = useAppSelector((state) => state.company);
     const dispatch = useAppDispatch();
-    const { data, isSuccess } = useGetCompanyQuery({
+    const { data, isSuccess } = useFindCompanyQuery({
         id: params && params.id ? parseInt(params.id) : 0
     });
 
@@ -79,7 +77,7 @@ export function CompanyInfoIndex() {
             </Row>
             <EditCompanyNameModal />
             <ManageCompanyUserModal />
-            <SelectUserModal />
+            <AddUserToCompanyModal />
         </WrapperPage>
     )
 }

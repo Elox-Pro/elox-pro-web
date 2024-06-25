@@ -1,11 +1,10 @@
 import WrapperPage from "../../../common/components/wrapper-page/wrapper-page";
 import { Col, Row } from "react-bootstrap";
-import { useGetCompaniesQuery } from "../../api/company.api";
 import { useEffect } from "react";
 import SearchBar from "../../../common/components/search-bar/search-bar";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";
 import WrapperHeader from "../../../common/components/wrapper-header/wrapper-header";
-import IconButton from "../../../common/components/icon-button/icon-button.component";
+import IconButton from "../../../common/components/icon-button/icon-button";
 import CreateCompanyModal from "../create-company-modal/create-company-modal";
 import Paginator from "../../../common/components/paginator/paginator";
 import { setPaginatorResults } from "../../../common/features/paginator.slice";
@@ -14,6 +13,7 @@ import CompanyListItem from "../company-list-item/company-list-item";
 import { setCompanies, setShowCreateCompanyModal } from "../../features/company.slice";
 import PageTitle from "../../../common/components/page-title/page-title";
 import CardList from "../../../common/components/card-list/card-list";
+import { useFindCompaniesQuery } from "../../api/company.api";
 
 export default function CompanyListIndex() {
 
@@ -22,7 +22,7 @@ export default function CompanyListIndex() {
     const { companies } = useAppSelector((state) => state.company);
     const dispatch = useAppDispatch();
 
-    const { data, isSuccess } = useGetCompaniesQuery({
+    const { data, isSuccess } = useFindCompaniesQuery({
         page: paginator.currentPage,
         limit: paginator.itemsPerPage,
         searchTerm: searchBar.text,

@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { UpdateNameRequest } from "../../types/update-name/update-name-request.type";
 import { updateNameSchema } from "../../schemas/update-name.schema";
 import { useZodForm } from "../../../common/hooks/zod-form.hook";
-import FloatingInput from "../../../common/components/floating-input/floating-input.component";
+import FloatingInput from "../../../common/components/floating-input/floating-input";
 import { FieldError } from "react-hook-form";
 import Form from "react-bootstrap/esm/Form";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks/app.hooks";

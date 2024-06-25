@@ -7,7 +7,7 @@ import { ZodType, z } from "zod";
 import { ZodErrorKey } from "../../../app/constants/zod-error.constants";
 import { useZodForm } from "../../../common/hooks/zod-form.hook";
 import { FieldError } from "react-hook-form";
-import FloatingInput from "../../../common/components/floating-input/floating-input.component";
+import FloatingInput from "../../../common/components/floating-input/floating-input";
 import { useCreateCompanyMutation } from "../../api/company.api";
 import { CreateCompanyRequest } from "../../requests/create-company.request";
 import { useEffect } from "react";
